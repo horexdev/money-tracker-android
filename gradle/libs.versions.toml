@@ -1,6 +1,14 @@
 [versions]
+# Toolchain and Android target versions.
+gradle = "9.6.1"
 agp = "9.2.1"
 kotlin = "2.4.0"
+java = "17"
+androidCompileSdk = "36"
+androidMinSdk = "26"
+androidTargetSdk = "36"
+
+# Runtime and test libraries.
 androidxActivity = "1.13.0"
 androidxComposeBom = "2026.06.00"
 junit = "4.13.2"
