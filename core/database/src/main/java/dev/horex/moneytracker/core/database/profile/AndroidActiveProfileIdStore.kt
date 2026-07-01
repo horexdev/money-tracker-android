@@ -11,12 +11,12 @@ class AndroidActiveProfileIdStore(
         Context.MODE_PRIVATE,
     )
 
-    override fun getActiveProfileId(): Long? {
+    override suspend fun getActiveProfileId(): Long? {
         val profileId = preferences.getLong(KEY_ACTIVE_PROFILE_ID, NO_PROFILE_ID)
         return profileId.takeIf { it > NO_PROFILE_ID }
     }
 
-    override fun setActiveProfileId(profileId: Long) {
+    override suspend fun setActiveProfileId(profileId: Long) {
         require(profileId > NO_PROFILE_ID) { "Active profile id must be positive" }
         check(
             preferences.edit()
@@ -25,7 +25,7 @@ class AndroidActiveProfileIdStore(
         ) { "Active profile selection should be persisted" }
     }
 
-    override fun clearActiveProfileId() {
+    override suspend fun clearActiveProfileId() {
         check(
             preferences.edit()
                 .remove(KEY_ACTIVE_PROFILE_ID)

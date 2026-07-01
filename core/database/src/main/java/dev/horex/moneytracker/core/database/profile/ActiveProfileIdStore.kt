@@ -1,7 +1,7 @@
 package dev.horex.moneytracker.core.database.profile
 
 interface ActiveProfileIdStore {
-    fun getActiveProfileId(): Long?
-    fun setActiveProfileId(profileId: Long)
-    fun clearActiveProfileId()
+    suspend fun getActiveProfileId(): Long?
+    suspend fun setActiveProfileId(profileId: Long)
+    suspend fun clearActiveProfileId()
 }

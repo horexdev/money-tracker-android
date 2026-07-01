@@ -3,17 +3,24 @@ package dev.horex.moneytracker
 import android.content.Context
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
-import dev.horex.moneytracker.core.database.profile.AndroidActiveProfileIdStore
 import dev.horex.moneytracker.core.database.profile.LocalProfileDefaults
 import dev.horex.moneytracker.core.database.profile.LocalProfileRepository
 import dev.horex.moneytracker.core.database.profile.normalizeLocalProfileLanguageCode
 import dev.horex.moneytracker.core.database.security.AndroidDatabasePassphraseStore
+import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
+import dev.horex.moneytracker.core.preferences.DataStoreActiveProfileIdStore
+import dev.horex.moneytracker.core.preferences.createAppPreferencesDataStore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import java.util.Locale
 
 internal class MoneyTrackerAppContainer(
     context: Context,
 ) {
     private val appContext = context.applicationContext
+    private val appPreferencesScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val databaseLazy = lazy {
         MoneyTrackerDatabaseFactory.createEncrypted(
             context = appContext,
@@ -23,11 +30,21 @@ internal class MoneyTrackerAppContainer(
     }
 
     private val database: MoneyTrackerDatabase by databaseLazy
+    private val appPreferencesDataStore by lazy {
+        createAppPreferencesDataStore(
+            context = appContext,
+            scope = appPreferencesScope,
+        )
+    }
+
+    val appPreferencesRepository: AppPreferencesRepository by lazy {
+        AppPreferencesRepository(appPreferencesDataStore)
+    }
 
     val localProfileRepository: LocalProfileRepository by lazy {
         LocalProfileRepository(
             database = database,
-            activeProfileIdStore = AndroidActiveProfileIdStore(appContext),
+            activeProfileIdStore = DataStoreActiveProfileIdStore(appPreferencesRepository),
             defaults = LocalProfileDefaults(
                 languageCode = resolveDeviceLanguageCode(appContext),
             ),
@@ -35,6 +52,7 @@ internal class MoneyTrackerAppContainer(
     }
 
     fun close() {
+        appPreferencesScope.cancel()
         if (databaseLazy.isInitialized()) {
             database.close()
         }

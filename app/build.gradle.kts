@@ -37,6 +37,7 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:preferences"))
     implementation(project(":feature:home"))
 
     implementation(platform(libs.androidx.compose.bom))
