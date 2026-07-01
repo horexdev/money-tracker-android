@@ -1,6 +1,7 @@
 package dev.horex.moneytracker.core.database
 
 import dev.horex.moneytracker.core.database.dao.AccountDao
+import dev.horex.moneytracker.core.database.dao.CategoryDao
 import dev.horex.moneytracker.core.database.dao.LocalProfileDao
 import dev.horex.moneytracker.core.database.dao.SavingsGoalDao
 import dev.horex.moneytracker.core.database.dao.requireDefaultAccountUpdate
@@ -79,6 +80,7 @@ class MoneyTrackerDatabaseSchemaTest {
     @Test
     fun daoContractsKeepProfileBoundaries() {
         val accountMethods = AccountDao::class.java.methods.map { it.name }.toSet()
+        val categoryMethods = CategoryDao::class.java.methods.map { it.name }.toSet()
         val profileMethods = LocalProfileDao::class.java.methods.map { it.name }.toSet()
         val savingsGoalListByAccount = SavingsGoalDao::class.java.methods.single { it.name == "listByAccount" }
 
@@ -86,6 +88,10 @@ class MoneyTrackerDatabaseSchemaTest {
         assertTrue("AccountDao should expose transactional default setter", "setDefault" in accountMethods)
         assertTrue("AccountDao should expose default clear helper", "clearOtherDefaultAccounts" in accountMethods)
         assertTrue("AccountDao should expose default mark helper", "markDefault" in accountMethods)
+        assertTrue("CategoryDao should expose active scoped lookup", "getActiveById" in categoryMethods)
+        assertTrue("CategoryDao should expose editable category list", "listEditableByProfile" in categoryMethods)
+        assertTrue("CategoryDao should expose soft delete", "softDelete" in categoryMethods)
+        assertTrue("CategoryDao should expose profile-scoped frequency sorting", "listByFrequency" in categoryMethods)
         assertTrue(
             "SavingsGoalDao.listByAccount should require profileId and accountId",
             savingsGoalListByAccount.parameterTypes.count { it == Long::class.javaPrimitiveType } >= 2,
