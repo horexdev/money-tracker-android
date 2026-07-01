@@ -20,6 +20,8 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 | Activity Compose | 1.13.0 | Minimal Activity integration for the bootstrap shell. |
 | Navigation Compose | 2.9.8 | Root `NavHost` and Android system back integration. |
 | Compose Material Icons | BOM-managed | Bottom navigation icon set resolved through the Compose BOM. |
+| KSP | 2.3.9 | Kotlin symbol processing for Room compiler integration. |
+| AndroidX Room Runtime / KTX / Compiler | 2.8.1 | Local Room database contract and DAO implementation generation. |
 | AndroidX Room Testing | 2.8.1 | Room migration/in-memory database test support for data-layer tasks. |
 | AndroidX Test Core / Runner / Rules | 1.7.0 | Instrumentation and Android framework test baseline. |
 | AndroidX Test Ext JUnit | 1.3.0 | AndroidJUnit4 integration for instrumentation tests. |
@@ -30,6 +32,8 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 `core:designsystem` owns Material 3 theme configuration, app semantic colors, typography, shapes, spacing, and shared Compose components. Feature modules should depend on that module instead of defining their own app theme or base component styles.
 
 `core:testing` owns shared test fixtures, coroutine test rules, and exported Room/Compose/AndroidX test dependencies. Production code must not depend on it; use it only through `testImplementation` or `androidTestImplementation`.
+
+`core:database` owns the Room schema, entities, DAO contracts, exported schema snapshots, and Room compiler setup. Feature modules should not define database tables directly.
 
 ## Rules
 
