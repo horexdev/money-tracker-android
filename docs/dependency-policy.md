@@ -20,9 +20,16 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 | Activity Compose | 1.13.0 | Minimal Activity integration for the bootstrap shell. |
 | Navigation Compose | 2.9.8 | Root `NavHost` and Android system back integration. |
 | Compose Material Icons | BOM-managed | Bottom navigation icon set resolved through the Compose BOM. |
+| AndroidX Room Testing | 2.8.1 | Room migration/in-memory database test support for data-layer tasks. |
+| AndroidX Test Core / Runner / Rules | 1.7.0 | Instrumentation and Android framework test baseline. |
+| AndroidX Test Ext JUnit | 1.3.0 | AndroidJUnit4 integration for instrumentation tests. |
+| AndroidX Espresso | 3.7.0 | Android test assertion baseline used by test artifacts. |
+| Kotlinx Coroutines Test | 1.11.0 | Coroutine dispatcher and virtual-time test support. |
 | JUnit | 4.13.2 | Unit-test baseline until the dedicated test infrastructure task expands coverage. |
 
 `core:designsystem` owns Material 3 theme configuration, app semantic colors, typography, shapes, spacing, and shared Compose components. Feature modules should depend on that module instead of defining their own app theme or base component styles.
+
+`core:testing` owns shared test fixtures, coroutine test rules, and exported Room/Compose/AndroidX test dependencies. Production code must not depend on it; use it only through `testImplementation` or `androidTestImplementation`.
 
 ## Rules
 
@@ -42,6 +49,7 @@ Run these before opening a PR that changes dependency or toolchain versions:
 .\gradlew.bat :app:dependencies --configuration debugRuntimeClasspath
 .\gradlew.bat test
 .\gradlew.bat lint
+.\gradlew.bat assembleDebugAndroidTest
 .\gradlew.bat assembleDebug
 ```
 

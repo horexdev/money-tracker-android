@@ -20,6 +20,7 @@ Run these before opening or updating an implementation PR:
 ```powershell
 .\gradlew.bat test
 .\gradlew.bat lint
+.\gradlew.bat assembleDebugAndroidTest
 .\gradlew.bat assembleDebug
 ```
 
@@ -37,10 +38,11 @@ GitHub Actions runs the same required Gradle checks for pull requests and pushes
 ```bash
 ./gradlew test
 ./gradlew lint
+./gradlew assembleDebugAndroidTest
 ./gradlew assembleDebug
 ```
 
-CI installs the Android 36 platform and build tools before running validation.
+`assembleDebugAndroidTest` compiles instrumentation, Room, and Compose test setup without requiring a connected device. CI installs the Android 36 platform and build tools before running validation.
 
 ## Expected Warnings
 
