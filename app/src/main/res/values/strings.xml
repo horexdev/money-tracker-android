@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Money Tracker</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_history">History</string>
+    <string name="tab_add">Add</string>
+    <string name="tab_stats">Stats</string>
+    <string name="tab_more">More</string>
+    <string name="history_title">History</string>
+    <string name="history_placeholder_subtitle">Transaction history route is registered.</string>
+    <string name="add_transaction_title">Add transaction</string>
+    <string name="add_transaction_placeholder_subtitle">Transaction creation route is registered.</string>
+    <string name="stats_title">Stats</string>
+    <string name="stats_placeholder_subtitle">Analytics route is registered.</string>
+    <string name="more_title">More</string>
+    <string name="more_placeholder_subtitle">Secondary routes will attach here.</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_placeholder_subtitle">Settings route is registered.</string>
+    <string name="categories_title">Categories</string>
+    <string name="categories_placeholder_subtitle">Categories route is registered.</string>
+    <string name="budgets_title">Budgets</string>
+    <string name="budgets_placeholder_subtitle">Budgets route is registered.</string>
+    <string name="recurring_title">Recurring</string>
+    <string name="recurring_placeholder_subtitle">Recurring transactions route is registered.</string>
+    <string name="templates_title">Templates</string>
+    <string name="templates_placeholder_subtitle">Transaction templates route is registered.</string>
+    <string name="savings_title">Savings</string>
+    <string name="savings_placeholder_subtitle">Savings goals route is registered.</string>
+    <string name="export_title">Export</string>
+    <string name="export_placeholder_subtitle">Backup and export route is registered.</string>
+    <string name="accounts_title">Accounts</string>
+    <string name="accounts_placeholder_subtitle">Accounts route is registered.</string>
 </resources>

@@ -1,5 +1,6 @@
 package dev.horex.moneytracker
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -25,7 +27,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import dev.horex.moneytracker.core.common.AppBootstrapContent
 import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerPlaceholderScreen
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerThemeMode
@@ -65,62 +66,92 @@ private fun MoneyTrackerNavHost(
         modifier = modifier,
     ) {
         composable(MoneyTrackerRoutes.Dashboard) {
-            HomeRoute(
-                content = AppBootstrapContent(
-                    title = "Dashboard",
-                    subtitle = "Root navigation is ready.",
-                ),
-            )
+            HomeRoute()
         }
         composable(MoneyTrackerRoutes.History) {
-            MoneyTrackerPlaceholderScreen(
-                title = "History",
-                subtitle = "Transaction history route is registered.",
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.history_title,
+                subtitleResId = R.string.history_placeholder_subtitle,
             )
         }
         composable(MoneyTrackerRoutes.AddTransaction) {
-            MoneyTrackerPlaceholderScreen(
-                title = "Add transaction",
-                subtitle = "Transaction creation route is registered.",
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.add_transaction_title,
+                subtitleResId = R.string.add_transaction_placeholder_subtitle,
             )
         }
         composable(MoneyTrackerRoutes.Stats) {
-            MoneyTrackerPlaceholderScreen(
-                title = "Stats",
-                subtitle = "Analytics route is registered.",
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.stats_title,
+                subtitleResId = R.string.stats_placeholder_subtitle,
             )
         }
         composable(MoneyTrackerRoutes.More) {
-            MoneyTrackerPlaceholderScreen(
-                title = "More",
-                subtitle = "Secondary routes will attach here.",
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.more_title,
+                subtitleResId = R.string.more_placeholder_subtitle,
             )
         }
         composable(MoneyTrackerRoutes.Settings) {
-            MoneyTrackerPlaceholderScreen("Settings", "Settings route is registered.")
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.settings_title,
+                subtitleResId = R.string.settings_placeholder_subtitle,
+            )
         }
         composable(MoneyTrackerRoutes.Categories) {
-            MoneyTrackerPlaceholderScreen("Categories", "Categories route is registered.")
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.categories_title,
+                subtitleResId = R.string.categories_placeholder_subtitle,
+            )
         }
         composable(MoneyTrackerRoutes.Budgets) {
-            MoneyTrackerPlaceholderScreen("Budgets", "Budgets route is registered.")
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.budgets_title,
+                subtitleResId = R.string.budgets_placeholder_subtitle,
+            )
         }
         composable(MoneyTrackerRoutes.Recurring) {
-            MoneyTrackerPlaceholderScreen("Recurring", "Recurring transactions route is registered.")
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.recurring_title,
+                subtitleResId = R.string.recurring_placeholder_subtitle,
+            )
         }
         composable(MoneyTrackerRoutes.Templates) {
-            MoneyTrackerPlaceholderScreen("Templates", "Transaction templates route is registered.")
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.templates_title,
+                subtitleResId = R.string.templates_placeholder_subtitle,
+            )
         }
         composable(MoneyTrackerRoutes.Savings) {
-            MoneyTrackerPlaceholderScreen("Savings", "Savings goals route is registered.")
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.savings_title,
+                subtitleResId = R.string.savings_placeholder_subtitle,
+            )
         }
         composable(MoneyTrackerRoutes.Export) {
-            MoneyTrackerPlaceholderScreen("Export", "Backup and export route is registered.")
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.export_title,
+                subtitleResId = R.string.export_placeholder_subtitle,
+            )
         }
         composable(MoneyTrackerRoutes.Accounts) {
-            MoneyTrackerPlaceholderScreen("Accounts", "Accounts route is registered.")
+            LocalizedPlaceholderScreen(
+                titleResId = R.string.accounts_title,
+                subtitleResId = R.string.accounts_placeholder_subtitle,
+            )
         }
     }
+}
+
+@Composable
+private fun LocalizedPlaceholderScreen(
+    @StringRes titleResId: Int,
+    @StringRes subtitleResId: Int,
+) {
+    MoneyTrackerPlaceholderScreen(
+        title = stringResource(titleResId),
+        subtitle = stringResource(subtitleResId),
+    )
 }
 
 @Composable
@@ -135,6 +166,7 @@ private fun MoneyTrackerBottomBar(
             val selected = currentDestination?.hierarchy?.any {
                 it.route == destination.route
             } == true
+            val label = stringResource(destination.labelResId)
 
             NavigationBarItem(
                 selected = selected,
@@ -144,11 +176,11 @@ private fun MoneyTrackerBottomBar(
                 icon = {
                     Icon(
                         imageVector = destination.icon,
-                        contentDescription = destination.label,
+                        contentDescription = label,
                     )
                 },
                 label = {
-                    Text(text = destination.label)
+                    Text(text = label)
                 },
             )
         }
@@ -169,7 +201,7 @@ private fun NavHostController.navigateToTopLevelDestination(
 
 private data class AppTopLevelDestination(
     val destination: MoneyTrackerTopLevelDestination,
-    val label: String,
+    @StringRes val labelResId: Int,
     val icon: ImageVector,
 ) {
     val route: String = destination.route
@@ -178,27 +210,27 @@ private data class AppTopLevelDestination(
 private val topLevelDestinations = listOf(
     AppTopLevelDestination(
         destination = MoneyTrackerTopLevelDestination.Dashboard,
-        label = "Home",
+        labelResId = R.string.tab_home,
         icon = Icons.Filled.Home,
     ),
     AppTopLevelDestination(
         destination = MoneyTrackerTopLevelDestination.History,
-        label = "History",
+        labelResId = R.string.tab_history,
         icon = Icons.Filled.History,
     ),
     AppTopLevelDestination(
         destination = MoneyTrackerTopLevelDestination.AddTransaction,
-        label = "Add",
+        labelResId = R.string.tab_add,
         icon = Icons.Filled.Add,
     ),
     AppTopLevelDestination(
         destination = MoneyTrackerTopLevelDestination.Stats,
-        label = "Stats",
+        labelResId = R.string.tab_stats,
         icon = Icons.Filled.BarChart,
     ),
     AppTopLevelDestination(
         destination = MoneyTrackerTopLevelDestination.More,
-        label = "More",
+        labelResId = R.string.tab_more,
         icon = Icons.Filled.MoreHoriz,
     ),
 )

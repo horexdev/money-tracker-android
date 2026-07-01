@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Money Tracker</string>
+    <string name="tab_home">Главная</string>
+    <string name="tab_history">История</string>
+    <string name="tab_add">Добавить</string>
+    <string name="tab_stats">Статистика</string>
+    <string name="tab_more">Ещё</string>
+    <string name="history_title">История</string>
+    <string name="history_placeholder_subtitle">Маршрут истории операций зарегистрирован.</string>
+    <string name="add_transaction_title">Добавление операции</string>
+    <string name="add_transaction_placeholder_subtitle">Маршрут создания операции зарегистрирован.</string>
+    <string name="stats_title">Статистика</string>
+    <string name="stats_placeholder_subtitle">Маршрут аналитики зарегистрирован.</string>
+    <string name="more_title">Ещё</string>
+    <string name="more_placeholder_subtitle">Здесь будут подключены дополнительные разделы.</string>
+    <string name="settings_title">Настройки</string>
+    <string name="settings_placeholder_subtitle">Маршрут настроек зарегистрирован.</string>
+    <string name="categories_title">Категории</string>
+    <string name="categories_placeholder_subtitle">Маршрут категорий зарегистрирован.</string>
+    <string name="budgets_title">Бюджеты</string>
+    <string name="budgets_placeholder_subtitle">Маршрут бюджетов зарегистрирован.</string>
+    <string name="recurring_title">Повторяющиеся</string>
+    <string name="recurring_placeholder_subtitle">Маршрут повторяющихся операций зарегистрирован.</string>
+    <string name="templates_title">Шаблоны</string>
+    <string name="templates_placeholder_subtitle">Маршрут шаблонов операций зарегистрирован.</string>
+    <string name="savings_title">Цели</string>
+    <string name="savings_placeholder_subtitle">Маршрут целей накоплений зарегистрирован.</string>
+    <string name="export_title">Экспорт</string>
+    <string name="export_placeholder_subtitle">Маршрут резервных копий и экспорта зарегистрирован.</string>
+    <string name="accounts_title">Счета</string>
+    <string name="accounts_placeholder_subtitle">Маршрут счетов зарегистрирован.</string>
+</resources>
