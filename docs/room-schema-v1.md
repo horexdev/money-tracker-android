@@ -1,0 +1,59 @@
+# Room Schema V1
+
+## Scope
+
+`core:database` owns the first local Room contract for the Android offline migration.
+
+The schema is based on the current Mini App PostgreSQL migrations, SQL queries, backend services, and web API types. It intentionally adapts server `users` into local Android profiles and does not copy Telegram identity fields or source database identifiers.
+
+## Identity Boundary
+
+Android persistent storage must use local identifiers only:
+
+- `local_profiles.id` is the local owner key for user data on the device.
+- Domain tables reference `profile_id`, never server `user_id`.
+- The schema must not add Telegram ID, Telegram username, Telegram first/last name, initData, bot/chat metadata, `legacy_*`, `source_*`, or source database IDs.
+- Import code must map any source rows into fresh local IDs before writing to Room.
+
+## Tables
+
+| Table | Purpose |
+| --- | --- |
+| `local_profiles` | Local settings owner: language, display currencies, notification preferences, UI preferences, timestamps. |
+| `accounts` | Local wallets/accounts with type, currency, default flag, include-in-total flag. |
+| `categories` | Per-profile categories, including protected infrastructure categories for transfers and adjustments. |
+| `transactions` | Income/expense rows, account/category links, snapshot date, adjustment flag, local timestamp. |
+| `transfers` | Account-to-account movements with linked local debit/credit transaction IDs. |
+| `budgets` | Category budgets with notification state. |
+| `recurring_transactions` | Scheduled transaction templates with account/category links and next-run timestamp. |
+| `savings_goals` | Goal progress and optional linked account. |
+| `goal_transactions` | Goal deposit/withdraw history. |
+| `exchange_rate_snapshots` | Date-based currency conversion snapshots, stored as `rate_e8` fixed-point values. |
+| `transaction_templates` | Manual quick templates ordered per profile. |
+
+## Indexes And Relationships
+
+The v1 contract includes indexes for the expected offline reads:
+
+- history and stats: `transactions(profile_id, created_at_epoch_millis)`, account/date, category/date, `snapshot_date`;
+- account screens: `accounts(profile_id)`, `accounts(profile_id, name)`;
+- categories: `categories(profile_id, name)`, profile/type, soft-delete filtering;
+- budgets: unique `budgets(profile_id, category_id, period)`;
+- recurring work: `recurring_transactions(profile_id, is_active, next_run_at_epoch_millis)`;
+- savings: goal/profile and goal transaction history indexes;
+- transfers: profile/date plus from/to account and linked transaction indexes;
+- exchange rates: unique `(snapshot_date, base_currency, target_currency)`;
+- templates: profile/order plus account/category indexes.
+
+Foreign keys use local IDs. Profile deletion cascades profile-owned data. Account/category deletes are restricted where deleting them would orphan financial records, except savings goals can unlink an account.
+
+## Migrations
+
+Room version `1` is the initial schema. `MoneyTrackerDatabaseMigrations.ALL` is empty until version `2`.
+
+When the schema changes:
+
+1. Add a Room `Migration`.
+2. Export the new Room schema JSON under `core/database/schemas`.
+3. Update this document with the new table/index/identity behavior.
+4. Keep `MoneyTrackerDatabaseSchemaTest` guarding against source identity fields.
