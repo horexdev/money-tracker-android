@@ -99,6 +99,9 @@ interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(category: CategoryEntity): Long
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertIgnore(category: CategoryEntity): Long
+
     @Update
     suspend fun update(category: CategoryEntity)
 
@@ -121,6 +124,16 @@ interface CategoryDao {
 
     @Query("SELECT * FROM categories WHERE profile_id = :profileId AND type = :type AND is_protected = 1 LIMIT 1")
     suspend fun getProtectedByType(profileId: Long, type: String): CategoryEntity?
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM categories
+        WHERE profile_id = :profileId
+          AND is_protected = 0
+          AND deleted_at_epoch_millis IS NULL
+        """,
+    )
+    suspend fun countEditableByProfile(profileId: Long): Int
 }
 
 @Dao

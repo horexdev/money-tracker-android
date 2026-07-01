@@ -17,6 +17,9 @@ Android persistent storage must use local identifiers only:
 - The schema must not add Telegram ID, Telegram username, Telegram first/last name, initData, bot/chat metadata, `legacy_*`, `source_*`, or source database IDs.
 - Import code must map any source rows into fresh local IDs before writing to Room.
 - First launch creates an offline `local_profiles` row through `LocalProfileRepository.ensureActiveProfile()` without auth or server identity.
+- First launch also seeds the local default account and categories through `DefaultProfileSeedRepository`.
+  The account currency is derived from the local profile/device language, unless a caller supplies an explicit currency code.
+  Seed data never stores source identity fields or Telegram-derived profile metadata.
 - The active profile selection is stored as the private DataStore preference `active_profile_id`; it is a device-local pointer, not a synced identity.
 
 ## Tables
@@ -51,6 +54,16 @@ The v1 contract includes indexes for the expected offline reads:
 - templates: profile/order plus account/category indexes.
 
 Foreign keys use local IDs. Profile deletion cascades profile-owned data. Account/category deletes are restricted where deleting them would orphan financial records, except savings goals can unlink an account.
+
+## Default Seed
+
+`DefaultProfileSeedRepository` ports the current Mini App first-launch seed behavior into the offline Android database:
+
+- creates one default checking account when the profile has no accounts;
+- localizes the default account name and derives currency from the normalized profile language (`en` -> `USD`, `ru` -> `RUB`, `uk` -> `UAH`, and the rest of the source-supported language table);
+- seeds the 9 user-editable source categories only when the profile has no editable categories;
+- always ensures protected per-profile infrastructure categories for `transfer` and `adjustment`;
+- uses idempotent inserts, so repeated app startup does not duplicate seed rows.
 
 ## Migrations
 

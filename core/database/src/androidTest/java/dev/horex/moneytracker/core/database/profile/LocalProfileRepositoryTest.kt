@@ -5,6 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
+import dev.horex.moneytracker.core.database.seed.DefaultProfileSeedRepository
 import dev.horex.moneytracker.core.database.security.AndroidDatabasePassphraseStore
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -78,6 +79,73 @@ class LocalProfileRepositoryTest {
             assertEquals(1_000L, active.createdAtEpochMillis)
         } finally {
             reopenedDatabase.close()
+        }
+    }
+
+    @Test
+    fun firstLaunchSeedsDefaultAccountAndCategoriesFromProfileLanguage() = runBlocking {
+        cleanUp()
+
+        val database = createDatabase()
+        val store = createProfileStore()
+        try {
+            val repository = LocalProfileRepository(
+                database = database,
+                activeProfileIdStore = store,
+                defaults = LocalProfileDefaults(languageCode = "ru"),
+                profileSeeder = DefaultProfileSeedRepository(
+                    database = database,
+                    clock = { 1_500L },
+                ),
+                clock = { 1_000L },
+            )
+
+            val profile = repository.ensureActiveProfile()
+
+            val accounts = database.accountDao().listByProfile(profile.id)
+            assertEquals(1, accounts.size)
+            val account = accounts.single()
+            assertEquals("\u041e\u0441\u043d\u043e\u0432\u043d\u043e\u0439 \u0441\u0447\u0451\u0442", account.name)
+            assertEquals("RUB", account.currencyCode)
+            assertEquals("wallet", account.icon)
+            assertEquals("checking", account.type)
+            assertTrue(account.isDefault)
+            assertTrue(account.includeInTotal)
+            assertEquals(1_500L, account.createdAtEpochMillis)
+
+            val categories = database.categoryDao().listByProfile(profile.id)
+            assertEquals(11, categories.size)
+
+            val categoriesByName = categories.associateBy { it.name }
+            val food = checkNotNull(categoriesByName["\u0415\u0434\u0430"])
+            assertEquals("fork-knife", food.icon)
+            assertEquals("expense", food.type)
+            assertEquals("#f97316", food.color)
+
+            val savings = checkNotNull(categoriesByName["\u041d\u0430\u043a\u043e\u043f\u043b\u0435\u043d\u0438\u044f"])
+            assertEquals("piggy-bank", savings.icon)
+            assertEquals("savings", savings.type)
+            assertEquals("#3b82f6", savings.color)
+
+            val transfer = checkNotNull(database.categoryDao().getProtectedByType(profile.id, "transfer"))
+            assertEquals("Transfer", transfer.name)
+            assertEquals("arrows-left-right", transfer.icon)
+            assertEquals("#6366f1", transfer.color)
+            assertTrue(transfer.isProtected)
+
+            val adjustment = checkNotNull(database.categoryDao().getProtectedByType(profile.id, "adjustment"))
+            assertEquals("Adjustment", adjustment.name)
+            assertEquals("scales", adjustment.icon)
+            assertEquals("#94a3b8", adjustment.color)
+            assertTrue(adjustment.isProtected)
+
+            val activeAgain = repository.ensureActiveProfile()
+
+            assertEquals(profile.id, activeAgain.id)
+            assertEquals(1, database.accountDao().listByProfile(profile.id).size)
+            assertEquals(11, database.categoryDao().listByProfile(profile.id).size)
+        } finally {
+            database.close()
         }
     }
 

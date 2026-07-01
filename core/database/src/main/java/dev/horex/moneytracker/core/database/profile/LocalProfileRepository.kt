@@ -3,6 +3,7 @@ package dev.horex.moneytracker.core.database.profile
 import androidx.room.withTransaction
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.model.LocalProfileEntity
+import dev.horex.moneytracker.core.database.seed.LocalProfileSeeder
 
 fun interface LocalProfileBootstrapper {
     suspend fun ensureActiveProfile(): LocalProfile
@@ -12,13 +13,14 @@ class LocalProfileRepository(
     private val database: MoneyTrackerDatabase,
     private val activeProfileIdStore: ActiveProfileIdStore,
     private val defaults: LocalProfileDefaults = LocalProfileDefaults(),
+    private val profileSeeder: LocalProfileSeeder? = null,
     private val clock: () -> Long = { System.currentTimeMillis() },
 ) : LocalProfileBootstrapper {
     private val profileDao = database.localProfileDao()
 
     override suspend fun ensureActiveProfile(): LocalProfile {
         activeProfileIdStore.getActiveProfileId()?.let { activeProfileId ->
-            profileDao.getById(activeProfileId)?.let { return it.toLocalProfile() }
+            profileDao.getById(activeProfileId)?.let { return it.toLocalProfile().ensureSeeded() }
             activeProfileIdStore.clearActiveProfileId()
         }
 
@@ -26,7 +28,7 @@ class LocalProfileRepository(
             profileDao.getFirst() ?: createDefaultProfileEntity()
         }
         activeProfileIdStore.setActiveProfileId(entity.id)
-        return entity.toLocalProfile()
+        return entity.toLocalProfile().ensureSeeded()
     }
 
     suspend fun listProfiles(): List<LocalProfile> {
@@ -74,6 +76,11 @@ class LocalProfileRepository(
     private suspend fun requireInsertedProfile(profileId: Long): LocalProfileEntity {
         return profileDao.getById(profileId)
             ?: error("Inserted local profile should be readable")
+    }
+
+    private suspend fun LocalProfile.ensureSeeded(): LocalProfile {
+        profileSeeder?.ensureSeed(this)
+        return this
     }
 }
 
