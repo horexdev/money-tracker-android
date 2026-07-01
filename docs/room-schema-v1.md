@@ -6,6 +6,8 @@
 
 The schema is based on the current Mini App PostgreSQL migrations, SQL queries, backend services, and web API types. It intentionally adapts server `users` into local Android profiles and does not copy Telegram identity fields or source database identifiers.
 
+Production opens this schema through SQLCipher. The encrypted database open flow and Android Keystore-backed passphrase storage are documented in `docs/database-encryption.md`.
+
 ## Identity Boundary
 
 Android persistent storage must use local identifiers only:

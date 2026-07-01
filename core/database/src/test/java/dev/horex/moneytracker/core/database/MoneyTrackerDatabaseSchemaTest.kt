@@ -103,6 +103,45 @@ class MoneyTrackerDatabaseSchemaTest {
         }
     }
 
+    @Test
+    fun sqlCipherFactoryRejectsEmptyPassphrase() {
+        try {
+            MoneyTrackerDatabaseFactory.createSqlCipherFactory(ByteArray(0))
+            fail("SQLCipher factory should reject an empty passphrase")
+        } catch (expected: IllegalArgumentException) {
+            assertTrue(
+                "Exception should explain the passphrase requirement",
+                expected.message.orEmpty().contains("passphrase"),
+            )
+        }
+    }
+
+    @Test
+    fun databaseEncryptionContractUsesKeystoreAndAvoidsLogs() {
+        val source = File("src/main/java")
+            .walkTopDown()
+            .filter { it.isFile && it.extension == "kt" }
+            .joinToString(separator = "\n") { it.readText() }
+
+        listOf(
+            "SupportOpenHelperFactory",
+            "System.loadLibrary(\"sqlcipher\")",
+            "AndroidKeyStore",
+            "KeyGenParameterSpec",
+            "AES/GCM/NoPadding",
+        ).forEach { required ->
+            assertTrue("Database encryption source should contain $required", source.contains(required))
+        }
+
+        listOf(
+            "android.util.Log",
+            "Log.",
+            "println(",
+        ).forEach { forbidden ->
+            assertFalse("Database module must not log plaintext financial data", source.contains(forbidden))
+        }
+    }
+
     private fun readSchema(): String {
         assertTrue("Room schema export is missing: ${schemaFile.path}", schemaFile.exists())
         return schemaFile.readText()
