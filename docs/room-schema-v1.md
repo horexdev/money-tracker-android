@@ -16,6 +16,8 @@ Android persistent storage must use local identifiers only:
 - Domain tables reference `profile_id`, never server `user_id`.
 - The schema must not add Telegram ID, Telegram username, Telegram first/last name, initData, bot/chat metadata, `legacy_*`, `source_*`, or source database IDs.
 - Import code must map any source rows into fresh local IDs before writing to Room.
+- First launch creates an offline `local_profiles` row through `LocalProfileRepository.ensureActiveProfile()` without auth or server identity.
+- The active profile selection is stored as a private app preference `active_profile_id`; it is a device-local pointer, not a synced identity.
 
 ## Tables
 

@@ -28,6 +28,7 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 | AndroidX Test Core / Runner / Rules | 1.7.0 | Instrumentation and Android framework test baseline. |
 | AndroidX Test Ext JUnit | 1.3.0 | AndroidJUnit4 integration for instrumentation tests. |
 | AndroidX Espresso | 3.7.0 | Android test assertion baseline used by test artifacts. |
+| Kotlinx Coroutines Android | 1.11.0 | Runtime coroutine classes aligned with coroutine test tooling used by connected Compose tests. |
 | Kotlinx Coroutines Test | 1.11.0 | Coroutine dispatcher and virtual-time test support. |
 | JUnit | 4.13.2 | Unit-test baseline until the dedicated test infrastructure task expands coverage. |
 

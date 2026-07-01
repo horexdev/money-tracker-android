@@ -15,6 +15,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -30,13 +31,20 @@ import androidx.navigation.compose.rememberNavController
 import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerPlaceholderScreen
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerThemeMode
+import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
 import dev.horex.moneytracker.core.navigation.MoneyTrackerRoutes
 import dev.horex.moneytracker.core.navigation.MoneyTrackerTopLevelDestination
 import dev.horex.moneytracker.feature.home.HomeRoute
 
 @Composable
-fun MoneyTrackerApp() {
+fun MoneyTrackerApp(
+    localProfileBootstrapper: LocalProfileBootstrapper? = null,
+) {
     val navController = rememberNavController()
+
+    LaunchedEffect(localProfileBootstrapper) {
+        localProfileBootstrapper?.ensureActiveProfile()
+    }
 
     MoneyTrackerTheme(themeMode = MoneyTrackerThemeMode.System) {
         Scaffold(
