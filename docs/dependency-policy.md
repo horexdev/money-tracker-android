@@ -22,6 +22,8 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 | Compose Material Icons | BOM-managed | Bottom navigation icon set resolved through the Compose BOM. |
 | JUnit | 4.13.2 | Unit-test baseline until the dedicated test infrastructure task expands coverage. |
 
+`core:designsystem` owns Material 3 theme configuration, app semantic colors, typography, shapes, spacing, and shared Compose components. Feature modules should depend on that module instead of defining their own app theme or base component styles.
+
 ## Rules
 
 - Add every new plugin or dependency through `libs.versions.toml`.

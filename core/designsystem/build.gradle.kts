@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.horex.moneytracker.feature.home"
+    namespace = "dev.horex.moneytracker.core.designsystem"
     compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
@@ -18,9 +18,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
-    implementation(project(":core:designsystem"))
-
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
