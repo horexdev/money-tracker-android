@@ -6,6 +6,7 @@ import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
 import dev.horex.moneytracker.core.database.profile.LocalProfileDefaults
 import dev.horex.moneytracker.core.database.profile.LocalProfileRepository
 import dev.horex.moneytracker.core.database.profile.normalizeLocalProfileLanguageCode
+import dev.horex.moneytracker.core.database.seed.DefaultProfileSeedRepository
 import dev.horex.moneytracker.core.database.security.AndroidDatabasePassphraseStore
 import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
 import dev.horex.moneytracker.core.preferences.DataStoreActiveProfileIdStore
@@ -48,6 +49,7 @@ internal class MoneyTrackerAppContainer(
             defaults = LocalProfileDefaults(
                 languageCode = resolveDeviceLanguageCode(appContext),
             ),
+            profileSeeder = DefaultProfileSeedRepository(database),
         )
     }
 
