@@ -8,6 +8,8 @@ The schema is based on the current Mini App PostgreSQL migrations, SQL queries, 
 
 Production opens this schema through SQLCipher. The encrypted database open flow and Android Keystore-backed passphrase storage are documented in `docs/database-encryption.md`.
 
+Room DAOs stay inside `core:database`. Feature-facing account behavior is exposed through `core:accounts`, which maps Room rows into local account domain models and enforces source-compatible CRUD/default/delete rules.
+
 ## Identity Boundary
 
 Android persistent storage must use local identifiers only:
@@ -54,6 +56,18 @@ The v1 contract includes indexes for the expected offline reads:
 - templates: profile/order plus account/category indexes.
 
 Foreign keys use local IDs. Profile deletion cascades profile-owned data. Account/category deletes are restricted where deleting them would orphan financial records, except savings goals can unlink an account.
+
+## Accounts Domain Layer
+
+`RoomAccountsRepository` in `core:accounts` owns the local account data contract above Room:
+
+- first created account in a profile becomes default; later accounts are non-default until explicitly promoted;
+- account updates can change name, icon, color, type, and include-in-total, but currency is immutable after creation;
+- `setDefaultAccount()` preserves exactly one default account per profile through the transactional DAO helper;
+- deleting the only account is rejected;
+- deleting a default account with exactly two accounts auto-promotes the remaining account; deleting a default account with more than two accounts requires selecting a new default first;
+- accounts referenced by transactions, transfers, recurring transactions, or transaction templates are rejected before SQLite foreign-key failure;
+- account balances are derived from local `transactions` rows (`income` positive, `expense` negative) and are not stored in `accounts`.
 
 ## Default Seed
 

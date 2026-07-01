@@ -48,6 +48,9 @@ interface AccountDao {
     @Update
     suspend fun update(account: AccountEntity)
 
+    @Update
+    suspend fun updateAndReturnCount(account: AccountEntity): Int
+
     @Query("SELECT * FROM accounts WHERE profile_id = :profileId ORDER BY is_default DESC, created_at_epoch_millis ASC")
     suspend fun listByProfile(profileId: Long): List<AccountEntity>
 
@@ -85,6 +88,43 @@ interface AccountDao {
 
     @Query("SELECT COUNT(*) FROM accounts WHERE profile_id = :profileId")
     suspend fun countByProfile(profileId: Long): Int
+
+    @Query("SELECT COUNT(*) FROM transactions WHERE profile_id = :profileId AND account_id = :accountId")
+    suspend fun countTransactions(profileId: Long, accountId: Long): Int
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM transfers
+        WHERE profile_id = :profileId
+          AND (from_account_id = :accountId OR to_account_id = :accountId)
+        """,
+    )
+    suspend fun countTransfers(profileId: Long, accountId: Long): Int
+
+    @Query("SELECT COUNT(*) FROM recurring_transactions WHERE profile_id = :profileId AND account_id = :accountId")
+    suspend fun countRecurring(profileId: Long, accountId: Long): Int
+
+    @Query("SELECT COUNT(*) FROM transaction_templates WHERE profile_id = :profileId AND account_id = :accountId")
+    suspend fun countTemplates(profileId: Long, accountId: Long): Int
+
+    @Query(
+        """
+        SELECT COALESCE(SUM(
+            CASE type
+                WHEN 'income' THEN amount_cents
+                WHEN 'expense' THEN -amount_cents
+                ELSE 0
+            END
+        ), 0)
+        FROM transactions
+        WHERE profile_id = :profileId
+          AND account_id = :accountId
+        """,
+    )
+    suspend fun getBalanceCents(profileId: Long, accountId: Long): Long
+
+    @Query("DELETE FROM accounts WHERE id = :accountId AND profile_id = :profileId")
+    suspend fun deleteById(profileId: Long, accountId: Long): Int
 
     @Delete
     suspend fun delete(account: AccountEntity)
