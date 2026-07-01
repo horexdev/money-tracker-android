@@ -23,6 +23,8 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 | KSP | 2.3.9 | Kotlin symbol processing for Room compiler integration. |
 | AndroidX Room Runtime / KTX / Compiler | 2.8.1 | Local Room database contract and DAO implementation generation. |
 | AndroidX Room Testing | 2.8.1 | Room migration/in-memory database test support for data-layer tasks. |
+| AndroidX SQLite | 2.6.2 | SupportSQLite API required by SQLCipher for Android Room integration. |
+| SQLCipher for Android | 4.16.0 | Encrypted Room database open helper for local financial storage. |
 | AndroidX Test Core / Runner / Rules | 1.7.0 | Instrumentation and Android framework test baseline. |
 | AndroidX Test Ext JUnit | 1.3.0 | AndroidJUnit4 integration for instrumentation tests. |
 | AndroidX Espresso | 3.7.0 | Android test assertion baseline used by test artifacts. |
@@ -34,6 +36,8 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 `core:testing` owns shared test fixtures, coroutine test rules, and exported Room/Compose/AndroidX test dependencies. Production code must not depend on it; use it only through `testImplementation` or `androidTestImplementation`.
 
 `core:database` owns the Room schema, entities, DAO contracts, exported schema snapshots, and Room compiler setup. Feature modules should not define database tables directly.
+
+`core:database` also owns encrypted database opening through SQLCipher and Android Keystore. Device-bound SQLCipher passphrases must not be reused for portable backup encryption.
 
 ## Rules
 
