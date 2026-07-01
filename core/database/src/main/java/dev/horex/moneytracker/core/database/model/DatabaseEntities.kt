@@ -17,6 +17,7 @@ object MoneyTrackerTables {
     const val SAVINGS_GOALS = "savings_goals"
     const val GOAL_TRANSACTIONS = "goal_transactions"
     const val EXCHANGE_RATE_SNAPSHOTS = "exchange_rate_snapshots"
+    const val EXCHANGE_RATE_OVERRIDES = "exchange_rate_overrides"
     const val TRANSACTION_TEMPLATES = "transaction_templates"
 }
 
@@ -470,6 +471,41 @@ data class ExchangeRateSnapshotEntity(
     val rateE8: Long,
     @ColumnInfo(name = "created_at_epoch_millis")
     val createdAtEpochMillis: Long = 0,
+)
+
+@Entity(
+    tableName = MoneyTrackerTables.EXCHANGE_RATE_OVERRIDES,
+    foreignKeys = [
+        ForeignKey(
+            entity = LocalProfileEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["profile_id"],
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ],
+    indices = [
+        Index(value = ["profile_id"]),
+        Index(value = ["profile_id", "effective_date", "base_currency", "target_currency"], unique = true),
+        Index(value = ["profile_id", "base_currency", "target_currency", "effective_date"]),
+    ],
+)
+data class ExchangeRateOverrideEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+    @ColumnInfo(name = "profile_id")
+    val profileId: Long,
+    @ColumnInfo(name = "effective_date")
+    val effectiveDate: String,
+    @ColumnInfo(name = "base_currency")
+    val baseCurrency: String,
+    @ColumnInfo(name = "target_currency")
+    val targetCurrency: String,
+    @ColumnInfo(name = "rate_e8")
+    val rateE8: Long,
+    @ColumnInfo(name = "created_at_epoch_millis")
+    val createdAtEpochMillis: Long = 0,
+    @ColumnInfo(name = "updated_at_epoch_millis")
+    val updatedAtEpochMillis: Long = 0,
 )
 
 @Entity(

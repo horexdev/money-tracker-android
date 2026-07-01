@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import dev.horex.moneytracker.core.database.dao.AccountDao
 import dev.horex.moneytracker.core.database.dao.BudgetDao
 import dev.horex.moneytracker.core.database.dao.CategoryDao
+import dev.horex.moneytracker.core.database.dao.ExchangeRateOverrideDao
 import dev.horex.moneytracker.core.database.dao.ExchangeRateSnapshotDao
 import dev.horex.moneytracker.core.database.dao.GoalTransactionDao
 import dev.horex.moneytracker.core.database.dao.LocalProfileDao
@@ -16,6 +17,7 @@ import dev.horex.moneytracker.core.database.dao.TransferDao
 import dev.horex.moneytracker.core.database.model.AccountEntity
 import dev.horex.moneytracker.core.database.model.BudgetEntity
 import dev.horex.moneytracker.core.database.model.CategoryEntity
+import dev.horex.moneytracker.core.database.model.ExchangeRateOverrideEntity
 import dev.horex.moneytracker.core.database.model.ExchangeRateSnapshotEntity
 import dev.horex.moneytracker.core.database.model.GoalTransactionEntity
 import dev.horex.moneytracker.core.database.model.LocalProfileEntity
@@ -37,6 +39,7 @@ import dev.horex.moneytracker.core.database.model.TransferEntity
         SavingsGoalEntity::class,
         GoalTransactionEntity::class,
         ExchangeRateSnapshotEntity::class,
+        ExchangeRateOverrideEntity::class,
         TransactionTemplateEntity::class,
     ],
     version = MoneyTrackerDatabase.SCHEMA_VERSION,
@@ -53,6 +56,7 @@ abstract class MoneyTrackerDatabase : RoomDatabase() {
     abstract fun savingsGoalDao(): SavingsGoalDao
     abstract fun goalTransactionDao(): GoalTransactionDao
     abstract fun exchangeRateSnapshotDao(): ExchangeRateSnapshotDao
+    abstract fun exchangeRateOverrideDao(): ExchangeRateOverrideDao
     abstract fun transactionTemplateDao(): TransactionTemplateDao
 
     companion object {
