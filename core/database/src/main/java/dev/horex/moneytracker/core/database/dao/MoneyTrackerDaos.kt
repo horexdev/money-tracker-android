@@ -30,6 +30,9 @@ interface LocalProfileDao {
     @Query("SELECT * FROM local_profiles ORDER BY created_at_epoch_millis ASC")
     suspend fun list(): List<LocalProfileEntity>
 
+    @Query("SELECT * FROM local_profiles ORDER BY created_at_epoch_millis ASC LIMIT 1")
+    suspend fun getFirst(): LocalProfileEntity?
+
     @Query("SELECT * FROM local_profiles WHERE id = :profileId")
     suspend fun getById(profileId: Long): LocalProfileEntity?
 

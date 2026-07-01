@@ -25,8 +25,9 @@ ksp {
 }
 
 dependencies {
+    api(libs.androidx.room.runtime)
+
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.sqlite)
     implementation(libs.sqlcipher.android)
 

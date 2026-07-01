@@ -1,9 +1,11 @@
 package dev.horex.moneytracker.core.database
 
 import dev.horex.moneytracker.core.database.dao.AccountDao
+import dev.horex.moneytracker.core.database.dao.LocalProfileDao
 import dev.horex.moneytracker.core.database.dao.SavingsGoalDao
 import dev.horex.moneytracker.core.database.dao.requireDefaultAccountUpdate
 import dev.horex.moneytracker.core.database.model.MoneyTrackerTables
+import dev.horex.moneytracker.core.database.profile.LocalProfile
 import java.io.File
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -77,8 +79,10 @@ class MoneyTrackerDatabaseSchemaTest {
     @Test
     fun daoContractsKeepProfileBoundaries() {
         val accountMethods = AccountDao::class.java.methods.map { it.name }.toSet()
+        val profileMethods = LocalProfileDao::class.java.methods.map { it.name }.toSet()
         val savingsGoalListByAccount = SavingsGoalDao::class.java.methods.single { it.name == "listByAccount" }
 
+        assertTrue("LocalProfileDao should expose first-launch fallback lookup", "getFirst" in profileMethods)
         assertTrue("AccountDao should expose transactional default setter", "setDefault" in accountMethods)
         assertTrue("AccountDao should expose default clear helper", "clearOtherDefaultAccounts" in accountMethods)
         assertTrue("AccountDao should expose default mark helper", "markDefault" in accountMethods)
@@ -139,6 +143,35 @@ class MoneyTrackerDatabaseSchemaTest {
             "println(",
         ).forEach { forbidden ->
             assertFalse("Database module must not log plaintext financial data", source.contains(forbidden))
+        }
+    }
+
+    @Test
+    fun localProfileContractAvoidsSourceIdentityFields() {
+        val source = File("src/main/java/dev/horex/moneytracker/core/database/profile")
+            .walkTopDown()
+            .filter { it.isFile && it.extension == "kt" }
+            .joinToString(separator = "\n") { it.readText().lowercase() }
+        val modelFields = LocalProfile::class.java.declaredFields
+            .map { it.name.lowercase() }
+            .joinToString(separator = "\n")
+
+        listOf(
+            "telegram",
+            "initdata",
+            "init_data",
+            "userid",
+            "user_id",
+            "username",
+            "firstname",
+            "first_name",
+            "lastname",
+            "last_name",
+            "legacy_",
+            "source_",
+        ).forEach { forbidden ->
+            assertFalse("Local profile source must not contain $forbidden", source.contains(forbidden))
+            assertFalse("Local profile model must not expose $forbidden", modelFields.contains(forbidden))
         }
     }
 
