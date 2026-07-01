@@ -145,7 +145,17 @@ interface CategoryDao {
     @Update
     suspend fun update(category: CategoryEntity)
 
-    @Query("SELECT * FROM categories WHERE profile_id = :profileId AND deleted_at_epoch_millis IS NULL ORDER BY name ASC")
+    @Update
+    suspend fun updateAndReturnCount(category: CategoryEntity): Int
+
+    @Query(
+        """
+        SELECT * FROM categories
+        WHERE profile_id = :profileId
+          AND deleted_at_epoch_millis IS NULL
+        ORDER BY name ASC
+        """,
+    )
     suspend fun listByProfile(profileId: Long): List<CategoryEntity>
 
     @Query(
@@ -153,16 +163,138 @@ interface CategoryDao {
         SELECT * FROM categories
         WHERE profile_id = :profileId
           AND deleted_at_epoch_millis IS NULL
-          AND (type = :type OR type = 'both')
+          AND (
+              type = :type
+              OR (:type IN ('expense', 'income') AND type = 'both')
+          )
         ORDER BY name ASC
         """,
     )
     suspend fun listByType(profileId: Long, type: String): List<CategoryEntity>
 
+    @Query(
+        """
+        SELECT * FROM categories
+        WHERE profile_id = :profileId
+          AND deleted_at_epoch_millis IS NULL
+          AND is_protected = 0
+          AND type NOT IN ('transfer', 'adjustment')
+        ORDER BY name ASC
+        """,
+    )
+    suspend fun listEditableByProfile(profileId: Long): List<CategoryEntity>
+
+    @Query(
+        """
+        SELECT * FROM categories
+        WHERE profile_id = :profileId
+          AND deleted_at_epoch_millis IS NULL
+          AND is_protected = 0
+          AND type NOT IN ('transfer', 'adjustment')
+          AND (
+              type = :type
+              OR (:type IN ('expense', 'income') AND type = 'both')
+          )
+        ORDER BY name ASC
+        """,
+    )
+    suspend fun listEditableByType(profileId: Long, type: String): List<CategoryEntity>
+
+    @Query(
+        """
+        SELECT * FROM categories
+        WHERE profile_id = :profileId
+          AND deleted_at_epoch_millis IS NULL
+          AND is_protected = 0
+          AND type NOT IN ('transfer', 'adjustment')
+        ORDER BY name DESC
+        """,
+    )
+    suspend fun listByProfileNameDesc(profileId: Long): List<CategoryEntity>
+
+    @Query(
+        """
+        SELECT * FROM categories
+        WHERE profile_id = :profileId
+          AND deleted_at_epoch_millis IS NULL
+          AND is_protected = 0
+          AND type NOT IN ('transfer', 'adjustment')
+          AND (
+              type = :type
+              OR (:type IN ('expense', 'income') AND type = 'both')
+          )
+        ORDER BY name DESC
+        """,
+    )
+    suspend fun listByTypeNameDesc(profileId: Long, type: String): List<CategoryEntity>
+
+    @Query(
+        """
+        SELECT categories.*
+        FROM categories
+        LEFT JOIN (
+            SELECT category_id, COUNT(*) AS transaction_count
+            FROM transactions
+            WHERE profile_id = :profileId
+              AND is_adjustment = 0
+            GROUP BY category_id
+        ) frequency ON frequency.category_id = categories.id
+        WHERE categories.profile_id = :profileId
+          AND categories.deleted_at_epoch_millis IS NULL
+          AND categories.is_protected = 0
+          AND categories.type NOT IN ('transfer', 'adjustment')
+        ORDER BY COALESCE(frequency.transaction_count, 0) DESC, categories.name ASC
+        """,
+    )
+    suspend fun listByFrequency(profileId: Long): List<CategoryEntity>
+
+    @Query(
+        """
+        SELECT categories.*
+        FROM categories
+        LEFT JOIN (
+            SELECT category_id, COUNT(*) AS transaction_count
+            FROM transactions
+            WHERE profile_id = :profileId
+              AND is_adjustment = 0
+            GROUP BY category_id
+        ) frequency ON frequency.category_id = categories.id
+        WHERE categories.profile_id = :profileId
+          AND categories.deleted_at_epoch_millis IS NULL
+          AND categories.is_protected = 0
+          AND categories.type NOT IN ('transfer', 'adjustment')
+          AND (
+              categories.type = :type
+              OR (:type IN ('expense', 'income') AND categories.type = 'both')
+          )
+        ORDER BY COALESCE(frequency.transaction_count, 0) DESC, categories.name ASC
+        """,
+    )
+    suspend fun listByTypeFrequency(profileId: Long, type: String): List<CategoryEntity>
+
     @Query("SELECT * FROM categories WHERE id = :categoryId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, categoryId: Long): CategoryEntity?
 
-    @Query("SELECT * FROM categories WHERE profile_id = :profileId AND type = :type AND is_protected = 1 LIMIT 1")
+    @Query(
+        """
+        SELECT * FROM categories
+        WHERE id = :categoryId
+          AND profile_id = :profileId
+          AND deleted_at_epoch_millis IS NULL
+        """,
+    )
+    suspend fun getActiveById(profileId: Long, categoryId: Long): CategoryEntity?
+
+    @Query(
+        """
+        SELECT * FROM categories
+        WHERE profile_id = :profileId
+          AND type = :type
+          AND is_protected = 1
+          AND deleted_at_epoch_millis IS NULL
+        LIMIT 1
+        """,
+    )
     suspend fun getProtectedByType(profileId: Long, type: String): CategoryEntity?
 
     @Query(
@@ -170,10 +302,24 @@ interface CategoryDao {
         SELECT COUNT(*) FROM categories
         WHERE profile_id = :profileId
           AND is_protected = 0
+          AND type NOT IN ('transfer', 'adjustment')
           AND deleted_at_epoch_millis IS NULL
         """,
     )
     suspend fun countEditableByProfile(profileId: Long): Int
+
+    @Query(
+        """
+        UPDATE categories
+        SET deleted_at_epoch_millis = :deletedAtEpochMillis,
+            updated_at_epoch_millis = :deletedAtEpochMillis
+        WHERE id = :categoryId
+          AND profile_id = :profileId
+          AND deleted_at_epoch_millis IS NULL
+          AND is_protected = 0
+        """,
+    )
+    suspend fun softDelete(profileId: Long, categoryId: Long, deletedAtEpochMillis: Long): Int
 }
 
 @Dao

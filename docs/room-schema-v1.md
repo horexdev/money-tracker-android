@@ -55,7 +55,7 @@ The v1 contract includes indexes for the expected offline reads:
 - exchange rates: unique `(snapshot_date, base_currency, target_currency)` plus `(base_currency, target_currency, snapshot_date)` for latest-at-or-before lookup;
 - templates: profile/order plus account/category indexes.
 
-Foreign keys use local IDs. Profile deletion cascades profile-owned data. Account/category deletes are restricted where deleting them would orphan financial records, except savings goals can unlink an account.
+Foreign keys use local IDs. Profile deletion cascades profile-owned data. Account hard-deletes are restricted where deleting them would orphan financial records. Category removal is a soft delete so transaction, budget, recurring, and template history can keep valid local category IDs. Savings goals can unlink an account.
 
 ## Accounts Domain Layer
 
@@ -68,6 +68,17 @@ Foreign keys use local IDs. Profile deletion cascades profile-owned data. Accoun
 - deleting a default account with exactly two accounts auto-promotes the remaining account; deleting a default account with more than two accounts requires selecting a new default first;
 - accounts referenced by transactions, transfers, recurring transactions, or transaction templates are rejected before SQLite foreign-key failure;
 - account balances are derived from local `transactions` rows (`income` positive, `expense` negative) and are not stored in `accounts`.
+
+## Categories Domain Layer
+
+`RoomCategoriesRepository` in `core:categories` owns the local category data contract above Room:
+
+- editable category lists are profile-scoped, hide soft-deleted rows, and exclude protected infrastructure categories;
+- type filters include `both` for `expense` and `income`, while `savings` remains its own category type;
+- frequency sorting counts non-adjustment transactions in the same profile and uses name ascending as the tie-breaker;
+- category creation and updates normalize text fields, reject empty names, and reject runtime creation or conversion to `transfer`/`adjustment`;
+- protected infrastructure categories (`transfer`, `adjustment`) can be looked up for internal flows but cannot be updated or deleted;
+- `deleteCategory()` writes `deleted_at_epoch_millis` instead of hard-deleting rows, preserving existing financial history references.
 
 ## Default Seed
 
