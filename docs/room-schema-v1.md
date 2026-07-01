@@ -8,7 +8,7 @@ The schema is based on the current Mini App PostgreSQL migrations, SQL queries, 
 
 Production opens this schema through SQLCipher. The encrypted database open flow and Android Keystore-backed passphrase storage are documented in `docs/database-encryption.md`.
 
-Room DAOs stay inside `core:database`. Feature-facing account behavior is exposed through `core:accounts`, which maps Room rows into local account domain models and enforces source-compatible CRUD/default/delete rules.
+Room DAOs stay inside `core:database`. Feature-facing account behavior is exposed through `core:accounts`, which maps Room rows into local account domain models and enforces source-compatible CRUD/default/delete rules. Currency catalog and local rate lookup behavior are exposed through `core:currency`.
 
 ## Identity Boundary
 
@@ -38,6 +38,7 @@ Android persistent storage must use local identifiers only:
 | `savings_goals` | Goal progress and optional linked account. |
 | `goal_transactions` | Goal deposit/withdraw history. |
 | `exchange_rate_snapshots` | Date-based currency conversion snapshots, stored as `rate_e8` fixed-point values. |
+| `exchange_rate_overrides` | Profile-owned manual exchange rates that override snapshots from a date onward. |
 | `transaction_templates` | Manual quick templates ordered per profile. |
 
 ## Indexes And Relationships
@@ -52,7 +53,8 @@ The v1 contract includes indexes for the expected offline reads:
 - recurring work: `recurring_transactions(profile_id, is_active, next_run_at_epoch_millis)` for profile reads and `recurring_transactions(is_active, next_run_at_epoch_millis)` for global due work;
 - savings: goal/profile and goal transaction history indexes;
 - transfers: profile/date plus from/to account and linked transaction indexes;
-- exchange rates: unique `(snapshot_date, base_currency, target_currency)` plus `(base_currency, target_currency, snapshot_date)` for latest-at-or-before lookup;
+- exchange rates: unique snapshot `(snapshot_date, base_currency, target_currency)` plus `(base_currency, target_currency, snapshot_date)` for latest-at-or-before lookup;
+- manual exchange rates: unique override `(profile_id, effective_date, base_currency, target_currency)` plus `(profile_id, base_currency, target_currency, effective_date)` for profile-scoped latest-at-or-before lookup;
 - templates: profile/order plus account/category indexes.
 
 Foreign keys use local IDs. Profile deletion cascades profile-owned data. Account hard-deletes are restricted where deleting them would orphan financial records. Category removal is a soft delete so transaction, budget, recurring, and template history can keep valid local category IDs. Savings goals can unlink an account.
@@ -79,6 +81,18 @@ Foreign keys use local IDs. Profile deletion cascades profile-owned data. Accoun
 - category creation and updates normalize text fields, reject empty names, and reject runtime creation or conversion to `transfer`/`adjustment`;
 - protected infrastructure categories (`transfer`, `adjustment`) can be looked up for internal flows but cannot be updated or deleted;
 - `deleteCategory()` writes `deleted_at_epoch_millis` instead of hard-deleting rows, preserving existing financial history references.
+
+## Currency Rates Domain Layer
+
+`core:currency` owns the local currency catalog and rate behavior above Room:
+
+- `IsoCurrencyCatalog` exposes offline ISO 4217 currencies from the platform runtime, supports code/name search, and excludes non-currency test/no-currency pseudo codes;
+- `RoomCurrencyRatesRepository` stores seed and daily snapshot rates in `exchange_rate_snapshots`;
+- rates use `rate_e8` fixed-point values, where `100_000_000` means `1.0`;
+- same-currency conversion returns `1.0` without requiring a database row;
+- historical lookup uses the exact snapshot date or the latest snapshot before it;
+- manual overrides are stored per local profile and take priority over snapshots for the same currency pair on or after the override effective date;
+- overrides do not affect other local profiles and are removed when their profile is deleted.
 
 ## Default Seed
 

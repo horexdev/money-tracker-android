@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f48c0ff50a93f267408e4ff0634dcc33",
+    "identityHash": "57fe89394e2344af70d9c379b1815881",
     "entities": [
       {
         "tableName": "local_profiles",
@@ -1379,6 +1379,114 @@
         ]
       },
       {
+        "tableName": "exchange_rate_overrides",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `effective_date` TEXT NOT NULL, `base_currency` TEXT NOT NULL, `target_currency` TEXT NOT NULL, `rate_e8` INTEGER NOT NULL, `created_at_epoch_millis` INTEGER NOT NULL, `updated_at_epoch_millis` INTEGER NOT NULL, FOREIGN KEY(`profile_id`) REFERENCES `local_profiles`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profile_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "effectiveDate",
+            "columnName": "effective_date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "baseCurrency",
+            "columnName": "base_currency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetCurrency",
+            "columnName": "target_currency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rateE8",
+            "columnName": "rate_e8",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "created_at_epoch_millis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAtEpochMillis",
+            "columnName": "updated_at_epoch_millis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_exchange_rate_overrides_profile_id",
+            "unique": false,
+            "columnNames": [
+              "profile_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_exchange_rate_overrides_profile_id` ON `${TABLE_NAME}` (`profile_id`)"
+          },
+          {
+            "name": "index_exchange_rate_overrides_profile_id_effective_date_base_currency_target_currency",
+            "unique": true,
+            "columnNames": [
+              "profile_id",
+              "effective_date",
+              "base_currency",
+              "target_currency"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_exchange_rate_overrides_profile_id_effective_date_base_currency_target_currency` ON `${TABLE_NAME}` (`profile_id`, `effective_date`, `base_currency`, `target_currency`)"
+          },
+          {
+            "name": "index_exchange_rate_overrides_profile_id_base_currency_target_currency_effective_date",
+            "unique": false,
+            "columnNames": [
+              "profile_id",
+              "base_currency",
+              "target_currency",
+              "effective_date"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_exchange_rate_overrides_profile_id_base_currency_target_currency_effective_date` ON `${TABLE_NAME}` (`profile_id`, `base_currency`, `target_currency`, `effective_date`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "local_profiles",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "profile_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
         "tableName": "transaction_templates",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_id` INTEGER NOT NULL, `name` TEXT NOT NULL DEFAULT '', `type` TEXT NOT NULL, `amount_cents` INTEGER NOT NULL, `amount_fixed` INTEGER NOT NULL DEFAULT 1, `category_id` INTEGER NOT NULL, `account_id` INTEGER NOT NULL, `currency_code` TEXT NOT NULL, `note` TEXT NOT NULL DEFAULT '', `sort_order` INTEGER NOT NULL DEFAULT 0, `created_at_epoch_millis` INTEGER NOT NULL, `updated_at_epoch_millis` INTEGER NOT NULL, FOREIGN KEY(`profile_id`) REFERENCES `local_profiles`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`account_id`) REFERENCES `accounts`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT , FOREIGN KEY(`category_id`) REFERENCES `categories`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
         "fields": [
@@ -1549,7 +1657,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f48c0ff50a93f267408e4ff0634dcc33')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '57fe89394e2344af70d9c379b1815881')"
     ]
   }
 }

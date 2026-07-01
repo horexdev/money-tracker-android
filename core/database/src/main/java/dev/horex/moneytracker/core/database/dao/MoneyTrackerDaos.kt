@@ -10,6 +10,7 @@ import androidx.room.Update
 import dev.horex.moneytracker.core.database.model.AccountEntity
 import dev.horex.moneytracker.core.database.model.BudgetEntity
 import dev.horex.moneytracker.core.database.model.CategoryEntity
+import dev.horex.moneytracker.core.database.model.ExchangeRateOverrideEntity
 import dev.horex.moneytracker.core.database.model.ExchangeRateSnapshotEntity
 import dev.horex.moneytracker.core.database.model.GoalTransactionEntity
 import dev.horex.moneytracker.core.database.model.LocalProfileEntity
@@ -493,6 +494,9 @@ interface ExchangeRateSnapshotDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(snapshot: ExchangeRateSnapshotEntity): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertAll(snapshots: List<ExchangeRateSnapshotEntity>): List<Long>
+
     @Query(
         """
         SELECT * FROM exchange_rate_snapshots
@@ -515,6 +519,65 @@ interface ExchangeRateSnapshotDao {
         """,
     )
     suspend fun getLatestAtOrBefore(baseCurrency: String, targetCurrency: String, snapshotDate: String): ExchangeRateSnapshotEntity?
+
+    @Query("SELECT DISTINCT currency_code FROM accounts WHERE profile_id = :profileId ORDER BY currency_code ASC")
+    suspend fun listDistinctBaseCurrencies(profileId: Long): List<String>
+
+    @Query("SELECT COALESCE(MAX(snapshot_date), '1970-01-01') FROM exchange_rate_snapshots")
+    suspend fun getLatestSnapshotDate(): String
+}
+
+@Dao
+interface ExchangeRateOverrideDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(override: ExchangeRateOverrideEntity): Long
+
+    @Query(
+        """
+        SELECT * FROM exchange_rate_overrides
+        WHERE profile_id = :profileId
+          AND effective_date = :effectiveDate
+          AND base_currency = :baseCurrency
+          AND target_currency = :targetCurrency
+        LIMIT 1
+        """,
+    )
+    suspend fun getByDate(
+        profileId: Long,
+        baseCurrency: String,
+        targetCurrency: String,
+        effectiveDate: String,
+    ): ExchangeRateOverrideEntity?
+
+    @Query(
+        """
+        SELECT * FROM exchange_rate_overrides
+        WHERE profile_id = :profileId
+          AND base_currency = :baseCurrency
+          AND target_currency = :targetCurrency
+          AND effective_date <= :effectiveDate
+        ORDER BY effective_date DESC
+        LIMIT 1
+        """,
+    )
+    suspend fun getLatestAtOrBefore(
+        profileId: Long,
+        baseCurrency: String,
+        targetCurrency: String,
+        effectiveDate: String,
+    ): ExchangeRateOverrideEntity?
+
+    @Query(
+        """
+        SELECT * FROM exchange_rate_overrides
+        WHERE profile_id = :profileId
+        ORDER BY base_currency ASC, target_currency ASC, effective_date DESC
+        """,
+    )
+    suspend fun listByProfile(profileId: Long): List<ExchangeRateOverrideEntity>
+
+    @Query("DELETE FROM exchange_rate_overrides WHERE id = :overrideId AND profile_id = :profileId")
+    suspend fun deleteById(profileId: Long, overrideId: Long): Int
 }
 
 @Dao

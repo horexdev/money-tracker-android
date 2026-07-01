@@ -2,6 +2,8 @@ package dev.horex.moneytracker.core.database
 
 import dev.horex.moneytracker.core.database.dao.AccountDao
 import dev.horex.moneytracker.core.database.dao.CategoryDao
+import dev.horex.moneytracker.core.database.dao.ExchangeRateOverrideDao
+import dev.horex.moneytracker.core.database.dao.ExchangeRateSnapshotDao
 import dev.horex.moneytracker.core.database.dao.LocalProfileDao
 import dev.horex.moneytracker.core.database.dao.SavingsGoalDao
 import dev.horex.moneytracker.core.database.dao.requireDefaultAccountUpdate
@@ -33,6 +35,7 @@ class MoneyTrackerDatabaseSchemaTest {
             MoneyTrackerTables.SAVINGS_GOALS,
             MoneyTrackerTables.GOAL_TRANSACTIONS,
             MoneyTrackerTables.EXCHANGE_RATE_SNAPSHOTS,
+            MoneyTrackerTables.EXCHANGE_RATE_OVERRIDES,
             MoneyTrackerTables.TRANSACTION_TEMPLATES,
         ).forEach { table ->
             assertTrue("Schema should contain $table", schema.contains("\"tableName\": \"$table\""))
@@ -72,6 +75,7 @@ class MoneyTrackerDatabaseSchemaTest {
         listOf(
             "index_recurring_transactions_is_active_next_run_at_epoch_millis",
             "index_exchange_rate_snapshots_base_currency_target_currency_snapshot_date",
+            "index_exchange_rate_overrides_profile_id_base_currency_target_currency_effective_date",
         ).forEach { indexName ->
             assertTrue("Schema should contain $indexName", schema.contains(indexName))
         }
@@ -81,6 +85,8 @@ class MoneyTrackerDatabaseSchemaTest {
     fun daoContractsKeepProfileBoundaries() {
         val accountMethods = AccountDao::class.java.methods.map { it.name }.toSet()
         val categoryMethods = CategoryDao::class.java.methods.map { it.name }.toSet()
+        val snapshotMethods = ExchangeRateSnapshotDao::class.java.methods.map { it.name }.toSet()
+        val overrideMethods = ExchangeRateOverrideDao::class.java.methods.map { it.name }.toSet()
         val profileMethods = LocalProfileDao::class.java.methods.map { it.name }.toSet()
         val savingsGoalListByAccount = SavingsGoalDao::class.java.methods.single { it.name == "listByAccount" }
 
@@ -92,6 +98,9 @@ class MoneyTrackerDatabaseSchemaTest {
         assertTrue("CategoryDao should expose editable category list", "listEditableByProfile" in categoryMethods)
         assertTrue("CategoryDao should expose soft delete", "softDelete" in categoryMethods)
         assertTrue("CategoryDao should expose profile-scoped frequency sorting", "listByFrequency" in categoryMethods)
+        assertTrue("ExchangeRateSnapshotDao should expose bulk seed snapshot upsert", "upsertAll" in snapshotMethods)
+        assertTrue("ExchangeRateSnapshotDao should expose latest snapshot date", "getLatestSnapshotDate" in snapshotMethods)
+        assertTrue("ExchangeRateOverrideDao should expose manual latest lookup", "getLatestAtOrBefore" in overrideMethods)
         assertTrue(
             "SavingsGoalDao.listByAccount should require profileId and accountId",
             savingsGoalListByAccount.parameterTypes.count { it == Long::class.javaPrimitiveType } >= 2,
