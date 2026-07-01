@@ -37,7 +37,7 @@ The v1 contract includes indexes for the expected offline reads:
 
 - history and stats: `transactions(profile_id, created_at_epoch_millis)`, account/date, category/date, `snapshot_date`;
 - account screens: `accounts(profile_id)`, `accounts(profile_id, name)`;
-- default account changes must go through `AccountDao.setDefault()`, which clears the previous profile default before marking the new one;
+- default account changes must go through `AccountDao.setDefault()`, which marks and validates the new account before clearing other defaults in the same profile;
 - categories: `categories(profile_id, name)`, profile/type, soft-delete filtering;
 - budgets: unique `budgets(profile_id, category_id, period)`;
 - recurring work: `recurring_transactions(profile_id, is_active, next_run_at_epoch_millis)` for profile reads and `recurring_transactions(is_active, next_run_at_epoch_millis)` for global due work;

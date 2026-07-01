@@ -2,10 +2,12 @@ package dev.horex.moneytracker.core.database
 
 import dev.horex.moneytracker.core.database.dao.AccountDao
 import dev.horex.moneytracker.core.database.dao.SavingsGoalDao
+import dev.horex.moneytracker.core.database.dao.requireDefaultAccountUpdate
 import dev.horex.moneytracker.core.database.model.MoneyTrackerTables
 import java.io.File
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Test
 
 class MoneyTrackerDatabaseSchemaTest {
@@ -78,12 +80,27 @@ class MoneyTrackerDatabaseSchemaTest {
         val savingsGoalListByAccount = SavingsGoalDao::class.java.methods.single { it.name == "listByAccount" }
 
         assertTrue("AccountDao should expose transactional default setter", "setDefault" in accountMethods)
-        assertTrue("AccountDao should expose default clear helper", "clearDefaultAccounts" in accountMethods)
+        assertTrue("AccountDao should expose default clear helper", "clearOtherDefaultAccounts" in accountMethods)
         assertTrue("AccountDao should expose default mark helper", "markDefault" in accountMethods)
         assertTrue(
             "SavingsGoalDao.listByAccount should require profileId and accountId",
             savingsGoalListByAccount.parameterTypes.count { it == Long::class.javaPrimitiveType } >= 2,
         )
+    }
+
+    @Test
+    fun defaultAccountUpdateGuardRejectsMissingTarget() {
+        requireDefaultAccountUpdate(1)
+
+        try {
+            requireDefaultAccountUpdate(0)
+            fail("Default account setter should reject missing target account")
+        } catch (expected: IllegalStateException) {
+            assertTrue(
+                "Exception should explain the profile boundary requirement",
+                expected.message.orEmpty().contains("target profile"),
+            )
+        }
     }
 
     private fun readSchema(): String {

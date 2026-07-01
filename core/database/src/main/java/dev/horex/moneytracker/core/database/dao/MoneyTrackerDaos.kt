@@ -58,10 +58,10 @@ interface AccountDao {
         """
         UPDATE accounts
         SET is_default = 0, updated_at_epoch_millis = :updatedAtEpochMillis
-        WHERE profile_id = :profileId AND is_default = 1
+        WHERE profile_id = :profileId AND is_default = 1 AND id != :accountId
         """,
     )
-    suspend fun clearDefaultAccounts(profileId: Long, updatedAtEpochMillis: Long)
+    suspend fun clearOtherDefaultAccounts(profileId: Long, accountId: Long, updatedAtEpochMillis: Long)
 
     @Query(
         """
@@ -74,8 +74,10 @@ interface AccountDao {
 
     @Transaction
     suspend fun setDefault(profileId: Long, accountId: Long, updatedAtEpochMillis: Long): Int {
-        clearDefaultAccounts(profileId, updatedAtEpochMillis)
-        return markDefault(profileId, accountId, updatedAtEpochMillis)
+        val updatedRows = markDefault(profileId, accountId, updatedAtEpochMillis)
+        requireDefaultAccountUpdate(updatedRows)
+        clearOtherDefaultAccounts(profileId, accountId, updatedAtEpochMillis)
+        return updatedRows
     }
 
     @Query("SELECT COUNT(*) FROM accounts WHERE profile_id = :profileId")
@@ -83,6 +85,10 @@ interface AccountDao {
 
     @Delete
     suspend fun delete(account: AccountEntity)
+}
+
+internal fun requireDefaultAccountUpdate(updatedRows: Int) {
+    check(updatedRows == 1) { "Default account must exist in the target profile" }
 }
 
 @Dao
