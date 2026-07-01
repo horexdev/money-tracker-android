@@ -17,4 +17,5 @@ dependencyResolutionManagement {
 rootProject.name = "MoneyTrackerAndroid"
 include(":app")
 include(":core:common")
+include(":core:navigation")
 include(":feature:home")

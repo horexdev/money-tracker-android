@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,28 +18,21 @@ import dev.horex.moneytracker.core.common.AppBootstrapDefaults
 fun HomeRoute(
     content: AppBootstrapContent = AppBootstrapDefaults.content,
 ) {
-    MaterialTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background,
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(24.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text(
-                    text = content.title,
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-                Text(
-                    text = content.subtitle,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
-        }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = content.title,
+            style = MaterialTheme.typography.headlineMedium,
+        )
+        Text(
+            text = content.subtitle,
+            style = MaterialTheme.typography.bodyLarge,
+        )
     }
 }
 
