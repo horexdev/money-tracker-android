@@ -18,6 +18,7 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 | minSdk | 26 | Conservative baseline for offline-first Android app support. |
 | Compose BOM | 2026.06.00 | All Compose runtime artifacts are resolved through the BOM. |
 | Activity Compose | 1.13.0 | Minimal Activity integration for the bootstrap shell. |
+| AndroidX DataStore Preferences | 1.2.1 | Device-local app preferences and active profile pointer exposed through Flow. |
 | Navigation Compose | 2.9.8 | Root `NavHost` and Android system back integration. |
 | Compose Material Icons | BOM-managed | Bottom navigation icon set resolved through the Compose BOM. |
 | KSP | 2.3.9 | Kotlin symbol processing for Room compiler integration. |
@@ -39,6 +40,8 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 `core:database` owns the Room schema, entities, DAO contracts, exported schema snapshots, and Room compiler setup. Feature modules should not define database tables directly.
 
 `core:database` also owns encrypted database opening through SQLCipher and Android Keystore. Device-bound SQLCipher passphrases must not be reused for portable backup encryption.
+
+`core:preferences` owns Preferences DataStore setup, app preference mapping, and the DataStore-backed active profile pointer. It must not store financial records or source identity fields.
 
 ## Rules
 
