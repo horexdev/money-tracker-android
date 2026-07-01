@@ -335,6 +335,7 @@ data class BudgetEntity(
         Index(value = ["account_id"]),
         Index(value = ["category_id"]),
         Index(value = ["profile_id", "is_active", "next_run_at_epoch_millis"]),
+        Index(value = ["is_active", "next_run_at_epoch_millis"]),
     ],
 )
 data class RecurringTransactionEntity(
@@ -453,6 +454,7 @@ data class GoalTransactionEntity(
     indices = [
         Index(value = ["snapshot_date", "base_currency", "target_currency"], unique = true),
         Index(value = ["snapshot_date", "base_currency"]),
+        Index(value = ["base_currency", "target_currency", "snapshot_date"]),
     ],
 )
 data class ExchangeRateSnapshotEntity(

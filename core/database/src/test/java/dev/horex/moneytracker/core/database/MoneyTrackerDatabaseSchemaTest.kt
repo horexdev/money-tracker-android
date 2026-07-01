@@ -1,5 +1,7 @@
 package dev.horex.moneytracker.core.database
 
+import dev.horex.moneytracker.core.database.dao.AccountDao
+import dev.horex.moneytracker.core.database.dao.SavingsGoalDao
 import dev.horex.moneytracker.core.database.model.MoneyTrackerTables
 import java.io.File
 import org.junit.Assert.assertFalse
@@ -56,6 +58,32 @@ class MoneyTrackerDatabaseSchemaTest {
     fun migrationListStartsAtInitialVersion() {
         assertTrue(MoneyTrackerDatabaseMigrations.INITIAL_VERSION == 1)
         assertTrue(MoneyTrackerDatabaseMigrations.ALL.isEmpty())
+    }
+
+    @Test
+    fun schemaContainsOfflineLookupIndexes() {
+        val schema = readSchema()
+
+        listOf(
+            "index_recurring_transactions_is_active_next_run_at_epoch_millis",
+            "index_exchange_rate_snapshots_base_currency_target_currency_snapshot_date",
+        ).forEach { indexName ->
+            assertTrue("Schema should contain $indexName", schema.contains(indexName))
+        }
+    }
+
+    @Test
+    fun daoContractsKeepProfileBoundaries() {
+        val accountMethods = AccountDao::class.java.methods.map { it.name }.toSet()
+        val savingsGoalListByAccount = SavingsGoalDao::class.java.methods.single { it.name == "listByAccount" }
+
+        assertTrue("AccountDao should expose transactional default setter", "setDefault" in accountMethods)
+        assertTrue("AccountDao should expose default clear helper", "clearDefaultAccounts" in accountMethods)
+        assertTrue("AccountDao should expose default mark helper", "markDefault" in accountMethods)
+        assertTrue(
+            "SavingsGoalDao.listByAccount should require profileId and accountId",
+            savingsGoalListByAccount.parameterTypes.count { it == Long::class.javaPrimitiveType } >= 2,
+        )
     }
 
     private fun readSchema(): String {

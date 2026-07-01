@@ -37,12 +37,13 @@ The v1 contract includes indexes for the expected offline reads:
 
 - history and stats: `transactions(profile_id, created_at_epoch_millis)`, account/date, category/date, `snapshot_date`;
 - account screens: `accounts(profile_id)`, `accounts(profile_id, name)`;
+- default account changes must go through `AccountDao.setDefault()`, which clears the previous profile default before marking the new one;
 - categories: `categories(profile_id, name)`, profile/type, soft-delete filtering;
 - budgets: unique `budgets(profile_id, category_id, period)`;
-- recurring work: `recurring_transactions(profile_id, is_active, next_run_at_epoch_millis)`;
+- recurring work: `recurring_transactions(profile_id, is_active, next_run_at_epoch_millis)` for profile reads and `recurring_transactions(is_active, next_run_at_epoch_millis)` for global due work;
 - savings: goal/profile and goal transaction history indexes;
 - transfers: profile/date plus from/to account and linked transaction indexes;
-- exchange rates: unique `(snapshot_date, base_currency, target_currency)`;
+- exchange rates: unique `(snapshot_date, base_currency, target_currency)` plus `(base_currency, target_currency, snapshot_date)` for latest-at-or-before lookup;
 - templates: profile/order plus account/category indexes.
 
 Foreign keys use local IDs. Profile deletion cascades profile-owned data. Account/category deletes are restricted where deleting them would orphan financial records, except savings goals can unlink an account.

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9c6caaeaafcaa1aa0d701d5cd74de0f7",
+    "identityHash": "f48c0ff50a93f267408e4ff0634dcc33",
     "entities": [
       {
         "tableName": "local_profiles",
@@ -1021,6 +1021,16 @@
             ],
             "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_recurring_transactions_profile_id_is_active_next_run_at_epoch_millis` ON `${TABLE_NAME}` (`profile_id`, `is_active`, `next_run_at_epoch_millis`)"
+          },
+          {
+            "name": "index_recurring_transactions_is_active_next_run_at_epoch_millis",
+            "unique": false,
+            "columnNames": [
+              "is_active",
+              "next_run_at_epoch_millis"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_recurring_transactions_is_active_next_run_at_epoch_millis` ON `${TABLE_NAME}` (`is_active`, `next_run_at_epoch_millis`)"
           }
         ],
         "foreignKeys": [
@@ -1354,6 +1364,17 @@
             ],
             "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_exchange_rate_snapshots_snapshot_date_base_currency` ON `${TABLE_NAME}` (`snapshot_date`, `base_currency`)"
+          },
+          {
+            "name": "index_exchange_rate_snapshots_base_currency_target_currency_snapshot_date",
+            "unique": false,
+            "columnNames": [
+              "base_currency",
+              "target_currency",
+              "snapshot_date"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_exchange_rate_snapshots_base_currency_target_currency_snapshot_date` ON `${TABLE_NAME}` (`base_currency`, `target_currency`, `snapshot_date`)"
           }
         ]
       },
@@ -1528,7 +1549,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9c6caaeaafcaa1aa0d701d5cd74de0f7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f48c0ff50a93f267408e4ff0634dcc33')"
     ]
   }
 }

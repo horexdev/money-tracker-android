@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import dev.horex.moneytracker.core.database.model.AccountEntity
 import dev.horex.moneytracker.core.database.model.BudgetEntity
@@ -52,6 +53,30 @@ interface AccountDao {
 
     @Query("SELECT * FROM accounts WHERE profile_id = :profileId AND is_default = 1 LIMIT 1")
     suspend fun getDefault(profileId: Long): AccountEntity?
+
+    @Query(
+        """
+        UPDATE accounts
+        SET is_default = 0, updated_at_epoch_millis = :updatedAtEpochMillis
+        WHERE profile_id = :profileId AND is_default = 1
+        """,
+    )
+    suspend fun clearDefaultAccounts(profileId: Long, updatedAtEpochMillis: Long)
+
+    @Query(
+        """
+        UPDATE accounts
+        SET is_default = 1, updated_at_epoch_millis = :updatedAtEpochMillis
+        WHERE id = :accountId AND profile_id = :profileId
+        """,
+    )
+    suspend fun markDefault(profileId: Long, accountId: Long, updatedAtEpochMillis: Long): Int
+
+    @Transaction
+    suspend fun setDefault(profileId: Long, accountId: Long, updatedAtEpochMillis: Long): Int {
+        clearDefaultAccounts(profileId, updatedAtEpochMillis)
+        return markDefault(profileId, accountId, updatedAtEpochMillis)
+    }
 
     @Query("SELECT COUNT(*) FROM accounts WHERE profile_id = :profileId")
     suspend fun countByProfile(profileId: Long): Int
@@ -233,8 +258,8 @@ interface SavingsGoalDao {
     @Query("SELECT * FROM savings_goals WHERE id = :goalId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, goalId: Long): SavingsGoalEntity?
 
-    @Query("SELECT * FROM savings_goals WHERE account_id = :accountId")
-    suspend fun listByAccount(accountId: Long): List<SavingsGoalEntity>
+    @Query("SELECT * FROM savings_goals WHERE profile_id = :profileId AND account_id = :accountId")
+    suspend fun listByAccount(profileId: Long, accountId: Long): List<SavingsGoalEntity>
 
     @Query("DELETE FROM savings_goals WHERE id = :goalId AND profile_id = :profileId")
     suspend fun deleteById(profileId: Long, goalId: Long)
