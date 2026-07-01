@@ -40,3 +40,5 @@ Run these before opening a PR that changes dependency or toolchain versions:
 .\gradlew.bat lint
 .\gradlew.bat assembleDebug
 ```
+
+General Android validation rules live in `docs/android-validation.md`.
