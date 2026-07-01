@@ -18,7 +18,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
+    api(project(":core:common"))
     implementation(project(":core:designsystem"))
 
     implementation(platform(libs.androidx.compose.bom))

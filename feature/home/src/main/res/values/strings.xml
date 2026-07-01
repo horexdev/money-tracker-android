@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Dashboard</string>
+    <string name="feature_home_subtitle">Root navigation is ready.</string>
+</resources>
