@@ -18,6 +18,8 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 | minSdk | 26 | Conservative baseline for offline-first Android app support. |
 | Compose BOM | 2026.06.00 | All Compose runtime artifacts are resolved through the BOM. |
 | Activity Compose | 1.13.0 | Minimal Activity integration for the bootstrap shell. |
+| Navigation Compose | 2.9.8 | Root `NavHost` and Android system back integration. |
+| Compose Material Icons | BOM-managed | Bottom navigation icon set resolved through the Compose BOM. |
 | JUnit | 4.13.2 | Unit-test baseline until the dedicated test infrastructure task expands coverage. |
 
 ## Rules
