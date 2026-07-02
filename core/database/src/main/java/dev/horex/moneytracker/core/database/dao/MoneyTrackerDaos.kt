@@ -70,6 +70,9 @@ interface LocalProfileDao {
     @Update
     suspend fun update(profile: LocalProfileEntity)
 
+    @Update
+    suspend fun updateAndReturnCount(profile: LocalProfileEntity): Int
+
     @Query("SELECT * FROM local_profiles ORDER BY created_at_epoch_millis ASC")
     suspend fun list(): List<LocalProfileEntity>
 
