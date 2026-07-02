@@ -572,7 +572,7 @@ private fun AccountFormSheet(
         mutableStateOf(account?.balanceCents?.let(MoneyParser::formatPlainCents) ?: "")
     }
     var adjustNote by remember(mode) { mutableStateOf("") }
-    val parsedTarget = MoneyParser.parseCentsOrZero(adjustTarget)
+    val parsedTarget = MoneyParser.parseSignedCentsOrZero(adjustTarget)
     val deltaCents = account?.let { parsedTarget - it.balanceCents } ?: 0L
 
     ModalBottomSheet(
@@ -693,7 +693,7 @@ private fun AccountFormSheet(
                     isMutating = isMutating,
                     deltaCents = deltaCents,
                     onTargetChange = {
-                        adjustTarget = MoneyParser.sanitizeAmountInput(it)
+                        adjustTarget = MoneyParser.sanitizeSignedAmountInput(it)
                     },
                     onNoteChange = { adjustNote = it.take(MAX_ADJUSTMENT_NOTE_LENGTH) },
                     onApply = {

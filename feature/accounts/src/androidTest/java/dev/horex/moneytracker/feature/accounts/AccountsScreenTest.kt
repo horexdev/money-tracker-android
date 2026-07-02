@@ -7,11 +7,27 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.horex.moneytracker.core.accounts.Account
 import dev.horex.moneytracker.core.accounts.AccountType
+import dev.horex.moneytracker.core.accounts.AccountsRepository
+import dev.horex.moneytracker.core.accounts.CreateAccountInput
+import dev.horex.moneytracker.core.accounts.UpdateAccountInput
+import dev.horex.moneytracker.core.database.profile.LocalProfile
+import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
+import dev.horex.moneytracker.core.transactions.BalanceAdjustmentInput
+import dev.horex.moneytracker.core.transactions.CreateTransactionInput
+import dev.horex.moneytracker.core.transactions.MoneyTransaction
+import dev.horex.moneytracker.core.transactions.TransactionPage
+import dev.horex.moneytracker.core.transactions.TransactionQuery
+import dev.horex.moneytracker.core.transactions.TransactionType
+import dev.horex.moneytracker.core.transactions.TransactionsRepository
+import dev.horex.moneytracker.core.transactions.UpdateTransactionInput
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -66,7 +82,56 @@ class AccountsScreenTest {
         composeRule.onNodeWithText("Retry").assertIsDisplayed()
     }
 
+    @Test
+    fun accountsRouteKeepsNegativeTargetBalanceForAdjustment() {
+        val account = accountsFixture.first().copy(
+            name = "Credit card",
+            type = AccountType.Credit,
+            balanceCents = -1_250,
+        )
+        val transactionsRepository = FakeTransactionsRepository()
+
+        composeRule.setContent {
+            MoneyTrackerTheme {
+                AccountsRoute(
+                    localProfileBootstrapper = LocalProfileBootstrapper { profileFixture },
+                    accountsRepository = FakeAccountsRepository(account),
+                    transactionsRepository = transactionsRepository,
+                )
+            }
+        }
+
+        composeRule.onNodeWithText("Credit card").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("Edit account").performClick()
+        composeRule.onNodeWithText("-12.50").assertIsDisplayed()
+        composeRule.onNodeWithText("-12.50").performTextReplacement("-15.00")
+        composeRule.onNodeWithText("Decrease by 2.50 USD").assertIsDisplayed()
+        composeRule.onNodeWithText("Apply adjustment").performClick()
+
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            transactionsRepository.lastAdjustmentDeltaCents == -250L
+        }
+        assertEquals(-250L, transactionsRepository.lastAdjustmentDeltaCents)
+    }
+
     private companion object {
+        val profileFixture = LocalProfile(
+            id = 1,
+            label = "Personal",
+            languageCode = "en",
+            displayCurrencies = emptyList(),
+            notifyBudgetAlerts = false,
+            notifyRecurringReminders = false,
+            notifyWeeklySummary = false,
+            notifyGoalMilestones = false,
+            statsChartStyle = "line",
+            animateNumbers = null,
+            theme = "system",
+            hideAmounts = false,
+            createdAtEpochMillis = 1,
+            updatedAtEpochMillis = 1,
+        )
+
         val accountsFixture = listOf(
             Account(
                 id = 1,
@@ -96,6 +161,101 @@ class AccountsScreenTest {
                 createdAtEpochMillis = 1,
                 updatedAtEpochMillis = 1,
             ),
+        )
+    }
+}
+
+private class FakeAccountsRepository(
+    private val account: Account,
+) : AccountsRepository {
+    override suspend fun listAccounts(profileId: Long): List<Account> {
+        return listOf(account)
+    }
+
+    override suspend fun getAccount(profileId: Long, accountId: Long): Account {
+        return account
+    }
+
+    override suspend fun getDefaultAccount(profileId: Long): Account {
+        return account
+    }
+
+    override suspend fun createAccount(profileId: Long, input: CreateAccountInput): Account {
+        return account
+    }
+
+    override suspend fun updateAccount(profileId: Long, accountId: Long, input: UpdateAccountInput): Account {
+        return account
+    }
+
+    override suspend fun setDefaultAccount(profileId: Long, accountId: Long): Account {
+        return account
+    }
+
+    override suspend fun deleteAccount(profileId: Long, accountId: Long) = Unit
+}
+
+private class FakeTransactionsRepository : TransactionsRepository {
+    var lastAdjustmentDeltaCents: Long? = null
+        private set
+
+    override suspend fun applyBalanceAdjustment(
+        profileId: Long,
+        input: BalanceAdjustmentInput,
+    ): MoneyTransaction {
+        lastAdjustmentDeltaCents = input.deltaCents
+        return moneyTransactionFixture(
+            profileId = profileId,
+            accountId = input.accountId,
+            amountCents = kotlin.math.abs(input.deltaCents),
+            type = if (input.deltaCents < 0) TransactionType.Expense else TransactionType.Income,
+        )
+    }
+
+    override suspend fun addTransaction(profileId: Long, input: CreateTransactionInput): MoneyTransaction {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun getTransaction(profileId: Long, transactionId: Long): MoneyTransaction {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun listTransactions(profileId: Long, query: TransactionQuery): TransactionPage {
+        return TransactionPage(transactions = emptyList(), totalPages = 0, currentPage = query.page)
+    }
+
+    override suspend fun updateTransaction(
+        profileId: Long,
+        transactionId: Long,
+        input: UpdateTransactionInput,
+    ): MoneyTransaction {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun deleteTransaction(profileId: Long, transactionId: Long) = Unit
+
+    private fun moneyTransactionFixture(
+        profileId: Long,
+        accountId: Long,
+        amountCents: Long,
+        type: TransactionType,
+    ): MoneyTransaction {
+        return MoneyTransaction(
+            id = 1,
+            profileId = profileId,
+            type = type,
+            amountCents = amountCents,
+            categoryId = 1,
+            categoryName = "Adjustment",
+            categoryIcon = "adjustment",
+            categoryColor = "#64748B",
+            accountId = accountId,
+            accountName = "Credit card",
+            note = "",
+            currencyCode = "USD",
+            snapshotDate = "2026-07-02",
+            createdAtEpochMillis = 1,
+            isAdjustment = true,
         )
     }
 }
