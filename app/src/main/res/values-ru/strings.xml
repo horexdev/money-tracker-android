@@ -30,4 +30,5 @@
     <string name="export_placeholder_subtitle">Маршрут резервных копий и экспорта зарегистрирован.</string>
     <string name="accounts_title">Счета</string>
     <string name="accounts_placeholder_subtitle">Маршрут счетов зарегистрирован.</string>
+    <string name="accounts_more_subtitle">Управление счетами, балансами и счетом по умолчанию.</string>
 </resources>

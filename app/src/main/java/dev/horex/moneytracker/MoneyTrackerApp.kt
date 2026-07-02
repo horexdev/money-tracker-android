@@ -1,15 +1,23 @@
 package dev.horex.moneytracker
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -21,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -28,17 +37,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dev.horex.moneytracker.core.accounts.AccountsRepository
 import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerPlaceholderScreen
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerThemeMode
 import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
 import dev.horex.moneytracker.core.navigation.MoneyTrackerRoutes
 import dev.horex.moneytracker.core.navigation.MoneyTrackerTopLevelDestination
+import dev.horex.moneytracker.core.transactions.TransactionsRepository
+import dev.horex.moneytracker.feature.accounts.AccountsRoute
 import dev.horex.moneytracker.feature.home.HomeRoute
 
 @Composable
 fun MoneyTrackerApp(
     localProfileBootstrapper: LocalProfileBootstrapper? = null,
+    accountsRepository: AccountsRepository? = null,
+    transactionsRepository: TransactionsRepository? = null,
 ) {
     val navController = rememberNavController()
 
@@ -55,6 +69,9 @@ fun MoneyTrackerApp(
         ) { innerPadding ->
             MoneyTrackerNavHost(
                 navController = navController,
+                localProfileBootstrapper = localProfileBootstrapper,
+                accountsRepository = accountsRepository,
+                transactionsRepository = transactionsRepository,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
@@ -66,6 +83,9 @@ fun MoneyTrackerApp(
 @Composable
 private fun MoneyTrackerNavHost(
     navController: NavHostController,
+    localProfileBootstrapper: LocalProfileBootstrapper?,
+    accountsRepository: AccountsRepository?,
+    transactionsRepository: TransactionsRepository?,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
@@ -95,9 +115,10 @@ private fun MoneyTrackerNavHost(
             )
         }
         composable(MoneyTrackerRoutes.More) {
-            LocalizedPlaceholderScreen(
-                titleResId = R.string.more_title,
-                subtitleResId = R.string.more_placeholder_subtitle,
+            MoreRoute(
+                onOpenAccounts = {
+                    navController.navigate(MoneyTrackerRoutes.Accounts)
+                },
             )
         }
         composable(MoneyTrackerRoutes.Settings) {
@@ -143,10 +164,70 @@ private fun MoneyTrackerNavHost(
             )
         }
         composable(MoneyTrackerRoutes.Accounts) {
-            LocalizedPlaceholderScreen(
-                titleResId = R.string.accounts_title,
-                subtitleResId = R.string.accounts_placeholder_subtitle,
+            if (
+                localProfileBootstrapper != null &&
+                accountsRepository != null &&
+                transactionsRepository != null
+            ) {
+                AccountsRoute(
+                    localProfileBootstrapper = localProfileBootstrapper,
+                    accountsRepository = accountsRepository,
+                    transactionsRepository = transactionsRepository,
+                )
+            } else {
+                LocalizedPlaceholderScreen(
+                    titleResId = R.string.accounts_title,
+                    subtitleResId = R.string.accounts_placeholder_subtitle,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun MoreRoute(
+    onOpenAccounts: () -> Unit,
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = androidx.compose.foundation.layout.PaddingValues(vertical = 12.dp),
+    ) {
+        item {
+            ListItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onOpenAccounts),
+                headlineContent = {
+                    Text(text = stringResource(R.string.accounts_title))
+                },
+                supportingContent = {
+                    Text(text = stringResource(R.string.accounts_more_subtitle))
+                },
+                leadingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.AccountBalanceWallet,
+                        contentDescription = null,
+                    )
+                },
+                trailingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.ChevronRight,
+                        contentDescription = null,
+                    )
+                },
             )
+            HorizontalDivider()
+        }
+        items(morePlaceholderRoutes) { route ->
+            ListItem(
+                headlineContent = {
+                    Text(text = stringResource(route.titleResId))
+                },
+                supportingContent = {
+                    Text(text = stringResource(route.subtitleResId))
+                },
+            )
+            HorizontalDivider()
         }
     }
 }
@@ -241,6 +322,21 @@ private val topLevelDestinations = listOf(
         labelResId = R.string.tab_more,
         icon = Icons.Filled.MoreHoriz,
     ),
+)
+
+private data class MorePlaceholderRoute(
+    @StringRes val titleResId: Int,
+    @StringRes val subtitleResId: Int,
+)
+
+private val morePlaceholderRoutes = listOf(
+    MorePlaceholderRoute(R.string.settings_title, R.string.settings_placeholder_subtitle),
+    MorePlaceholderRoute(R.string.categories_title, R.string.categories_placeholder_subtitle),
+    MorePlaceholderRoute(R.string.budgets_title, R.string.budgets_placeholder_subtitle),
+    MorePlaceholderRoute(R.string.recurring_title, R.string.recurring_placeholder_subtitle),
+    MorePlaceholderRoute(R.string.templates_title, R.string.templates_placeholder_subtitle),
+    MorePlaceholderRoute(R.string.savings_title, R.string.savings_placeholder_subtitle),
+    MorePlaceholderRoute(R.string.export_title, R.string.export_placeholder_subtitle),
 )
 
 @Preview(showBackground = true)

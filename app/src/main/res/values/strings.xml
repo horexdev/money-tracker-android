@@ -30,4 +30,5 @@
     <string name="export_placeholder_subtitle">Backup and export route is registered.</string>
     <string name="accounts_title">Accounts</string>
     <string name="accounts_placeholder_subtitle">Accounts route is registered.</string>
+    <string name="accounts_more_subtitle">Manage accounts, balances, and defaults.</string>
 </resources>

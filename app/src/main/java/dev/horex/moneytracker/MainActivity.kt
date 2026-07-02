@@ -16,6 +16,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             MoneyTrackerApp(
                 localProfileBootstrapper = appContainer.localProfileRepository,
+                accountsRepository = appContainer.accountsRepository,
+                transactionsRepository = appContainer.transactionsRepository,
             )
         }
     }

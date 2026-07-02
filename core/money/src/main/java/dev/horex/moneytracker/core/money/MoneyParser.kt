@@ -54,6 +54,25 @@ object MoneyParser {
         }
     }
 
+    fun parseSignedCentsOrZero(input: String): Long {
+        val trimmed = input.trimStart()
+        val isNegative = trimmed.startsWith("-")
+        val unsignedInput = if (isNegative) trimmed.drop(1) else trimmed
+        val unsigned = unsignedInput.replace(Regex("[^0-9.]"), "")
+        val cleaned = if (isNegative) "-$unsigned" else unsigned
+        if (cleaned.isEmpty() || cleaned == "-" || cleaned == "." || cleaned == "-.") {
+            return 0
+        }
+        return try {
+            BigDecimal(cleaned)
+                .movePointRight(2)
+                .setScale(0, RoundingMode.HALF_UP)
+                .longValueExact()
+        } catch (error: RuntimeException) {
+            0
+        }
+    }
+
     fun sanitizeAmountInput(input: String): String {
         var cleaned = input.replace(Regex("[^0-9.]"), "")
         val dotIndex = cleaned.indexOf('.')
@@ -68,6 +87,18 @@ object MoneyParser {
             cleaned = cleaned.substring(1)
         }
         return cleaned
+    }
+
+    fun sanitizeSignedAmountInput(input: String): String {
+        val trimmed = input.trimStart()
+        val isNegative = trimmed.startsWith("-")
+        val unsignedInput = if (isNegative) trimmed.drop(1) else trimmed
+        val unsigned = sanitizeAmountInput(unsignedInput)
+        return if (isNegative) {
+            if (unsigned.isEmpty()) "-" else "-$unsigned"
+        } else {
+            unsigned
+        }
     }
 
     fun formatPlainCents(cents: Long): String {
