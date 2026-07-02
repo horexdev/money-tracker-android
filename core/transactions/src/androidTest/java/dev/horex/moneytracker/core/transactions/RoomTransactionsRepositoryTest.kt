@@ -123,6 +123,98 @@ class RoomTransactionsRepositoryTest {
     }
 
     @Test
+    fun applyBalanceAdjustmentCreatesHiddenTransactionsAndUpdatesBalance() = runBlocking {
+        cleanUp()
+        val database = createDatabase()
+        try {
+            val profileId = insertProfile(database)
+            val accountId = insertAccount(database, profileId, name = "Card", currency = "EUR")
+            val adjustmentCategoryId = insertCategory(database, profileId, name = "Adjustment", type = "adjustment")
+            val repository = RoomTransactionsRepository(database)
+
+            val incomeAdjustment = repository.applyBalanceAdjustment(
+                profileId,
+                BalanceAdjustmentInput(
+                    accountId = accountId,
+                    deltaCents = 500,
+                    note = "Initial correction",
+                    createdAtEpochMillis = 1_788_264_000_000L,
+                ),
+            )
+            val expenseAdjustment = repository.applyBalanceAdjustment(
+                profileId,
+                BalanceAdjustmentInput(
+                    accountId = accountId,
+                    deltaCents = -125,
+                    note = "Cash mismatch",
+                    createdAtEpochMillis = 1_788_350_400_000L,
+                ),
+            )
+
+            assertEquals(TransactionType.Income, incomeAdjustment.type)
+            assertEquals(500L, incomeAdjustment.amountCents)
+            assertEquals("EUR", incomeAdjustment.currencyCode)
+            assertEquals(adjustmentCategoryId, incomeAdjustment.categoryId)
+            assertEquals("Adjustment", incomeAdjustment.categoryName)
+            assertEquals("Card", incomeAdjustment.accountName)
+            assertEquals("Initial correction", incomeAdjustment.note)
+            assertEquals("2026-09-01", incomeAdjustment.snapshotDate)
+            assertTrue(incomeAdjustment.isAdjustment)
+
+            assertEquals(TransactionType.Expense, expenseAdjustment.type)
+            assertEquals(125L, expenseAdjustment.amountCents)
+            assertEquals(adjustmentCategoryId, expenseAdjustment.categoryId)
+            assertTrue(expenseAdjustment.isAdjustment)
+
+            assertEquals(emptyList<MoneyTransaction>(), repository.listTransactions(profileId).transactions)
+            assertFailsWithType<TransactionNotFoundException> {
+                repository.getTransaction(profileId, incomeAdjustment.id)
+            }
+            assertEquals(375L, database.accountDao().getBalanceCents(profileId, accountId))
+        } finally {
+            database.close()
+        }
+    }
+
+    @Test
+    fun applyBalanceAdjustmentRejectsInvalidDeltaMissingAccountAndMissingCategory() = runBlocking {
+        cleanUp()
+        val database = createDatabase()
+        try {
+            val profileId = insertProfile(database)
+            val accountId = insertAccount(database, profileId)
+            val repository = RoomTransactionsRepository(database)
+
+            assertFailsWithType<InvalidAdjustmentDeltaException> {
+                repository.applyBalanceAdjustment(
+                    profileId,
+                    BalanceAdjustmentInput(accountId = accountId, deltaCents = 0),
+                )
+            }
+            assertFailsWithType<InvalidAdjustmentDeltaException> {
+                repository.applyBalanceAdjustment(
+                    profileId,
+                    BalanceAdjustmentInput(accountId = accountId, deltaCents = Long.MIN_VALUE),
+                )
+            }
+            assertFailsWithType<TransactionAccountNotFoundException> {
+                repository.applyBalanceAdjustment(
+                    profileId,
+                    BalanceAdjustmentInput(accountId = 999, deltaCents = 100),
+                )
+            }
+            assertFailsWithType<TransactionCategoryNotFoundException> {
+                repository.applyBalanceAdjustment(
+                    profileId,
+                    BalanceAdjustmentInput(accountId = accountId, deltaCents = 100),
+                )
+            }
+        } finally {
+            database.close()
+        }
+    }
+
+    @Test
     fun listTransactionsFiltersPagesAndExcludesAdjustments() = runBlocking {
         cleanUp()
         val database = createDatabase()

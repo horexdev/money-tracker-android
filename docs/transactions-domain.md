@@ -10,7 +10,8 @@
 - Edit operations update amount, category, note, and `created_at_epoch_millis`; they do not rewrite `snapshot_date`, account, type, or currency.
 - History/list queries exclude `is_adjustment = true` rows.
 - Ordinary transaction categories must be active and usable for the transaction type: `both`, `expense`, or `income`.
-- Adjustment transactions are immutable through this contract. MT-C03 owns adjustment creation rules.
+- Balance adjustments are created through `applyBalanceAdjustment`: positive deltas become hidden income rows, negative deltas become hidden expense rows, both using the protected `adjustment` category.
+- Adjustment transactions are immutable through ordinary update/delete operations and excluded from history/list queries; account balances include them through the transaction ledger.
 - Transfer-linked transactions are not edited or deleted directly. MT-C04 owns linked transfer mutation rules.
 - Pagination follows the Mini App defaults: page size defaults to 20 when outside `1..100`, empty result sets still report one page.
 - `core:transactions` does not store or expose Telegram/source/server identity fields.
