@@ -451,6 +451,12 @@ interface TransactionDao {
           AND (:categoryId IS NULL OR t.category_id = :categoryId)
           AND (:fromEpochMillis IS NULL OR t.created_at_epoch_millis >= :fromEpochMillis)
           AND (:toEpochMillis IS NULL OR t.created_at_epoch_millis <= :toEpochMillis)
+          AND (
+              :searchText IS NULL
+              OR LOWER(t.note) LIKE '%' || LOWER(:searchText) || '%'
+              OR LOWER(c.name) LIKE '%' || LOWER(:searchText) || '%'
+              OR LOWER(a.name) LIKE '%' || LOWER(:searchText) || '%'
+          )
         ORDER BY t.created_at_epoch_millis DESC, t.id DESC
         LIMIT :limit OFFSET :offset
         """,
@@ -461,19 +467,28 @@ interface TransactionDao {
         categoryId: Long?,
         fromEpochMillis: Long?,
         toEpochMillis: Long?,
+        searchText: String?,
         limit: Int,
         offset: Int,
     ): List<TransactionWithRelations>
 
     @Query(
         """
-        SELECT COUNT(*) FROM transactions
-        WHERE profile_id = :profileId
-          AND is_adjustment = 0
-          AND (:accountId IS NULL OR account_id = :accountId)
-          AND (:categoryId IS NULL OR category_id = :categoryId)
-          AND (:fromEpochMillis IS NULL OR created_at_epoch_millis >= :fromEpochMillis)
-          AND (:toEpochMillis IS NULL OR created_at_epoch_millis <= :toEpochMillis)
+        SELECT COUNT(*) FROM transactions t
+        JOIN categories c ON c.id = t.category_id
+        JOIN accounts a ON a.id = t.account_id
+        WHERE t.profile_id = :profileId
+          AND t.is_adjustment = 0
+          AND (:accountId IS NULL OR t.account_id = :accountId)
+          AND (:categoryId IS NULL OR t.category_id = :categoryId)
+          AND (:fromEpochMillis IS NULL OR t.created_at_epoch_millis >= :fromEpochMillis)
+          AND (:toEpochMillis IS NULL OR t.created_at_epoch_millis <= :toEpochMillis)
+          AND (
+              :searchText IS NULL
+              OR LOWER(t.note) LIKE '%' || LOWER(:searchText) || '%'
+              OR LOWER(c.name) LIKE '%' || LOWER(:searchText) || '%'
+              OR LOWER(a.name) LIKE '%' || LOWER(:searchText) || '%'
+          )
         """,
     )
     suspend fun countVisibleWithFilters(
@@ -482,6 +497,7 @@ interface TransactionDao {
         categoryId: Long?,
         fromEpochMillis: Long?,
         toEpochMillis: Long?,
+        searchText: String?,
     ): Int
 
     @Query(

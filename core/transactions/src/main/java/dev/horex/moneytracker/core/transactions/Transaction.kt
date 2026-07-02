@@ -58,6 +58,7 @@ data class TransactionQuery(
     val categoryId: Long? = null,
     val fromEpochMillis: Long? = null,
     val toEpochMillis: Long? = null,
+    val searchText: String? = null,
     val page: Int = 1,
     val pageSize: Int = DEFAULT_TRANSACTION_PAGE_SIZE,
 )

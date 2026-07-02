@@ -231,15 +231,36 @@ class RoomTransactionsRepositoryTest {
 
             val oldFood = repository.addTransaction(
                 profileId,
-                CreateTransactionInput(TransactionType.Expense, 100, foodCategoryId, firstAccountId, createdAtEpochMillis = 10),
+                CreateTransactionInput(
+                    TransactionType.Expense,
+                    100,
+                    foodCategoryId,
+                    firstAccountId,
+                    note = "Old lunch",
+                    createdAtEpochMillis = 10,
+                ),
             )
             val newFood = repository.addTransaction(
                 profileId,
-                CreateTransactionInput(TransactionType.Expense, 200, foodCategoryId, secondAccountId, createdAtEpochMillis = 20),
+                CreateTransactionInput(
+                    TransactionType.Expense,
+                    200,
+                    foodCategoryId,
+                    secondAccountId,
+                    note = "Dinner card",
+                    createdAtEpochMillis = 20,
+                ),
             )
             repository.addTransaction(
                 profileId,
-                CreateTransactionInput(TransactionType.Income, 300, salaryCategoryId, firstAccountId, createdAtEpochMillis = 30),
+                CreateTransactionInput(
+                    TransactionType.Income,
+                    300,
+                    salaryCategoryId,
+                    firstAccountId,
+                    note = "Monthly salary",
+                    createdAtEpochMillis = 30,
+                ),
             )
             insertTransaction(
                 database = database,
@@ -276,13 +297,19 @@ class RoomTransactionsRepositoryTest {
             assertEquals(1, filtered.totalPages)
             assertEquals(listOf(newFood.id), filtered.transactions.map { it.id })
             assertTrue(filtered.transactions.none { it.isAdjustment })
+
+            val searched = repository.listTransactions(
+                profileId,
+                TransactionQuery(searchText = "salary"),
+            )
+            assertEquals(listOf(300L), searched.transactions.map { it.amountCents })
         } finally {
             database.close()
         }
     }
 
     @Test
-    fun updateTransactionChangesEditableFieldsButPreservesSnapshotDate() = runBlocking {
+    fun updateTransactionChangesEditableFieldsAndSnapshotDate() = runBlocking {
         cleanUp()
         val database = createDatabase()
         try {
@@ -320,7 +347,7 @@ class RoomTransactionsRepositoryTest {
             assertEquals("Travel", updated.categoryName)
             assertEquals("New", updated.note)
             assertEquals(1_788_350_400_000L, updated.createdAtEpochMillis)
-            assertEquals("2026-09-01", updated.snapshotDate)
+            assertEquals("2026-09-02", updated.snapshotDate)
             assertEquals("USD", updated.currencyCode)
 
             assertFailsWithType<TransactionCategoryTypeException> {

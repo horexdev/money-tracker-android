@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">История</string>
+    <string name="history_subtitle">Поиск, фильтры, редактирование и удаление офлайн-операций</string>
+    <string name="history_empty_title">Операций пока нет</string>
+    <string name="history_empty_body">Новые доходы и расходы появятся здесь после сохранения.</string>
+    <string name="history_loading">Загружаем историю</string>
+    <string name="history_search">Поиск операций</string>
+    <string name="history_apply_filters">Применить фильтры</string>
+    <string name="history_clear_filters">Сбросить</string>
+    <string name="history_all_accounts">Все счета</string>
+    <string name="history_all_categories">Все категории</string>
+    <string name="history_load_more">Загрузить ещё</string>
+    <string name="history_page_label">Страница %1$d из %2$d</string>
+    <string name="history_income">Доход</string>
+    <string name="history_expense">Расход</string>
+    <string name="history_edit">Редактировать операцию</string>
+    <string name="history_delete">Удалить операцию</string>
+    <string name="history_delete_title">Удалить операцию?</string>
+    <string name="history_delete_body">Операция будет удалена из локального журнала.</string>
+    <string name="history_cancel">Отмена</string>
+    <string name="history_save">Сохранить операцию</string>
+    <string name="history_amount">Сумма</string>
+    <string name="history_date">Дата</string>
+    <string name="history_date_hint">ГГГГ-ММ-ДД</string>
+    <string name="history_category">Категория</string>
+    <string name="history_note">Заметка</string>
+    <string name="history_note_empty">Без заметки</string>
+    <string name="history_account">Счёт</string>
+    <string name="history_retry">Повторить</string>
+    <string name="history_error_generic">Не удалось выполнить действие.</string>
+    <string name="history_error_invalid_amount">Введите положительную сумму.</string>
+    <string name="history_error_invalid_date">Используйте дату в формате ГГГГ-ММ-ДД.</string>
+    <string name="history_error_category">Выберите совместимую категорию.</string>
+    <string name="history_error_linked_transfer">Операции, связанные с переводом, нельзя менять или удалять из истории.</string>
+    <string name="history_error_not_found">Операция не найдена.</string>
+</resources>
