@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">History</string>
+    <string name="history_subtitle">Search, filter, edit, and delete offline transactions</string>
+    <string name="history_empty_title">No transactions</string>
+    <string name="history_empty_body">New income and expenses will appear here after they are saved.</string>
+    <string name="history_loading">Loading history</string>
+    <string name="history_search">Search transactions</string>
+    <string name="history_apply_filters">Apply filters</string>
+    <string name="history_clear_filters">Clear</string>
+    <string name="history_all_accounts">All accounts</string>
+    <string name="history_all_categories">All categories</string>
+    <string name="history_load_more">Load more</string>
+    <string name="history_page_label">Page %1$d of %2$d</string>
+    <string name="history_income">Income</string>
+    <string name="history_expense">Expense</string>
+    <string name="history_edit">Edit transaction</string>
+    <string name="history_delete">Delete transaction</string>
+    <string name="history_delete_title">Delete transaction?</string>
+    <string name="history_delete_body">This transaction will be removed from the local ledger.</string>
+    <string name="history_cancel">Cancel</string>
+    <string name="history_save">Save transaction</string>
+    <string name="history_amount">Amount</string>
+    <string name="history_date">Date</string>
+    <string name="history_date_hint">YYYY-MM-DD</string>
+    <string name="history_category">Category</string>
+    <string name="history_note">Note</string>
+    <string name="history_note_empty">No note</string>
+    <string name="history_account">Account</string>
+    <string name="history_retry">Retry</string>
+    <string name="history_error_generic">Could not complete the action.</string>
+    <string name="history_error_invalid_amount">Enter a positive amount.</string>
+    <string name="history_error_invalid_date">Use a valid date in YYYY-MM-DD format.</string>
+    <string name="history_error_category">Choose a compatible category.</string>
+    <string name="history_error_linked_transfer">Linked transfer transactions cannot be edited or deleted from history.</string>
+    <string name="history_error_not_found">Transaction was not found.</string>
+</resources>

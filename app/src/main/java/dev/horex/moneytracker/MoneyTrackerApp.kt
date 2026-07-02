@@ -38,6 +38,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.horex.moneytracker.core.accounts.AccountsRepository
+import dev.horex.moneytracker.core.categories.CategoriesRepository
 import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerPlaceholderScreen
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerThemeMode
@@ -47,11 +48,13 @@ import dev.horex.moneytracker.core.navigation.MoneyTrackerTopLevelDestination
 import dev.horex.moneytracker.core.transactions.TransactionsRepository
 import dev.horex.moneytracker.feature.accounts.AccountsRoute
 import dev.horex.moneytracker.feature.home.HomeRoute
+import dev.horex.moneytracker.feature.history.HistoryRoute
 
 @Composable
 fun MoneyTrackerApp(
     localProfileBootstrapper: LocalProfileBootstrapper? = null,
     accountsRepository: AccountsRepository? = null,
+    categoriesRepository: CategoriesRepository? = null,
     transactionsRepository: TransactionsRepository? = null,
 ) {
     val navController = rememberNavController()
@@ -71,6 +74,7 @@ fun MoneyTrackerApp(
                 navController = navController,
                 localProfileBootstrapper = localProfileBootstrapper,
                 accountsRepository = accountsRepository,
+                categoriesRepository = categoriesRepository,
                 transactionsRepository = transactionsRepository,
                 modifier = Modifier
                     .fillMaxSize()
@@ -85,6 +89,7 @@ private fun MoneyTrackerNavHost(
     navController: NavHostController,
     localProfileBootstrapper: LocalProfileBootstrapper?,
     accountsRepository: AccountsRepository?,
+    categoriesRepository: CategoriesRepository?,
     transactionsRepository: TransactionsRepository?,
     modifier: Modifier = Modifier,
 ) {
@@ -97,10 +102,24 @@ private fun MoneyTrackerNavHost(
             HomeRoute()
         }
         composable(MoneyTrackerRoutes.History) {
-            LocalizedPlaceholderScreen(
-                titleResId = R.string.history_title,
-                subtitleResId = R.string.history_placeholder_subtitle,
-            )
+            if (
+                localProfileBootstrapper != null &&
+                accountsRepository != null &&
+                categoriesRepository != null &&
+                transactionsRepository != null
+            ) {
+                HistoryRoute(
+                    localProfileBootstrapper = localProfileBootstrapper,
+                    transactionsRepository = transactionsRepository,
+                    accountsRepository = accountsRepository,
+                    categoriesRepository = categoriesRepository,
+                )
+            } else {
+                LocalizedPlaceholderScreen(
+                    titleResId = R.string.history_title,
+                    subtitleResId = R.string.history_placeholder_subtitle,
+                )
+            }
         }
         composable(MoneyTrackerRoutes.AddTransaction) {
             LocalizedPlaceholderScreen(

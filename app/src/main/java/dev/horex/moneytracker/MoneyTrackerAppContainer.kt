@@ -2,6 +2,7 @@ package dev.horex.moneytracker
 
 import android.content.Context
 import dev.horex.moneytracker.core.accounts.RoomAccountsRepository
+import dev.horex.moneytracker.core.categories.RoomCategoriesRepository
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
 import dev.horex.moneytracker.core.database.profile.LocalProfileDefaults
@@ -57,6 +58,10 @@ internal class MoneyTrackerAppContainer(
 
     val accountsRepository: RoomAccountsRepository by lazy {
         RoomAccountsRepository(database)
+    }
+
+    val categoriesRepository: RoomCategoriesRepository by lazy {
+        RoomCategoriesRepository(database)
     }
 
     val transactionsRepository: RoomTransactionsRepository by lazy {

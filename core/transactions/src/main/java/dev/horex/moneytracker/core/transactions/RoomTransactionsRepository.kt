@@ -110,6 +110,7 @@ class RoomTransactionsRepository(
             categoryId = normalized.categoryId,
             fromEpochMillis = normalized.fromEpochMillis,
             toEpochMillis = normalized.toEpochMillis,
+            searchText = normalized.searchText,
         )
         val totalPages = total.totalPages(normalized.pageSize)
         val currentPage = normalized.page.coerceIn(1, totalPages)
@@ -120,6 +121,7 @@ class RoomTransactionsRepository(
             categoryId = normalized.categoryId,
             fromEpochMillis = normalized.fromEpochMillis,
             toEpochMillis = normalized.toEpochMillis,
+            searchText = normalized.searchText,
             limit = normalized.pageSize,
             offset = offset,
         ).map(TransactionWithRelations::toTransaction)
@@ -143,12 +145,14 @@ class RoomTransactionsRepository(
             val type = TransactionType.fromStorageValue(existing.type)
             val category = requireActiveCategory(profileId, input.categoryId)
             requireCategorySupportsType(category, type)
+            val createdAt = input.createdAtEpochMillis ?: existing.createdAtEpochMillis
 
             val updated = existing.copy(
                 amountCents = input.amountCents,
                 categoryId = category.id,
                 note = input.note,
-                createdAtEpochMillis = input.createdAtEpochMillis ?: existing.createdAtEpochMillis,
+                snapshotDate = createdAt.toUtcSnapshotDate(),
+                createdAtEpochMillis = createdAt,
             )
             if (transactionDao.updateAndReturnCount(updated) != 1) {
                 throw TransactionNotFoundException()
@@ -227,8 +231,11 @@ private fun TransactionQuery.normalized(): TransactionQuery {
     return copy(
         page = page.coerceAtLeast(1),
         pageSize = safePageSize,
+        searchText = searchText?.trim()?.takeIf { it.isNotEmpty() }?.take(MAX_TRANSACTION_SEARCH_LENGTH),
     )
 }
+
+private const val MAX_TRANSACTION_SEARCH_LENGTH = 80
 
 private fun Int.totalPages(pageSize: Int): Int {
     if (this <= 0) {
