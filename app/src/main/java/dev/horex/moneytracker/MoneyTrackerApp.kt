@@ -48,6 +48,7 @@ import dev.horex.moneytracker.core.navigation.MoneyTrackerRoutes
 import dev.horex.moneytracker.core.navigation.MoneyTrackerTopLevelDestination
 import dev.horex.moneytracker.core.transactions.TransactionsRepository
 import dev.horex.moneytracker.feature.accounts.AccountsRoute
+import dev.horex.moneytracker.feature.addtransaction.AddTransactionRoute
 import dev.horex.moneytracker.feature.categories.CategoriesRoute
 import dev.horex.moneytracker.feature.home.HomeRoute
 import dev.horex.moneytracker.feature.history.HistoryRoute
@@ -124,10 +125,29 @@ private fun MoneyTrackerNavHost(
             }
         }
         composable(MoneyTrackerRoutes.AddTransaction) {
-            LocalizedPlaceholderScreen(
-                titleResId = R.string.add_transaction_title,
-                subtitleResId = R.string.add_transaction_placeholder_subtitle,
-            )
+            if (
+                localProfileBootstrapper != null &&
+                accountsRepository != null &&
+                categoriesRepository != null &&
+                transactionsRepository != null
+            ) {
+                AddTransactionRoute(
+                    localProfileBootstrapper = localProfileBootstrapper,
+                    transactionsRepository = transactionsRepository,
+                    accountsRepository = accountsRepository,
+                    categoriesRepository = categoriesRepository,
+                    onTransactionSaved = {
+                        navController.navigate(MoneyTrackerRoutes.History) {
+                            launchSingleTop = true
+                        }
+                    },
+                )
+            } else {
+                LocalizedPlaceholderScreen(
+                    titleResId = R.string.add_transaction_title,
+                    subtitleResId = R.string.add_transaction_placeholder_subtitle,
+                )
+            }
         }
         composable(MoneyTrackerRoutes.Stats) {
             LocalizedPlaceholderScreen(

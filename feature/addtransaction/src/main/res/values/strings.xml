@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">Add transaction</string>
+    <string name="add_transaction_subtitle">Record an expense or income in your local ledger.</string>
+    <string name="add_transaction_loading">Loading form data...</string>
+    <string name="add_transaction_expense">Expense</string>
+    <string name="add_transaction_income">Income</string>
+    <string name="add_transaction_amount">Amount</string>
+    <string name="add_transaction_account">Account</string>
+    <string name="add_transaction_category">Category</string>
+    <string name="add_transaction_note">Note</string>
+    <string name="add_transaction_note_placeholder">Optional note</string>
+    <string name="add_transaction_date">Date</string>
+    <string name="add_transaction_date_hint">YYYY-MM-DD</string>
+    <string name="add_transaction_save">Save transaction</string>
+    <string name="add_transaction_saving">Saving...</string>
+    <string name="add_transaction_no_accounts_title">No accounts yet</string>
+    <string name="add_transaction_no_accounts_body">Create an account before recording transactions.</string>
+    <string name="add_transaction_no_categories_title">No categories for this type</string>
+    <string name="add_transaction_no_categories_body">Create an expense or income category before saving.</string>
+    <string name="add_transaction_retry">Retry</string>
+    <string name="add_transaction_error_generic">Could not save the transaction.</string>
+    <string name="add_transaction_error_invalid_amount">Enter an amount greater than zero.</string>
+    <string name="add_transaction_error_invalid_date">Enter a valid date as YYYY-MM-DD.</string>
+    <string name="add_transaction_error_account_required">Choose an account.</string>
+    <string name="add_transaction_error_category_required">Choose a category.</string>
+    <string name="add_transaction_error_account_not_found">The selected account is no longer available.</string>
+    <string name="add_transaction_error_category_not_found">The selected category is no longer available.</string>
+    <string name="add_transaction_error_category_type">Choose a category that matches the transaction type.</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">Добавление операции</string>
+    <string name="add_transaction_subtitle">Запишите расход или доход в локальную книгу.</string>
+    <string name="add_transaction_loading">Загрузка формы...</string>
+    <string name="add_transaction_expense">Расход</string>
+    <string name="add_transaction_income">Доход</string>
+    <string name="add_transaction_amount">Сумма</string>
+    <string name="add_transaction_account">Счет</string>
+    <string name="add_transaction_category">Категория</string>
+    <string name="add_transaction_note">Заметка</string>
+    <string name="add_transaction_note_placeholder">Необязательная заметка</string>
+    <string name="add_transaction_date">Дата</string>
+    <string name="add_transaction_date_hint">ГГГГ-ММ-ДД</string>
+    <string name="add_transaction_save">Сохранить операцию</string>
+    <string name="add_transaction_saving">Сохранение...</string>
+    <string name="add_transaction_no_accounts_title">Счетов пока нет</string>
+    <string name="add_transaction_no_accounts_body">Создайте счет перед добавлением операций.</string>
+    <string name="add_transaction_no_categories_title">Нет категорий для этого типа</string>
+    <string name="add_transaction_no_categories_body">Создайте категорию расхода или дохода перед сохранением.</string>
+    <string name="add_transaction_retry">Повторить</string>
+    <string name="add_transaction_error_generic">Не удалось сохранить операцию.</string>
+    <string name="add_transaction_error_invalid_amount">Введите сумму больше нуля.</string>
+    <string name="add_transaction_error_invalid_date">Введите корректную дату в формате ГГГГ-ММ-ДД.</string>
+    <string name="add_transaction_error_account_required">Выберите счет.</string>
+    <string name="add_transaction_error_category_required">Выберите категорию.</string>
+    <string name="add_transaction_error_account_not_found">Выбранный счет больше недоступен.</string>
+    <string name="add_transaction_error_category_not_found">Выбранная категория больше недоступна.</string>
+    <string name="add_transaction_error_category_type">Выберите категорию, подходящую типу операции.</string>
+</resources>
