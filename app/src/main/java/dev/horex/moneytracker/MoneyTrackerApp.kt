@@ -26,6 +26,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -47,12 +50,16 @@ import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerThemeMode
 import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
 import dev.horex.moneytracker.core.navigation.MoneyTrackerRoutes
 import dev.horex.moneytracker.core.navigation.MoneyTrackerTopLevelDestination
+import dev.horex.moneytracker.core.preferences.SettingsRepository
+import dev.horex.moneytracker.core.stats.StatsRepository
 import dev.horex.moneytracker.core.transactions.TransactionsRepository
 import dev.horex.moneytracker.feature.accounts.AccountsRoute
 import dev.horex.moneytracker.feature.addtransaction.AddTransactionRoute
 import dev.horex.moneytracker.feature.categories.CategoriesRoute
 import dev.horex.moneytracker.feature.home.HomeRoute
+import dev.horex.moneytracker.feature.history.HistoryFilters
 import dev.horex.moneytracker.feature.history.HistoryRoute
+import dev.horex.moneytracker.feature.stats.StatsRoute
 
 @Composable
 fun MoneyTrackerApp(
@@ -60,9 +67,12 @@ fun MoneyTrackerApp(
     accountsRepository: AccountsRepository? = null,
     balancesRepository: BalancesRepository? = null,
     categoriesRepository: CategoriesRepository? = null,
+    settingsRepository: SettingsRepository? = null,
+    statsRepository: StatsRepository? = null,
     transactionsRepository: TransactionsRepository? = null,
 ) {
     val navController = rememberNavController()
+    var historyInitialFilters by remember { mutableStateOf(HistoryFilters()) }
 
     LaunchedEffect(localProfileBootstrapper) {
         localProfileBootstrapper?.ensureActiveProfile()
@@ -72,7 +82,14 @@ fun MoneyTrackerApp(
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             bottomBar = {
-                MoneyTrackerBottomBar(navController = navController)
+                MoneyTrackerBottomBar(
+                    navController = navController,
+                    onDestinationSelected = { destination ->
+                        if (destination.destination == MoneyTrackerTopLevelDestination.History) {
+                            historyInitialFilters = HistoryFilters()
+                        }
+                    },
+                )
             },
         ) { innerPadding ->
             MoneyTrackerNavHost(
@@ -81,7 +98,11 @@ fun MoneyTrackerApp(
                 accountsRepository = accountsRepository,
                 balancesRepository = balancesRepository,
                 categoriesRepository = categoriesRepository,
+                settingsRepository = settingsRepository,
+                statsRepository = statsRepository,
                 transactionsRepository = transactionsRepository,
+                historyInitialFilters = historyInitialFilters,
+                onHistoryInitialFiltersChange = { historyInitialFilters = it },
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
@@ -97,7 +118,11 @@ private fun MoneyTrackerNavHost(
     accountsRepository: AccountsRepository?,
     balancesRepository: BalancesRepository?,
     categoriesRepository: CategoriesRepository?,
+    settingsRepository: SettingsRepository?,
+    statsRepository: StatsRepository?,
     transactionsRepository: TransactionsRepository?,
+    historyInitialFilters: HistoryFilters,
+    onHistoryInitialFiltersChange: (HistoryFilters) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
@@ -121,6 +146,7 @@ private fun MoneyTrackerNavHost(
                         }
                     },
                     onOpenHistory = {
+                        onHistoryInitialFiltersChange(HistoryFilters())
                         navController.navigate(MoneyTrackerRoutes.History) {
                             launchSingleTop = true
                         }
@@ -147,6 +173,7 @@ private fun MoneyTrackerNavHost(
                     transactionsRepository = transactionsRepository,
                     accountsRepository = accountsRepository,
                     categoriesRepository = categoriesRepository,
+                    initialFilters = historyInitialFilters,
                 )
             } else {
                 LocalizedPlaceholderScreen(
@@ -168,6 +195,7 @@ private fun MoneyTrackerNavHost(
                     accountsRepository = accountsRepository,
                     categoriesRepository = categoriesRepository,
                     onTransactionSaved = {
+                        onHistoryInitialFiltersChange(HistoryFilters())
                         navController.navigate(MoneyTrackerRoutes.History) {
                             launchSingleTop = true
                         }
@@ -181,10 +209,37 @@ private fun MoneyTrackerNavHost(
             }
         }
         composable(MoneyTrackerRoutes.Stats) {
-            LocalizedPlaceholderScreen(
-                titleResId = R.string.stats_title,
-                subtitleResId = R.string.stats_placeholder_subtitle,
-            )
+            if (
+                localProfileBootstrapper != null &&
+                accountsRepository != null &&
+                settingsRepository != null &&
+                statsRepository != null
+            ) {
+                StatsRoute(
+                    localProfileBootstrapper = localProfileBootstrapper,
+                    accountsRepository = accountsRepository,
+                    settingsRepository = settingsRepository,
+                    statsRepository = statsRepository,
+                    onOpenHistory = { categoryId, range ->
+                        onHistoryInitialFiltersChange(
+                            HistoryFilters(
+                                categoryId = categoryId,
+                                fromEpochMillis = range.fromEpochMillisInclusive,
+                                toEpochMillis = (range.toEpochMillisExclusive - 1)
+                                    .coerceAtLeast(range.fromEpochMillisInclusive),
+                            ),
+                        )
+                        navController.navigate(MoneyTrackerRoutes.History) {
+                            launchSingleTop = true
+                        }
+                    },
+                )
+            } else {
+                LocalizedPlaceholderScreen(
+                    titleResId = R.string.stats_title,
+                    subtitleResId = R.string.stats_placeholder_subtitle,
+                )
+            }
         }
         composable(MoneyTrackerRoutes.More) {
             MoreRoute(
@@ -358,6 +413,7 @@ private fun LocalizedPlaceholderScreen(
 @Composable
 private fun MoneyTrackerBottomBar(
     navController: NavHostController,
+    onDestinationSelected: (AppTopLevelDestination) -> Unit = {},
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -372,6 +428,7 @@ private fun MoneyTrackerBottomBar(
             NavigationBarItem(
                 selected = selected,
                 onClick = {
+                    onDestinationSelected(destination)
                     navController.navigateToTopLevelDestination(destination)
                 },
                 icon = {

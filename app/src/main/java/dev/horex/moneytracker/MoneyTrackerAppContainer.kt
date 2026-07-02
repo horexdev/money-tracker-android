@@ -15,6 +15,7 @@ import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
 import dev.horex.moneytracker.core.preferences.DataStoreActiveProfileIdStore
 import dev.horex.moneytracker.core.preferences.RoomSettingsRepository
 import dev.horex.moneytracker.core.preferences.createAppPreferencesDataStore
+import dev.horex.moneytracker.core.stats.RoomStatsRepository
 import dev.horex.moneytracker.core.transactions.RoomTransactionsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -76,6 +77,10 @@ internal class MoneyTrackerAppContainer(
             localProfileBootstrapper = localProfileRepository,
             appPreferencesRepository = appPreferencesRepository,
         )
+    }
+
+    val statsRepository: RoomStatsRepository by lazy {
+        RoomStatsRepository(database)
     }
 
     val transactionsRepository: RoomTransactionsRepository by lazy {

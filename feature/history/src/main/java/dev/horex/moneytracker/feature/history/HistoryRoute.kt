@@ -99,12 +99,13 @@ fun HistoryRoute(
     transactionsRepository: TransactionsRepository,
     accountsRepository: AccountsRepository,
     categoriesRepository: CategoriesRepository,
+    initialFilters: HistoryFilters = HistoryFilters(),
     modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
     var profileId by remember { mutableStateOf<Long?>(null) }
-    var filters by remember { mutableStateOf(HistoryFilters()) }
-    var searchDraft by remember { mutableStateOf("") }
+    var filters by remember(initialFilters) { mutableStateOf(initialFilters) }
+    var searchDraft by remember(initialFilters) { mutableStateOf(initialFilters.searchText) }
     var uiState by remember { mutableStateOf(HistoryUiState(isLoading = true)) }
     var editTarget by remember { mutableStateOf<MoneyTransaction?>(null) }
     var deleteTarget by remember { mutableStateOf<MoneyTransaction?>(null) }
@@ -194,8 +195,21 @@ fun HistoryRoute(
         }
     }
 
-    LaunchedEffect(localProfileBootstrapper, transactionsRepository, accountsRepository, categoriesRepository) {
-        loadHistory(page = 1, append = false, showLoading = true)
+    LaunchedEffect(
+        localProfileBootstrapper,
+        transactionsRepository,
+        accountsRepository,
+        categoriesRepository,
+        initialFilters,
+    ) {
+        filters = initialFilters
+        searchDraft = initialFilters.searchText
+        loadHistory(
+            page = 1,
+            append = false,
+            showLoading = true,
+            filterSnapshot = initialFilters,
+        )
     }
 
     HistoryScreen(
@@ -849,11 +863,15 @@ data class HistoryFilters(
     val searchText: String = "",
     val accountId: Long? = null,
     val categoryId: Long? = null,
+    val fromEpochMillis: Long? = null,
+    val toEpochMillis: Long? = null,
 ) {
     fun toQuery(page: Int): TransactionQuery {
         return TransactionQuery(
             accountId = accountId,
             categoryId = categoryId,
+            fromEpochMillis = fromEpochMillis,
+            toEpochMillis = toEpochMillis,
             searchText = searchText.trim().takeIf { it.isNotEmpty() },
             page = page,
             pageSize = HISTORY_PAGE_SIZE,
