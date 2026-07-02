@@ -48,6 +48,52 @@ class RoomTransactionsRepository(
         return getTransaction(profileId, transactionId)
     }
 
+    override suspend fun applyBalanceAdjustment(
+        profileId: Long,
+        input: BalanceAdjustmentInput,
+    ): MoneyTransaction {
+        val createdAt = input.createdAtEpochMillis ?: clock()
+        val (type, amountCents) = input.deltaCents.toAdjustmentTypeAndAmount()
+        val snapshotDate = createdAt.toUtcSnapshotDate()
+
+        return database.withTransaction {
+            val account = requireAccount(profileId, input.accountId)
+            val category = requireAdjustmentCategory(profileId)
+            val transactionId = transactionDao.insert(
+                TransactionEntity(
+                    profileId = profileId,
+                    type = type.storageValue,
+                    amountCents = amountCents,
+                    categoryId = category.id,
+                    accountId = account.id,
+                    note = input.note,
+                    currencyCode = account.currencyCode,
+                    snapshotDate = snapshotDate,
+                    isAdjustment = true,
+                    createdAtEpochMillis = createdAt,
+                ),
+            )
+
+            MoneyTransaction(
+                id = transactionId,
+                profileId = profileId,
+                type = type,
+                amountCents = amountCents,
+                categoryId = category.id,
+                categoryName = category.name,
+                categoryIcon = category.icon,
+                categoryColor = category.color,
+                accountId = account.id,
+                accountName = account.name,
+                note = input.note,
+                currencyCode = account.currencyCode,
+                snapshotDate = snapshotDate,
+                createdAtEpochMillis = createdAt,
+                isAdjustment = true,
+            )
+        }
+    }
+
     override suspend fun getTransaction(profileId: Long, transactionId: Long): MoneyTransaction {
         return transactionDao.getVisibleWithRelations(profileId, transactionId)?.toTransaction()
             ?: throw TransactionNotFoundException()
@@ -129,6 +175,11 @@ class RoomTransactionsRepository(
         return categoryDao.getActiveById(profileId, categoryId) ?: throw TransactionCategoryNotFoundException()
     }
 
+    private suspend fun requireAdjustmentCategory(profileId: Long): CategoryEntity {
+        return categoryDao.getProtectedByType(profileId, ADJUSTMENT_CATEGORY_TYPE)
+            ?: throw TransactionCategoryNotFoundException()
+    }
+
     private suspend fun requireMutableTransaction(profileId: Long, transactionId: Long): TransactionEntity {
         val transaction = transactionDao.getById(profileId, transactionId) ?: throw TransactionNotFoundException()
         if (transaction.isAdjustment) {
@@ -141,6 +192,8 @@ class RoomTransactionsRepository(
     }
 }
 
+private const val ADJUSTMENT_CATEGORY_TYPE = "adjustment"
+
 private fun requirePositiveAmount(amountCents: Long) {
     if (amountCents <= 0) {
         throw InvalidTransactionAmountException()
@@ -151,6 +204,14 @@ private fun requireCategorySupportsType(category: CategoryEntity, type: Transact
     val canUse = category.type == "both" || category.type == type.storageValue
     if (!canUse || category.type == "transfer" || category.type == "adjustment" || category.type == "savings") {
         throw TransactionCategoryTypeException()
+    }
+}
+
+private fun Long.toAdjustmentTypeAndAmount(): Pair<TransactionType, Long> {
+    return when {
+        this > 0 -> TransactionType.Income to this
+        this < 0 && this != Long.MIN_VALUE -> TransactionType.Expense to -this
+        else -> throw InvalidAdjustmentDeltaException()
     }
 }
 

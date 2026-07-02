@@ -3,6 +3,8 @@ package dev.horex.moneytracker.core.transactions
 interface TransactionsRepository {
     suspend fun addTransaction(profileId: Long, input: CreateTransactionInput): MoneyTransaction
 
+    suspend fun applyBalanceAdjustment(profileId: Long, input: BalanceAdjustmentInput): MoneyTransaction
+
     suspend fun getTransaction(profileId: Long, transactionId: Long): MoneyTransaction
 
     suspend fun listTransactions(profileId: Long, query: TransactionQuery = TransactionQuery()): TransactionPage

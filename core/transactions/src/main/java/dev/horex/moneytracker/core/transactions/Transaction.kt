@@ -39,6 +39,13 @@ data class CreateTransactionInput(
     val createdAtEpochMillis: Long? = null,
 )
 
+data class BalanceAdjustmentInput(
+    val accountId: Long,
+    val deltaCents: Long,
+    val note: String = "",
+    val createdAtEpochMillis: Long? = null,
+)
+
 data class UpdateTransactionInput(
     val amountCents: Long,
     val categoryId: Long,
