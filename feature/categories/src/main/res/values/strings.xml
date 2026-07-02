@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Categories</string>
+    <string name="categories_subtitle">Manage names, icons, colors, and transaction types</string>
+    <string name="categories_empty_title">No categories</string>
+    <string name="categories_empty_body">Create a category to classify income and expenses offline.</string>
+    <string name="categories_add">Add category</string>
+    <string name="categories_edit">Edit category</string>
+    <string name="categories_create">Create category</string>
+    <string name="categories_save">Save category</string>
+    <string name="categories_delete">Delete category</string>
+    <string name="categories_delete_title">Delete category?</string>
+    <string name="categories_delete_body">The category will be hidden from new transactions. Existing history keeps its label.</string>
+    <string name="categories_cancel">Cancel</string>
+    <string name="categories_retry">Retry</string>
+    <string name="categories_loading">Loading categories</string>
+    <string name="categories_name">Name</string>
+    <string name="categories_name_placeholder">Groceries</string>
+    <string name="categories_type">Type</string>
+    <string name="categories_color">Color</string>
+    <string name="categories_icon">Icon</string>
+    <string name="categories_all">All</string>
+    <string name="categories_type_expense">Expense</string>
+    <string name="categories_type_income">Income</string>
+    <string name="categories_type_both">Both</string>
+    <string name="categories_type_savings">Savings</string>
+    <string name="categories_type_transfer">Transfer</string>
+    <string name="categories_type_adjustment">Adjustment</string>
+    <string name="categories_protected">Protected</string>
+    <string name="categories_system">System</string>
+    <string name="categories_error_generic">Could not complete the action.</string>
+    <string name="categories_error_empty_name">Enter a category name.</string>
+    <string name="categories_error_duplicate_name">A category with this name already exists.</string>
+    <string name="categories_error_protected">Protected categories cannot be modified.</string>
+    <string name="categories_error_not_found">Category was not found.</string>
+    <string name="categories_icon_food">Food</string>
+    <string name="categories_icon_transport">Transport</string>
+    <string name="categories_icon_home">Home</string>
+    <string name="categories_icon_shopping">Shopping</string>
+    <string name="categories_icon_work">Work</string>
+    <string name="categories_icon_money">Money</string>
+    <string name="categories_icon_savings">Savings</string>
+    <string name="categories_icon_transfer">Transfer</string>
+    <string name="categories_icon_other">Other</string>
+</resources>

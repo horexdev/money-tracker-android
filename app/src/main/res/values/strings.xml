@@ -18,6 +18,7 @@
     <string name="settings_placeholder_subtitle">Settings route is registered.</string>
     <string name="categories_title">Categories</string>
     <string name="categories_placeholder_subtitle">Categories route is registered.</string>
+    <string name="categories_more_subtitle">Manage category names, icons, colors, and types.</string>
     <string name="budgets_title">Budgets</string>
     <string name="budgets_placeholder_subtitle">Budgets route is registered.</string>
     <string name="recurring_title">Recurring</string>

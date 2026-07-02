@@ -18,6 +18,7 @@
     <string name="settings_placeholder_subtitle">Маршрут настроек зарегистрирован.</string>
     <string name="categories_title">Категории</string>
     <string name="categories_placeholder_subtitle">Маршрут категорий зарегистрирован.</string>
+    <string name="categories_more_subtitle">Управление названиями, иконками, цветами и типами категорий.</string>
     <string name="budgets_title">Бюджеты</string>
     <string name="budgets_placeholder_subtitle">Маршрут бюджетов зарегистрирован.</string>
     <string name="recurring_title">Повторяющиеся</string>
