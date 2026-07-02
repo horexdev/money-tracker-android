@@ -35,6 +35,7 @@ android {
 
 dependencies {
     implementation(project(":core:accounts"))
+    implementation(project(":core:balance"))
     implementation(project(":core:categories"))
     implementation(project(":core:database"))
     implementation(project(":core:designsystem"))

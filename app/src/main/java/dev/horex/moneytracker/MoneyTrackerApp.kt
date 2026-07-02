@@ -39,6 +39,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.horex.moneytracker.core.accounts.AccountsRepository
+import dev.horex.moneytracker.core.balance.BalancesRepository
 import dev.horex.moneytracker.core.categories.CategoriesRepository
 import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerPlaceholderScreen
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
@@ -57,6 +58,7 @@ import dev.horex.moneytracker.feature.history.HistoryRoute
 fun MoneyTrackerApp(
     localProfileBootstrapper: LocalProfileBootstrapper? = null,
     accountsRepository: AccountsRepository? = null,
+    balancesRepository: BalancesRepository? = null,
     categoriesRepository: CategoriesRepository? = null,
     transactionsRepository: TransactionsRepository? = null,
 ) {
@@ -77,6 +79,7 @@ fun MoneyTrackerApp(
                 navController = navController,
                 localProfileBootstrapper = localProfileBootstrapper,
                 accountsRepository = accountsRepository,
+                balancesRepository = balancesRepository,
                 categoriesRepository = categoriesRepository,
                 transactionsRepository = transactionsRepository,
                 modifier = Modifier
@@ -92,6 +95,7 @@ private fun MoneyTrackerNavHost(
     navController: NavHostController,
     localProfileBootstrapper: LocalProfileBootstrapper?,
     accountsRepository: AccountsRepository?,
+    balancesRepository: BalancesRepository?,
     categoriesRepository: CategoriesRepository?,
     transactionsRepository: TransactionsRepository?,
     modifier: Modifier = Modifier,
@@ -102,7 +106,34 @@ private fun MoneyTrackerNavHost(
         modifier = modifier,
     ) {
         composable(MoneyTrackerRoutes.Dashboard) {
-            HomeRoute()
+            if (
+                localProfileBootstrapper != null &&
+                balancesRepository != null &&
+                transactionsRepository != null
+            ) {
+                HomeRoute(
+                    localProfileBootstrapper = localProfileBootstrapper,
+                    balancesRepository = balancesRepository,
+                    transactionsRepository = transactionsRepository,
+                    onAddTransaction = {
+                        navController.navigate(MoneyTrackerRoutes.AddTransaction) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onOpenHistory = {
+                        navController.navigate(MoneyTrackerRoutes.History) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onOpenStats = {
+                        navController.navigate(MoneyTrackerRoutes.Stats) {
+                            launchSingleTop = true
+                        }
+                    },
+                )
+            } else {
+                HomeRoute()
+            }
         }
         composable(MoneyTrackerRoutes.History) {
             if (

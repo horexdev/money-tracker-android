@@ -2,4 +2,17 @@
 <resources>
     <string name="feature_home_title">Dashboard</string>
     <string name="feature_home_subtitle">Root navigation is ready.</string>
+    <string name="home_subtitle">Offline snapshot of balances and recent activity.</string>
+    <string name="home_loading">Loading dashboard...</string>
+    <string name="home_retry">Retry</string>
+    <string name="home_error_generic">Dashboard data could not be loaded.</string>
+    <string name="home_net_balance">Net balance</string>
+    <string name="home_all_accounts">All accounts</string>
+    <string name="home_add_transaction">Add transaction</string>
+    <string name="home_income">Income</string>
+    <string name="home_expense">Expense</string>
+    <string name="home_recent_transactions">Recent transactions</string>
+    <string name="home_view_all">View all</string>
+    <string name="home_empty_title">No transactions yet</string>
+    <string name="home_empty_body">Add the first transaction to start tracking.</string>
 </resources>

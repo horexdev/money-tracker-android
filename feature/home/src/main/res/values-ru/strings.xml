@@ -2,4 +2,17 @@
 <resources>
     <string name="feature_home_title">Главная</string>
     <string name="feature_home_subtitle">Корневая навигация готова.</string>
+    <string name="home_subtitle">Офлайн-сводка по балансам и последним операциям.</string>
+    <string name="home_loading">Загружаем главную...</string>
+    <string name="home_retry">Повторить</string>
+    <string name="home_error_generic">Не удалось загрузить данные главной.</string>
+    <string name="home_net_balance">Баланс</string>
+    <string name="home_all_accounts">Все счета</string>
+    <string name="home_add_transaction">Добавить операцию</string>
+    <string name="home_income">Доходы</string>
+    <string name="home_expense">Расходы</string>
+    <string name="home_recent_transactions">Последние операции</string>
+    <string name="home_view_all">Все</string>
+    <string name="home_empty_title">Операций пока нет</string>
+    <string name="home_empty_body">Добавьте первую операцию, чтобы начать учет.</string>
 </resources>
