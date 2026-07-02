@@ -52,6 +52,8 @@ import dev.horex.moneytracker.core.navigation.MoneyTrackerRoutes
 import dev.horex.moneytracker.core.navigation.MoneyTrackerTopLevelDestination
 import dev.horex.moneytracker.core.preferences.SettingsRepository
 import dev.horex.moneytracker.core.stats.StatsRepository
+import dev.horex.moneytracker.core.stats.StatsTransactionType
+import dev.horex.moneytracker.core.transactions.TransactionType
 import dev.horex.moneytracker.core.transactions.TransactionsRepository
 import dev.horex.moneytracker.feature.accounts.AccountsRoute
 import dev.horex.moneytracker.feature.addtransaction.AddTransactionRoute
@@ -220,13 +222,16 @@ private fun MoneyTrackerNavHost(
                     accountsRepository = accountsRepository,
                     settingsRepository = settingsRepository,
                     statsRepository = statsRepository,
-                    onOpenHistory = { categoryId, range ->
+                    onOpenHistory = { drilldown ->
                         onHistoryInitialFiltersChange(
                             HistoryFilters(
-                                categoryId = categoryId,
-                                fromEpochMillis = range.fromEpochMillisInclusive,
-                                toEpochMillis = (range.toEpochMillisExclusive - 1)
-                                    .coerceAtLeast(range.fromEpochMillisInclusive),
+                                accountId = drilldown.accountId,
+                                categoryId = drilldown.categoryId,
+                                transactionType = drilldown.type.toTransactionType(),
+                                currencyCode = drilldown.currencyCode,
+                                fromEpochMillis = drilldown.range.fromEpochMillisInclusive,
+                                toEpochMillis = (drilldown.range.toEpochMillisExclusive - 1)
+                                    .coerceAtLeast(drilldown.range.fromEpochMillisInclusive),
                             ),
                         )
                         navController.navigate(MoneyTrackerRoutes.History) {
@@ -454,6 +459,13 @@ private fun NavHostController.navigateToTopLevelDestination(
         }
         launchSingleTop = true
         restoreState = true
+    }
+}
+
+private fun StatsTransactionType.toTransactionType(): TransactionType {
+    return when (this) {
+        StatsTransactionType.Expense -> TransactionType.Expense
+        StatsTransactionType.Income -> TransactionType.Income
     }
 }
 

@@ -56,6 +56,8 @@ data class UpdateTransactionInput(
 data class TransactionQuery(
     val accountId: Long? = null,
     val categoryId: Long? = null,
+    val type: TransactionType? = null,
+    val currencyCode: String? = null,
     val fromEpochMillis: Long? = null,
     val toEpochMillis: Long? = null,
     val searchText: String? = null,

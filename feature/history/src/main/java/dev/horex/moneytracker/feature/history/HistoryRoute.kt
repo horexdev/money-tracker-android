@@ -863,6 +863,8 @@ data class HistoryFilters(
     val searchText: String = "",
     val accountId: Long? = null,
     val categoryId: Long? = null,
+    val transactionType: TransactionType? = null,
+    val currencyCode: String? = null,
     val fromEpochMillis: Long? = null,
     val toEpochMillis: Long? = null,
 ) {
@@ -870,6 +872,8 @@ data class HistoryFilters(
         return TransactionQuery(
             accountId = accountId,
             categoryId = categoryId,
+            type = transactionType,
+            currencyCode = currencyCode,
             fromEpochMillis = fromEpochMillis,
             toEpochMillis = toEpochMillis,
             searchText = searchText.trim().takeIf { it.isNotEmpty() },

@@ -289,6 +289,8 @@ class RoomTransactionsRepositoryTest {
                 TransactionQuery(
                     accountId = secondAccountId,
                     categoryId = foodCategoryId,
+                    type = TransactionType.Expense,
+                    currencyCode = "USD",
                     fromEpochMillis = 15,
                     toEpochMillis = 25,
                     pageSize = 200,

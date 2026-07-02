@@ -64,7 +64,7 @@ class StatsScreenTest {
                         onSelectCurrency = {},
                         onSelectType = {},
                         onSelectChartStyle = {},
-                        onOpenHistory = { _, _ -> },
+                        onOpenHistory = {},
                         onRetry = {},
                     )
                 }
@@ -136,8 +136,7 @@ class StatsScreenTest {
 
     @Test
     fun statsRouteReportsDrilldownCategoryAndRange() {
-        var reportedCategoryId: Long? = null
-        var reportedRange: StatsRange? = null
+        var reportedDrilldown: StatsDrilldownFilter? = null
 
         composeRule.setContent {
             MoneyTrackerTheme {
@@ -146,9 +145,8 @@ class StatsScreenTest {
                     accountsRepository = FakeAccountsRepository(),
                     settingsRepository = FakeSettingsRepository(),
                     statsRepository = FakeStatsRepository(),
-                    onOpenHistory = { categoryId, range ->
-                        reportedCategoryId = categoryId
-                        reportedRange = range
+                    onOpenHistory = { drilldown ->
+                        reportedDrilldown = drilldown
                     },
                 )
             }
@@ -160,8 +158,11 @@ class StatsScreenTest {
         composeRule.onNodeWithTag("stats-breakdown-row-1")
             .performClick()
 
-        assertEquals(1L, reportedCategoryId)
-        assertEquals(snapshotRange, reportedRange)
+        assertEquals(1L, reportedDrilldown?.accountId)
+        assertEquals(1L, reportedDrilldown?.categoryId)
+        assertEquals(StatsTransactionType.Expense, reportedDrilldown?.type)
+        assertEquals("USD", reportedDrilldown?.currencyCode)
+        assertEquals(snapshotRange, reportedDrilldown?.range)
     }
 
     @Test
@@ -184,7 +185,7 @@ class StatsScreenTest {
                     onSelectCurrency = {},
                     onSelectType = {},
                     onSelectChartStyle = {},
-                    onOpenHistory = { _, _ -> },
+                    onOpenHistory = {},
                     onRetry = {},
                 )
             }

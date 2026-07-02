@@ -92,7 +92,7 @@ fun StatsRoute(
     settingsRepository: SettingsRepository,
     statsRepository: StatsRepository,
     modifier: Modifier = Modifier,
-    onOpenHistory: (categoryId: Long, range: StatsRange) -> Unit = { _, _ -> },
+    onOpenHistory: (StatsDrilldownFilter) -> Unit = {},
 ) {
     val scope = rememberCoroutineScope()
     var profileId by remember { mutableStateOf<Long?>(null) }
@@ -217,7 +217,7 @@ fun StatsScreen(
     onSelectCurrency: (String) -> Unit,
     onSelectType: (StatsTransactionType) -> Unit,
     onSelectChartStyle: (StatsChartStylePreference) -> Unit,
-    onOpenHistory: (categoryId: Long, range: StatsRange) -> Unit,
+    onOpenHistory: (StatsDrilldownFilter) -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -302,7 +302,15 @@ fun StatsScreen(
                                 item = item,
                                 hideAmounts = hideAmounts,
                                 onOpenHistory = {
-                                    onOpenHistory(item.categoryId, snapshot.range)
+                                    onOpenHistory(
+                                        StatsDrilldownFilter(
+                                            accountId = selectedAccountId,
+                                            categoryId = item.categoryId,
+                                            type = item.type,
+                                            currencyCode = item.currencyCode,
+                                            range = snapshot.range,
+                                        ),
+                                    )
                                 },
                             )
                         }
@@ -319,6 +327,14 @@ data class StatsUiState(
     val settings: MoneyTrackerSettings? = null,
     val snapshot: StatsSnapshot? = null,
     val error: StatsError? = null,
+)
+
+data class StatsDrilldownFilter(
+    val accountId: Long?,
+    val categoryId: Long,
+    val type: StatsTransactionType,
+    val currencyCode: String,
+    val range: StatsRange,
 )
 
 enum class StatsError(@StringRes val messageResId: Int) {
@@ -1010,7 +1026,7 @@ private fun StatsScreenPreview() {
             onSelectCurrency = {},
             onSelectType = {},
             onSelectChartStyle = {},
-            onOpenHistory = { _, _ -> },
+            onOpenHistory = {},
             onRetry = {},
         )
     }
