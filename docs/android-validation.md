@@ -31,6 +31,15 @@ For Gradle structure or dependency changes, also run:
 .\gradlew.bat :app:dependencies --configuration debugRuntimeClasspath
 ```
 
+## Build Variants And Release Signing
+
+The app module defines `debug` and `release` build variants. Debug builds use
+standard Android debug signing and do not require secrets. Release builds require
+local or CI signing values and fail fast when signing is not configured.
+
+See `docs/release-builds.md` for the signing properties, environment variables,
+and branch policy.
+
 ## CI Checks
 
 GitHub Actions runs the same required Gradle checks for pull requests and pushes to `develop`:

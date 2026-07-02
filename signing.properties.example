@@ -1,0 +1,9 @@
+# Copy this file to ~/.gradle/money-tracker-signing.properties and fill it locally.
+# Keep the filled file outside the repository so signing secrets cannot be committed.
+#
+# releaseStoreFile accepts an absolute path or a path relative to the repository root.
+# Prefer an absolute path outside the repository.
+releaseStoreFile=C:/Users/<user>/.gradle/keystores/money-tracker-release.jks
+releaseStorePassword=change-me
+releaseKeyAlias=money-tracker-release
+releaseKeyPassword=change-me
