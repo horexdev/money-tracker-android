@@ -12,6 +12,6 @@
 - Ordinary transaction categories must be active and usable for the transaction type: `both`, `expense`, or `income`.
 - Balance adjustments are created through `applyBalanceAdjustment`: positive deltas become hidden income rows, negative deltas become hidden expense rows, both using the protected `adjustment` category.
 - Adjustment transactions are immutable through ordinary update/delete operations and excluded from history/list queries; account balances include them through the transaction ledger.
-- Transfer-linked transactions are not edited or deleted directly. MT-C04 owns linked transfer mutation rules.
+- Transfer-linked transactions are not edited or deleted directly. `core:transfers` owns linked transfer mutation rules.
 - Pagination follows the Mini App defaults: page size defaults to 20 when outside `1..100`, empty result sets still report one page.
 - `core:transactions` does not store or expose Telegram/source/server identity fields.
