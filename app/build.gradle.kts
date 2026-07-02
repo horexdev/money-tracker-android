@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:notifications"))
     implementation(project(":core:preferences"))
     implementation(project(":core:stats"))
     implementation(project(":core:transactions"))

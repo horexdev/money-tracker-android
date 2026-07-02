@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">Оповещения по бюджетам</string>
+    <string name="notification_channel_budget_alerts_description">Локальные оповещения о порогах бюджета.</string>
+    <string name="notification_channel_recurring_reminders_name">Повторяющиеся напоминания</string>
+    <string name="notification_channel_recurring_reminders_description">Локальные напоминания о повторяющихся операциях.</string>
+    <string name="notification_channel_goal_milestones_name">Этапы целей</string>
+    <string name="notification_channel_goal_milestones_description">Локальные уведомления о прогрессе целей накоплений.</string>
+    <string name="notification_channel_weekly_summary_name">Недельная сводка</string>
+    <string name="notification_channel_weekly_summary_description">Локальная недельная сводка по финансам.</string>
+</resources>

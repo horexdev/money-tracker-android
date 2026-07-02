@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">Budget alerts</string>
+    <string name="notification_channel_budget_alerts_description">Local alerts when budget thresholds need attention.</string>
+    <string name="notification_channel_recurring_reminders_name">Recurring reminders</string>
+    <string name="notification_channel_recurring_reminders_description">Local reminders for recurring transactions.</string>
+    <string name="notification_channel_goal_milestones_name">Goal milestones</string>
+    <string name="notification_channel_goal_milestones_description">Local updates about savings goal progress.</string>
+    <string name="notification_channel_weekly_summary_name">Weekly summary</string>
+    <string name="notification_channel_weekly_summary_description">Local weekly finance summary notifications.</string>
+</resources>
