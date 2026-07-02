@@ -1,7 +1,9 @@
 package dev.horex.moneytracker.core.database.dao
 
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Embedded
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -19,6 +21,19 @@ import dev.horex.moneytracker.core.database.model.SavingsGoalEntity
 import dev.horex.moneytracker.core.database.model.TransactionEntity
 import dev.horex.moneytracker.core.database.model.TransactionTemplateEntity
 import dev.horex.moneytracker.core.database.model.TransferEntity
+
+data class TransactionWithRelations(
+    @Embedded
+    val transaction: TransactionEntity,
+    @ColumnInfo(name = "category_name")
+    val categoryName: String,
+    @ColumnInfo(name = "category_icon")
+    val categoryIcon: String,
+    @ColumnInfo(name = "category_color")
+    val categoryColor: String,
+    @ColumnInfo(name = "account_name")
+    val accountName: String,
+)
 
 @Dao
 interface LocalProfileDao {
@@ -331,8 +346,29 @@ interface TransactionDao {
     @Update
     suspend fun update(transaction: TransactionEntity)
 
+    @Update
+    suspend fun updateAndReturnCount(transaction: TransactionEntity): Int
+
     @Query("SELECT * FROM transactions WHERE id = :transactionId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, transactionId: Long): TransactionEntity?
+
+    @Query(
+        """
+        SELECT
+            t.*,
+            c.name AS category_name,
+            c.icon AS category_icon,
+            c.color AS category_color,
+            a.name AS account_name
+        FROM transactions t
+        JOIN categories c ON c.id = t.category_id
+        JOIN accounts a ON a.id = t.account_id
+        WHERE t.id = :transactionId
+          AND t.profile_id = :profileId
+          AND t.is_adjustment = 0
+        """,
+    )
+    suspend fun getVisibleWithRelations(profileId: Long, transactionId: Long): TransactionWithRelations?
 
     @Query(
         """
@@ -371,8 +407,67 @@ interface TransactionDao {
     @Query("SELECT COUNT(*) FROM transactions WHERE profile_id = :profileId AND is_adjustment = 0")
     suspend fun countHistory(profileId: Long): Int
 
+    @Query(
+        """
+        SELECT
+            t.*,
+            c.name AS category_name,
+            c.icon AS category_icon,
+            c.color AS category_color,
+            a.name AS account_name
+        FROM transactions t
+        JOIN categories c ON c.id = t.category_id
+        JOIN accounts a ON a.id = t.account_id
+        WHERE t.profile_id = :profileId
+          AND t.is_adjustment = 0
+          AND (:accountId IS NULL OR t.account_id = :accountId)
+          AND (:categoryId IS NULL OR t.category_id = :categoryId)
+          AND (:fromEpochMillis IS NULL OR t.created_at_epoch_millis >= :fromEpochMillis)
+          AND (:toEpochMillis IS NULL OR t.created_at_epoch_millis <= :toEpochMillis)
+        ORDER BY t.created_at_epoch_millis DESC, t.id DESC
+        LIMIT :limit OFFSET :offset
+        """,
+    )
+    suspend fun listVisibleWithFilters(
+        profileId: Long,
+        accountId: Long?,
+        categoryId: Long?,
+        fromEpochMillis: Long?,
+        toEpochMillis: Long?,
+        limit: Int,
+        offset: Int,
+    ): List<TransactionWithRelations>
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM transactions
+        WHERE profile_id = :profileId
+          AND is_adjustment = 0
+          AND (:accountId IS NULL OR account_id = :accountId)
+          AND (:categoryId IS NULL OR category_id = :categoryId)
+          AND (:fromEpochMillis IS NULL OR created_at_epoch_millis >= :fromEpochMillis)
+          AND (:toEpochMillis IS NULL OR created_at_epoch_millis <= :toEpochMillis)
+        """,
+    )
+    suspend fun countVisibleWithFilters(
+        profileId: Long,
+        accountId: Long?,
+        categoryId: Long?,
+        fromEpochMillis: Long?,
+        toEpochMillis: Long?,
+    ): Int
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM transfers
+        WHERE profile_id = :profileId
+          AND (from_transaction_id = :transactionId OR to_transaction_id = :transactionId)
+        """,
+    )
+    suspend fun countTransferLinks(profileId: Long, transactionId: Long): Int
+
     @Query("DELETE FROM transactions WHERE id = :transactionId AND profile_id = :profileId")
-    suspend fun deleteById(profileId: Long, transactionId: Long)
+    suspend fun deleteById(profileId: Long, transactionId: Long): Int
 }
 
 @Dao
