@@ -65,7 +65,7 @@ class AddTransactionScreenTest {
         composeRule.waitUntil(timeoutMillis = 5_000) {
             composeRule.onAllNodesWithText("Food").fetchSemanticsNodes().isNotEmpty()
         }
-        composeRule.onNodeWithTag("add-transaction-amount").performTextReplacement("15.25")
+        composeRule.onNodeWithTag("add-transaction-amount").performTextReplacement("15,25")
         composeRule.onNodeWithTag("add-transaction-category-1").performClick()
         composeRule.onNodeWithTag("add-transaction-note").performTextReplacement("Lunch")
         composeRule.onNodeWithTag("add-transaction-save").performClick()

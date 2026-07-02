@@ -64,8 +64,10 @@ class MoneyParserTest {
     @Test
     fun sanitizeAmountInputKeepsSingleDecimalPointAndTwoFractionDigits() {
         assertEquals("1500.50", MoneyParser.sanitizeAmountInput("1500.50"))
+        assertEquals("15.25", MoneyParser.sanitizeAmountInput("15,25"))
         assertEquals("12.34", MoneyParser.sanitizeAmountInput("1a2.3b4"))
         assertEquals("1.23", MoneyParser.sanitizeAmountInput("1.2.3"))
+        assertEquals("1.23", MoneyParser.sanitizeAmountInput("1,2,3"))
         assertEquals("1.23", MoneyParser.sanitizeAmountInput("1.2345"))
         assertEquals("123", MoneyParser.sanitizeAmountInput("0123"))
         assertEquals("0.5", MoneyParser.sanitizeAmountInput("0.5"))
@@ -76,6 +78,7 @@ class MoneyParserTest {
     @Test
     fun sanitizeSignedAmountInputKeepsLeadingNegativeSign() {
         assertEquals("-12.34", MoneyParser.sanitizeSignedAmountInput("-12.345"))
+        assertEquals("-12.34", MoneyParser.sanitizeSignedAmountInput("-12,345"))
         assertEquals("-12.34", MoneyParser.sanitizeSignedAmountInput("--12.34"))
         assertEquals("1234", MoneyParser.sanitizeSignedAmountInput("12-34"))
         assertEquals("-", MoneyParser.sanitizeSignedAmountInput("-"))
