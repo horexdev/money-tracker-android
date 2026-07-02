@@ -53,5 +53,5 @@ jobs:
         run: |
           ./gradlew test
           ./gradlew lint
-          ./gradlew assembleDebugAndroidTest
+          ./gradlew assembleDebugAndroidTest --no-daemon --max-workers=1
           ./gradlew assembleDebug
