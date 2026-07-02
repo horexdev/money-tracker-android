@@ -109,6 +109,42 @@ class HistoryScreenTest {
     }
 
     @Test
+    fun historyRouteAppliesInitialDrilldownFiltersOnRepositoryQuery() {
+        val transactionsRepository = FakeTransactionsRepository(transactionsFixture)
+
+        composeRule.setContent {
+            MoneyTrackerTheme {
+                HistoryRoute(
+                    localProfileBootstrapper = LocalProfileBootstrapper { profileFixture },
+                    transactionsRepository = transactionsRepository,
+                    accountsRepository = FakeAccountsRepository(),
+                    categoriesRepository = FakeCategoriesRepository(),
+                    initialFilters = HistoryFilters(
+                        accountId = 1,
+                        categoryId = 1,
+                        transactionType = TransactionType.Expense,
+                        currencyCode = "USD",
+                        fromEpochMillis = 1_782_864_000_000L,
+                        toEpochMillis = 1_785_542_399_999L,
+                    ),
+                )
+            }
+        }
+
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            transactionsRepository.lastQuery?.currencyCode == "USD"
+        }
+
+        val query = transactionsRepository.lastQuery
+        assertEquals(1L, query?.accountId)
+        assertEquals(1L, query?.categoryId)
+        assertEquals(TransactionType.Expense, query?.type)
+        assertEquals("USD", query?.currencyCode)
+        assertEquals(1_782_864_000_000L, query?.fromEpochMillis)
+        assertEquals(1_785_542_399_999L, query?.toEpochMillis)
+    }
+
+    @Test
     fun historyRouteShowsLinkedTransferDeleteError() {
         val transactionsRepository = FakeTransactionsRepository(
             transactions = transactionsFixture.take(1),
@@ -147,6 +183,8 @@ private class FakeTransactionsRepository(
 
     override suspend fun listTransactions(profileId: Long, query: TransactionQuery): TransactionPage {
         lastQuery = query
+        val fromEpochMillis = query.fromEpochMillis
+        val toEpochMillis = query.toEpochMillis
         val filtered = transactions.filter { transaction ->
             val search = query.searchText?.lowercase().orEmpty()
             val matchesSearch = search.isEmpty() ||
@@ -155,7 +193,19 @@ private class FakeTransactionsRepository(
                 transaction.accountName.lowercase().contains(search)
             val matchesAccount = query.accountId == null || transaction.accountId == query.accountId
             val matchesCategory = query.categoryId == null || transaction.categoryId == query.categoryId
-            matchesSearch && matchesAccount && matchesCategory
+            val matchesType = query.type == null || transaction.type == query.type
+            val matchesCurrency = query.currencyCode == null || transaction.currencyCode == query.currencyCode
+            val matchesFrom = fromEpochMillis == null ||
+                transaction.createdAtEpochMillis >= fromEpochMillis
+            val matchesTo = toEpochMillis == null ||
+                transaction.createdAtEpochMillis <= toEpochMillis
+            matchesSearch &&
+                matchesAccount &&
+                matchesCategory &&
+                matchesType &&
+                matchesCurrency &&
+                matchesFrom &&
+                matchesTo
         }
         val totalPages = max(1, (filtered.size + query.pageSize - 1) / query.pageSize)
         val currentPage = query.page.coerceIn(1, totalPages)

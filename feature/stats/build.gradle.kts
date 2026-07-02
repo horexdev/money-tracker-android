@@ -1,30 +1,15 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "dev.horex.moneytracker"
+    namespace = "dev.horex.moneytracker.feature.stats"
     compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "dev.horex.moneytracker"
         minSdk = libs.versions.androidMinSdk.get().toInt()
-        targetSdk = libs.versions.androidTargetSdk.get().toInt()
-        versionCode = 1
-        versionName = "0.1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
     }
 
     compileOptions {
@@ -35,34 +20,21 @@ android {
 
 dependencies {
     implementation(project(":core:accounts"))
-    implementation(project(":core:balance"))
-    implementation(project(":core:categories"))
     implementation(project(":core:database"))
     implementation(project(":core:designsystem"))
-    implementation(project(":core:navigation"))
+    implementation(project(":core:money"))
     implementation(project(":core:preferences"))
     implementation(project(":core:stats"))
-    implementation(project(":core:transactions"))
-    implementation(project(":feature:accounts"))
-    implementation(project(":feature:addtransaction"))
-    implementation(project(":feature:categories"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:history"))
-    implementation(project(":feature:stats"))
 
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.coroutines.android)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-
-    testImplementation(libs.junit)
 
     androidTestImplementation(project(":core:testing"))
 }

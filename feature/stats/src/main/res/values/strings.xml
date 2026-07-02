@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Stats</string>
+    <string name="stats_subtitle">Category breakdown, trends, and drilldown.</string>
+    <string name="stats_loading">Loading stats</string>
+    <string name="stats_retry">Retry</string>
+    <string name="stats_error_generic">Stats could not be loaded.</string>
+    <string name="stats_empty_title">No stats for this filter</string>
+    <string name="stats_empty_body">Change account, period, or add transactions to see charts.</string>
+    <string name="stats_filter_accounts">Accounts</string>
+    <string name="stats_filter_period">Period</string>
+    <string name="stats_filter_currency">Currency</string>
+    <string name="stats_filter_type">Breakdown</string>
+    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_all_accounts">All accounts</string>
+    <string name="stats_today">Today</string>
+    <string name="stats_week">Week</string>
+    <string name="stats_month">Month</string>
+    <string name="stats_last_month">Last month</string>
+    <string name="stats_expense">Expense</string>
+    <string name="stats_income">Income</string>
+    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_stacked_bar">Stacked</string>
+    <string name="stats_style_dual_bar">Income / expense</string>
+    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_income_total">Income</string>
+    <string name="stats_expense_total">Expense</string>
+    <string name="stats_net_total">Net</string>
+    <string name="stats_transactions_count">%1$d tx</string>
+    <string name="stats_open_history">Open transactions for %1$s</string>
+</resources>

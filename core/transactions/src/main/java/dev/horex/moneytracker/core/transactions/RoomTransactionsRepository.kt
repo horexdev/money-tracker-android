@@ -8,6 +8,7 @@ import dev.horex.moneytracker.core.database.model.CategoryEntity
 import dev.horex.moneytracker.core.database.model.TransactionEntity
 import java.time.Instant
 import java.time.ZoneOffset
+import java.util.Locale
 
 class RoomTransactionsRepository(
     private val database: MoneyTrackerDatabase,
@@ -108,6 +109,8 @@ class RoomTransactionsRepository(
             profileId = profileId,
             accountId = normalized.accountId,
             categoryId = normalized.categoryId,
+            type = normalized.type?.storageValue,
+            currencyCode = normalized.currencyCode,
             fromEpochMillis = normalized.fromEpochMillis,
             toEpochMillis = normalized.toEpochMillis,
             searchText = normalized.searchText,
@@ -119,6 +122,8 @@ class RoomTransactionsRepository(
             profileId = profileId,
             accountId = normalized.accountId,
             categoryId = normalized.categoryId,
+            type = normalized.type?.storageValue,
+            currencyCode = normalized.currencyCode,
             fromEpochMillis = normalized.fromEpochMillis,
             toEpochMillis = normalized.toEpochMillis,
             searchText = normalized.searchText,
@@ -231,6 +236,7 @@ private fun TransactionQuery.normalized(): TransactionQuery {
     return copy(
         page = page.coerceAtLeast(1),
         pageSize = safePageSize,
+        currencyCode = currencyCode?.trim()?.uppercase(Locale.US)?.takeIf { it.isNotEmpty() },
         searchText = searchText?.trim()?.takeIf { it.isNotEmpty() }?.take(MAX_TRANSACTION_SEARCH_LENGTH),
     )
 }

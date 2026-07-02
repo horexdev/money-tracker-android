@@ -471,6 +471,8 @@ interface TransactionDao {
           AND t.is_adjustment = 0
           AND (:accountId IS NULL OR t.account_id = :accountId)
           AND (:categoryId IS NULL OR t.category_id = :categoryId)
+          AND (:type IS NULL OR t.type = :type)
+          AND (:currencyCode IS NULL OR t.currency_code = :currencyCode)
           AND (:fromEpochMillis IS NULL OR t.created_at_epoch_millis >= :fromEpochMillis)
           AND (:toEpochMillis IS NULL OR t.created_at_epoch_millis <= :toEpochMillis)
           AND (
@@ -487,6 +489,8 @@ interface TransactionDao {
         profileId: Long,
         accountId: Long?,
         categoryId: Long?,
+        type: String?,
+        currencyCode: String?,
         fromEpochMillis: Long?,
         toEpochMillis: Long?,
         searchText: String?,
@@ -503,6 +507,8 @@ interface TransactionDao {
           AND t.is_adjustment = 0
           AND (:accountId IS NULL OR t.account_id = :accountId)
           AND (:categoryId IS NULL OR t.category_id = :categoryId)
+          AND (:type IS NULL OR t.type = :type)
+          AND (:currencyCode IS NULL OR t.currency_code = :currencyCode)
           AND (:fromEpochMillis IS NULL OR t.created_at_epoch_millis >= :fromEpochMillis)
           AND (:toEpochMillis IS NULL OR t.created_at_epoch_millis <= :toEpochMillis)
           AND (
@@ -517,6 +523,8 @@ interface TransactionDao {
         profileId: Long,
         accountId: Long?,
         categoryId: Long?,
+        type: String?,
+        currencyCode: String?,
         fromEpochMillis: Long?,
         toEpochMillis: Long?,
         searchText: String?,

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Статистика</string>
+    <string name="stats_subtitle">Разбивка по категориям, графики и переход к операциям.</string>
+    <string name="stats_loading">Загружаем статистику</string>
+    <string name="stats_retry">Повторить</string>
+    <string name="stats_error_generic">Не удалось загрузить статистику.</string>
+    <string name="stats_empty_title">Нет статистики для фильтра</string>
+    <string name="stats_empty_body">Измените счет, период или добавьте операции, чтобы увидеть графики.</string>
+    <string name="stats_filter_accounts">Счета</string>
+    <string name="stats_filter_period">Период</string>
+    <string name="stats_filter_currency">Валюта</string>
+    <string name="stats_filter_type">Разбивка</string>
+    <string name="stats_filter_chart_style">Стиль графика</string>
+    <string name="stats_all_accounts">Все счета</string>
+    <string name="stats_today">Сегодня</string>
+    <string name="stats_week">Неделя</string>
+    <string name="stats_month">Месяц</string>
+    <string name="stats_last_month">Прошлый месяц</string>
+    <string name="stats_expense">Расходы</string>
+    <string name="stats_income">Доходы</string>
+    <string name="stats_style_donut">Кольцо</string>
+    <string name="stats_style_stacked_bar">Стек</string>
+    <string name="stats_style_dual_bar">Доход / расход</string>
+    <string name="stats_style_profit_bars">Профит</string>
+    <string name="stats_income_total">Доходы</string>
+    <string name="stats_expense_total">Расходы</string>
+    <string name="stats_net_total">Итого</string>
+    <string name="stats_transactions_count">%1$d оп.</string>
+    <string name="stats_open_history">Открыть операции: %1$s</string>
+</resources>
