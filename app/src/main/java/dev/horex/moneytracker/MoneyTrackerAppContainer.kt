@@ -1,6 +1,7 @@
 package dev.horex.moneytracker
 
 import android.content.Context
+import dev.horex.moneytracker.core.accounts.RoomAccountsRepository
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
 import dev.horex.moneytracker.core.database.profile.LocalProfileDefaults
@@ -11,6 +12,7 @@ import dev.horex.moneytracker.core.database.security.AndroidDatabasePassphraseSt
 import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
 import dev.horex.moneytracker.core.preferences.DataStoreActiveProfileIdStore
 import dev.horex.moneytracker.core.preferences.createAppPreferencesDataStore
+import dev.horex.moneytracker.core.transactions.RoomTransactionsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -51,6 +53,14 @@ internal class MoneyTrackerAppContainer(
             ),
             profileSeeder = DefaultProfileSeedRepository(database),
         )
+    }
+
+    val accountsRepository: RoomAccountsRepository by lazy {
+        RoomAccountsRepository(database)
+    }
+
+    val transactionsRepository: RoomTransactionsRepository by lazy {
+        RoomTransactionsRepository(database)
     }
 
     fun close() {

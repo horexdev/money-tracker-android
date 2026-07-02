@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.horex.moneytracker.core.database.profile.LocalProfile
@@ -35,6 +36,21 @@ class MoneyTrackerAppComposeTest {
         composeRule.onNodeWithText(context.getString(R.string.tab_more)).assertIsDisplayed()
 
         assertTrue(MoneyTrackerTestFixtures.cashAccount.localId > 0L)
+    }
+
+    @Test
+    fun moreRouteLinksToAccountsRoute() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+
+        composeRule.setContent {
+            MoneyTrackerApp()
+        }
+
+        composeRule.onNodeWithText(context.getString(R.string.tab_more)).performClick()
+        composeRule.onNodeWithText(context.getString(R.string.accounts_title)).assertIsDisplayed()
+        composeRule.onNodeWithText(context.getString(R.string.accounts_more_subtitle)).assertIsDisplayed()
+        composeRule.onNodeWithText(context.getString(R.string.accounts_title)).performClick()
+        composeRule.onNodeWithText(context.getString(R.string.accounts_placeholder_subtitle)).assertIsDisplayed()
     }
 
     @Test
