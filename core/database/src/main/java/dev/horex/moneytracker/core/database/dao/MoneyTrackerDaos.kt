@@ -62,6 +62,25 @@ data class BalanceLedgerEntry(
     val snapshotDate: String,
 )
 
+data class CategoryStatsRow(
+    @ColumnInfo(name = "category_id")
+    val categoryId: Long,
+    @ColumnInfo(name = "category_name")
+    val categoryName: String,
+    @ColumnInfo(name = "category_icon")
+    val categoryIcon: String,
+    @ColumnInfo(name = "category_color")
+    val categoryColor: String,
+    @ColumnInfo(name = "type")
+    val type: String,
+    @ColumnInfo(name = "total_cents")
+    val totalCents: Long,
+    @ColumnInfo(name = "transaction_count")
+    val transactionCount: Long,
+    @ColumnInfo(name = "currency_code")
+    val currencyCode: String,
+)
+
 @Dao
 interface LocalProfileDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
@@ -547,6 +566,40 @@ interface TransactionDao {
         accountId: Long?,
         includeExcludedAccounts: Boolean,
     ): List<BalanceLedgerEntry>
+
+    @Query(
+        """
+        SELECT
+            c.id AS category_id,
+            c.name AS category_name,
+            c.icon AS category_icon,
+            c.color AS category_color,
+            t.type AS type,
+            COALESCE(SUM(t.amount_cents), 0) AS total_cents,
+            COUNT(*) AS transaction_count,
+            t.currency_code AS currency_code
+        FROM transactions t
+        JOIN categories c ON c.id = t.category_id AND c.profile_id = t.profile_id
+        WHERE t.profile_id = :profileId
+          AND t.is_adjustment = 0
+          AND (:accountId IS NULL OR t.account_id = :accountId)
+          AND t.created_at_epoch_millis >= :fromEpochMillisInclusive
+          AND t.created_at_epoch_millis < :toEpochMillisExclusive
+          AND NOT EXISTS (
+              SELECT 1 FROM transfers x
+              WHERE x.profile_id = t.profile_id
+                AND (x.from_transaction_id = t.id OR x.to_transaction_id = t.id)
+          )
+        GROUP BY c.id, c.name, c.icon, c.color, t.type, t.currency_code
+        ORDER BY total_cents DESC, c.name ASC, t.currency_code ASC
+        """,
+    )
+    suspend fun getStatsByCategory(
+        profileId: Long,
+        accountId: Long?,
+        fromEpochMillisInclusive: Long,
+        toEpochMillisExclusive: Long,
+    ): List<CategoryStatsRow>
 
     @Query(
         """
