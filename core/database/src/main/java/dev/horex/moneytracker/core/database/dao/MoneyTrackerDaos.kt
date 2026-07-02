@@ -44,6 +44,24 @@ data class TransferWithAccounts(
     val toAccountName: String,
 )
 
+data class BalanceCurrencyTotals(
+    @ColumnInfo(name = "currency_code")
+    val currencyCode: String,
+    @ColumnInfo(name = "income_cents")
+    val incomeCents: Long,
+    @ColumnInfo(name = "expense_cents")
+    val expenseCents: Long,
+)
+
+data class BalanceLedgerEntry(
+    @ColumnInfo(name = "currency_code")
+    val currencyCode: String,
+    @ColumnInfo(name = "signed_amount_cents")
+    val signedAmountCents: Long,
+    @ColumnInfo(name = "snapshot_date")
+    val snapshotDate: String,
+)
+
 @Dao
 interface LocalProfileDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
@@ -465,6 +483,51 @@ interface TransactionDao {
         fromEpochMillis: Long?,
         toEpochMillis: Long?,
     ): Int
+
+    @Query(
+        """
+        SELECT
+            t.currency_code AS currency_code,
+            COALESCE(SUM(CASE WHEN t.type = 'income' THEN t.amount_cents ELSE 0 END), 0) AS income_cents,
+            COALESCE(SUM(CASE WHEN t.type = 'expense' THEN t.amount_cents ELSE 0 END), 0) AS expense_cents
+        FROM transactions t
+        JOIN accounts a ON a.id = t.account_id AND a.profile_id = t.profile_id
+        WHERE t.profile_id = :profileId
+          AND (:accountId IS NULL OR t.account_id = :accountId)
+          AND (:accountId IS NOT NULL OR :includeExcludedAccounts = 1 OR a.include_in_total = 1)
+        GROUP BY t.currency_code
+        ORDER BY t.currency_code ASC
+        """,
+    )
+    suspend fun getBalanceTotalsByCurrency(
+        profileId: Long,
+        accountId: Long?,
+        includeExcludedAccounts: Boolean,
+    ): List<BalanceCurrencyTotals>
+
+    @Query(
+        """
+        SELECT
+            t.currency_code AS currency_code,
+            CASE
+                WHEN t.type = 'income' THEN t.amount_cents
+                WHEN t.type = 'expense' THEN -t.amount_cents
+                ELSE 0
+            END AS signed_amount_cents,
+            t.snapshot_date AS snapshot_date
+        FROM transactions t
+        JOIN accounts a ON a.id = t.account_id AND a.profile_id = t.profile_id
+        WHERE t.profile_id = :profileId
+          AND (:accountId IS NULL OR t.account_id = :accountId)
+          AND (:accountId IS NOT NULL OR :includeExcludedAccounts = 1 OR a.include_in_total = 1)
+        ORDER BY t.created_at_epoch_millis ASC, t.id ASC
+        """,
+    )
+    suspend fun listBalanceLedgerEntries(
+        profileId: Long,
+        accountId: Long?,
+        includeExcludedAccounts: Boolean,
+    ): List<BalanceLedgerEntry>
 
     @Query(
         """
