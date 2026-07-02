@@ -35,6 +35,15 @@ data class TransactionWithRelations(
     val accountName: String,
 )
 
+data class TransferWithAccounts(
+    @Embedded
+    val transfer: TransferEntity,
+    @ColumnInfo(name = "from_account_name")
+    val fromAccountName: String,
+    @ColumnInfo(name = "to_account_name")
+    val toAccountName: String,
+)
+
 @Dao
 interface LocalProfileDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
@@ -480,6 +489,21 @@ interface TransferDao {
 
     @Query(
         """
+        SELECT
+            t.*,
+            from_accounts.name AS from_account_name,
+            to_accounts.name AS to_account_name
+        FROM transfers t
+        JOIN accounts from_accounts ON from_accounts.id = t.from_account_id
+        JOIN accounts to_accounts ON to_accounts.id = t.to_account_id
+        WHERE t.id = :transferId
+          AND t.profile_id = :profileId
+        """,
+    )
+    suspend fun getWithAccounts(profileId: Long, transferId: Long): TransferWithAccounts?
+
+    @Query(
+        """
         SELECT * FROM transfers
         WHERE profile_id = :profileId
         ORDER BY created_at_epoch_millis DESC
@@ -498,8 +522,39 @@ interface TransferDao {
     )
     suspend fun listByAccount(profileId: Long, accountId: Long): List<TransferEntity>
 
+    @Query(
+        """
+        SELECT
+            t.*,
+            from_accounts.name AS from_account_name,
+            to_accounts.name AS to_account_name
+        FROM transfers t
+        JOIN accounts from_accounts ON from_accounts.id = t.from_account_id
+        JOIN accounts to_accounts ON to_accounts.id = t.to_account_id
+        WHERE t.profile_id = :profileId
+          AND (:accountId IS NULL OR t.from_account_id = :accountId OR t.to_account_id = :accountId)
+        ORDER BY t.created_at_epoch_millis DESC, t.id DESC
+        LIMIT :limit OFFSET :offset
+        """,
+    )
+    suspend fun listWithFilters(
+        profileId: Long,
+        accountId: Long?,
+        limit: Int,
+        offset: Int,
+    ): List<TransferWithAccounts>
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM transfers
+        WHERE profile_id = :profileId
+          AND (:accountId IS NULL OR from_account_id = :accountId OR to_account_id = :accountId)
+        """,
+    )
+    suspend fun countWithFilters(profileId: Long, accountId: Long?): Int
+
     @Query("DELETE FROM transfers WHERE id = :transferId AND profile_id = :profileId")
-    suspend fun deleteById(profileId: Long, transferId: Long)
+    suspend fun deleteById(profileId: Long, transferId: Long): Int
 }
 
 @Dao
