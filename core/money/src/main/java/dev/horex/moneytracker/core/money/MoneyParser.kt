@@ -74,7 +74,7 @@ object MoneyParser {
     }
 
     fun sanitizeAmountInput(input: String): String {
-        var cleaned = input.replace(Regex("[^0-9.]"), "")
+        var cleaned = input.replace(',', '.').replace(Regex("[^0-9.]"), "")
         val dotIndex = cleaned.indexOf('.')
         if (dotIndex != -1) {
             cleaned = cleaned.substring(0, dotIndex + 1) +
