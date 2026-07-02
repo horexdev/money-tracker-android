@@ -11,6 +11,11 @@ import dev.horex.moneytracker.core.database.profile.LocalProfileRepository
 import dev.horex.moneytracker.core.database.profile.normalizeLocalProfileLanguageCode
 import dev.horex.moneytracker.core.database.seed.DefaultProfileSeedRepository
 import dev.horex.moneytracker.core.database.security.AndroidDatabasePassphraseStore
+import dev.horex.moneytracker.core.notifications.AndroidMoneyTrackerNotificationBuilder
+import dev.horex.moneytracker.core.notifications.AndroidMoneyTrackerNotifier
+import dev.horex.moneytracker.core.notifications.AndroidNotificationChannelRegistrar
+import dev.horex.moneytracker.core.notifications.AndroidNotificationIntentFactory
+import dev.horex.moneytracker.core.notifications.AndroidNotificationPermissionController
 import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
 import dev.horex.moneytracker.core.preferences.DataStoreActiveProfileIdStore
 import dev.horex.moneytracker.core.preferences.RoomSettingsRepository
@@ -85,6 +90,37 @@ internal class MoneyTrackerAppContainer(
 
     val transactionsRepository: RoomTransactionsRepository by lazy {
         RoomTransactionsRepository(database)
+    }
+
+    val notificationPermissionController: AndroidNotificationPermissionController by lazy {
+        AndroidNotificationPermissionController(appContext)
+    }
+
+    val notificationChannelRegistrar: AndroidNotificationChannelRegistrar by lazy {
+        AndroidNotificationChannelRegistrar(appContext)
+    }
+
+    val notificationIntentFactory: AndroidNotificationIntentFactory by lazy {
+        AndroidNotificationIntentFactory(
+            context = appContext,
+            launcherActivityClass = MainActivity::class.java,
+        )
+    }
+
+    val notificationBuilder: AndroidMoneyTrackerNotificationBuilder by lazy {
+        AndroidMoneyTrackerNotificationBuilder(
+            context = appContext,
+            smallIconResId = R.drawable.ic_notification_money_tracker,
+        )
+    }
+
+    val notificationNotifier: AndroidMoneyTrackerNotifier by lazy {
+        AndroidMoneyTrackerNotifier(
+            context = appContext,
+            channelRegistrar = notificationChannelRegistrar,
+            permissionController = notificationPermissionController,
+            notificationBuilder = notificationBuilder,
+        )
     }
 
     fun close() {
