@@ -37,6 +37,25 @@ class RoomCategoriesRepository(
         return entities.map(CategoryEntity::toCategory)
     }
 
+    override suspend fun listAllCategories(
+        profileId: Long,
+        type: CategoryType?,
+        sortOrder: CategorySortOrder,
+    ): List<Category> {
+        val categories = if (type == null) {
+            categoryDao.listByProfile(profileId)
+        } else {
+            categoryDao.listByType(profileId, type.storageValue)
+        }.map(CategoryEntity::toCategory)
+
+        return when (sortOrder) {
+            CategorySortOrder.NameAsc,
+            CategorySortOrder.Frequency -> categories
+
+            CategorySortOrder.NameDesc -> categories.sortedByDescending { it.name.lowercase() }
+        }
+    }
+
     override suspend fun getCategory(profileId: Long, categoryId: Long): Category {
         return requireCategory(profileId, categoryId).toCategory()
     }

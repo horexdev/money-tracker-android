@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.automirrored.filled.Label
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.Add
@@ -47,6 +48,7 @@ import dev.horex.moneytracker.core.navigation.MoneyTrackerRoutes
 import dev.horex.moneytracker.core.navigation.MoneyTrackerTopLevelDestination
 import dev.horex.moneytracker.core.transactions.TransactionsRepository
 import dev.horex.moneytracker.feature.accounts.AccountsRoute
+import dev.horex.moneytracker.feature.categories.CategoriesRoute
 import dev.horex.moneytracker.feature.home.HomeRoute
 import dev.horex.moneytracker.feature.history.HistoryRoute
 
@@ -138,6 +140,9 @@ private fun MoneyTrackerNavHost(
                 onOpenAccounts = {
                     navController.navigate(MoneyTrackerRoutes.Accounts)
                 },
+                onOpenCategories = {
+                    navController.navigate(MoneyTrackerRoutes.Categories)
+                },
             )
         }
         composable(MoneyTrackerRoutes.Settings) {
@@ -147,10 +152,20 @@ private fun MoneyTrackerNavHost(
             )
         }
         composable(MoneyTrackerRoutes.Categories) {
-            LocalizedPlaceholderScreen(
-                titleResId = R.string.categories_title,
-                subtitleResId = R.string.categories_placeholder_subtitle,
-            )
+            if (
+                localProfileBootstrapper != null &&
+                categoriesRepository != null
+            ) {
+                CategoriesRoute(
+                    localProfileBootstrapper = localProfileBootstrapper,
+                    categoriesRepository = categoriesRepository,
+                )
+            } else {
+                LocalizedPlaceholderScreen(
+                    titleResId = R.string.categories_title,
+                    subtitleResId = R.string.categories_placeholder_subtitle,
+                )
+            }
         }
         composable(MoneyTrackerRoutes.Budgets) {
             LocalizedPlaceholderScreen(
@@ -206,6 +221,7 @@ private fun MoneyTrackerNavHost(
 @Composable
 private fun MoreRoute(
     onOpenAccounts: () -> Unit,
+    onOpenCategories: () -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -225,6 +241,32 @@ private fun MoreRoute(
                 leadingContent = {
                     Icon(
                         imageVector = Icons.Filled.AccountBalanceWallet,
+                        contentDescription = null,
+                    )
+                },
+                trailingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.ChevronRight,
+                        contentDescription = null,
+                    )
+                },
+            )
+            HorizontalDivider()
+        }
+        item {
+            ListItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onOpenCategories),
+                headlineContent = {
+                    Text(text = stringResource(R.string.categories_title))
+                },
+                supportingContent = {
+                    Text(text = stringResource(R.string.categories_more_subtitle))
+                },
+                leadingContent = {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.Label,
                         contentDescription = null,
                     )
                 },
@@ -350,7 +392,6 @@ private data class MorePlaceholderRoute(
 
 private val morePlaceholderRoutes = listOf(
     MorePlaceholderRoute(R.string.settings_title, R.string.settings_placeholder_subtitle),
-    MorePlaceholderRoute(R.string.categories_title, R.string.categories_placeholder_subtitle),
     MorePlaceholderRoute(R.string.budgets_title, R.string.budgets_placeholder_subtitle),
     MorePlaceholderRoute(R.string.recurring_title, R.string.recurring_placeholder_subtitle),
     MorePlaceholderRoute(R.string.templates_title, R.string.templates_placeholder_subtitle),

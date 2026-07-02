@@ -108,6 +108,14 @@ class RoomCategoriesRepositoryTest {
             )
             assertFalse(repository.listCategories(profileId).any { it.id == transferId })
             assertFalse(repository.listCategories(profileId).any { it.id == accidentalTransferId })
+            assertEquals(
+                listOf(accidentalTransferId, both.id, expense.id, income.id, savings.id, transferId),
+                repository.listAllCategories(profileId).map { it.id },
+            )
+            assertEquals(
+                listOf(accidentalTransferId, transferId),
+                repository.listAllCategories(profileId, type = CategoryType.Transfer).map { it.id },
+            )
         } finally {
             database.close()
         }

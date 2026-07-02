@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Категории</string>
+    <string name="categories_subtitle">Управление названиями, иконками, цветами и типами операций</string>
+    <string name="categories_empty_title">Категорий пока нет</string>
+    <string name="categories_empty_body">Создайте категорию, чтобы группировать доходы и расходы офлайн.</string>
+    <string name="categories_add">Добавить категорию</string>
+    <string name="categories_edit">Редактировать категорию</string>
+    <string name="categories_create">Создать категорию</string>
+    <string name="categories_save">Сохранить категорию</string>
+    <string name="categories_delete">Удалить категорию</string>
+    <string name="categories_delete_title">Удалить категорию?</string>
+    <string name="categories_delete_body">Категория будет скрыта для новых операций. В истории останется прежнее название.</string>
+    <string name="categories_cancel">Отмена</string>
+    <string name="categories_retry">Повторить</string>
+    <string name="categories_loading">Загрузка категорий</string>
+    <string name="categories_name">Название</string>
+    <string name="categories_name_placeholder">Продукты</string>
+    <string name="categories_type">Тип</string>
+    <string name="categories_color">Цвет</string>
+    <string name="categories_icon">Иконка</string>
+    <string name="categories_all">Все</string>
+    <string name="categories_type_expense">Расход</string>
+    <string name="categories_type_income">Доход</string>
+    <string name="categories_type_both">Оба</string>
+    <string name="categories_type_savings">Накопления</string>
+    <string name="categories_type_transfer">Перевод</string>
+    <string name="categories_type_adjustment">Корректировка</string>
+    <string name="categories_protected">Защищена</string>
+    <string name="categories_system">Системная</string>
+    <string name="categories_error_generic">Не удалось выполнить действие.</string>
+    <string name="categories_error_empty_name">Введите название категории.</string>
+    <string name="categories_error_duplicate_name">Категория с таким названием уже существует.</string>
+    <string name="categories_error_protected">Защищенные категории нельзя изменять.</string>
+    <string name="categories_error_not_found">Категория не найдена.</string>
+    <string name="categories_icon_food">Еда</string>
+    <string name="categories_icon_transport">Транспорт</string>
+    <string name="categories_icon_home">Дом</string>
+    <string name="categories_icon_shopping">Покупки</string>
+    <string name="categories_icon_work">Работа</string>
+    <string name="categories_icon_money">Деньги</string>
+    <string name="categories_icon_savings">Накопления</string>
+    <string name="categories_icon_transfer">Перевод</string>
+    <string name="categories_icon_other">Другое</string>
+</resources>

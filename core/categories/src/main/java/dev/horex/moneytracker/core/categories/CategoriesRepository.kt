@@ -7,6 +7,14 @@ interface CategoriesRepository {
         sortOrder: CategorySortOrder = CategorySortOrder.NameAsc,
     ): List<Category>
 
+    suspend fun listAllCategories(
+        profileId: Long,
+        type: CategoryType? = null,
+        sortOrder: CategorySortOrder = CategorySortOrder.NameAsc,
+    ): List<Category> {
+        return listCategories(profileId, type, sortOrder)
+    }
+
     suspend fun getCategory(profileId: Long, categoryId: Long): Category
 
     suspend fun getProtectedCategoryByType(profileId: Long, type: CategoryType): Category
