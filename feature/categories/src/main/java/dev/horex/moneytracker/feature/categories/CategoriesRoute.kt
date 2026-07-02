@@ -109,12 +109,13 @@ fun CategoriesRoute(
             try {
                 val profile = localProfileBootstrapper.ensureActiveProfile()
                 profileId = profile.id
+                val allCategories = categoriesRepository.listAllCategories(
+                    profileId = profile.id,
+                    sortOrder = CategorySortOrder.NameAsc,
+                )
                 uiState = CategoriesUiState(
-                    categories = categoriesRepository.listAllCategories(
-                        profileId = profile.id,
-                        type = filterSnapshot.type,
-                        sortOrder = CategorySortOrder.NameAsc,
-                    ),
+                    categories = allCategories.filteredBy(filterSnapshot),
+                    allCategories = allCategories,
                 )
             } catch (error: Throwable) {
                 uiState = uiState.copy(
@@ -133,12 +134,13 @@ fun CategoriesRoute(
             uiState = uiState.copy(isMutating = true, error = null)
             try {
                 block(activeProfileId)
+                val allCategories = categoriesRepository.listAllCategories(
+                    profileId = activeProfileId,
+                    sortOrder = CategorySortOrder.NameAsc,
+                )
                 uiState = CategoriesUiState(
-                    categories = categoriesRepository.listAllCategories(
-                        profileId = activeProfileId,
-                        type = selectedFilter.type,
-                        sortOrder = CategorySortOrder.NameAsc,
-                    ),
+                    categories = allCategories.filteredBy(selectedFilter),
+                    allCategories = allCategories,
                 )
                 if (closeSheet) {
                     sheetMode = null
@@ -164,7 +166,10 @@ fun CategoriesRoute(
         modifier = modifier,
         onSelectFilter = { filter ->
             selectedFilter = filter
-            uiState = uiState.copy(error = null)
+            uiState = uiState.copy(
+                categories = uiState.allCategories.filteredBy(filter),
+                error = null,
+            )
         },
         onRetry = { loadCategories(showLoading = true) },
         onAddCategory = {
@@ -196,7 +201,7 @@ fun CategoriesRoute(
     sheetMode?.let { mode ->
         CategoryFormSheet(
             mode = mode,
-            categories = uiState.categories,
+            categories = uiState.allCategories,
             error = uiState.error,
             isMutating = uiState.isMutating,
             onDismiss = { sheetMode = null },
@@ -798,6 +803,7 @@ private fun FormErrorMessage(error: CategoriesError) {
 data class CategoriesUiState(
     val isLoading: Boolean = false,
     val categories: List<Category> = emptyList(),
+    val allCategories: List<Category> = categories,
     val isMutating: Boolean = false,
     val error: CategoriesError? = null,
 )
@@ -885,6 +891,14 @@ private fun CategoryType.toLabel(): String {
 
 private val Category.isLockedForManagement: Boolean
     get() = isProtected || type !in EditableCategoryTypes
+
+private fun List<Category>.filteredBy(filter: CategoryTypeFilter): List<Category> {
+    val type = filter.type ?: return this
+    return filter { category ->
+        category.type == type ||
+            (type in setOf(CategoryType.Expense, CategoryType.Income) && category.type == CategoryType.Both)
+    }
+}
 
 private fun String.toCategoryIcon(): ImageVector {
     return when (this) {

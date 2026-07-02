@@ -3,10 +3,12 @@ package dev.horex.moneytracker.feature.categories
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -76,11 +78,8 @@ class CategoriesScreenTest {
         composeRule.onNodeWithText("Food").assertIsDisplayed()
         composeRule.onNodeWithTag("categories-filter-Income").performClick()
 
-        composeRule.waitUntil(timeoutMillis = 5_000) {
-            repository.lastListType == CategoryType.Income
-        }
-        assertEquals(CategoryType.Income, repository.lastListType)
         composeRule.onNodeWithText("Salary").assertIsDisplayed()
+        composeRule.onAllNodesWithText("Food").assertCountEquals(0)
     }
 
     @Test
@@ -94,6 +93,8 @@ class CategoriesScreenTest {
             }
         }
 
+        composeRule.onNodeWithTag("categories-filter-Income").performClick()
+        composeRule.onAllNodesWithText("Food").assertCountEquals(0)
         composeRule.onNodeWithContentDescription("Add category").performClick()
         composeRule.onNode(hasSetTextAction()).performTextReplacement("Food")
 
