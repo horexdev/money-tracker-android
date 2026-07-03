@@ -174,6 +174,7 @@ dependencies {
     implementation(project(":feature:history"))
     implementation(project(":feature:recurring"))
     implementation(project(":feature:stats"))
+    implementation(project(":feature:templates"))
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)

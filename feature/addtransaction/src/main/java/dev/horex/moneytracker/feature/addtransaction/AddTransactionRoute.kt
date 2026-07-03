@@ -21,6 +21,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AssistChip
 import androidx.compose.material.icons.automirrored.filled.Label
 import androidx.compose.material.icons.automirrored.filled.Notes
 import androidx.compose.material.icons.Icons
@@ -75,6 +77,10 @@ import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.money.InvalidMoneyAmountException
 import dev.horex.moneytracker.core.money.MoneyOverflowException
 import dev.horex.moneytracker.core.money.MoneyParser
+import dev.horex.moneytracker.core.templates.ApplyTransactionTemplateInput
+import dev.horex.moneytracker.core.templates.TransactionTemplate
+import dev.horex.moneytracker.core.templates.TransactionTemplateAmountMode
+import dev.horex.moneytracker.core.templates.TransactionTemplatesRepository
 import dev.horex.moneytracker.core.transactions.CreateTransactionInput
 import dev.horex.moneytracker.core.transactions.InvalidTransactionAmountException
 import dev.horex.moneytracker.core.transactions.TransactionAccountNotFoundException
@@ -94,6 +100,7 @@ fun AddTransactionRoute(
     transactionsRepository: TransactionsRepository,
     accountsRepository: AccountsRepository,
     categoriesRepository: CategoriesRepository,
+    transactionTemplatesRepository: TransactionTemplatesRepository? = null,
     onTransactionSaved: () -> Unit = {},
     modifier: Modifier = Modifier,
     todayProvider: () -> LocalDate = { LocalDate.now(ZoneOffset.UTC) },
@@ -104,6 +111,7 @@ fun AddTransactionRoute(
         mutableStateOf(AddTransactionFormState(date = todayProvider().toString()))
     }
     var uiState by remember { mutableStateOf(AddTransactionUiState(isLoading = true)) }
+    var variableTemplateTarget by remember { mutableStateOf<TransactionTemplate?>(null) }
 
     fun loadFormData(showLoading: Boolean) {
         scope.launch {
@@ -118,6 +126,7 @@ fun AddTransactionRoute(
                     profileId = profile.id,
                     sortOrder = CategorySortOrder.Frequency,
                 )
+                val quickTemplates = transactionTemplatesRepository?.listTemplates(profile.id).orEmpty()
                 val selectedAccountId = form.accountId.takeIf { selected ->
                     selected != null && accounts.any { it.id == selected }
                 } ?: accounts.firstOrNull { it.isDefault }?.id ?: accounts.firstOrNull()?.id
@@ -132,6 +141,7 @@ fun AddTransactionRoute(
                 uiState = AddTransactionUiState(
                     accounts = accounts,
                     categories = categories,
+                    quickTemplates = quickTemplates,
                 )
             } catch (error: Throwable) {
                 uiState = AddTransactionUiState(error = error.toAddTransactionError())
@@ -170,7 +180,31 @@ fun AddTransactionRoute(
         }
     }
 
-    LaunchedEffect(localProfileBootstrapper, accountsRepository, categoriesRepository) {
+    fun applyTemplate(template: TransactionTemplate, variableAmountCents: Long? = null) {
+        val templatesRepository = transactionTemplatesRepository ?: return
+        scope.launch {
+            val activeProfileId = profileId ?: localProfileBootstrapper.ensureActiveProfile().id
+            profileId = activeProfileId
+            uiState = uiState.copy(isSaving = true, error = null)
+            try {
+                templatesRepository.applyTemplate(
+                    profileId = activeProfileId,
+                    templateId = template.id,
+                    input = ApplyTransactionTemplateInput(variableAmountCents = variableAmountCents),
+                )
+                uiState = uiState.copy(isSaving = false, error = null)
+                variableTemplateTarget = null
+                onTransactionSaved()
+            } catch (error: Throwable) {
+                uiState = uiState.copy(
+                    isSaving = false,
+                    error = error.toAddTransactionError(),
+                )
+            }
+        }
+    }
+
+    LaunchedEffect(localProfileBootstrapper, accountsRepository, categoriesRepository, transactionTemplatesRepository) {
         loadFormData(showLoading = true)
     }
 
@@ -207,7 +241,23 @@ fun AddTransactionRoute(
             uiState = uiState.copy(error = null)
         },
         onSubmit = ::submit,
+        onApplyTemplate = { template ->
+            if (template.amountMode == TransactionTemplateAmountMode.Variable) {
+                variableTemplateTarget = template
+            } else {
+                applyTemplate(template)
+            }
+        },
     )
+
+    variableTemplateTarget?.let { template ->
+        AddTransactionTemplateAmountDialog(
+            template = template,
+            enabled = !uiState.isSaving,
+            onDismiss = { variableTemplateTarget = null },
+            onApply = { amountCents -> applyTemplate(template, amountCents) },
+        )
+    }
 }
 
 @Composable
@@ -222,6 +272,7 @@ fun AddTransactionScreen(
     onDateChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onSubmit: () -> Unit,
+    onApplyTemplate: (TransactionTemplate) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(modifier = modifier.fillMaxSize()) { padding ->
@@ -242,6 +293,7 @@ fun AddTransactionScreen(
                     onDateChange = onDateChange,
                     onNoteChange = onNoteChange,
                     onSubmit = onSubmit,
+                    onApplyTemplate = onApplyTemplate,
                 )
             }
 
@@ -287,6 +339,7 @@ private fun AddTransactionForm(
     onDateChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onSubmit: () -> Unit,
+    onApplyTemplate: (TransactionTemplate) -> Unit,
 ) {
     val compatibleCategories = state.categories.compatibleWith(form.type)
     val selectedAccount = state.accounts.firstOrNull { it.id == form.accountId }
@@ -308,6 +361,14 @@ private fun AddTransactionForm(
                 modifier = Modifier.padding(top = 4.dp),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+
+        item {
+            QuickTemplatesRow(
+                templates = state.quickTemplates,
+                enabled = !state.isSaving,
+                onApplyTemplate = onApplyTemplate,
             )
         }
 
@@ -425,6 +486,61 @@ private fun TransactionTypeSelector(
                     }
                 },
             )
+        }
+    }
+}
+
+@Composable
+private fun QuickTemplatesRow(
+    templates: List<TransactionTemplate>,
+    enabled: Boolean,
+    onApplyTemplate: (TransactionTemplate) -> Unit,
+) {
+    if (templates.isEmpty()) {
+        return
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(
+            text = stringResource(R.string.add_transaction_quick_templates),
+            style = MaterialTheme.typography.labelLarge,
+        )
+        Row(
+            modifier = Modifier.horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            templates.forEach { template ->
+                AssistChip(
+                    onClick = { onApplyTemplate(template) },
+                    enabled = enabled,
+                    modifier = Modifier.testTag("add-quick-template-${template.id}"),
+                    label = {
+                        Text(
+                            text = template.displayName(),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = if (template.type == TransactionType.Income) {
+                                Icons.Filled.Work
+                            } else {
+                                Icons.Filled.ShoppingCart
+                            },
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp),
+                        )
+                    },
+                    trailingIcon = {
+                        if (template.amountMode == TransactionTemplateAmountMode.Variable) {
+                            Text(
+                                text = stringResource(R.string.add_transaction_template_variable),
+                                style = MaterialTheme.typography.labelSmall,
+                            )
+                        }
+                    },
+                )
+            }
         }
     }
 }
@@ -665,10 +781,79 @@ private fun ErrorBanner(
     }
 }
 
+@Composable
+private fun AddTransactionTemplateAmountDialog(
+    template: TransactionTemplate,
+    enabled: Boolean,
+    onDismiss: () -> Unit,
+    onApply: (Long) -> Unit,
+) {
+    var amount by remember(template.id) {
+        mutableStateOf(MoneyParser.formatPlainCents(template.amountCents))
+    }
+    var showAmountError by remember(template.id) { mutableStateOf(false) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(text = stringResource(R.string.add_transaction_template_amount_title))
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(text = stringResource(R.string.add_transaction_template_amount_body))
+                OutlinedTextField(
+                    value = amount,
+                    onValueChange = {
+                        amount = MoneyParser.sanitizeAmountInput(it)
+                        showAmountError = false
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("add-template-variable-amount"),
+                    label = { Text(stringResource(R.string.add_transaction_amount)) },
+                    suffix = { Text(template.currencyCode) },
+                    isError = showAmountError,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                )
+                if (showAmountError) {
+                    Text(
+                        text = stringResource(R.string.add_transaction_error_invalid_amount),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    val amountCents = runCatching { MoneyParser.parsePositiveCents(amount) }.getOrNull()
+                    if (amountCents == null) {
+                        showAmountError = true
+                    } else {
+                        onApply(amountCents)
+                    }
+                },
+                enabled = enabled,
+                modifier = Modifier.testTag("add-template-variable-apply"),
+            ) {
+                Text(text = stringResource(R.string.add_transaction_template_apply))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(R.string.add_transaction_template_cancel))
+            }
+        },
+    )
+}
+
 data class AddTransactionUiState(
     val isLoading: Boolean = false,
     val accounts: List<Account> = emptyList(),
     val categories: List<Category> = emptyList(),
+    val quickTemplates: List<TransactionTemplate> = emptyList(),
     val isSaving: Boolean = false,
     val error: AddTransactionError? = null,
 )
@@ -759,6 +944,10 @@ private fun List<Category>.compatibleWith(type: TransactionType): List<Category>
     }
 }
 
+private fun TransactionTemplate.displayName(): String {
+    return name.ifBlank { note.ifBlank { categoryName } }
+}
+
 private fun String.toStartOfDayEpochMillis(): Long {
     return LocalDate.parse(this, DateTimeFormatter.ISO_LOCAL_DATE)
         .atStartOfDay(ZoneOffset.UTC)
@@ -810,6 +999,7 @@ private fun AddTransactionScreenPreview() {
             onDateChange = {},
             onNoteChange = {},
             onSubmit = {},
+            onApplyTemplate = {},
         )
     }
 }

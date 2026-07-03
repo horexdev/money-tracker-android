@@ -20,6 +20,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AssistChip
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.automirrored.filled.TrendingDown
@@ -35,6 +38,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -51,6 +55,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -64,6 +69,10 @@ import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
 import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerPlaceholderScreen
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.money.MoneyParser
+import dev.horex.moneytracker.core.templates.ApplyTransactionTemplateInput
+import dev.horex.moneytracker.core.templates.TransactionTemplate
+import dev.horex.moneytracker.core.templates.TransactionTemplateAmountMode
+import dev.horex.moneytracker.core.templates.TransactionTemplatesRepository
 import dev.horex.moneytracker.core.transactions.MoneyTransaction
 import dev.horex.moneytracker.core.transactions.TransactionQuery
 import dev.horex.moneytracker.core.transactions.TransactionType
@@ -80,6 +89,7 @@ fun HomeRoute(
     localProfileBootstrapper: LocalProfileBootstrapper? = null,
     balancesRepository: BalancesRepository? = null,
     transactionsRepository: TransactionsRepository? = null,
+    transactionTemplatesRepository: TransactionTemplatesRepository? = null,
     content: AppBootstrapContent? = null,
     onAddTransaction: () -> Unit = {},
     onOpenHistory: () -> Unit = {},
@@ -106,13 +116,17 @@ fun HomeRoute(
     var selectedAccountId by remember { mutableStateOf<Long?>(null) }
     var hasAppliedInitialAccount by remember { mutableStateOf(false) }
     var uiState by remember { mutableStateOf(HomeUiState(isLoading = true)) }
+    var variableTemplateTarget by remember { mutableStateOf<TransactionTemplate?>(null) }
 
     fun loadDashboard(
         requestedAccountId: Long? = selectedAccountId,
         chooseDefaultAccount: Boolean = false,
+        showLoading: Boolean = true,
     ) {
         scope.launch {
-            uiState = uiState.copy(isLoading = true, error = null)
+            if (showLoading) {
+                uiState = uiState.copy(isLoading = true, error = null)
+            }
             try {
                 val profile = localProfileBootstrapper.ensureActiveProfile()
                 val accountSnapshot = balancesRepository.getBalance(profile.id)
@@ -141,6 +155,7 @@ fun HomeRoute(
                         pageSize = RECENT_TRANSACTION_LIMIT,
                     ),
                 ).transactions
+                val quickTemplates = transactionTemplatesRepository?.listTemplates(profile.id).orEmpty()
 
                 uiState = HomeUiState(
                     snapshot = balanceSnapshot,
@@ -148,6 +163,7 @@ fun HomeRoute(
                     recentTransactions = recentTransactions,
                     selectedAccountId = accountId,
                     hideAmounts = profile.hideAmounts,
+                    quickTemplates = quickTemplates,
                 )
             } catch (error: Throwable) {
                 uiState = uiState.copy(
@@ -158,7 +174,29 @@ fun HomeRoute(
         }
     }
 
-    LaunchedEffect(localProfileBootstrapper, balancesRepository, transactionsRepository) {
+    fun applyTemplate(template: TransactionTemplate, variableAmountCents: Long? = null) {
+        val templatesRepository = transactionTemplatesRepository ?: return
+        scope.launch {
+            val activeProfileId = localProfileBootstrapper.ensureActiveProfile().id
+            uiState = uiState.copy(isApplyingTemplate = true, error = null)
+            try {
+                templatesRepository.applyTemplate(
+                    profileId = activeProfileId,
+                    templateId = template.id,
+                    input = ApplyTransactionTemplateInput(variableAmountCents = variableAmountCents),
+                )
+                variableTemplateTarget = null
+                loadDashboard(requestedAccountId = selectedAccountId, showLoading = false)
+            } catch (error: Throwable) {
+                uiState = uiState.copy(
+                    isApplyingTemplate = false,
+                    error = HomeError.Generic,
+                )
+            }
+        }
+    }
+
+    LaunchedEffect(localProfileBootstrapper, balancesRepository, transactionsRepository, transactionTemplatesRepository) {
         loadDashboard(chooseDefaultAccount = true)
     }
 
@@ -175,7 +213,23 @@ fun HomeRoute(
         onAddTransaction = onAddTransaction,
         onOpenHistory = onOpenHistory,
         onOpenStats = onOpenStats,
+        onApplyTemplate = { template ->
+            if (template.amountMode == TransactionTemplateAmountMode.Variable) {
+                variableTemplateTarget = template
+            } else {
+                applyTemplate(template)
+            }
+        },
     )
+
+    variableTemplateTarget?.let { template ->
+        HomeTemplateAmountDialog(
+            template = template,
+            enabled = !uiState.isApplyingTemplate,
+            onDismiss = { variableTemplateTarget = null },
+            onApply = { amountCents -> applyTemplate(template, amountCents) },
+        )
+    }
 }
 
 @Composable
@@ -186,6 +240,7 @@ fun HomeScreen(
     onAddTransaction: () -> Unit,
     onOpenHistory: () -> Unit,
     onOpenStats: () -> Unit,
+    onApplyTemplate: (TransactionTemplate) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.fillMaxSize()) {
@@ -202,6 +257,7 @@ fun HomeScreen(
                 onAddTransaction = onAddTransaction,
                 onOpenHistory = onOpenHistory,
                 onOpenStats = onOpenStats,
+                onApplyTemplate = onApplyTemplate,
             )
         }
     }
@@ -257,6 +313,7 @@ private fun HomeContent(
     onAddTransaction: () -> Unit,
     onOpenHistory: () -> Unit,
     onOpenStats: () -> Unit,
+    onApplyTemplate: (TransactionTemplate) -> Unit,
 ) {
     val snapshot = requireNotNull(state.snapshot)
     val selectedAccount = state.accounts.firstOrNull { it.id == state.selectedAccountId }
@@ -313,6 +370,14 @@ private fun HomeContent(
                 summary = summary,
                 hideAmounts = state.hideAmounts,
                 onOpenStats = onOpenStats,
+            )
+        }
+
+        item {
+            QuickTemplatesCard(
+                templates = state.quickTemplates,
+                enabled = !state.isApplyingTemplate,
+                onApplyTemplate = onApplyTemplate,
             )
         }
 
@@ -486,6 +551,78 @@ private fun SummaryCard(
 }
 
 @Composable
+private fun QuickTemplatesCard(
+    templates: List<TransactionTemplate>,
+    enabled: Boolean,
+    onApplyTemplate: (TransactionTemplate) -> Unit,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag("home-quick-templates"),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = stringResource(R.string.home_quick_templates),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+            )
+            if (templates.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.home_quick_templates_empty),
+                    modifier = Modifier.padding(top = 6.dp),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            } else {
+                Row(
+                    modifier = Modifier
+                        .padding(top = 12.dp)
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    templates.forEach { template ->
+                        AssistChip(
+                            onClick = { onApplyTemplate(template) },
+                            enabled = enabled,
+                            modifier = Modifier.testTag("home-quick-template-${template.id}"),
+                            label = {
+                                Text(
+                                    text = template.displayName(),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = if (template.type == TransactionType.Income) {
+                                        Icons.AutoMirrored.Filled.TrendingUp
+                                    } else {
+                                        Icons.AutoMirrored.Filled.TrendingDown
+                                    },
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp),
+                                )
+                            },
+                            trailingIcon = {
+                                if (template.amountMode == TransactionTemplateAmountMode.Variable) {
+                                    Text(
+                                        text = stringResource(R.string.home_template_variable),
+                                        style = MaterialTheme.typography.labelSmall,
+                                    )
+                                }
+                            },
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
 private fun RecentTransactionsCard(
     transactions: List<MoneyTransaction>,
     hideAmounts: Boolean,
@@ -625,6 +762,74 @@ private fun RecentTransactionRow(
     }
 }
 
+@Composable
+private fun HomeTemplateAmountDialog(
+    template: TransactionTemplate,
+    enabled: Boolean,
+    onDismiss: () -> Unit,
+    onApply: (Long) -> Unit,
+) {
+    var amount by remember(template.id) {
+        mutableStateOf(MoneyParser.formatPlainCents(template.amountCents))
+    }
+    var showAmountError by remember(template.id) { mutableStateOf(false) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(text = stringResource(R.string.home_template_amount_prompt_title))
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(text = stringResource(R.string.home_template_amount_prompt_body))
+                OutlinedTextField(
+                    value = amount,
+                    onValueChange = {
+                        amount = MoneyParser.sanitizeAmountInput(it)
+                        showAmountError = false
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("home-template-variable-amount"),
+                    label = { Text(stringResource(R.string.home_template_amount)) },
+                    suffix = { Text(template.currencyCode) },
+                    isError = showAmountError,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                )
+                if (showAmountError) {
+                    Text(
+                        text = stringResource(R.string.home_error_generic),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    val amountCents = runCatching { MoneyParser.parsePositiveCents(amount) }.getOrNull()
+                    if (amountCents == null) {
+                        showAmountError = true
+                    } else {
+                        onApply(amountCents)
+                    }
+                },
+                enabled = enabled,
+                modifier = Modifier.testTag("home-template-variable-apply"),
+            ) {
+                Text(text = stringResource(R.string.home_template_apply))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(R.string.home_template_cancel))
+            }
+        },
+    )
+}
+
 data class HomeUiState(
     val isLoading: Boolean = false,
     val snapshot: BalanceSnapshot? = null,
@@ -632,6 +837,8 @@ data class HomeUiState(
     val recentTransactions: List<MoneyTransaction> = emptyList(),
     val selectedAccountId: Long? = null,
     val hideAmounts: Boolean = false,
+    val quickTemplates: List<TransactionTemplate> = emptyList(),
+    val isApplyingTemplate: Boolean = false,
     val error: HomeError? = null,
 )
 
@@ -645,6 +852,10 @@ private fun MoneyTransaction.formatSignedAmount(hideAmounts: Boolean): String {
     }
     val sign = if (type == TransactionType.Income) "+" else "-"
     return "$sign${MoneyParser.formatPlainCents(abs(amountCents))} $currencyCode"
+}
+
+private fun TransactionTemplate.displayName(): String {
+    return name.ifBlank { note.ifBlank { categoryName } }
 }
 
 private fun formatMoney(cents: Long, currencyCode: String, hideAmounts: Boolean): String {
@@ -702,6 +913,7 @@ private fun HomeScreenPreview() {
             onAddTransaction = {},
             onOpenHistory = {},
             onOpenStats = {},
+            onApplyTemplate = {},
         )
     }
 }

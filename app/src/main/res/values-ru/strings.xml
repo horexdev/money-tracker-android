@@ -118,6 +118,7 @@
     <string name="recurring_more_subtitle">Управление запланированными доходами и расходами.</string>
     <string name="templates_title">Шаблоны</string>
     <string name="templates_placeholder_subtitle">Маршрут шаблонов операций зарегистрирован.</string>
+    <string name="templates_more_subtitle">Управление быстрыми шаблонами операций.</string>
     <string name="savings_title">Цели</string>
     <string name="savings_placeholder_subtitle">Маршрут целей накоплений зарегистрирован.</string>
     <string name="export_title">Импорт / экспорт</string>

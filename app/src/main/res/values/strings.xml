@@ -118,6 +118,7 @@
     <string name="recurring_more_subtitle">Manage scheduled income and expenses.</string>
     <string name="templates_title">Templates</string>
     <string name="templates_placeholder_subtitle">Transaction templates route is registered.</string>
+    <string name="templates_more_subtitle">Manage quick transaction shortcuts.</string>
     <string name="savings_title">Savings</string>
     <string name="savings_placeholder_subtitle">Savings goals route is registered.</string>
     <string name="export_title">Import / Export</string>
