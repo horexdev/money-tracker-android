@@ -21,6 +21,8 @@ interface CurrencyRatesRepository {
 
     suspend fun listBaseCurrencies(profileId: Long): List<String>
 
+    suspend fun listActiveCurrencyCodes(profileId: Long): List<String>
+
     suspend fun saveManualOverride(
         profileId: Long,
         input: SaveExchangeRateOverrideInput,

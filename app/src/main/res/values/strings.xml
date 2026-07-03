@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Same currency</string>
     <string name="settings_rate_source_manual">Manual override</string>
     <string name="settings_rate_source_snapshot">Saved snapshot</string>
+    <string name="settings_rate_source_system">System rate</string>
     <string name="settings_manual_rate_title">Manual rate override</string>
     <string name="settings_rate_base">Base</string>
     <string name="settings_rate_target">Target</string>

@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Même devise</string>
     <string name="settings_rate_source_manual">Commande manuelle</string>
     <string name="settings_rate_source_snapshot">instantané enregistré</string>
+    <string name="settings_rate_source_system">Taux système</string>
     <string name="settings_manual_rate_title">Forçage manuel du taux</string>
     <string name="settings_rate_base">Devise de base</string>
     <string name="settings_rate_target">Objectif</string>

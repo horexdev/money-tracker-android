@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Mata uang yang sama</string>
     <string name="settings_rate_source_manual">Penggantian manual</string>
     <string name="settings_rate_source_snapshot">Cuplikan tersimpan</string>
+    <string name="settings_rate_source_system">Kurs sistem</string>
     <string name="settings_manual_rate_title">Penggantian tarif manual</string>
     <string name="settings_rate_base">Pangkalan</string>
     <string name="settings_rate_target">Mata uang tujuan</string>

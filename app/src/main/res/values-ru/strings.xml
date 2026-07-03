@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Та же валюта</string>
     <string name="settings_rate_source_manual">Ручной курс</string>
     <string name="settings_rate_source_snapshot">Сохраненный снимок</string>
+    <string name="settings_rate_source_system">Системный курс</string>
     <string name="settings_manual_rate_title">Ручной курс</string>
     <string name="settings_rate_base">Из</string>
     <string name="settings_rate_target">В</string>

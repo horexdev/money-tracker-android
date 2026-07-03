@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Gleiche Währung</string>
     <string name="settings_rate_source_manual">Manuelle Übersteuerung</string>
     <string name="settings_rate_source_snapshot">Schnappschuss gespeichert</string>
+    <string name="settings_rate_source_system">Systemkurs</string>
     <string name="settings_manual_rate_title">Manuelle Ratenüberschreibung</string>
     <string name="settings_rate_base">Basis</string>
     <string name="settings_rate_target">Ziel</string>

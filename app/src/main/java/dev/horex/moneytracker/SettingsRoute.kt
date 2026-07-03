@@ -385,19 +385,15 @@ fun SettingsRoute(
         onUpdateOnlineRates = {
             val service = exchangeRateUpdateService ?: return@SettingsScreen
             val settings = state.settings ?: return@SettingsScreen
-            val baseCurrency = state.rateBaseInput.ifBlank { settings.baseCurrencyCode }
-            val targetCurrencies = state.displayCurrenciesInput.toCurrencyCodesInput()
-                .plus(state.rateTargetInput.takeIf(String::isNotBlank))
-                .filterNotNull()
-                .distinct()
-            if (targetCurrencies.isEmpty()) {
-                state = state.copy(error = SettingsUiError.InvalidInput, success = null)
-                return@SettingsScreen
-            }
 
             scope.launch {
                 state = state.copy(isBusy = true, error = null, success = null)
                 try {
+                    val baseCurrency = settings.baseCurrencyCode
+                    val targetCurrencies = onlineRateTargetCurrencies(
+                        baseCurrency = baseCurrency,
+                        activeCurrencyCodes = currencyRatesRepository.listActiveCurrencyCodes(settings.profileId),
+                    )
                     service.updateLatestRates(
                         baseCurrency = baseCurrency,
                         targetCurrencies = targetCurrencies,
@@ -1531,6 +1527,7 @@ enum class SettingsRateSourceUi(@StringRes val labelResId: Int) {
     SameCurrency(R.string.settings_rate_source_same),
     ManualOverride(R.string.settings_rate_source_manual),
     Snapshot(R.string.settings_rate_source_snapshot),
+    SystemRate(R.string.settings_rate_source_system),
 }
 
 enum class SettingsNotificationDeliveryState(
@@ -1718,6 +1715,7 @@ private fun ExchangeRateSource.toUi(): SettingsRateSourceUi {
         ExchangeRateSource.SameCurrency -> SettingsRateSourceUi.SameCurrency
         ExchangeRateSource.ManualOverride -> SettingsRateSourceUi.ManualOverride
         ExchangeRateSource.Snapshot -> SettingsRateSourceUi.Snapshot
+        ExchangeRateSource.SystemRate -> SettingsRateSourceUi.SystemRate
     }
 }
 
@@ -1786,6 +1784,17 @@ private fun String.toCurrencyCodesInput(): List<String> {
     return split(CurrencyInputSeparator)
         .map { it.trim().uppercase(Locale.US) }
         .filter { it.isNotBlank() }
+        .distinct()
+}
+
+internal fun onlineRateTargetCurrencies(
+    baseCurrency: String,
+    activeCurrencyCodes: List<String>,
+): List<String> {
+    val normalizedBase = baseCurrency.trim().uppercase(Locale.US)
+    return activeCurrencyCodes
+        .map { it.trim().uppercase(Locale.US) }
+        .filter { it.isNotBlank() && it != normalizedBase }
         .distinct()
 }
 

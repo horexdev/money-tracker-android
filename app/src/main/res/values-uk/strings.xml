@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">та сама валюта</string>
     <string name="settings_rate_source_manual">Ручне перевизначення</string>
     <string name="settings_rate_source_snapshot">збережений знімок</string>
+    <string name="settings_rate_source_system">Системний курс</string>
     <string name="settings_manual_rate_title">Перевизначення норми вручну</string>
     <string name="settings_rate_base">База</string>
     <string name="settings_rate_target">Ціль</string>

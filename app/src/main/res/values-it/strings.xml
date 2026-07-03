@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Stessa valuta</string>
     <string name="settings_rate_source_manual">Azionamento manuale</string>
     <string name="settings_rate_source_snapshot">istantanea salvata</string>
+    <string name="settings_rate_source_system">Tasso di sistema</string>
     <string name="settings_manual_rate_title">Override manuale della tariffa</string>
     <string name="settings_rate_base">Valuta base</string>
     <string name="settings_rate_target">Obiettivo</string>
