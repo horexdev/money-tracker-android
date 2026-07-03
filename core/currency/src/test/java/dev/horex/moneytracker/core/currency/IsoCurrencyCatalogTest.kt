@@ -14,7 +14,21 @@ class IsoCurrencyCatalogTest {
         assertTrue(IsoCurrencyCatalog.isSupported("TJS"))
         assertFalse(IsoCurrencyCatalog.isSupported("XYZ"))
         assertFalse(IsoCurrencyCatalog.isSupported("XXX"))
+        assertFalse(IsoCurrencyCatalog.isSupported("XTS"))
         assertFalse(IsoCurrencyCatalog.isSupported(""))
+    }
+
+    @Test
+    fun listsRuntimeIsoCurrenciesWithDisplayMetadataExcludingPseudoCodes() {
+        val currencies = IsoCurrencyCatalog.listCurrencies(locale = Locale.US)
+        val codes = currencies.map { it.code }
+
+        assertTrue("USD should be available in the runtime currency catalog", "USD" in codes)
+        assertTrue("EUR should be available in the runtime currency catalog", "EUR" in codes)
+        assertFalse("Pseudo no-currency code should be excluded", "XXX" in codes)
+        assertFalse("Test currency code should be excluded", "XTS" in codes)
+        assertEquals(codes.sorted(), codes)
+        assertTrue(currencies.any { it.code == "USD" && it.displayName.isNotBlank() })
     }
 
     @Test
@@ -33,5 +47,15 @@ class IsoCurrencyCatalogTest {
 
         assertTrue(results.any { it.displayName.contains("Dollar") })
         assertEquals(codes.size, codes.toSet().size)
+    }
+
+    @Test
+    fun currencyInfoMatchesCodeAndLocalizedNameQueries() {
+        val usd = IsoCurrencyCatalog.listCurrencies(locale = Locale.US)
+            .single { it.code == "USD" }
+
+        assertTrue(usd.matchesCurrencyQuery("usd", locale = Locale.US))
+        assertTrue(usd.matchesCurrencyQuery("dollar", locale = Locale.US))
+        assertTrue(usd.currencyDisplayText().startsWith("USD - "))
     }
 }

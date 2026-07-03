@@ -18,6 +18,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:currency"))
     implementation(project(":core:database"))
     implementation(project(":core:notifications"))
     implementation(libs.androidx.room.ktx)

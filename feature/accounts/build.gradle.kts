@@ -20,6 +20,7 @@ android {
 
 dependencies {
     implementation(project(":core:accounts"))
+    implementation(project(":core:currency"))
     implementation(project(":core:database"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:money"))

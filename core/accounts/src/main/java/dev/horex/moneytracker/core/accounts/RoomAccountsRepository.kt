@@ -1,6 +1,7 @@
 package dev.horex.moneytracker.core.accounts
 
 import androidx.room.withTransaction
+import dev.horex.moneytracker.core.currency.IsoCurrencyCatalog
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.model.AccountEntity
 import java.util.Locale
@@ -179,4 +180,5 @@ private fun String?.normalizedCurrencyCode(): String? {
         ?.trim()
         ?.uppercase(Locale.US)
         ?.takeIf { CurrencyCodePattern.matches(it) }
+        ?.takeIf(IsoCurrencyCatalog::isSupported)
 }
