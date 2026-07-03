@@ -2,9 +2,11 @@
 
 ## Scope
 
-`core:backup` owns the JSON DTO contract for `MoneyTrackerBackup` version `1`.
-The contract is shared by a future source-side exporter and the Android importer,
-but this module does not implement either data extraction or restore execution.
+`core:backup` owns the JSON DTO contract for `MoneyTrackerBackup` version `1`
+and the Android importer that restores validated backup data into the local Room
+database. The contract is shared by a future source-side exporter and the
+Android importer, but this module does not implement data extraction, SAF file
+selection, restore UI, or encryption.
 
 The backup format is intentionally separate from Room entities. It mirrors the
 Android offline data surface and stores only values needed to rebuild local
@@ -94,6 +96,28 @@ profile, account, category, transaction, transfer, budget, recurring
 transaction, savings goal, goal transaction, exchange rate override, and
 transaction template refs for valid syntax, forbidden ref parts, duplicates, and
 unresolved relationship refs.
+
+## Android Importer
+
+`MoneyTrackerBackupImporter` imports a decoded `MoneyTrackerBackup` into
+`MoneyTrackerDatabase`. It always runs `MoneyTrackerBackupV1Validator` before
+opening a write transaction. Validation errors fail before any DB write.
+
+The importer accepts `MoneyTrackerBackupImportOptions.selectedProfileRefs` for
+profile-level selection. `null` imports every profile in backup order. A non-null
+set imports only matching profile refs, fails if any selected ref is missing,
+and imports no profiles for an empty set.
+
+All writes for a restore attempt are wrapped in one Room `withTransaction`
+block. If any profile row or child row fails to persist, Room rolls back profile
+rows, child rows, and top-level exchange-rate snapshots written earlier in the
+same attempt.
+
+Export-local refs are used only as in-memory lookup keys while the transaction
+is running. The importer stores new local Room IDs in relationship columns such
+as `account_id`, `category_id`, `transaction_id`, and `goal_id`; it does not
+persist backup refs, source database IDs, Telegram identifiers, `legacy_*`
+fields, or source metadata.
 
 ## Domain Coverage
 
