@@ -69,6 +69,22 @@ internal class MoneyTrackerAppContainer(
         )
     }
 
+    val backgroundTaskRegistry: MutableBackgroundTaskRegistry by lazy {
+        MutableBackgroundTaskRegistry()
+    }
+
+    val backgroundTaskExecutor: BackgroundTaskExecutor by lazy {
+        BackgroundTaskExecutor(backgroundTaskRegistry)
+    }
+
+    val backgroundWorkerFactory: MoneyTrackerWorkerFactory by lazy {
+        MoneyTrackerWorkerFactory(backgroundTaskExecutor)
+    }
+
+    val backgroundWorkScheduler: MoneyTrackerBackgroundWorkScheduler by lazy {
+        MoneyTrackerBackgroundWorkScheduler.create(appContext)
+    }
+
     init {
         registerBackgroundTasks()
     }
@@ -263,22 +279,6 @@ internal class MoneyTrackerAppContainer(
                 )
             },
         )
-    }
-
-    val backgroundTaskRegistry: MutableBackgroundTaskRegistry by lazy {
-        MutableBackgroundTaskRegistry()
-    }
-
-    val backgroundTaskExecutor: BackgroundTaskExecutor by lazy {
-        BackgroundTaskExecutor(backgroundTaskRegistry)
-    }
-
-    val backgroundWorkerFactory: MoneyTrackerWorkerFactory by lazy {
-        MoneyTrackerWorkerFactory(backgroundTaskExecutor)
-    }
-
-    val backgroundWorkScheduler: MoneyTrackerBackgroundWorkScheduler by lazy {
-        MoneyTrackerBackgroundWorkScheduler.create(appContext)
     }
 
     fun startBackgroundWork() {
