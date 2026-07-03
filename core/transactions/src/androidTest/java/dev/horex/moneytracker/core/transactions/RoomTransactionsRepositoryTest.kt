@@ -311,6 +311,64 @@ class RoomTransactionsRepositoryTest {
     }
 
     @Test
+    fun listTransactionsKeepsLargeHistoryPagedAndFiltered() = runBlocking {
+        cleanUp()
+        val database = createDatabase()
+        try {
+            val profileId = insertProfile(database)
+            val cashAccountId = insertAccount(database, profileId, name = "Cash")
+            val cardAccountId = insertAccount(database, profileId, name = "Card")
+            val foodCategoryId = insertCategory(database, profileId, name = "Food", type = "expense")
+            val transportCategoryId = insertCategory(database, profileId, name = "Transport", type = "expense")
+            val repository = RoomTransactionsRepository(database)
+
+            repeat(LARGE_HISTORY_SIZE) { index ->
+                repository.addTransaction(
+                    profileId = profileId,
+                    input = CreateTransactionInput(
+                        type = TransactionType.Expense,
+                        amountCents = (index + 1).toLong(),
+                        categoryId = if (index % 2 == 0) foodCategoryId else transportCategoryId,
+                        accountId = if (index % 3 == 0) cashAccountId else cardAccountId,
+                        note = "History item $index",
+                        createdAtEpochMillis = TEST_TIME + index,
+                    ),
+                )
+            }
+
+            val firstPage = repository.listTransactions(
+                profileId = profileId,
+                query = TransactionQuery(page = 1, pageSize = 25),
+            )
+            val lastPage = repository.listTransactions(
+                profileId = profileId,
+                query = TransactionQuery(page = 5, pageSize = 25),
+            )
+            val filtered = repository.listTransactions(
+                profileId = profileId,
+                query = TransactionQuery(
+                    categoryId = foodCategoryId,
+                    page = 1,
+                    pageSize = 25,
+                ),
+            )
+
+            assertEquals(5, firstPage.totalPages)
+            assertEquals(25, firstPage.transactions.size)
+            assertEquals(120L, firstPage.transactions.first().amountCents)
+            assertEquals(96L, firstPage.transactions.last().amountCents)
+            assertEquals(20, lastPage.transactions.size)
+            assertEquals(20L, lastPage.transactions.first().amountCents)
+            assertEquals(1L, lastPage.transactions.last().amountCents)
+            assertEquals(3, filtered.totalPages)
+            assertEquals(25, filtered.transactions.size)
+            assertTrue(filtered.transactions.all { it.categoryId == foodCategoryId })
+        } finally {
+            database.close()
+        }
+    }
+
+    @Test
     fun updateTransactionChangesEditableFieldsAndSnapshotDate() = runBlocking {
         cleanUp()
         val database = createDatabase()
@@ -566,5 +624,7 @@ class RoomTransactionsRepositoryTest {
         const val TEST_DATABASE_NAME = "money-tracker-transactions-test.db"
         const val TEST_PREFERENCES_NAME = "money_tracker_transactions_test_key"
         const val TEST_KEY_ALIAS = "money_tracker_transactions_test_key"
+        const val TEST_TIME = 1_788_200_000_000L
+        const val LARGE_HISTORY_SIZE = 120
     }
 }

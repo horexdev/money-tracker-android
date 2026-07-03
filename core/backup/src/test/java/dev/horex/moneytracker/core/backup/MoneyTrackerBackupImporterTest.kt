@@ -80,6 +80,53 @@ class MoneyTrackerBackupImporterTest {
     }
 
     @Test
+    fun importsLargeProfileInSingleRollbackScope() = runTest {
+        val store = FakeImportStore()
+        val importer = MoneyTrackerBackupImporter(store)
+        val backup = MoneyTrackerBackup(
+            createdAtEpochMillis = TEST_TIME,
+            profiles = listOf(largeTransactionProfile(transactionCount = LARGE_IMPORT_TRANSACTION_COUNT)),
+        )
+
+        val result = importer.importBackup(backup)
+
+        assertEquals(1, store.transactionsStarted)
+        assertEquals(1, result.importedProfileCount)
+        assertEquals(LARGE_IMPORT_TRANSACTION_COUNT, result.importedProfiles.single().counts.transactions)
+        assertEquals(LARGE_IMPORT_TRANSACTION_COUNT, store.transactions.size)
+        assertEquals(
+            (1..LARGE_IMPORT_TRANSACTION_COUNT).toList(),
+            store.transactions.map { it.amountCents.toInt() },
+        )
+    }
+
+    @Test
+    fun backupJsonKeepsMigrationIdentityFieldsOutOfContract() {
+        val json = MoneyTrackerBackupV1Json.encodeToString(
+            MoneyTrackerBackup(
+                createdAtEpochMillis = TEST_TIME,
+                profiles = listOf(sampleProfile(ref = "profile:main")),
+            ),
+        ).lowercase()
+
+        listOf(
+            "telegram",
+            "init_data",
+            "initdata",
+            "bot_",
+            "chat_",
+            "legacy_",
+            "source_",
+            "user_id",
+            "username",
+            "first_name",
+            "last_name",
+        ).forEach { forbidden ->
+            assertTrue("Backup JSON must not contain $forbidden", forbidden !in json)
+        }
+    }
+
+    @Test
     fun validationErrorsPreventWritesBeforeTransaction() {
         val store = FakeImportStore()
         val importer = MoneyTrackerBackupImporter(store)
@@ -287,6 +334,35 @@ class MoneyTrackerBackupImporterTest {
         )
     }
 
+    private fun largeTransactionProfile(transactionCount: Int): BackupProfile {
+        val accountRef = "account:large-main"
+        val categoryRef = "category:large-food"
+        return BackupProfile(
+            ref = "profile:large",
+            label = "Large",
+            languageCode = "en",
+            createdAtEpochMillis = TEST_TIME,
+            updatedAtEpochMillis = TEST_TIME,
+            accounts = listOf(sampleAccount(accountRef, "Large Main", isDefault = true)),
+            categories = listOf(
+                sampleCategory(categoryRef, "Large Food", BackupCategoryType.Expense, isProtected = false),
+            ),
+            transactions = (1..transactionCount).map { index ->
+                BackupTransaction(
+                    ref = "transaction:large-$index",
+                    type = BackupTransactionType.Expense,
+                    amountCents = index.toLong(),
+                    categoryRef = categoryRef,
+                    accountRef = accountRef,
+                    note = "Large import $index",
+                    currencyCode = "USD",
+                    snapshotDate = "2026-07-01",
+                    createdAtEpochMillis = TEST_TIME + index,
+                )
+            },
+        )
+    }
+
     private fun sampleAccount(ref: String, name: String, isDefault: Boolean): BackupAccount {
         return BackupAccount(
             ref = ref,
@@ -349,6 +425,7 @@ class MoneyTrackerBackupImporterTest {
 
     private companion object {
         const val TEST_TIME = 1_788_200_000_000L
+        const val LARGE_IMPORT_TRANSACTION_COUNT = 500
     }
 }
 
@@ -418,6 +495,7 @@ private class FakeImportStore(
             profileId = profileId,
             accountId = accountId,
             categoryId = categoryId,
+            amountCents = transaction.amountCents,
         )
         return id
     }
@@ -590,7 +668,13 @@ private data class FakeImportSnapshot(
 private data class FakeProfile(val id: Long, val label: String)
 private data class FakeAccount(val id: Long, val profileId: Long, val name: String)
 private data class FakeCategory(val id: Long, val profileId: Long, val name: String)
-private data class FakeTransaction(val id: Long, val profileId: Long, val accountId: Long, val categoryId: Long)
+private data class FakeTransaction(
+    val id: Long,
+    val profileId: Long,
+    val accountId: Long,
+    val categoryId: Long,
+    val amountCents: Long,
+)
 private data class FakeTransfer(
     val id: Long,
     val profileId: Long,

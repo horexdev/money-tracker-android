@@ -105,16 +105,28 @@ class RoomTransactionsRepository(
         query: TransactionQuery,
     ): TransactionPage {
         val normalized = query.normalized()
-        val total = transactionDao.countVisibleWithFilters(
-            profileId = profileId,
-            accountId = normalized.accountId,
-            categoryId = normalized.categoryId,
-            type = normalized.type?.storageValue,
-            currencyCode = normalized.currencyCode,
-            fromEpochMillis = normalized.fromEpochMillis,
-            toEpochMillis = normalized.toEpochMillis,
-            searchText = normalized.searchText,
-        )
+        val total = if (normalized.searchText == null) {
+            transactionDao.countVisibleWithFiltersNoSearch(
+                profileId = profileId,
+                accountId = normalized.accountId,
+                categoryId = normalized.categoryId,
+                type = normalized.type?.storageValue,
+                currencyCode = normalized.currencyCode,
+                fromEpochMillis = normalized.fromEpochMillis,
+                toEpochMillis = normalized.toEpochMillis,
+            )
+        } else {
+            transactionDao.countVisibleWithFilters(
+                profileId = profileId,
+                accountId = normalized.accountId,
+                categoryId = normalized.categoryId,
+                type = normalized.type?.storageValue,
+                currencyCode = normalized.currencyCode,
+                fromEpochMillis = normalized.fromEpochMillis,
+                toEpochMillis = normalized.toEpochMillis,
+                searchText = normalized.searchText,
+            )
+        }
         val totalPages = total.totalPages(normalized.pageSize)
         val currentPage = normalized.page.coerceIn(1, totalPages)
         val offset = (currentPage - 1) * normalized.pageSize
