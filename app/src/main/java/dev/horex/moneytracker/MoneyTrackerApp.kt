@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -26,6 +27,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +48,7 @@ import dev.horex.moneytracker.backup.MoneyTrackerBackupDocumentRepository
 import dev.horex.moneytracker.core.accounts.AccountsRepository
 import dev.horex.moneytracker.core.balance.BalancesRepository
 import dev.horex.moneytracker.core.categories.CategoriesRepository
+import dev.horex.moneytracker.core.currency.CurrencyRatesRepository
 import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerPlaceholderScreen
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerThemeMode
@@ -53,6 +56,9 @@ import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
 import dev.horex.moneytracker.core.database.profile.LocalProfileRepository
 import dev.horex.moneytracker.core.navigation.MoneyTrackerRoutes
 import dev.horex.moneytracker.core.navigation.MoneyTrackerTopLevelDestination
+import dev.horex.moneytracker.core.preferences.AppPreferences
+import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
+import dev.horex.moneytracker.core.preferences.AppThemePreference
 import dev.horex.moneytracker.core.preferences.SettingsRepository
 import dev.horex.moneytracker.core.stats.StatsRepository
 import dev.horex.moneytracker.core.stats.StatsTransactionType
@@ -72,20 +78,26 @@ fun MoneyTrackerApp(
     accountsRepository: AccountsRepository? = null,
     balancesRepository: BalancesRepository? = null,
     categoriesRepository: CategoriesRepository? = null,
+    currencyRatesRepository: CurrencyRatesRepository? = null,
     settingsRepository: SettingsRepository? = null,
     statsRepository: StatsRepository? = null,
     transactionsRepository: TransactionsRepository? = null,
     localProfileRepository: LocalProfileRepository? = null,
+    appPreferencesRepository: AppPreferencesRepository? = null,
     backupDocumentRepository: MoneyTrackerBackupDocumentRepository? = null,
 ) {
     val navController = rememberNavController()
     var historyInitialFilters by remember { mutableStateOf(HistoryFilters()) }
+    val fallbackPreferencesState = remember { mutableStateOf(AppPreferences()) }
+    val appPreferencesState = appPreferencesRepository?.preferences?.collectAsState(
+        initial = AppPreferences(),
+    ) ?: fallbackPreferencesState
 
     LaunchedEffect(localProfileBootstrapper) {
         localProfileBootstrapper?.ensureActiveProfile()
     }
 
-    MoneyTrackerTheme(themeMode = MoneyTrackerThemeMode.System) {
+    MoneyTrackerTheme(themeMode = appPreferencesState.value.theme.toThemeMode()) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             bottomBar = {
@@ -105,10 +117,12 @@ fun MoneyTrackerApp(
                 accountsRepository = accountsRepository,
                 balancesRepository = balancesRepository,
                 categoriesRepository = categoriesRepository,
+                currencyRatesRepository = currencyRatesRepository,
                 settingsRepository = settingsRepository,
                 statsRepository = statsRepository,
                 transactionsRepository = transactionsRepository,
                 localProfileRepository = localProfileRepository,
+                appPreferencesRepository = appPreferencesRepository,
                 backupDocumentRepository = backupDocumentRepository,
                 historyInitialFilters = historyInitialFilters,
                 onHistoryInitialFiltersChange = { historyInitialFilters = it },
@@ -127,10 +141,12 @@ private fun MoneyTrackerNavHost(
     accountsRepository: AccountsRepository?,
     balancesRepository: BalancesRepository?,
     categoriesRepository: CategoriesRepository?,
+    currencyRatesRepository: CurrencyRatesRepository?,
     settingsRepository: SettingsRepository?,
     statsRepository: StatsRepository?,
     transactionsRepository: TransactionsRepository?,
     localProfileRepository: LocalProfileRepository?,
+    appPreferencesRepository: AppPreferencesRepository?,
     backupDocumentRepository: MoneyTrackerBackupDocumentRepository?,
     historyInitialFilters: HistoryFilters,
     onHistoryInitialFiltersChange: (HistoryFilters) -> Unit,
@@ -263,16 +279,37 @@ private fun MoneyTrackerNavHost(
                 onOpenCategories = {
                     navController.navigate(MoneyTrackerRoutes.Categories)
                 },
+                onOpenSettings = {
+                    navController.navigate(MoneyTrackerRoutes.Settings)
+                },
                 onOpenExport = {
                     navController.navigate(MoneyTrackerRoutes.Export)
                 },
             )
         }
         composable(MoneyTrackerRoutes.Settings) {
-            LocalizedPlaceholderScreen(
-                titleResId = R.string.settings_title,
-                subtitleResId = R.string.settings_placeholder_subtitle,
-            )
+            if (
+                settingsRepository != null &&
+                localProfileRepository != null &&
+                currencyRatesRepository != null
+            ) {
+                SettingsRoute(
+                    settingsRepository = settingsRepository,
+                    localProfileRepository = localProfileRepository,
+                    currencyRatesRepository = currencyRatesRepository,
+                    appPreferencesRepository = appPreferencesRepository,
+                    onOpenImportExport = {
+                        navController.navigate(MoneyTrackerRoutes.Export) {
+                            launchSingleTop = true
+                        }
+                    },
+                )
+            } else {
+                LocalizedPlaceholderScreen(
+                    titleResId = R.string.settings_title,
+                    subtitleResId = R.string.settings_placeholder_subtitle,
+                )
+            }
         }
         composable(MoneyTrackerRoutes.Categories) {
             if (
@@ -355,6 +392,7 @@ private fun MoneyTrackerNavHost(
 private fun MoreRoute(
     onOpenAccounts: () -> Unit,
     onOpenCategories: () -> Unit,
+    onOpenSettings: () -> Unit,
     onOpenExport: () -> Unit,
 ) {
     LazyColumn(
@@ -375,6 +413,32 @@ private fun MoreRoute(
                 leadingContent = {
                     Icon(
                         imageVector = Icons.Filled.AccountBalanceWallet,
+                        contentDescription = null,
+                    )
+                },
+                trailingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.ChevronRight,
+                        contentDescription = null,
+                    )
+                },
+            )
+            HorizontalDivider()
+        }
+        item {
+            ListItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onOpenSettings),
+                headlineContent = {
+                    Text(text = stringResource(R.string.settings_title))
+                },
+                supportingContent = {
+                    Text(text = stringResource(R.string.settings_more_subtitle))
+                },
+                leadingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
                         contentDescription = null,
                     )
                 },
@@ -518,6 +582,14 @@ private fun StatsTransactionType.toTransactionType(): TransactionType {
     }
 }
 
+private fun AppThemePreference.toThemeMode(): MoneyTrackerThemeMode {
+    return when (this) {
+        AppThemePreference.System -> MoneyTrackerThemeMode.System
+        AppThemePreference.Light -> MoneyTrackerThemeMode.Light
+        AppThemePreference.Dark -> MoneyTrackerThemeMode.Dark
+    }
+}
+
 private data class AppTopLevelDestination(
     val destination: MoneyTrackerTopLevelDestination,
     @StringRes val labelResId: Int,
@@ -560,7 +632,6 @@ private data class MorePlaceholderRoute(
 )
 
 private val morePlaceholderRoutes = listOf(
-    MorePlaceholderRoute(R.string.settings_title, R.string.settings_placeholder_subtitle),
     MorePlaceholderRoute(R.string.budgets_title, R.string.budgets_placeholder_subtitle),
     MorePlaceholderRoute(R.string.recurring_title, R.string.recurring_placeholder_subtitle),
     MorePlaceholderRoute(R.string.templates_title, R.string.templates_placeholder_subtitle),

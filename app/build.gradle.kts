@@ -155,6 +155,7 @@ dependencies {
     implementation(project(":core:background"))
     implementation(project(":core:budgets"))
     implementation(project(":core:categories"))
+    implementation(project(":core:currency"))
     implementation(project(":core:database"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:navigation"))

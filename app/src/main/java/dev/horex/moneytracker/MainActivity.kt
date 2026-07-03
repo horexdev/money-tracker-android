@@ -26,10 +26,12 @@ class MainActivity : ComponentActivity() {
                 accountsRepository = appContainer.accountsRepository,
                 balancesRepository = appContainer.balancesRepository,
                 categoriesRepository = appContainer.categoriesRepository,
+                currencyRatesRepository = appContainer.currencyRatesRepository,
                 settingsRepository = appContainer.settingsRepository,
                 statsRepository = appContainer.statsRepository,
                 transactionsRepository = appContainer.transactionsRepository,
                 localProfileRepository = appContainer.localProfileRepository,
+                appPreferencesRepository = appContainer.appPreferencesRepository,
                 backupDocumentRepository = appContainer.backupDocumentRepository,
             )
         }
