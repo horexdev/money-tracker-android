@@ -175,7 +175,48 @@ class LocalProfileRepositoryTest {
             assertEquals(imported.id, selected.id)
             assertEquals(imported.id, store.getActiveProfileId())
             assertEquals(2, repository.listProfiles().size)
+            assertEquals(1, database.accountDao().listByProfile(imported.id).size)
+            assertEquals(11, database.categoryDao().listByProfile(imported.id).size)
             assertTrue(personal.id != selected.id)
+        } finally {
+            database.close()
+        }
+    }
+
+    @Test
+    fun updateProfileLabelAndResetActiveProfileStayLocal() = runBlocking {
+        cleanUp()
+
+        val database = createDatabase()
+        val store = createProfileStore()
+        try {
+            val repository = LocalProfileRepository(
+                database = database,
+                activeProfileIdStore = store,
+                defaults = LocalProfileDefaults(languageCode = "ru"),
+                profileSeeder = DefaultProfileSeedRepository(
+                    database = database,
+                    clock = { 2_000L },
+                ),
+                clock = { 1_000L },
+            )
+
+            val active = repository.ensureActiveProfile()
+            val renamed = repository.updateProfileLabel(active.id, "Family")
+
+            assertEquals(active.id, renamed.id)
+            assertEquals("Family", renamed.label)
+            assertEquals(active.id, store.getActiveProfileId())
+
+            val reset = repository.resetActiveProfileData()
+
+            assertTrue(reset.id != active.id)
+            assertEquals("Personal", reset.label)
+            assertEquals("ru", reset.languageCode)
+            assertEquals(reset.id, store.getActiveProfileId())
+            assertNull(database.localProfileDao().getById(active.id))
+            assertEquals(1, database.accountDao().listByProfile(reset.id).size)
+            assertEquals(11, database.categoryDao().listByProfile(reset.id).size)
         } finally {
             database.close()
         }

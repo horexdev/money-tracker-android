@@ -50,14 +50,54 @@ class LocalProfileRepository(
             updatedAtEpochMillis = now,
         )
         val profileId = profileDao.insert(entity)
-        return requireInsertedProfile(profileId).toLocalProfile()
+        return requireInsertedProfile(profileId).toLocalProfile().ensureSeeded()
+    }
+
+    suspend fun updateProfileLabel(profileId: Long, label: String): LocalProfile {
+        val trimmedLabel = label.trim()
+        require(trimmedLabel.isNotEmpty()) { "Local profile label must not be blank" }
+
+        val updatedProfile = database.withTransaction {
+            val existing = profileDao.getById(profileId)
+                ?: throw IllegalArgumentException("Local profile must exist before it can be renamed")
+            val updated = existing.copy(
+                label = trimmedLabel,
+                updatedAtEpochMillis = clock(),
+            )
+            if (profileDao.updateAndReturnCount(updated) != 1) {
+                throw IllegalArgumentException("Local profile must exist before it can be renamed")
+            }
+            updated
+        }
+
+        return updatedProfile.toLocalProfile()
     }
 
     suspend fun selectActiveProfile(profileId: Long): LocalProfile {
         val profile = profileDao.getById(profileId)
             ?: throw IllegalArgumentException("Local profile must exist before it can be selected")
         activeProfileIdStore.setActiveProfileId(profile.id)
-        return profile.toLocalProfile()
+        return profile.toLocalProfile().ensureSeeded()
+    }
+
+    suspend fun resetActiveProfileData(): LocalProfile {
+        val activeProfile = ensureActiveProfile()
+        val replacement = database.withTransaction {
+            val now = clock()
+            val replacementId = profileDao.insert(
+                LocalProfileEntity(
+                    label = defaults.label,
+                    languageCode = activeProfile.languageCode,
+                    createdAtEpochMillis = now,
+                    updatedAtEpochMillis = now,
+                ),
+            )
+            profileDao.getById(activeProfile.id)?.let { profileDao.delete(it) }
+            requireInsertedProfile(replacementId)
+        }
+
+        activeProfileIdStore.setActiveProfileId(replacement.id)
+        return replacement.toLocalProfile().ensureSeeded()
     }
 
     private suspend fun createDefaultProfileEntity(): LocalProfileEntity {

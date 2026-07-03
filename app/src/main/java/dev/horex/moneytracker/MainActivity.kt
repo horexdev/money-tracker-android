@@ -1,6 +1,9 @@
 package dev.horex.moneytracker
 
+import android.app.NotificationManager
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.setContent
@@ -26,11 +29,18 @@ class MainActivity : ComponentActivity() {
                 accountsRepository = appContainer.accountsRepository,
                 balancesRepository = appContainer.balancesRepository,
                 categoriesRepository = appContainer.categoriesRepository,
+                currencyRatesRepository = appContainer.currencyRatesRepository,
                 settingsRepository = appContainer.settingsRepository,
                 statsRepository = appContainer.statsRepository,
                 transactionsRepository = appContainer.transactionsRepository,
                 localProfileRepository = appContainer.localProfileRepository,
+                appPreferencesRepository = appContainer.appPreferencesRepository,
                 backupDocumentRepository = appContainer.backupDocumentRepository,
+                notificationPermissionStatusProvider = {
+                    appContainer.notificationPermissionController.permissionStatus()
+                },
+                areNotificationsEnabledProvider = ::areNotificationsEnabled,
+                onOpenNotificationSettings = ::openNotificationSettings,
             )
         }
         requestNotificationPermissionIfNeeded()
@@ -45,5 +55,15 @@ class MainActivity : ComponentActivity() {
 
         appContainer.notificationPermissionController.markRuntimePermissionRequested()
         requestNotificationPermission.launch(permissionName)
+    }
+
+    private fun areNotificationsEnabled(): Boolean {
+        return getSystemService(NotificationManager::class.java).areNotificationsEnabled()
+    }
+
+    private fun openNotificationSettings() {
+        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+            .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+        startActivity(intent)
     }
 }

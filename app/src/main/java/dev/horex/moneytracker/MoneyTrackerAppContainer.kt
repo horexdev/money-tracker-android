@@ -19,6 +19,7 @@ import dev.horex.moneytracker.core.budgets.BudgetNotificationProfileProvider
 import dev.horex.moneytracker.core.budgets.BudgetThresholdNotificationProcessor
 import dev.horex.moneytracker.core.budgets.RoomBudgetsRepository
 import dev.horex.moneytracker.core.categories.RoomCategoriesRepository
+import dev.horex.moneytracker.core.currency.RoomCurrencyRatesRepository
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
 import dev.horex.moneytracker.core.database.profile.LocalProfileDefaults
@@ -99,6 +100,10 @@ internal class MoneyTrackerAppContainer(
 
     val categoriesRepository: RoomCategoriesRepository by lazy {
         RoomCategoriesRepository(database)
+    }
+
+    val currencyRatesRepository: RoomCurrencyRatesRepository by lazy {
+        RoomCurrencyRatesRepository(database)
     }
 
     val settingsRepository: RoomSettingsRepository by lazy {
