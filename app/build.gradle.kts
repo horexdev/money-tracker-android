@@ -3,7 +3,10 @@ import org.gradle.api.GradleException
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 import java.util.Properties
@@ -39,6 +42,102 @@ abstract class ValidateReleaseSigningTask : DefaultTask() {
             throw GradleException(
                 "Release keystore file does not exist: ${releaseStoreFile.absolutePath}",
             )
+        }
+    }
+}
+
+abstract class ValidateStartupPerformanceChecksTask : DefaultTask() {
+    @get:InputFile
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    abstract val baselineProfileFile: Property<File>
+
+    @get:Input
+    abstract val requiredStartupClasses: ListProperty<String>
+
+    @TaskAction
+    fun validate() {
+        val profileFile = baselineProfileFile.get()
+        if (!profileFile.isFile) {
+            throw GradleException("Missing startup baseline profile: ${profileFile.path}")
+        }
+
+        val profileText = profileFile.readText()
+        if (profileText.isBlank()) {
+            throw GradleException("Startup baseline profile is empty: ${profileFile.path}")
+        }
+
+        val missingStartupClasses = requiredStartupClasses.get()
+            .filterNot { classDescriptor -> profileText.contains(classDescriptor) }
+        if (missingStartupClasses.isNotEmpty()) {
+            throw GradleException(
+                "Startup baseline profile is missing required classes: " +
+                    missingStartupClasses.joinToString(),
+            )
+        }
+
+        val prohibitedIdentityMarkers = listOf(
+            "telegram",
+            "username",
+            "initdata",
+            "bot",
+            "chat",
+            "legacy_",
+            "legacy-",
+            "source_db",
+            "source-db",
+            "sourceid",
+            "source_id",
+        )
+        val normalizedProfile = profileText.lowercase()
+        val presentMarkers = prohibitedIdentityMarkers.filter(normalizedProfile::contains)
+        if (presentMarkers.isNotEmpty()) {
+            throw GradleException(
+                "Startup baseline profile contains prohibited migration identity markers: " +
+                    presentMarkers.joinToString(),
+            )
+        }
+    }
+}
+
+abstract class ValidateReleaseBuildChecksTask : DefaultTask() {
+    @get:Input
+    abstract val releaseApplicationId: Property<String>
+
+    @get:Input
+    abstract val releaseVersionCode: Property<Int>
+
+    @get:Input
+    abstract val releaseVersionName: Property<String>
+
+    @get:Input
+    abstract val releaseDebuggable: Property<Boolean>
+
+    @get:InputFile
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    abstract val proguardRulesFile: Property<File>
+
+    @TaskAction
+    fun validate() {
+        val applicationId = releaseApplicationId.get()
+        if (applicationId.endsWith(".debug")) {
+            throw GradleException("Release applicationId must not use the debug suffix: $applicationId")
+        }
+
+        if (releaseVersionCode.get() < 1) {
+            throw GradleException("Release versionCode must be positive.")
+        }
+
+        if (releaseVersionName.get().isBlank()) {
+            throw GradleException("Release versionName must not be blank.")
+        }
+
+        if (releaseDebuggable.get()) {
+            throw GradleException("Release build must not be debuggable.")
+        }
+
+        val proguardFile = proguardRulesFile.get()
+        if (!proguardFile.isFile) {
+            throw GradleException("Release ProGuard rules file is missing: ${proguardFile.path}")
         }
     }
 }
@@ -82,17 +181,21 @@ val missingReleaseSigningFields = releaseSigningFields
     .keys
     .sorted()
 val isReleaseSigningConfigured = missingReleaseSigningFields.isEmpty()
+val moneyTrackerApplicationId = "dev.horex.moneytracker"
+val moneyTrackerVersionCode = 1
+val moneyTrackerVersionName = "0.1.0"
+val isReleaseDebuggable = false
 
 android {
     namespace = "dev.horex.moneytracker"
     compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "dev.horex.moneytracker"
+        applicationId = moneyTrackerApplicationId
         minSdk = libs.versions.androidMinSdk.get().toInt()
         targetSdk = libs.versions.androidTargetSdk.get().toInt()
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = moneyTrackerVersionCode
+        versionName = moneyTrackerVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -119,7 +222,7 @@ android {
             if (isReleaseSigningConfigured) {
                 signingConfig = signingConfigs.getByName("release")
             }
-            isDebuggable = false
+            isDebuggable = isReleaseDebuggable
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -142,6 +245,45 @@ val validateReleaseSigning = tasks.register<ValidateReleaseSigningTask>("validat
     releaseStoreFilePath?.let { path ->
         storeFilePath.set(rootProject.file(path).absolutePath)
     }
+}
+
+val validateStartupPerformanceChecks = tasks.register<ValidateStartupPerformanceChecksTask>(
+    "validateStartupPerformanceChecks",
+) {
+    group = "verification"
+    description = "Verifies startup baseline profile coverage and migration identity safety."
+
+    baselineProfileFile.set(layout.projectDirectory.file("src/main/baseline-prof.txt").asFile)
+    requiredStartupClasses.set(
+        listOf(
+            "Ldev/horex/moneytracker/MoneyTrackerApplication;",
+            "Ldev/horex/moneytracker/MainActivity;",
+            "Ldev/horex/moneytracker/MoneyTrackerAppContainer;",
+            "Ldev/horex/moneytracker/core/database/profile/LocalProfileRepository;",
+            "Ldev/horex/moneytracker/core/database/seed/DefaultProfileSeedRepository;",
+        ),
+    )
+}
+
+tasks.named("check") {
+    dependsOn(validateStartupPerformanceChecks)
+}
+
+val validateReleaseBuildChecks = tasks.register<ValidateReleaseBuildChecksTask>(
+    "validateReleaseBuildChecks",
+) {
+    group = "verification"
+    description = "Verifies release build constants that do not require signing secrets."
+
+    releaseApplicationId.set(moneyTrackerApplicationId)
+    releaseVersionCode.set(moneyTrackerVersionCode)
+    releaseVersionName.set(moneyTrackerVersionName)
+    releaseDebuggable.set(isReleaseDebuggable)
+    proguardRulesFile.set(layout.projectDirectory.file("proguard-rules.pro").asFile)
+}
+
+tasks.named("check") {
+    dependsOn(validateReleaseBuildChecks)
 }
 
 tasks.matching { task -> task.name == "preReleaseBuild" }.configureEach {

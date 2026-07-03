@@ -63,6 +63,36 @@ Builds the debug APK with the debug application ID suffix.
 
 Builds the release APK only when release signing is configured.
 
+Before preparing a release candidate, run the release-readiness checks:
+
+```powershell
+.\gradlew.bat :app:validateStartupPerformanceChecks
+.\gradlew.bat :app:validateReleaseBuildChecks
+```
+
+`validateStartupPerformanceChecks` verifies that the packaged Baseline Profile
+source exists, keeps the required cold-start classes, and does not contain
+migration identity markers. `validateReleaseBuildChecks` verifies release
+constants that do not need signing secrets: application ID, version fields,
+debuggable state, and the ProGuard rules file.
+
+In the release-signing environment, also run:
+
+```powershell
+.\gradlew.bat :app:lintVitalRelease
+```
+
+`lintVitalRelease` catches release-only manifest, resource, and Android lint
+issues, but it resolves the release variant and therefore requires the signing
+values described above.
+
+The current Baseline Profile is manual and lives at
+`app/src/main/baseline-prof.txt`. It is justified for the first offline release
+because the cold-start path is small and stable enough to cover explicitly,
+while generated Macrobenchmark profiles would require a dedicated rooted/API
+33+ performance device and a settled release smoke journey. Replace or refresh
+the manual profile with generated rules once that infrastructure exists.
+
 ## Play Release
 
 Use `docs/play-release-checklist.md` before preparing a Google Play release. It
