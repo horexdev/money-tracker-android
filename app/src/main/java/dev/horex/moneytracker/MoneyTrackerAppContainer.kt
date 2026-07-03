@@ -37,6 +37,10 @@ import dev.horex.moneytracker.core.preferences.DataStoreActiveProfileIdStore
 import dev.horex.moneytracker.core.preferences.RoomSettingsRepository
 import dev.horex.moneytracker.core.preferences.createAppPreferencesDataStore
 import dev.horex.moneytracker.core.recurring.RoomRecurringTransactionsRepository
+import dev.horex.moneytracker.core.savings.GoalMilestoneNotificationPreferenceProvider
+import dev.horex.moneytracker.core.savings.GoalMilestoneNotificationProcessor
+import dev.horex.moneytracker.core.savings.RoomSavingsGoalsRepository
+import dev.horex.moneytracker.core.savings.SavingsGoal
 import dev.horex.moneytracker.core.stats.RoomStatsRepository
 import dev.horex.moneytracker.core.templates.RoomTransactionTemplatesRepository
 import dev.horex.moneytracker.core.transactions.RoomTransactionsRepository
@@ -119,6 +123,14 @@ internal class MoneyTrackerAppContainer(
 
     val recurringRepository: RoomRecurringTransactionsRepository by lazy {
         RoomRecurringTransactionsRepository(database)
+    }
+
+    val savingsGoalsRepository: RoomSavingsGoalsRepository by lazy {
+        RoomSavingsGoalsRepository(
+            database = database,
+            goalMilestoneNotificationProcessor = goalMilestoneNotificationProcessor,
+            goalMilestoneNotificationPreferenceProvider = goalMilestoneNotificationPreferenceProvider,
+        )
     }
 
     val statsRepository: RoomStatsRepository by lazy {
@@ -213,6 +225,25 @@ internal class MoneyTrackerAppContainer(
         )
     }
 
+    private val goalMilestoneNotificationPreferenceProvider: GoalMilestoneNotificationPreferenceProvider by lazy {
+        GoalMilestoneNotificationPreferenceProvider { profileId ->
+            localProfileRepository.listProfiles()
+                .firstOrNull { profile -> profile.id == profileId }
+                ?.notifyGoalMilestones == true
+        }
+    }
+
+    private val goalMilestoneNotificationProcessor: GoalMilestoneNotificationProcessor by lazy {
+        GoalMilestoneNotificationProcessor(
+            notifier = { request -> notificationNotifier.notify(request) },
+            contentIntentFactory = { goal, _ ->
+                notificationIntentFactory.openAppPendingIntent(
+                    requestCode = goal.notificationRequestCode(),
+                )
+            },
+        )
+    }
+
     val backgroundTaskRegistry: MutableBackgroundTaskRegistry by lazy {
         MutableBackgroundTaskRegistry()
     }
@@ -289,6 +320,13 @@ private fun resolveDeviceLanguageCode(context: Context): String {
 
 private fun Budget.notificationRequestCode(): Int {
     var result = 17
+    result = 31 * result + profileId.hashCode()
+    result = 31 * result + id.hashCode()
+    return result.absoluteValue.takeIf { it > 0 } ?: 1
+}
+
+private fun SavingsGoal.notificationRequestCode(): Int {
+    var result = 43
     result = 31 * result + profileId.hashCode()
     result = 31 * result + id.hashCode()
     return result.absoluteValue.takeIf { it > 0 } ?: 1

@@ -19,6 +19,7 @@ android {
 
 dependencies {
     implementation(project(":core:database"))
+    implementation(project(":core:notifications"))
     implementation(libs.androidx.room.ktx)
 
     api(libs.kotlinx.coroutines.core)

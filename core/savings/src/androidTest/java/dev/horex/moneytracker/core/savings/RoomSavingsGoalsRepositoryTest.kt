@@ -9,6 +9,8 @@ import dev.horex.moneytracker.core.database.model.AccountEntity
 import dev.horex.moneytracker.core.database.model.CategoryEntity
 import dev.horex.moneytracker.core.database.model.LocalProfileEntity
 import dev.horex.moneytracker.core.database.security.AndroidDatabasePassphraseStore
+import dev.horex.moneytracker.core.notifications.MoneyTrackerNotificationDeliveryResult
+import dev.horex.moneytracker.core.notifications.MoneyTrackerNotificationRequest
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -222,6 +224,76 @@ class RoomSavingsGoalsRepositoryTest {
     }
 
     @Test
+    fun depositDeliversOptInGoalMilestoneAndDoesNotDuplicate() = runBlocking {
+        cleanUp()
+        val database = createDatabase()
+        try {
+            val profileId = insertProfile(database, notifyGoalMilestones = true)
+            val notifier = RecordingGoalMilestoneNotifier()
+            val repository = RoomSavingsGoalsRepository(
+                database = database,
+                goalMilestoneNotificationProcessor = GoalMilestoneNotificationProcessor(
+                    notifier = notifier,
+                    clock = { JULY_03 },
+                ),
+                goalMilestoneNotificationPreferenceProvider = profilePreferenceProvider(database),
+                clock = { JULY_03 },
+            )
+            val goal = repository.createGoal(
+                profileId,
+                CreateSavingsGoalInput(
+                    name = "Trip",
+                    targetCents = 10_000,
+                    currencyCode = "USD",
+                ),
+            )
+
+            repository.deposit(profileId, goal.id, SavingsGoalOperationInput(amountCents = 2_500))
+            repository.withdraw(profileId, goal.id, SavingsGoalOperationInput(amountCents = 1_000))
+            repository.deposit(profileId, goal.id, SavingsGoalOperationInput(amountCents = 1_000))
+
+            assertEquals(1, notifier.requests.size)
+            assertEquals("Trip reached 25%", notifier.requests.single().title)
+            assertTrue(notifier.requests.single().body.contains("USD 25.00 of USD 100.00"))
+        } finally {
+            database.close()
+        }
+    }
+
+    @Test
+    fun depositSkipsGoalMilestoneWhenProfilePreferenceIsDisabled() = runBlocking {
+        cleanUp()
+        val database = createDatabase()
+        try {
+            val profileId = insertProfile(database, notifyGoalMilestones = false)
+            val notifier = RecordingGoalMilestoneNotifier()
+            val repository = RoomSavingsGoalsRepository(
+                database = database,
+                goalMilestoneNotificationProcessor = GoalMilestoneNotificationProcessor(
+                    notifier = notifier,
+                    clock = { JULY_03 },
+                ),
+                goalMilestoneNotificationPreferenceProvider = profilePreferenceProvider(database),
+                clock = { JULY_03 },
+            )
+            val goal = repository.createGoal(
+                profileId,
+                CreateSavingsGoalInput(
+                    name = "Trip",
+                    targetCents = 10_000,
+                    currencyCode = "USD",
+                ),
+            )
+
+            repository.deposit(profileId, goal.id, SavingsGoalOperationInput(amountCents = 10_000))
+
+            assertEquals(emptyList<MoneyTrackerNotificationRequest>(), notifier.requests)
+        } finally {
+            database.close()
+        }
+    }
+
+    @Test
     fun linkedGoalRequiresSavingsCategoryBeforeCreatingTransaction() = runBlocking {
         cleanUp()
         val database = createDatabase()
@@ -266,11 +338,13 @@ class RoomSavingsGoalsRepositoryTest {
     private suspend fun insertProfile(
         database: MoneyTrackerDatabase,
         label: String = "Personal",
+        notifyGoalMilestones: Boolean = false,
     ): Long {
         return database.localProfileDao().insert(
             LocalProfileEntity(
                 label = label,
                 languageCode = "en",
+                notifyGoalMilestones = notifyGoalMilestones,
                 createdAtEpochMillis = 1L,
                 updatedAtEpochMillis = 1L,
             ),
@@ -310,6 +384,23 @@ class RoomSavingsGoalsRepositoryTest {
                 updatedAtEpochMillis = 1L,
             ),
         )
+    }
+
+    private fun profilePreferenceProvider(
+        database: MoneyTrackerDatabase,
+    ): GoalMilestoneNotificationPreferenceProvider {
+        return GoalMilestoneNotificationPreferenceProvider { profileId ->
+            database.localProfileDao().getById(profileId)?.notifyGoalMilestones == true
+        }
+    }
+
+    private class RecordingGoalMilestoneNotifier : GoalMilestoneNotifier {
+        val requests = mutableListOf<MoneyTrackerNotificationRequest>()
+
+        override fun notify(request: MoneyTrackerNotificationRequest): MoneyTrackerNotificationDeliveryResult {
+            requests += request
+            return MoneyTrackerNotificationDeliveryResult.Delivered
+        }
     }
 
     private suspend inline fun <reified T : Throwable> assertFailsWithType(
