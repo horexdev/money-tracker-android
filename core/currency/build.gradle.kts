@@ -21,8 +21,12 @@ dependencies {
     implementation(project(":core:database"))
 
     api(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.core)
 
     testImplementation(libs.junit)
+    testImplementation(libs.ktor.client.mock)
 
     androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.ext.junit)

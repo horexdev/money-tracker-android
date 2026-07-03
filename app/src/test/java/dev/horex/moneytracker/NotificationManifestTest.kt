@@ -9,11 +9,11 @@ import org.w3c.dom.Element
 
 class NotificationManifestTest {
     @Test
-    fun manifestDeclaresLocalNotificationPermissionWithoutNetworkPermission() {
+    fun manifestDeclaresNotificationAndExplicitOnlineRatePermissions() {
         val permissions = readManifestPermissions()
 
         assertTrue("android.permission.POST_NOTIFICATIONS" in permissions)
-        assertEquals(false, "android.permission.INTERNET" in permissions)
+        assertTrue("android.permission.INTERNET" in permissions)
     }
 
     @Test

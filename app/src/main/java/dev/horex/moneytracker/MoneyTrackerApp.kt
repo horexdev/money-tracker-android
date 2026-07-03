@@ -53,6 +53,7 @@ import dev.horex.moneytracker.core.balance.BalancesRepository
 import dev.horex.moneytracker.core.budgets.BudgetsRepository
 import dev.horex.moneytracker.core.categories.CategoriesRepository
 import dev.horex.moneytracker.core.currency.CurrencyRatesRepository
+import dev.horex.moneytracker.core.currency.ExchangeRateUpdateService
 import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerPlaceholderScreen
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerThemeMode
@@ -91,6 +92,7 @@ fun MoneyTrackerApp(
     budgetsRepository: BudgetsRepository? = null,
     categoriesRepository: CategoriesRepository? = null,
     currencyRatesRepository: CurrencyRatesRepository? = null,
+    exchangeRateUpdateService: ExchangeRateUpdateService? = null,
     settingsRepository: SettingsRepository? = null,
     recurringRepository: RecurringTransactionsRepository? = null,
     statsRepository: StatsRepository? = null,
@@ -137,6 +139,7 @@ fun MoneyTrackerApp(
                 budgetsRepository = budgetsRepository,
                 categoriesRepository = categoriesRepository,
                 currencyRatesRepository = currencyRatesRepository,
+                exchangeRateUpdateService = exchangeRateUpdateService,
                 settingsRepository = settingsRepository,
                 recurringRepository = recurringRepository,
                 statsRepository = statsRepository,
@@ -168,6 +171,7 @@ private fun MoneyTrackerNavHost(
     budgetsRepository: BudgetsRepository?,
     categoriesRepository: CategoriesRepository?,
     currencyRatesRepository: CurrencyRatesRepository?,
+    exchangeRateUpdateService: ExchangeRateUpdateService?,
     settingsRepository: SettingsRepository?,
     recurringRepository: RecurringTransactionsRepository?,
     statsRepository: StatsRepository?,
@@ -340,6 +344,7 @@ private fun MoneyTrackerNavHost(
                     settingsRepository = settingsRepository,
                     localProfileRepository = localProfileRepository,
                     currencyRatesRepository = currencyRatesRepository,
+                    exchangeRateUpdateService = exchangeRateUpdateService,
                     appPreferencesRepository = appPreferencesRepository,
                     notificationPermissionStatusProvider = notificationPermissionStatusProvider ?: {
                         NotificationPermissionStatus.NotRequired

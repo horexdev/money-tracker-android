@@ -73,6 +73,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.horex.moneytracker.core.currency.CurrencyException
 import dev.horex.moneytracker.core.currency.CurrencyRatesRepository
+import dev.horex.moneytracker.core.currency.ExchangeRateUpdateService
 import dev.horex.moneytracker.core.currency.ExchangeRateNotFoundException
 import dev.horex.moneytracker.core.currency.ExchangeRateOverride
 import dev.horex.moneytracker.core.currency.ExchangeRateOverrideAlreadyExistsException
@@ -96,6 +97,7 @@ import dev.horex.moneytracker.core.preferences.StatsChartStylePreference
 import dev.horex.moneytracker.core.preferences.UpdateSettingsInput
 import dev.horex.moneytracker.core.preferences.UpdateSettingsNotificationPreferencesInput
 import dev.horex.moneytracker.core.preferences.UpdateSettingsUiPreferencesInput
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -107,6 +109,7 @@ fun SettingsRoute(
     settingsRepository: SettingsRepository,
     localProfileRepository: LocalProfileRepository,
     currencyRatesRepository: CurrencyRatesRepository,
+    exchangeRateUpdateService: ExchangeRateUpdateService? = null,
     appPreferencesRepository: AppPreferencesRepository? = null,
     notificationPermissionStatusProvider: () -> NotificationPermissionStatus = {
         NotificationPermissionStatus.NotRequired
@@ -368,6 +371,38 @@ fun SettingsRoute(
             }
             saveRateOverride(input = input, overwriteExisting = false)
         },
+        onUpdateOnlineRates = {
+            val service = exchangeRateUpdateService ?: return@SettingsScreen
+            val settings = state.settings ?: return@SettingsScreen
+            val baseCurrency = state.rateBaseInput.ifBlank { settings.baseCurrencyCode }
+            val targetCurrencies = state.displayCurrenciesInput.toCurrencyCodesInput()
+                .plus(state.rateTargetInput.takeIf(String::isNotBlank))
+                .filterNotNull()
+                .distinct()
+            if (targetCurrencies.isEmpty()) {
+                state = state.copy(error = SettingsUiError.InvalidInput, success = null)
+                return@SettingsScreen
+            }
+
+            scope.launch {
+                state = state.copy(isBusy = true, error = null, success = null)
+                try {
+                    service.updateLatestRates(
+                        baseCurrency = baseCurrency,
+                        targetCurrencies = targetCurrencies,
+                    )
+                    loadSettings(showLoading = false, success = SettingsSuccess.OnlineRatesUpdated)
+                } catch (error: CancellationException) {
+                    throw error
+                } catch (error: Throwable) {
+                    state = state.copy(
+                        isBusy = false,
+                        error = SettingsUiError.RateUpdateFailed,
+                        success = null,
+                    )
+                }
+            }
+        },
         onDeleteRateOverride = { overrideId ->
             val settings = state.settings ?: return@SettingsScreen
             scope.launch {
@@ -435,6 +470,7 @@ fun SettingsScreen(
     onRateDateChange: (String) -> Unit,
     onRateValueChange: (String) -> Unit,
     onSaveRateOverride: () -> Unit,
+    onUpdateOnlineRates: () -> Unit = {},
     onDeleteRateOverride: (Long) -> Unit,
     onOpenImportExport: () -> Unit,
     onResetRequested: () -> Unit,
@@ -544,6 +580,7 @@ fun SettingsScreen(
                             onRateDateChange = onRateDateChange,
                             onRateValueChange = onRateValueChange,
                             onSaveRateOverride = onSaveRateOverride,
+                            onUpdateOnlineRates = onUpdateOnlineRates,
                             onDeleteRateOverride = onDeleteRateOverride,
                         )
                     }
@@ -897,6 +934,7 @@ private fun RatesSection(
     onRateDateChange: (String) -> Unit,
     onRateValueChange: (String) -> Unit,
     onSaveRateOverride: () -> Unit,
+    onUpdateOnlineRates: () -> Unit,
     onDeleteRateOverride: (Long) -> Unit,
 ) {
     SettingsSection(
@@ -933,6 +971,27 @@ private fun RatesSection(
                 stringResource(R.string.settings_latest_snapshot, date)
             } ?: stringResource(R.string.settings_no_snapshots),
             style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        OutlinedButton(
+            onClick = onUpdateOnlineRates,
+            enabled = !state.isBusy &&
+                state.rateBaseInput.isNotBlank() &&
+                (
+                    state.rateTargetInput.isNotBlank() ||
+                        state.displayCurrenciesInput.toCurrencyCodesInput().isNotEmpty()
+                    ),
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Icon(Icons.Filled.Refresh, contentDescription = null)
+            Text(
+                text = stringResource(R.string.settings_update_online_rates),
+                modifier = Modifier.padding(start = 8.dp),
+            )
+        }
+        Text(
+            text = stringResource(R.string.settings_update_online_rates_desc),
+            style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         RateSourcePreview(preview = state.ratePreview)
@@ -1413,6 +1472,7 @@ enum class NotificationPreferenceKey(
 enum class SettingsUiError(@StringRes val messageResId: Int) {
     Generic(R.string.settings_error_generic),
     InvalidInput(R.string.settings_error_invalid_input),
+    RateUpdateFailed(R.string.settings_error_rate_update_failed),
 }
 
 enum class SettingsSuccess(@StringRes val messageResId: Int) {
@@ -1422,6 +1482,7 @@ enum class SettingsSuccess(@StringRes val messageResId: Int) {
     ProfileCreated(R.string.settings_profile_created),
     RateSaved(R.string.settings_rate_saved),
     RateDeleted(R.string.settings_rate_deleted),
+    OnlineRatesUpdated(R.string.settings_online_rates_updated),
     DataReset(R.string.settings_data_reset_done),
 }
 
@@ -1751,6 +1812,7 @@ private fun SettingsScreenPreview() {
             onRateDateChange = {},
             onRateValueChange = {},
             onSaveRateOverride = {},
+            onUpdateOnlineRates = {},
             onDeleteRateOverride = {},
             onOpenImportExport = {},
             onResetRequested = {},

@@ -31,6 +31,7 @@ class MainActivity : ComponentActivity() {
                 budgetsRepository = appContainer.budgetsRepository,
                 categoriesRepository = appContainer.categoriesRepository,
                 currencyRatesRepository = appContainer.currencyRatesRepository,
+                exchangeRateUpdateService = appContainer.exchangeRateUpdateService,
                 settingsRepository = appContainer.settingsRepository,
                 recurringRepository = appContainer.recurringRepository,
                 statsRepository = appContainer.statsRepository,
