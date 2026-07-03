@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Byudjetlar</string>
+    <string name="budgets_subtitle">Harajat limitlarini toifa va joriy davr boʻyicha kuzatib boring.</string>
+    <string name="budgets_loading">Budjetlar yuklanmoqda</string>
+    <string name="budgets_empty_title">Hozircha byudjet yo\'q</string>
+    <string name="budgets_empty_body">Bu yerda taraqqiyotni koʻrish uchun xarajat toifasi uchun chegara yarating.</string>
+    <string name="budgets_no_categories_title">Xarajat toifalari yo\'q</string>
+    <string name="budgets_no_categories_body">Byudjet qo\'shishdan oldin xarajatlar toifasini yarating.</string>
+    <string name="budgets_add">Byudjet qo\'shing</string>
+    <string name="budgets_create">Byudjet yarating</string>
+    <string name="budgets_edit">Byudjetni tahrirlash</string>
+    <string name="budgets_save">Byudjetni tejash</string>
+    <string name="budgets_delete">Byudjetni o\'chirish</string>
+    <string name="budgets_cancel">Bekor qilish</string>
+    <string name="budgets_retry">Qayta urinish</string>
+    <string name="budgets_category">Kategoriya</string>
+    <string name="budgets_period">Davr</string>
+    <string name="budgets_period_weekly">Har hafta</string>
+    <string name="budgets_period_monthly">Har oy</string>
+    <string name="budgets_limit">Chegara</string>
+    <string name="budgets_spent_of_limit">%2$sning %1$s</string>
+    <string name="budgets_remaining">Qolgan: %1$s</string>
+    <string name="budgets_over_limit">%1$s tomonidan chegaradan oshib ketdi</string>
+    <string name="budgets_over_limit_chip">chegaradan oshib ketdi</string>
+    <string name="budgets_progress_percent">%1$d%% ishlatilgan</string>
+    <string name="budgets_currency">Valyuta</string>
+    <string name="budgets_notifications">Bildirishnomalar</string>
+    <string name="budgets_notifications_enabled">Bildirishnomalar yoqilgan</string>
+    <string name="budgets_notifications_disabled">Bildirishnomalar oʻchirilgan</string>
+    <string name="budgets_notify_at">foizda xabar bering</string>
+    <string name="budgets_transactions">Tranzaksiyalar</string>
+    <string name="budgets_transactions_title">Byudjet operatsiyalari</string>
+    <string name="budgets_transactions_empty">Joriy davrda tranzaksiya yo\'q.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Byudjet o\'chirilsinmi?</string>
+    <string name="budgets_delete_body">Bu byudjet chegarasini olib tashlaydi. Bitimlar o\'zgarishsiz qoladi.</string>
+    <string name="budgets_error_generic">Byudjet amali bajarilmadi.</string>
+    <string name="budgets_error_amount">Byudjet chegarasi ijobiy miqdor bo\'lishi kerak.</string>
+    <string name="budgets_error_currency">Valyuta 3 harfli ISO kodi boʻlishi kerak.</string>
+    <string name="budgets_error_notify_percent">Bildirishnoma foizi ijobiy bo\'lishi kerak.</string>
+    <string name="budgets_error_duplicate">Ushbu turkumda allaqachon tanlangan davr uchun byudjet mavjud.</string>
+    <string name="budgets_error_category">Xarajat toifasini tanlang.</string>
+    <string name="budgets_error_not_found">Byudjet topilmadi.</string>
+</resources>

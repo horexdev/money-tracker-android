@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Panel</string>
+    <string name="feature_home_subtitle">La navegación raíz está lista.</string>
+    <string name="home_subtitle">Instantánea fuera de línea de saldos y actividad reciente.</string>
+    <string name="home_loading">Cargando panel...</string>
+    <string name="home_retry">Reintentar</string>
+    <string name="home_error_generic">No se pudieron cargar los datos del panel.</string>
+    <string name="home_net_balance">Saldo neto</string>
+    <string name="home_all_accounts">Todas las cuentas</string>
+    <string name="home_add_transaction">Agregar transacción</string>
+    <string name="home_income">Ingreso</string>
+    <string name="home_expense">Gasto</string>
+    <string name="home_recent_transactions">Transacciones recientes</string>
+    <string name="home_quick_templates">Plantillas rápidas</string>
+    <string name="home_quick_templates_empty">Crear plantillas para aplicar transacciones frecuentes desde el tablero.</string>
+    <string name="home_template_amount_prompt_title">Ingrese la cantidad</string>
+    <string name="home_template_amount_prompt_body">Esta plantilla utiliza una cantidad variable.</string>
+    <string name="home_template_amount">Monto</string>
+    <string name="home_template_apply">Aplicar</string>
+    <string name="home_template_cancel">Cancelar</string>
+    <string name="home_template_variable">variable</string>
+    <string name="home_view_all">Ver todo</string>
+    <string name="home_empty_title">Sin transacciones aún</string>
+    <string name="home_empty_body">Agregue la primera transacción para iniciar el seguimiento.</string>
+</resources>

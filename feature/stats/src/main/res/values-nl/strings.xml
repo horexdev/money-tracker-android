@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Statistieken</string>
+    <string name="stats_subtitle">Uitsplitsing van categorieën, trends en details.</string>
+    <string name="stats_loading">Statistieken worden geladen</string>
+    <string name="stats_retry">Opnieuw proberen</string>
+    <string name="stats_error_generic">Statistieken konden niet worden geladen.</string>
+    <string name="stats_empty_title">Geen statistieken voor dit filter</string>
+    <string name="stats_empty_body">Wijzig rekening, periode of voeg transacties toe om grafieken te bekijken.</string>
+    <string name="stats_filter_accounts">Rekeningen</string>
+    <string name="stats_filter_period">Periode</string>
+    <string name="stats_filter_currency">Valuta</string>
+    <string name="stats_filter_type">Uitsplitsing</string>
+    <string name="stats_filter_chart_style">Grafiekstijl</string>
+    <string name="stats_all_accounts">Alle rekeningen</string>
+    <string name="stats_today">Vandaag</string>
+    <string name="stats_week">Deze week</string>
+    <string name="stats_month">Maand</string>
+    <string name="stats_last_month">Vorige maand</string>
+    <string name="stats_expense">Uitgave</string>
+    <string name="stats_income">Inkomst</string>
+    <string name="stats_style_donut">Ringdiagram</string>
+    <string name="stats_style_stacked_bar">Gestapeld</string>
+    <string name="stats_style_dual_bar">Baten/lasten</string>
+    <string name="stats_style_profit_bars">Winst</string>
+    <string name="stats_income_total">Inkomst</string>
+    <string name="stats_expense_total">Uitgave</string>
+    <string name="stats_net_total">netto</string>
+    <string name="stats_transactions_count">%1$d transacties</string>
+    <string name="stats_open_history">Openstaande transacties voor %1$s</string>
+</resources>

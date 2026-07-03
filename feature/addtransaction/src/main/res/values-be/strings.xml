@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">Дадаць транзакцыю</string>
+    <string name="add_transaction_subtitle">Запішыце выдаткі або даходы ў вашай мясцовай кнізе.</string>
+    <string name="add_transaction_quick_templates">Хуткія шаблоны</string>
+    <string name="add_transaction_template_variable">Пераменная</string>
+    <string name="add_transaction_template_amount_title">Увядзіце суму</string>
+    <string name="add_transaction_template_amount_body">Гэты шаблон выкарыстоўвае зменную суму.</string>
+    <string name="add_transaction_template_apply">Ужыць</string>
+    <string name="add_transaction_template_cancel">Скасаваць</string>
+    <string name="add_transaction_loading">Загрузка дадзеных формы...</string>
+    <string name="add_transaction_expense">Выдатак</string>
+    <string name="add_transaction_income">Даход</string>
+    <string name="add_transaction_amount">Сума</string>
+    <string name="add_transaction_account">Рахунак</string>
+    <string name="add_transaction_category">Катэгорыя</string>
+    <string name="add_transaction_note">Нататка</string>
+    <string name="add_transaction_note_placeholder">Дадатковая нататка</string>
+    <string name="add_transaction_date">Дата</string>
+    <string name="add_transaction_date_hint">ГГГГ-ММ-ДД</string>
+    <string name="add_transaction_save">Захаваць транзакцыю</string>
+    <string name="add_transaction_saving">Захаванне...</string>
+    <string name="add_transaction_no_accounts_title">уліковых запісаў пакуль няма</string>
+    <string name="add_transaction_no_accounts_body">Стварыце ўліковы запіс перад запісам транзакцый.</string>
+    <string name="add_transaction_no_categories_title">Няма катэгорый для гэтага тыпу</string>
+    <string name="add_transaction_no_categories_body">Стварыце катэгорыю выдаткаў або даходаў перад захаваннем.</string>
+    <string name="add_transaction_retry">Паўтарыць</string>
+    <string name="add_transaction_error_generic">Не атрымалася захаваць транзакцыю.</string>
+    <string name="add_transaction_error_invalid_amount">увядзіце суму, большую за нуль.</string>
+    <string name="add_transaction_error_invalid_date">увядзіце правільную дату як ГГГГ-ММ-ДД.</string>
+    <string name="add_transaction_error_account_required">Выберыце ўліковы запіс.</string>
+    <string name="add_transaction_error_category_required">Выберыце катэгорыю.</string>
+    <string name="add_transaction_error_account_not_found">Выбраны ўліковы запіс больш не даступны.</string>
+    <string name="add_transaction_error_category_not_found">Выбраная катэгорыя больш недаступная.</string>
+    <string name="add_transaction_error_category_type">Выберыце катэгорыю, якая адпавядае тыпу транзакцыі.</string>
+</resources>

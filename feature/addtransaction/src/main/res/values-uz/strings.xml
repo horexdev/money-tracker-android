@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">tranzaksiya qo\'shing</string>
+    <string name="add_transaction_subtitle">Xarajat yoki daromadni mahalliy daftaringizga yozing.</string>
+    <string name="add_transaction_quick_templates">Tezkor shablonlar</string>
+    <string name="add_transaction_template_variable">o\'zgaruvchan</string>
+    <string name="add_transaction_template_amount_title">summani kiriting</string>
+    <string name="add_transaction_template_amount_body">Ushbu shablon o\'zgaruvchan miqdorni ishlatadi.</string>
+    <string name="add_transaction_template_apply">Qo\'llash</string>
+    <string name="add_transaction_template_cancel">Bekor qilish</string>
+    <string name="add_transaction_loading">Shakl ma\'lumotlari yuklanmoqda...</string>
+    <string name="add_transaction_expense">Xarajat</string>
+    <string name="add_transaction_income">Daromad</string>
+    <string name="add_transaction_amount">Summa</string>
+    <string name="add_transaction_account">Hisob</string>
+    <string name="add_transaction_category">Kategoriya</string>
+    <string name="add_transaction_note">Izoh</string>
+    <string name="add_transaction_note_placeholder">ixtiyoriy eslatma</string>
+    <string name="add_transaction_date">Sana</string>
+    <string name="add_transaction_date_hint">YYYY-AA-KK</string>
+    <string name="add_transaction_save">Tranzaksiyani saqlash</string>
+    <string name="add_transaction_saving">Saqlanmoqda...</string>
+    <string name="add_transaction_no_accounts_title">Hozircha hisoblar yo\'q</string>
+    <string name="add_transaction_no_accounts_body">Tranzaktsiyalarni yozishdan oldin hisob yarating.</string>
+    <string name="add_transaction_no_categories_title">Ushbu turdagi toifalar yo\'q</string>
+    <string name="add_transaction_no_categories_body">Saqlashdan oldin xarajat yoki daromad toifasini yarating.</string>
+    <string name="add_transaction_retry">Qayta urinish</string>
+    <string name="add_transaction_error_generic">tranzaksiyani saqlab bo‘lmadi.</string>
+    <string name="add_transaction_error_invalid_amount">Noldan kattaroq miqdorni kiriting.</string>
+    <string name="add_transaction_error_invalid_date">YYYY-MM-DD sifatida joriy sanani kiriting.</string>
+    <string name="add_transaction_error_account_required">Hisobni tanlang.</string>
+    <string name="add_transaction_error_category_required">Kategoriyani tanlang.</string>
+    <string name="add_transaction_error_account_not_found">Tanlangan hisob endi mavjud emas.</string>
+    <string name="add_transaction_error_category_not_found">Tanlangan turkum endi mavjud emas.</string>
+    <string name="add_transaction_error_category_type">Tranzaktsiya turiga mos toifani tanlang.</string>
+</resources>

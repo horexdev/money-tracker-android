@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Бюджеттер</string>
+    <string name="budgets_subtitle">Санат және ағымдағы кезең бойынша шығыс шектеулерін бақылаңыз.</string>
+    <string name="budgets_loading">Бюджеттер жүктелуде</string>
+    <string name="budgets_empty_title">Әлі бюджеттер жоқ</string>
+    <string name="budgets_empty_body">Орындалу барысын көру үшін шығыс санатына шектеу жасаңыз.</string>
+    <string name="budgets_no_categories_title">Шығын санаттары жоқ</string>
+    <string name="budgets_no_categories_body">Бюджетті қоспас бұрын шығыс санатын жасаңыз.</string>
+    <string name="budgets_add">Бюджетті қосу</string>
+    <string name="budgets_create">Бюджетті құру</string>
+    <string name="budgets_edit">Бюджетті өңдеу</string>
+    <string name="budgets_save">бюджетті үнемдеу</string>
+    <string name="budgets_delete">бюджетті жою</string>
+    <string name="budgets_cancel">Болдырмау</string>
+    <string name="budgets_retry">Қайталау</string>
+    <string name="budgets_category">Санат</string>
+    <string name="budgets_period">Кезең</string>
+    <string name="budgets_period_weekly">Апта сайын</string>
+    <string name="budgets_period_monthly">Ай сайын</string>
+    <string name="budgets_limit">Лимит</string>
+    <string name="budgets_spent_of_limit">%2$s %1$s</string>
+    <string name="budgets_remaining">Қалған: %1$s</string>
+    <string name="budgets_over_limit">%1$s бойынша шектен асып кету</string>
+    <string name="budgets_over_limit_chip">шектен асып кетті</string>
+    <string name="budgets_progress_percent">%1$d%% пайдаланылды</string>
+    <string name="budgets_currency">Валюта</string>
+    <string name="budgets_notifications">Хабарландырулар</string>
+    <string name="budgets_notifications_enabled">Хабарландырулар қосулы</string>
+    <string name="budgets_notifications_disabled">Хабарландырулар өшірулі</string>
+    <string name="budgets_notify_at">пайызбен хабарлаңыз</string>
+    <string name="budgets_transactions">Транзакциялар</string>
+    <string name="budgets_transactions_title">Бюджеттік операциялар</string>
+    <string name="budgets_transactions_empty">Ағымдағы кезеңде транзакциялар жоқ.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Бюджет жойылсын ба?</string>
+    <string name="budgets_delete_body">Бұл бюджет шегін жояды. Транзакциялар өзгеріссіз қалады.</string>
+    <string name="budgets_error_generic">Бюджет әрекеті орындалмады.</string>
+    <string name="budgets_error_amount">Бюджет шегі оң сома болуы керек.</string>
+    <string name="budgets_error_currency">Валюта 3 әріпті ISO коды болуы керек.</string>
+    <string name="budgets_error_notify_percent">Хабарландыру пайызы оң болуы керек.</string>
+    <string name="budgets_error_duplicate">Бұл санатта таңдалған кезеңге арналған бюджет әлдеқашан бар.</string>
+    <string name="budgets_error_category">шығыс санатын таңдаңыз.</string>
+    <string name="budgets_error_not_found">Бюджет табылмады.</string>
+</resources>

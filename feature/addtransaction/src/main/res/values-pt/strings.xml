@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">Adicionar transação</string>
+    <string name="add_transaction_subtitle">Registre uma despesa ou receita em seu livro-razão local.</string>
+    <string name="add_transaction_quick_templates">Modelos rápidos</string>
+    <string name="add_transaction_template_variable">Variável</string>
+    <string name="add_transaction_template_amount_title">Insira o valor</string>
+    <string name="add_transaction_template_amount_body">Este modelo usa um valor variável.</string>
+    <string name="add_transaction_template_apply">Aplicar</string>
+    <string name="add_transaction_template_cancel">Cancelar</string>
+    <string name="add_transaction_loading">Carregando dados do formulário...</string>
+    <string name="add_transaction_expense">Despesa</string>
+    <string name="add_transaction_income">Receita</string>
+    <string name="add_transaction_amount">Valor</string>
+    <string name="add_transaction_account">Conta</string>
+    <string name="add_transaction_category">Categoria</string>
+    <string name="add_transaction_note">Nota</string>
+    <string name="add_transaction_note_placeholder">Nota opcional</string>
+    <string name="add_transaction_date">Data</string>
+    <string name="add_transaction_date_hint">AAAA-MM-DD</string>
+    <string name="add_transaction_save">Salvar transação</string>
+    <string name="add_transaction_saving">Salvando...</string>
+    <string name="add_transaction_no_accounts_title">Nenhuma conta ainda</string>
+    <string name="add_transaction_no_accounts_body">Crie uma conta antes de registrar transações.</string>
+    <string name="add_transaction_no_categories_title">Nenhuma categoria para este tipo</string>
+    <string name="add_transaction_no_categories_body">Crie uma categoria de despesa ou receita antes de salvar.</string>
+    <string name="add_transaction_retry">Tentar novamente</string>
+    <string name="add_transaction_error_generic">Não foi possível salvar a transação.</string>
+    <string name="add_transaction_error_invalid_amount">Insira um valor maior que zero.</string>
+    <string name="add_transaction_error_invalid_date">Insira uma data válida como AAAA-MM-DD.</string>
+    <string name="add_transaction_error_account_required">Escolha uma conta.</string>
+    <string name="add_transaction_error_category_required">Escolha uma categoria.</string>
+    <string name="add_transaction_error_account_not_found">A conta selecionada não está mais disponível.</string>
+    <string name="add_transaction_error_category_not_found">A categoria selecionada não está mais disponível.</string>
+    <string name="add_transaction_error_category_type">Escolha uma categoria que corresponda ao tipo de transação.</string>
+</resources>

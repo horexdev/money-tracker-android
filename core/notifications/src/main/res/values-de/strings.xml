@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">Budgetwarnungen</string>
+    <string name="notification_channel_budget_alerts_description">Lokale Warnungen, wenn Budgetschwellenwerte beachtet werden müssen.</string>
+    <string name="notification_channel_recurring_reminders_name">Wiederkehrende Erinnerungen</string>
+    <string name="notification_channel_recurring_reminders_description">Lokale Erinnerungen für wiederkehrende Transaktionen.</string>
+    <string name="notification_channel_goal_milestones_name">Zielmeilensteine</string>
+    <string name="notification_channel_goal_milestones_description">Lokale Updates zum Fortschritt des Sparziels.</string>
+    <string name="notification_channel_weekly_summary_name">Wöchentliche Zusammenfassung</string>
+    <string name="notification_channel_weekly_summary_description">Lokale wöchentliche Finanzzusammenfassungsbenachrichtigungen.</string>
+</resources>

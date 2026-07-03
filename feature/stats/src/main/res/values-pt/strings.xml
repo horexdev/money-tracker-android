@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Estatísticas</string>
+    <string name="stats_subtitle">Detalhamento de categorias, tendências e detalhamento.</string>
+    <string name="stats_loading">Carregando estatísticas</string>
+    <string name="stats_retry">Tentar novamente</string>
+    <string name="stats_error_generic">Não foi possível carregar as estatísticas.</string>
+    <string name="stats_empty_title">Não há estatísticas para este filtro</string>
+    <string name="stats_empty_body">Altere conta, período ou adicione transações para ver gráficos.</string>
+    <string name="stats_filter_accounts">Contas</string>
+    <string name="stats_filter_period">Período</string>
+    <string name="stats_filter_currency">Moeda</string>
+    <string name="stats_filter_type">Repartição</string>
+    <string name="stats_filter_chart_style">Estilo do gráfico</string>
+    <string name="stats_all_accounts">Todas as contas</string>
+    <string name="stats_today">Hoje</string>
+    <string name="stats_week">Semana</string>
+    <string name="stats_month">Mês</string>
+    <string name="stats_last_month">Último mês</string>
+    <string name="stats_expense">Despesa</string>
+    <string name="stats_income">Receita</string>
+    <string name="stats_style_donut">Anel</string>
+    <string name="stats_style_stacked_bar">Empilhado</string>
+    <string name="stats_style_dual_bar">Receita/despesa</string>
+    <string name="stats_style_profit_bars">Lucro</string>
+    <string name="stats_income_total">Receita</string>
+    <string name="stats_expense_total">Despesa</string>
+    <string name="stats_net_total">Líquido</string>
+    <string name="stats_transactions_count">%1$d transações</string>
+    <string name="stats_open_history">Transações abertas para %1$s</string>
+</resources>

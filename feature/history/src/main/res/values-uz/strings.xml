@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Tarix</string>
+    <string name="history_subtitle">Oflayn tranzaksiyalarni qidirish, filtrlash, tahrirlash va o‘chirish</string>
+    <string name="history_empty_title">Tranzaksiya yo\'q</string>
+    <string name="history_empty_body">Yangi daromad va xarajatlar saqlanganidan keyin bu yerda paydo bo\'ladi.</string>
+    <string name="history_loading">Yuklanish tarixi</string>
+    <string name="history_search">Tranzaktsiyalarni qidirish</string>
+    <string name="history_apply_filters">Filtrlarni qo\'llash</string>
+    <string name="history_clear_filters">Aniq</string>
+    <string name="history_all_accounts">Barcha hisoblar</string>
+    <string name="history_all_categories">Barcha toifalar</string>
+    <string name="history_load_more">Yana yuklash</string>
+    <string name="history_page_label">%2$dning %1$d sahifasi</string>
+    <string name="history_income">Daromad</string>
+    <string name="history_expense">Xarajat</string>
+    <string name="history_edit">tranzaksiyani tahrirlash</string>
+    <string name="history_delete">tranzaktsiyani o\'chirish</string>
+    <string name="history_delete_title">Tranzaksiya oʻchirilsinmi?</string>
+    <string name="history_delete_body">Ushbu tranzaksiya mahalliy kitobdan o\'chiriladi.</string>
+    <string name="history_cancel">Bekor qilish</string>
+    <string name="history_save">Tranzaksiyani saqlash</string>
+    <string name="history_amount">Summa</string>
+    <string name="history_date">Sana</string>
+    <string name="history_date_hint">YYYY-AA-KK</string>
+    <string name="history_category">Kategoriya</string>
+    <string name="history_note">Izoh</string>
+    <string name="history_note_empty">Eslatma yo\'q</string>
+    <string name="history_account">Hisob</string>
+    <string name="history_retry">Qayta urinish</string>
+    <string name="history_error_generic">Amalni yakunlab bo‘lmadi.</string>
+    <string name="history_error_invalid_amount">Ijobiy miqdorni kiriting.</string>
+    <string name="history_error_invalid_date">YYYY-MM-DD formatida haqiqiy sanadan foydalaning.</string>
+    <string name="history_error_category">Mos toifani tanlang.</string>
+    <string name="history_error_linked_transfer">Bog\'langan transfer tranzaksiyalarini tahrirlash yoki tarixdan o\'chirib bo\'lmaydi.</string>
+    <string name="history_error_not_found">Tranzaksiya topilmadi.</string>
+</resources>

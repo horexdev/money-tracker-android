@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Painel</string>
+    <string name="feature_home_subtitle">A navegação raiz está pronta.</string>
+    <string name="home_subtitle">Instantâneo offline de saldos e atividades recentes.</string>
+    <string name="home_loading">Carregando painel...</string>
+    <string name="home_retry">Tentar novamente</string>
+    <string name="home_error_generic">Não foi possível carregar os dados do painel.</string>
+    <string name="home_net_balance">Saldo líquido</string>
+    <string name="home_all_accounts">Todas as contas</string>
+    <string name="home_add_transaction">Adicionar transação</string>
+    <string name="home_income">Receita</string>
+    <string name="home_expense">Despesa</string>
+    <string name="home_recent_transactions">Transações recentes</string>
+    <string name="home_quick_templates">Modelos rápidos</string>
+    <string name="home_quick_templates_empty">Crie modelos para aplicar transações frequentes do painel.</string>
+    <string name="home_template_amount_prompt_title">Insira o valor</string>
+    <string name="home_template_amount_prompt_body">Este modelo usa um valor variável.</string>
+    <string name="home_template_amount">Valor</string>
+    <string name="home_template_apply">Aplicar</string>
+    <string name="home_template_cancel">Cancelar</string>
+    <string name="home_template_variable">Variável</string>
+    <string name="home_view_all">Ver tudo</string>
+    <string name="home_empty_title">Sem transações ainda</string>
+    <string name="home_empty_body">Adicione a primeira transação para iniciar o rastreamento.</string>
+</resources>

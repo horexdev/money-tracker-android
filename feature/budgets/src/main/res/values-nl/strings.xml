@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Budgetten</string>
+    <string name="budgets_subtitle">houd bestedingslimieten bij per categorie en huidige periode.</string>
+    <string name="budgets_loading">Budgetten laden</string>
+    <string name="budgets_empty_title">Nog geen budgetten</string>
+    <string name="budgets_empty_body">Creëer een limiet voor een onkostencategorie om hier de voortgang te zien.</string>
+    <string name="budgets_no_categories_title">Geen onkostencategorieën</string>
+    <string name="budgets_no_categories_body">Maak een onkostencategorie voordat u een budget toevoegt.</string>
+    <string name="budgets_add">Budget toevoegen</string>
+    <string name="budgets_create">Begroting maken</string>
+    <string name="budgets_edit">Budget bewerken</string>
+    <string name="budgets_save">Budget besparen</string>
+    <string name="budgets_delete">Budget verwijderen</string>
+    <string name="budgets_cancel">Annuleren</string>
+    <string name="budgets_retry">Opnieuw proberen</string>
+    <string name="budgets_category">Categorie</string>
+    <string name="budgets_period">Periode</string>
+    <string name="budgets_period_weekly">Wekelijks</string>
+    <string name="budgets_period_monthly">Maandelijks</string>
+    <string name="budgets_limit">Limiet</string>
+    <string name="budgets_spent_of_limit">%1$s van %2$s</string>
+    <string name="budgets_remaining">Resterend: %1$s</string>
+    <string name="budgets_over_limit">Overlimiet door %1$s</string>
+    <string name="budgets_over_limit_chip">Overlimiet</string>
+    <string name="budgets_progress_percent">%1$d%% gebruikt</string>
+    <string name="budgets_currency">Valuta</string>
+    <string name="budgets_notifications">Meldingen</string>
+    <string name="budgets_notifications_enabled">Meldingen ingeschakeld</string>
+    <string name="budgets_notifications_disabled">Meldingen uitgeschakeld</string>
+    <string name="budgets_notify_at">Melding met percentage</string>
+    <string name="budgets_transactions">Transacties</string>
+    <string name="budgets_transactions_title">Budgettransacties</string>
+    <string name="budgets_transactions_empty">Geen transacties in de huidige periode.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Budget verwijderen?</string>
+    <string name="budgets_delete_body">Hiermee wordt de budgetlimiet verwijderd. Transacties blijven ongewijzigd.</string>
+    <string name="budgets_error_generic">Budgetactie mislukt.</string>
+    <string name="budgets_error_amount">Budgetlimiet moet een positief bedrag zijn.</string>
+    <string name="budgets_error_currency">Valuta moet een ISO-code van drie letters zijn.</string>
+    <string name="budgets_error_notify_percent">Meldingspercentage moet positief zijn.</string>
+    <string name="budgets_error_duplicate">Deze categorie heeft al een budget voor de geselecteerde periode.</string>
+    <string name="budgets_error_category">Selecteer een onkostencategorie.</string>
+    <string name="budgets_error_not_found">Budget is niet gevonden.</string>
+</resources>

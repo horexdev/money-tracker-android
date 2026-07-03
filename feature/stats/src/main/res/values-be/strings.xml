@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Статыстыка</string>
+    <string name="stats_subtitle">Разбіўка катэгорый, тэндэнцыі і падрабязная інфармацыя.</string>
+    <string name="stats_loading">Загрузка статыстыкі</string>
+    <string name="stats_retry">Паўтарыць</string>
+    <string name="stats_error_generic">Не атрымалася загрузіць статыстыку.</string>
+    <string name="stats_empty_title">Няма статыстыкі для гэтага фільтра</string>
+    <string name="stats_empty_body">змяніце рахунак, перыяд або дадайце транзакцыі, каб убачыць дыяграмы.</string>
+    <string name="stats_filter_accounts">Рахункі</string>
+    <string name="stats_filter_period">Перыяд</string>
+    <string name="stats_filter_currency">Валюта</string>
+    <string name="stats_filter_type">Паломка</string>
+    <string name="stats_filter_chart_style">Стыль дыяграмы</string>
+    <string name="stats_all_accounts">Усе рахункі</string>
+    <string name="stats_today">Сёння</string>
+    <string name="stats_week">Тыдзень</string>
+    <string name="stats_month">Месяц</string>
+    <string name="stats_last_month">У мінулым месяцы</string>
+    <string name="stats_expense">Выдатак</string>
+    <string name="stats_income">Даход</string>
+    <string name="stats_style_donut">Пончык</string>
+    <string name="stats_style_stacked_bar">Складзены</string>
+    <string name="stats_style_dual_bar">Даход / выдаткі</string>
+    <string name="stats_style_profit_bars">Прыбытак</string>
+    <string name="stats_income_total">Даход</string>
+    <string name="stats_expense_total">Выдатак</string>
+    <string name="stats_net_total">Сетка</string>
+    <string name="stats_transactions_count">%1$d тх</string>
+    <string name="stats_open_history">Адкрытыя транзакцыі для %1$s</string>
+</resources>

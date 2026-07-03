@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Statistik</string>
+    <string name="stats_subtitle">Perincian kategori, tren, dan penelusuran.</string>
+    <string name="stats_loading">Memuat statistik</string>
+    <string name="stats_retry">Coba lagi</string>
+    <string name="stats_error_generic">Statistik tidak dapat dimuat.</string>
+    <string name="stats_empty_title">Tidak ada statistik untuk filter ini</string>
+    <string name="stats_empty_body">Ubah akun, periode, atau tambahkan transaksi untuk melihat grafik.</string>
+    <string name="stats_filter_accounts">Akun</string>
+    <string name="stats_filter_period">Periode</string>
+    <string name="stats_filter_currency">Mata uang</string>
+    <string name="stats_filter_type">Kerusakan</string>
+    <string name="stats_filter_chart_style">Gaya grafik</string>
+    <string name="stats_all_accounts">Semua akun</string>
+    <string name="stats_today">Hari Ini</string>
+    <string name="stats_week">Minggu</string>
+    <string name="stats_month">Bulan</string>
+    <string name="stats_last_month">Bulan lalu</string>
+    <string name="stats_expense">Pengeluaran</string>
+    <string name="stats_income">Pemasukan</string>
+    <string name="stats_style_donut">Cincin</string>
+    <string name="stats_style_stacked_bar">Ditumpuk</string>
+    <string name="stats_style_dual_bar">Pendapatan/beban</string>
+    <string name="stats_style_profit_bars">Laba</string>
+    <string name="stats_income_total">Pemasukan</string>
+    <string name="stats_expense_total">Pengeluaran</string>
+    <string name="stats_net_total">Bersih</string>
+    <string name="stats_transactions_count">%1$d transaksi</string>
+    <string name="stats_open_history">Buka transaksi untuk %1$s</string>
+</resources>

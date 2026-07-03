@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Risparmio</string>
+    <string name="savings_subtitle">monitora i progressi degli obiettivi, i depositi, i prelievi e la cronologia.</string>
+    <string name="savings_loading">Caricamento obiettivi di risparmio</string>
+    <string name="savings_empty_title">Ancora nessun obiettivo</string>
+    <string name="savings_empty_body">crea un obiettivo per monitorare i progressi verso un importo target.</string>
+    <string name="savings_add">Aggiungi obiettivo</string>
+    <string name="savings_create">Crea obiettivo</string>
+    <string name="savings_edit">Modifica obiettivo</string>
+    <string name="savings_save">Salva obiettivo</string>
+    <string name="savings_delete">Elimina obiettivo</string>
+    <string name="savings_cancel">Annulla</string>
+    <string name="savings_retry">Riprova</string>
+    <string name="savings_name">nome dell\'obiettivo</string>
+    <string name="savings_target">importo target</string>
+    <string name="savings_currency">Valuta</string>
+    <string name="savings_deadline_optional">Scadenza (AAAA-MM-GG, facoltativo)</string>
+    <string name="savings_account">Conto collegato</string>
+    <string name="savings_no_account">Nessun account collegato</string>
+    <string name="savings_progress_percent">%1$d%% completato</string>
+    <string name="savings_amount_progress">%1$s di %2$s</string>
+    <string name="savings_remaining">Rimanente: %1$s</string>
+    <string name="savings_completed">completato</string>
+    <string name="savings_deposit">Deposita</string>
+    <string name="savings_withdraw">Preleva</string>
+    <string name="savings_history">Cronologia</string>
+    <string name="savings_history_title">Cronologia gol</string>
+    <string name="savings_history_empty">Ancora nessun deposito o prelievo.</string>
+    <string name="savings_operation_amount">Importo</string>
+    <string name="savings_operation_note">Nota</string>
+    <string name="savings_operation_note_placeholder">Nota operativa opzionale</string>
+    <string name="savings_delete_title">Eliminare l\'obiettivo?</string>
+    <string name="savings_delete_body">questo rimuove l\'obiettivo e la sua cronologia degli obiettivi. Le transazioni dei conti collegati rimangono invariate.</string>
+    <string name="savings_error_generic">Azione di salvataggio fallita.</string>
+    <string name="savings_error_name">Il nome dell\'obiettivo è obbligatorio.</string>
+    <string name="savings_error_amount">l\'importo deve essere positivo.</string>
+    <string name="savings_error_currency">la valuta deve essere un codice ISO di 3 lettere.</string>
+    <string name="savings_error_deadline">la scadenza deve utilizzare AAAA-MM-GG.</string>
+    <string name="savings_error_account">L\'account collegato non è stato trovato.</string>
+    <string name="savings_error_category">Manca la categoria di risparmio.</string>
+    <string name="savings_error_funds">Il prelievo è superiore all\'importo dell\'obiettivo attuale.</string>
+    <string name="savings_error_not_found">L\'obiettivo di risparmio non è stato trovato.</string>
+</resources>

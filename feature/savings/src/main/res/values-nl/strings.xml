@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Spaarrekening</string>
+    <string name="savings_subtitle">Volg de voortgang van doelen, stortingen, opnames en geschiedenis.</string>
+    <string name="savings_loading">Spaardoelen laden</string>
+    <string name="savings_empty_title">Nog geen doelpunten</string>
+    <string name="savings_empty_body">Creëer een doel om de voortgang richting een doelbedrag bij te houden.</string>
+    <string name="savings_add">Doel toevoegen</string>
+    <string name="savings_create">Doel creëren</string>
+    <string name="savings_edit">Doel bewerken</string>
+    <string name="savings_save">Doel opslaan</string>
+    <string name="savings_delete">Doel verwijderen</string>
+    <string name="savings_cancel">Annuleren</string>
+    <string name="savings_retry">Opnieuw proberen</string>
+    <string name="savings_name">Doelnaam</string>
+    <string name="savings_target">Streefbedrag</string>
+    <string name="savings_currency">Valuta</string>
+    <string name="savings_deadline_optional">Deadline (JJJJ-MM-DD, optioneel)</string>
+    <string name="savings_account">Gekoppeld account</string>
+    <string name="savings_no_account">Geen gekoppeld account</string>
+    <string name="savings_progress_percent">%1$d%% voltooid</string>
+    <string name="savings_amount_progress">%1$s van %2$s</string>
+    <string name="savings_remaining">Resterend: %1$s</string>
+    <string name="savings_completed">voltooid</string>
+    <string name="savings_deposit">Storten</string>
+    <string name="savings_withdraw">Opnemen</string>
+    <string name="savings_history">Geschiedenis</string>
+    <string name="savings_history_title">Doelgeschiedenis</string>
+    <string name="savings_history_empty">Nog geen stortingen of opnames.</string>
+    <string name="savings_operation_amount">Bedrag</string>
+    <string name="savings_operation_note">Notitie</string>
+    <string name="savings_operation_note_placeholder">Opmerking over optionele bediening</string>
+    <string name="savings_delete_title">Doel verwijderen?</string>
+    <string name="savings_delete_body">Hiermee worden het doel en de doelgeschiedenis ervan verwijderd. Gekoppelde accounttransacties blijven ongewijzigd.</string>
+    <string name="savings_error_generic">Besparingsactie mislukt.</string>
+    <string name="savings_error_name">Doelnaam is vereist.</string>
+    <string name="savings_error_amount">Bedrag moet positief zijn.</string>
+    <string name="savings_error_currency">Valuta moet een ISO-code van drie letters zijn.</string>
+    <string name="savings_error_deadline">Deadline moet JJJJ-MM-DD zijn.</string>
+    <string name="savings_error_account">Gekoppeld account is niet gevonden.</string>
+    <string name="savings_error_category">Spaarcategorie ontbreekt.</string>
+    <string name="savings_error_funds">Opname is hoger dan het huidige doelbedrag.</string>
+    <string name="savings_error_not_found">Besparingsdoel is niet gevonden.</string>
+</resources>

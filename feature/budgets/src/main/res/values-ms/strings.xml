@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Bajet</string>
+    <string name="budgets_subtitle">Jejaki had perbelanjaan mengikut kategori dan tempoh semasa.</string>
+    <string name="budgets_loading">Memuatkan belanjawan</string>
+    <string name="budgets_empty_title">Belum ada belanjawan</string>
+    <string name="budgets_empty_body">Buat had untuk kategori perbelanjaan untuk melihat kemajuan di sini.</string>
+    <string name="budgets_no_categories_title">Tiada kategori perbelanjaan</string>
+    <string name="budgets_no_categories_body">Buat kategori perbelanjaan sebelum menambah belanjawan.</string>
+    <string name="budgets_add">Tambah belanjawan</string>
+    <string name="budgets_create">Buat belanjawan</string>
+    <string name="budgets_edit">Edit belanjawan</string>
+    <string name="budgets_save">Jimat bajet</string>
+    <string name="budgets_delete">Padamkan belanjawan</string>
+    <string name="budgets_cancel">Batal</string>
+    <string name="budgets_retry">Cuba lagi</string>
+    <string name="budgets_category">Kategori</string>
+    <string name="budgets_period">Tempoh</string>
+    <string name="budgets_period_weekly">Mingguan</string>
+    <string name="budgets_period_monthly">Bulanan</string>
+    <string name="budgets_limit">Had</string>
+    <string name="budgets_spent_of_limit">%1$s daripada %2$s</string>
+    <string name="budgets_remaining">Baki: %1$s</string>
+    <string name="budgets_over_limit">Lebihan had oleh %1$s</string>
+    <string name="budgets_over_limit_chip">Melebihi had</string>
+    <string name="budgets_progress_percent">%1$d%% digunakan</string>
+    <string name="budgets_currency">Mata Wang</string>
+    <string name="budgets_notifications">Pemberitahuan</string>
+    <string name="budgets_notifications_enabled">Pemberitahuan dihidupkan</string>
+    <string name="budgets_notifications_disabled">Pemberitahuan dimatikan</string>
+    <string name="budgets_notify_at">Maklumkan pada peratus</string>
+    <string name="budgets_transactions">Transaksi</string>
+    <string name="budgets_transactions_title">Urus niaga belanjawan</string>
+    <string name="budgets_transactions_empty">Tiada transaksi dalam tempoh semasa.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Padamkan bajet?</string>
+    <string name="budgets_delete_body">Ini mengalih keluar had belanjawan. Urus niaga kekal tidak berubah.</string>
+    <string name="budgets_error_generic">Tindakan belanjawan gagal.</string>
+    <string name="budgets_error_amount">Had belanjawan mestilah jumlah yang positif.</string>
+    <string name="budgets_error_currency">Mata wang mestilah kod ISO 3 huruf.</string>
+    <string name="budgets_error_notify_percent">Peratus pemberitahuan mestilah positif.</string>
+    <string name="budgets_error_duplicate">Kategori ini sudah mempunyai belanjawan untuk tempoh yang dipilih.</string>
+    <string name="budgets_error_category">Pilih kategori perbelanjaan.</string>
+    <string name="budgets_error_not_found">Belanjawan tidak dijumpai.</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Kategoriler</string>
+    <string name="categories_subtitle">Adları, simgeleri, renkleri ve işlem türlerini yönetin</string>
+    <string name="categories_empty_title">Kategori yok</string>
+    <string name="categories_empty_body">Gelir ve giderleri çevrimdışı olarak sınıflandırmak için bir kategori oluşturun.</string>
+    <string name="categories_add">Kategori ekle</string>
+    <string name="categories_edit">Kategoriyi düzenle</string>
+    <string name="categories_create">Kategori oluştur</string>
+    <string name="categories_save">Kategoriyi kaydet</string>
+    <string name="categories_delete">Kategoriyi sil</string>
+    <string name="categories_delete_title">Kategori silinsin mi?</string>
+    <string name="categories_delete_body">Kategori yeni işlemlerden gizlenecek. Mevcut tarih etiketini koruyor.</string>
+    <string name="categories_cancel">İptal</string>
+    <string name="categories_retry">Tekrar dene</string>
+    <string name="categories_loading">Kategoriler yükleniyor</string>
+    <string name="categories_name">Ad</string>
+    <string name="categories_name_placeholder">Bakkaliye</string>
+    <string name="categories_type">Tür</string>
+    <string name="categories_color">Renk</string>
+    <string name="categories_icon">Simge</string>
+    <string name="categories_all">Tümü</string>
+    <string name="categories_type_expense">Gider</string>
+    <string name="categories_type_income">Gelir</string>
+    <string name="categories_type_both">Her İkisi</string>
+    <string name="categories_type_savings">Birikim</string>
+    <string name="categories_type_transfer">Transfer Et</string>
+    <string name="categories_type_adjustment">Ayarlama</string>
+    <string name="categories_protected">Korumalı</string>
+    <string name="categories_system">Sistem</string>
+    <string name="categories_error_generic">Eylem tamamlanamadı.</string>
+    <string name="categories_error_empty_name">Bir kategori adı girin.</string>
+    <string name="categories_error_duplicate_name">Bu isimde bir kategori zaten mevcut.</string>
+    <string name="categories_error_protected">Korunan kategoriler değiştirilemez.</string>
+    <string name="categories_error_not_found">Kategori bulunamadı.</string>
+    <string name="categories_icon_food">Yemek</string>
+    <string name="categories_icon_transport">Ulaşım</string>
+    <string name="categories_icon_home">Ana Sayfa</string>
+    <string name="categories_icon_shopping">Alışveriş</string>
+    <string name="categories_icon_work">İş</string>
+    <string name="categories_icon_money">Para</string>
+    <string name="categories_icon_savings">Birikim</string>
+    <string name="categories_icon_transfer">Transfer Et</string>
+    <string name="categories_icon_other">Diğer</string>
+</resources>

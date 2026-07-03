@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Orçamentos</string>
+    <string name="budgets_subtitle">Acompanhe os limites de gastos por categoria e período atual.</string>
+    <string name="budgets_loading">Carregando orçamentos</string>
+    <string name="budgets_empty_title">Ainda não há orçamentos</string>
+    <string name="budgets_empty_body">Crie um limite para uma categoria de despesas para ver o progresso aqui.</string>
+    <string name="budgets_no_categories_title">Sem categorias de despesas</string>
+    <string name="budgets_no_categories_body">Crie uma categoria de despesas antes de adicionar um orçamento.</string>
+    <string name="budgets_add">Adicionar orçamento</string>
+    <string name="budgets_create">Criar orçamento</string>
+    <string name="budgets_edit">Editar orçamento</string>
+    <string name="budgets_save">Economize orçamento</string>
+    <string name="budgets_delete">Excluir orçamento</string>
+    <string name="budgets_cancel">Cancelar</string>
+    <string name="budgets_retry">Tentar novamente</string>
+    <string name="budgets_category">Categoria</string>
+    <string name="budgets_period">Período</string>
+    <string name="budgets_period_weekly">Semanal</string>
+    <string name="budgets_period_monthly">Mensal</string>
+    <string name="budgets_limit">Limite</string>
+    <string name="budgets_spent_of_limit">%1$s de %2$s</string>
+    <string name="budgets_remaining">Restante: %1$s</string>
+    <string name="budgets_over_limit">Acima do limite por %1$s</string>
+    <string name="budgets_over_limit_chip">Acima do limite</string>
+    <string name="budgets_progress_percent">%1$d%% usado</string>
+    <string name="budgets_currency">Moeda</string>
+    <string name="budgets_notifications">Notificações</string>
+    <string name="budgets_notifications_enabled">Notificações ativadas</string>
+    <string name="budgets_notifications_disabled">Notificações desativadas</string>
+    <string name="budgets_notify_at">Notificar em porcentagem</string>
+    <string name="budgets_transactions">Transações</string>
+    <string name="budgets_transactions_title">Transações orçamentárias</string>
+    <string name="budgets_transactions_empty">Nenhuma transação no período atual.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Excluir orçamento?</string>
+    <string name="budgets_delete_body">Isso remove o limite do orçamento. As transações permanecem inalteradas.</string>
+    <string name="budgets_error_generic">Falha na ação orçamentária.</string>
+    <string name="budgets_error_amount">O limite do orçamento deve ser um valor positivo.</string>
+    <string name="budgets_error_currency">A moeda deve ser um código ISO de 3 letras.</string>
+    <string name="budgets_error_notify_percent">A porcentagem de notificação deve ser positiva.</string>
+    <string name="budgets_error_duplicate">Esta categoria já possui orçamento para o período selecionado.</string>
+    <string name="budgets_error_category">Selecione uma categoria de despesa.</string>
+    <string name="budgets_error_not_found">Orçamento não encontrado.</string>
+</resources>

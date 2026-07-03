@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Categorieën</string>
+    <string name="categories_subtitle">Beheer namen, pictogrammen, kleuren en transactietypen</string>
+    <string name="categories_empty_title">Geen categorieën</string>
+    <string name="categories_empty_body">Maak een categorie om inkomsten en uitgaven offline te classificeren.</string>
+    <string name="categories_add">Categorie toevoegen</string>
+    <string name="categories_edit">Categorie bewerken</string>
+    <string name="categories_create">Categorie aanmaken</string>
+    <string name="categories_save">Categorie opslaan</string>
+    <string name="categories_delete">Categorie verwijderen</string>
+    <string name="categories_delete_title">Categorie verwijderen?</string>
+    <string name="categories_delete_body">De categorie wordt verborgen voor nieuwe transacties. De bestaande geschiedenis behoudt zijn label.</string>
+    <string name="categories_cancel">Annuleren</string>
+    <string name="categories_retry">Opnieuw proberen</string>
+    <string name="categories_loading">Categorieën laden</string>
+    <string name="categories_name">Naam</string>
+    <string name="categories_name_placeholder">Boodschappen</string>
+    <string name="categories_type">Categorietype</string>
+    <string name="categories_color">Kleur</string>
+    <string name="categories_icon">Icoon</string>
+    <string name="categories_all">Alles</string>
+    <string name="categories_type_expense">Uitgave</string>
+    <string name="categories_type_income">Inkomst</string>
+    <string name="categories_type_both">Beide</string>
+    <string name="categories_type_savings">Spaarrekening</string>
+    <string name="categories_type_transfer">Overmaken</string>
+    <string name="categories_type_adjustment">Aanpassing</string>
+    <string name="categories_protected">Beschermd</string>
+    <string name="categories_system">Systeem</string>
+    <string name="categories_error_generic">Kan de actie niet voltooien.</string>
+    <string name="categories_error_empty_name">Voer een categorienaam in.</string>
+    <string name="categories_error_duplicate_name">Er bestaat al een categorie met deze naam.</string>
+    <string name="categories_error_protected">Beschermde categorieën kunnen niet worden gewijzigd.</string>
+    <string name="categories_error_not_found">Categorie is niet gevonden.</string>
+    <string name="categories_icon_food">Eten</string>
+    <string name="categories_icon_transport">Vervoer</string>
+    <string name="categories_icon_home">Start</string>
+    <string name="categories_icon_shopping">Winkelen</string>
+    <string name="categories_icon_work">Werk</string>
+    <string name="categories_icon_money">Geld</string>
+    <string name="categories_icon_savings">Spaarrekening</string>
+    <string name="categories_icon_transfer">Overmaken</string>
+    <string name="categories_icon_other">Overig</string>
+</resources>

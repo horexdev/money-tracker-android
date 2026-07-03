@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">تنبيهات الميزانية</string>
+    <string name="notification_channel_budget_alerts_description">تنبيهات محلية عندما تحتاج حدود الميزانية إلى الاهتمام.</string>
+    <string name="notification_channel_recurring_reminders_name">التذكيرات المتكررة</string>
+    <string name="notification_channel_recurring_reminders_description">تذكيرات محلية للمعاملات المتكررة.</string>
+    <string name="notification_channel_goal_milestones_name">معالم الهدف</string>
+    <string name="notification_channel_goal_milestones_description">تحديثات محلية حول التقدم في هدف الادخار.</string>
+    <string name="notification_channel_weekly_summary_name">الملخص الأسبوعي</string>
+    <string name="notification_channel_weekly_summary_description">إشعارات ملخص الشؤون المالية الأسبوعية المحلية.</string>
+</resources>

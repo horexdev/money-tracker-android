@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Estadísticas</string>
+    <string name="stats_subtitle">Desglose de categorías, tendencias y desglose.</string>
+    <string name="stats_loading">Cargando estadísticas</string>
+    <string name="stats_retry">Reintentar</string>
+    <string name="stats_error_generic">No se pudieron cargar las estadísticas.</string>
+    <string name="stats_empty_title">No hay estadísticas para este filtro</string>
+    <string name="stats_empty_body">cambie de cuenta, período o agregue transacciones para ver gráficos.</string>
+    <string name="stats_filter_accounts">Cuentas</string>
+    <string name="stats_filter_period">Período</string>
+    <string name="stats_filter_currency">moneda</string>
+    <string name="stats_filter_type">Desglose</string>
+    <string name="stats_filter_chart_style">Estilo de gráfico</string>
+    <string name="stats_all_accounts">Todas las cuentas</string>
+    <string name="stats_today">Hoy</string>
+    <string name="stats_week">Semana</string>
+    <string name="stats_month">mes</string>
+    <string name="stats_last_month">el mes pasado</string>
+    <string name="stats_expense">Gasto</string>
+    <string name="stats_income">Ingreso</string>
+    <string name="stats_style_donut">Anillo</string>
+    <string name="stats_style_stacked_bar">apilado</string>
+    <string name="stats_style_dual_bar">Ingresos/gastos</string>
+    <string name="stats_style_profit_bars">Beneficio</string>
+    <string name="stats_income_total">Ingreso</string>
+    <string name="stats_expense_total">Gasto</string>
+    <string name="stats_net_total">neto</string>
+    <string name="stats_transactions_count">%1$d transmisión</string>
+    <string name="stats_open_history">Transacciones abiertas para %1$s</string>
+</resources>

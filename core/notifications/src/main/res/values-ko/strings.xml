@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">예산 알림</string>
+    <string name="notification_channel_budget_alerts_description">예산 임계값에 주의가 필요할 때 지역 경고.</string>
+    <string name="notification_channel_recurring_reminders_name">반복 알림</string>
+    <string name="notification_channel_recurring_reminders_description">반복 거래에 대한 로컬 알림입니다.</string>
+    <string name="notification_channel_goal_milestones_name">목표 이정표</string>
+    <string name="notification_channel_goal_milestones_description">저축 목표 진행 상황에 대한 로컬 업데이트입니다.</string>
+    <string name="notification_channel_weekly_summary_name">주간 요약</string>
+    <string name="notification_channel_weekly_summary_description">지역 주간 재정 요약 알림입니다.</string>
+</resources>

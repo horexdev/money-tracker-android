@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Kategori</string>
+    <string name="categories_subtitle">Kelola nama, ikon, warna, dan jenis transaksi</string>
+    <string name="categories_empty_title">Tidak ada kategori</string>
+    <string name="categories_empty_body">Buat kategori untuk mengklasifikasikan pendapatan dan pengeluaran secara offline.</string>
+    <string name="categories_add">Tambahkan kategori</string>
+    <string name="categories_edit">Sunting kategori</string>
+    <string name="categories_create">Buat kategori</string>
+    <string name="categories_save">Simpan kategori</string>
+    <string name="categories_delete">Hapus kategori</string>
+    <string name="categories_delete_title">Hapus kategori?</string>
+    <string name="categories_delete_body">Kategori akan disembunyikan dari transaksi baru. Sejarah yang ada tetap mempertahankan labelnya.</string>
+    <string name="categories_cancel">Batal</string>
+    <string name="categories_retry">Coba lagi</string>
+    <string name="categories_loading">Memuat kategori</string>
+    <string name="categories_name">Nama</string>
+    <string name="categories_name_placeholder">Bahan makanan</string>
+    <string name="categories_type">Jenis</string>
+    <string name="categories_color">Warna</string>
+    <string name="categories_icon">Ikon</string>
+    <string name="categories_all">Semua</string>
+    <string name="categories_type_expense">Pengeluaran</string>
+    <string name="categories_type_income">Pemasukan</string>
+    <string name="categories_type_both">Keduanya</string>
+    <string name="categories_type_savings">Tabungan</string>
+    <string name="categories_type_transfer">Pindahan</string>
+    <string name="categories_type_adjustment">Penyesuaian</string>
+    <string name="categories_protected">Dilindungi</string>
+    <string name="categories_system">Sistem</string>
+    <string name="categories_error_generic">Tidak dapat menyelesaikan tindakan.</string>
+    <string name="categories_error_empty_name">Masukkan nama kategori.</string>
+    <string name="categories_error_duplicate_name">Kategori dengan nama ini sudah ada.</string>
+    <string name="categories_error_protected">Kategori yang dilindungi tidak dapat diubah.</string>
+    <string name="categories_error_not_found">Kategori tidak ditemukan.</string>
+    <string name="categories_icon_food">Makanan</string>
+    <string name="categories_icon_transport">Transportasi</string>
+    <string name="categories_icon_home">Beranda</string>
+    <string name="categories_icon_shopping">Belanja</string>
+    <string name="categories_icon_work">Bekerja</string>
+    <string name="categories_icon_money">Uang</string>
+    <string name="categories_icon_savings">Tabungan</string>
+    <string name="categories_icon_transfer">Ikon pindahan</string>
+    <string name="categories_icon_other">Lainnya</string>
+</resources>

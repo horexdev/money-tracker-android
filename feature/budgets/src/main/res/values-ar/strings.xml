@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">الميزانيات</string>
+    <string name="budgets_subtitle">تتبع حدود الإنفاق حسب الفئة والفترة الحالية.</string>
+    <string name="budgets_loading">تحميل الميزانيات</string>
+    <string name="budgets_empty_title">لا توجد ميزانيات حتى الآن</string>
+    <string name="budgets_empty_body">قم بإنشاء حد لفئة المصروفات لرؤية التقدم هنا.</string>
+    <string name="budgets_no_categories_title">لا توجد فئات مصروفات</string>
+    <string name="budgets_no_categories_body">قم بإنشاء فئة المصروفات قبل إضافة الميزانية.</string>
+    <string name="budgets_add">اضافة الميزانية</string>
+    <string name="budgets_create">إنشاء الميزانية</string>
+    <string name="budgets_edit">تعديل الميزانية</string>
+    <string name="budgets_save">حفظ الميزانية</string>
+    <string name="budgets_delete">حذف الميزانية</string>
+    <string name="budgets_cancel">إلغاء</string>
+    <string name="budgets_retry">إعادة المحاولة</string>
+    <string name="budgets_category">الفئة</string>
+    <string name="budgets_period">الفترة</string>
+    <string name="budgets_period_weekly">أسبوعي</string>
+    <string name="budgets_period_monthly">شهري</string>
+    <string name="budgets_limit">الحد</string>
+    <string name="budgets_spent_of_limit">%1$s من %2$s</string>
+    <string name="budgets_remaining">المتبقي: %1$s</string>
+    <string name="budgets_over_limit">تجاوز الحد بواسطة %1$s</string>
+    <string name="budgets_over_limit_chip">تجاوز الحد</string>
+    <string name="budgets_progress_percent">%1$d%% مستخدم</string>
+    <string name="budgets_currency">العملة</string>
+    <string name="budgets_notifications">الإشعارات</string>
+    <string name="budgets_notifications_enabled">تشغيل الإشعارات</string>
+    <string name="budgets_notifications_disabled">إيقاف الإشعارات</string>
+    <string name="budgets_notify_at">الإخطار في المئة</string>
+    <string name="budgets_transactions">المعاملات</string>
+    <string name="budgets_transactions_title">معاملات الميزانية</string>
+    <string name="budgets_transactions_empty">لا توجد معاملات في الفترة الحالية.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">حذف الميزانية؟</string>
+    <string name="budgets_delete_body">يؤدي هذا إلى إزالة حد الميزانية. المعاملات تبقى دون تغيير.</string>
+    <string name="budgets_error_generic">فشل إجراء الموازنة.</string>
+    <string name="budgets_error_amount">يجب أن يكون حد الميزانية مبلغًا موجبًا.</string>
+    <string name="budgets_error_currency">يجب أن تكون العملة عبارة عن رمز ISO مكون من 3 أحرف.</string>
+    <string name="budgets_error_notify_percent">يجب أن تكون نسبة الإشعارات موجبة.</string>
+    <string name="budgets_error_duplicate">هذه الفئة لديها بالفعل ميزانية للفترة المحددة.</string>
+    <string name="budgets_error_category">حدد فئة المصروفات.</string>
+    <string name="budgets_error_not_found">لم يتم العثور على الميزانية.</string>
+</resources>

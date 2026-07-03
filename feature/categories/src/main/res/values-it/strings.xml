@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Categorie</string>
+    <string name="categories_subtitle">Gestisci nomi, icone, colori e tipi di transazione</string>
+    <string name="categories_empty_title">Nessuna categoria</string>
+    <string name="categories_empty_body">Crea una categoria per classificare entrate e uscite offline.</string>
+    <string name="categories_add">Aggiungi categoria</string>
+    <string name="categories_edit">Modifica categoria</string>
+    <string name="categories_create">Crea categoria</string>
+    <string name="categories_save">Salva categoria</string>
+    <string name="categories_delete">Elimina categoria</string>
+    <string name="categories_delete_title">Eliminare la categoria?</string>
+    <string name="categories_delete_body">La categoria verrà nascosta dalle nuove transazioni. La storia esistente mantiene la sua etichetta.</string>
+    <string name="categories_cancel">Annulla</string>
+    <string name="categories_retry">Riprova</string>
+    <string name="categories_loading">Caricamento categorie</string>
+    <string name="categories_name">Nome</string>
+    <string name="categories_name_placeholder">Generi alimentari</string>
+    <string name="categories_type">Tipo</string>
+    <string name="categories_color">Colore</string>
+    <string name="categories_icon">Icona</string>
+    <string name="categories_all">Tutto</string>
+    <string name="categories_type_expense">Spesa</string>
+    <string name="categories_type_income">Entrata</string>
+    <string name="categories_type_both">Entrambi</string>
+    <string name="categories_type_savings">Risparmio</string>
+    <string name="categories_type_transfer">Trasferisci</string>
+    <string name="categories_type_adjustment">Regolazione</string>
+    <string name="categories_protected">Protetto</string>
+    <string name="categories_system">Sistema</string>
+    <string name="categories_error_generic">Impossibile completare l\'azione.</string>
+    <string name="categories_error_empty_name">inserisci il nome di una categoria.</string>
+    <string name="categories_error_duplicate_name">Esiste già una categoria con questo nome.</string>
+    <string name="categories_error_protected">Le categorie protette non possono essere modificate.</string>
+    <string name="categories_error_not_found">Categoria non trovata.</string>
+    <string name="categories_icon_food">Cibo</string>
+    <string name="categories_icon_transport">Trasporti</string>
+    <string name="categories_icon_home">Casa</string>
+    <string name="categories_icon_shopping">Fare la spesa</string>
+    <string name="categories_icon_work">Lavoro</string>
+    <string name="categories_icon_money">Soldi</string>
+    <string name="categories_icon_savings">Risparmio</string>
+    <string name="categories_icon_transfer">Trasferisci</string>
+    <string name="categories_icon_other">Altro</string>
+</resources>

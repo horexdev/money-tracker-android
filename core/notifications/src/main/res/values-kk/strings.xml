@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">Бюджеттік ескертулер</string>
+    <string name="notification_channel_budget_alerts_description">бюджет шектеріне назар аудару қажет болғанда жергілікті ескертулер.</string>
+    <string name="notification_channel_recurring_reminders_name">Қайталанатын еске салғыштар</string>
+    <string name="notification_channel_recurring_reminders_description">Қайталанатын транзакциялар үшін жергілікті еске салғыштар.</string>
+    <string name="notification_channel_goal_milestones_name">Мақсат кезеңдері</string>
+    <string name="notification_channel_goal_milestones_description">Жинақтау мақсатының орындалу барысы туралы жергілікті жаңартулар.</string>
+    <string name="notification_channel_weekly_summary_name">Апталық қорытынды</string>
+    <string name="notification_channel_weekly_summary_description">Жергілікті апта сайынғы қаржылық қорытынды хабарландырулар.</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Pannello</string>
+    <string name="feature_home_subtitle">la navigazione root è pronta.</string>
+    <string name="home_subtitle">istantanea offline dei saldi e dell\'attività recente.</string>
+    <string name="home_loading">Caricamento dashboard...</string>
+    <string name="home_retry">Riprova</string>
+    <string name="home_error_generic">Impossibile caricare i dati del dashboard.</string>
+    <string name="home_net_balance">Saldo netto</string>
+    <string name="home_all_accounts">Tutti i conti</string>
+    <string name="home_add_transaction">Aggiungi transazione</string>
+    <string name="home_income">Entrata</string>
+    <string name="home_expense">Spesa</string>
+    <string name="home_recent_transactions">Transazioni recenti</string>
+    <string name="home_quick_templates">Modelli rapidi</string>
+    <string name="home_quick_templates_empty">Crea modelli per applicare transazioni frequenti dalla dashboard.</string>
+    <string name="home_template_amount_prompt_title">inserire l\'importo</string>
+    <string name="home_template_amount_prompt_body">questo modello utilizza un importo variabile.</string>
+    <string name="home_template_amount">Importo</string>
+    <string name="home_template_apply">Applica</string>
+    <string name="home_template_cancel">Annulla</string>
+    <string name="home_template_variable">Variabile</string>
+    <string name="home_view_all">Visualizza tutto</string>
+    <string name="home_empty_title">Nessuna transazione ancora</string>
+    <string name="home_empty_body">aggiungi la prima transazione per iniziare il monitoraggio.</string>
+</resources>

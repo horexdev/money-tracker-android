@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Statistiques</string>
+    <string name="stats_subtitle">répartition des catégories, tendances et exploration.</string>
+    <string name="stats_loading">Chargement des statistiques</string>
+    <string name="stats_retry">Réessayer</string>
+    <string name="stats_error_generic">Les statistiques n\'ont pas pu être chargées.</string>
+    <string name="stats_empty_title">Aucune statistique pour ce filtre</string>
+    <string name="stats_empty_body">modifiez le compte, la période ou ajoutez des transactions pour voir les graphiques.</string>
+    <string name="stats_filter_accounts">Comptes</string>
+    <string name="stats_filter_period">Période</string>
+    <string name="stats_filter_currency">Devise</string>
+    <string name="stats_filter_type">Panne</string>
+    <string name="stats_filter_chart_style">Style de graphique</string>
+    <string name="stats_all_accounts">Tous les comptes</string>
+    <string name="stats_today">Aujourd\'hui</string>
+    <string name="stats_week">Semaine</string>
+    <string name="stats_month">Mois</string>
+    <string name="stats_last_month">le mois dernier</string>
+    <string name="stats_expense">Dépense</string>
+    <string name="stats_income">Revenu</string>
+    <string name="stats_style_donut">Anneau</string>
+    <string name="stats_style_stacked_bar">empilé</string>
+    <string name="stats_style_dual_bar">Revenus/dépenses</string>
+    <string name="stats_style_profit_bars">Bénéfice</string>
+    <string name="stats_income_total">Revenu</string>
+    <string name="stats_expense_total">Dépense</string>
+    <string name="stats_net_total">Solde net</string>
+    <string name="stats_transactions_count">émission %1$d</string>
+    <string name="stats_open_history">Transactions ouvertes pour %1$s</string>
+</resources>

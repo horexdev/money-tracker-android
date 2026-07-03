@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Тарих</string>
+    <string name="history_subtitle">Офлайн транзакцияларды іздеу, сүзу, өңдеу және жою</string>
+    <string name="history_empty_title">транзакциялар жоқ</string>
+    <string name="history_empty_body">Жаңа кірістер мен шығыстар сақталғаннан кейін осы жерде пайда болады.</string>
+    <string name="history_loading">Жүктеу журналы</string>
+    <string name="history_search">транзакцияларды іздеу</string>
+    <string name="history_apply_filters">Сүзгілерді қолдану</string>
+    <string name="history_clear_filters">Таза</string>
+    <string name="history_all_accounts">Барлық шоттар</string>
+    <string name="history_all_categories">Барлық санаттар</string>
+    <string name="history_load_more">Көбірек жүктеңіз</string>
+    <string name="history_page_label">%2$d %1$d беті</string>
+    <string name="history_income">Кіріс</string>
+    <string name="history_expense">Шығыс</string>
+    <string name="history_edit">транзакцияны өңдеу</string>
+    <string name="history_delete">транзакцияны жою</string>
+    <string name="history_delete_title">транзакция жойылсын ба?</string>
+    <string name="history_delete_body">Бұл транзакция жергілікті кітаптан жойылады.</string>
+    <string name="history_cancel">Болдырмау</string>
+    <string name="history_save">транзакцияны сақтау</string>
+    <string name="history_amount">Сома</string>
+    <string name="history_date">Күні</string>
+    <string name="history_date_hint">ЖЖЖЖ-АА-КК</string>
+    <string name="history_category">Санат</string>
+    <string name="history_note">Жазба</string>
+    <string name="history_note_empty">Ескерту жоқ</string>
+    <string name="history_account">Шот</string>
+    <string name="history_retry">Қайталау</string>
+    <string name="history_error_generic">әрекетті аяқтау мүмкін емес.</string>
+    <string name="history_error_invalid_amount">оң соманы енгізіңіз.</string>
+    <string name="history_error_invalid_date">ЖЖЖЖ-АА-КК пішімінде жарамды күнді пайдаланыңыз.</string>
+    <string name="history_error_category">Үйлесімді санатты таңдаңыз.</string>
+    <string name="history_error_linked_transfer">Байланыстырылған аударым транзакцияларын өңдеу немесе тарихтан жою мүмкін емес.</string>
+    <string name="history_error_not_found">транзакция табылмады.</string>
+</resources>

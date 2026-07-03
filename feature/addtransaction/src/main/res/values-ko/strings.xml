@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">트랜잭션 추가</string>
+    <string name="add_transaction_subtitle">지역 장부에 비용이나 수입을 기록합니다.</string>
+    <string name="add_transaction_quick_templates">빠른 템플릿</string>
+    <string name="add_transaction_template_variable">가변</string>
+    <string name="add_transaction_template_amount_title">금액 입력</string>
+    <string name="add_transaction_template_amount_body">이 템플릿은 가변 금액을 사용합니다.</string>
+    <string name="add_transaction_template_apply">적용</string>
+    <string name="add_transaction_template_cancel">취소</string>
+    <string name="add_transaction_loading">양식 데이터 로드 중...</string>
+    <string name="add_transaction_expense">지출</string>
+    <string name="add_transaction_income">수입</string>
+    <string name="add_transaction_amount">금액</string>
+    <string name="add_transaction_account">계좌</string>
+    <string name="add_transaction_category">카테고리</string>
+    <string name="add_transaction_note">메모</string>
+    <string name="add_transaction_note_placeholder">옵션 메모</string>
+    <string name="add_transaction_date">날짜</string>
+    <string name="add_transaction_date_hint">YYYY-MM-DD</string>
+    <string name="add_transaction_save">거래 저장</string>
+    <string name="add_transaction_saving">저장 중...</string>
+    <string name="add_transaction_no_accounts_title">아직 계정이 없습니다</string>
+    <string name="add_transaction_no_accounts_body">거래를 기록하기 전에 계정을 만드세요.</string>
+    <string name="add_transaction_no_categories_title">이 유형에는 카테고리가 없습니다.</string>
+    <string name="add_transaction_no_categories_body">저장하기 전에 지출 또는 수입 항목을 생성하세요.</string>
+    <string name="add_transaction_retry">다시 시도</string>
+    <string name="add_transaction_error_generic">거래를 저장할 수 없습니다.</string>
+    <string name="add_transaction_error_invalid_amount">0보다 큰 금액을 입력하세요.</string>
+    <string name="add_transaction_error_invalid_date">YYYY-MM-DD로 유효한 날짜를 입력하세요.</string>
+    <string name="add_transaction_error_account_required">계정을 선택하세요.</string>
+    <string name="add_transaction_error_category_required">카테고리를 선택하세요.</string>
+    <string name="add_transaction_error_account_not_found">선택한 계정은 더 이상 사용할 수 없습니다.</string>
+    <string name="add_transaction_error_category_not_found">선택한 카테고리는 더 이상 사용할 수 없습니다.</string>
+    <string name="add_transaction_error_category_type">거래 유형에 맞는 카테고리를 선택하세요.</string>
+</resources>

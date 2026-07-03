@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Cronologia</string>
+    <string name="history_subtitle">cerca, filtra, modifica ed elimina le transazioni offline</string>
+    <string name="history_empty_title">Nessuna transazione</string>
+    <string name="history_empty_body">Le nuove entrate e uscite appariranno qui dopo che sono state salvate.</string>
+    <string name="history_loading">Caricamento della cronologia</string>
+    <string name="history_search">Cerca transazioni</string>
+    <string name="history_apply_filters">applica filtri</string>
+    <string name="history_clear_filters">Cancella</string>
+    <string name="history_all_accounts">Tutti i conti</string>
+    <string name="history_all_categories">Tutte le categorie</string>
+    <string name="history_load_more">Carica altro</string>
+    <string name="history_page_label">Pagina %1$d di %2$d</string>
+    <string name="history_income">Entrata</string>
+    <string name="history_expense">Spesa</string>
+    <string name="history_edit">Modifica transazione</string>
+    <string name="history_delete">Elimina transazione</string>
+    <string name="history_delete_title">Eliminare la transazione?</string>
+    <string name="history_delete_body">questa transazione verrà rimossa dal registro locale.</string>
+    <string name="history_cancel">Annulla</string>
+    <string name="history_save">Salva transazione</string>
+    <string name="history_amount">Importo</string>
+    <string name="history_date">Data</string>
+    <string name="history_date_hint">AAAA-MM-GG</string>
+    <string name="history_category">Categoria</string>
+    <string name="history_note">Nota</string>
+    <string name="history_note_empty">Nessuna nota</string>
+    <string name="history_account">Conto</string>
+    <string name="history_retry">Riprova</string>
+    <string name="history_error_generic">Impossibile completare l\'azione.</string>
+    <string name="history_error_invalid_amount">inserire un importo positivo.</string>
+    <string name="history_error_invalid_date">utilizza una data valida nel formato AAAA-MM-GG.</string>
+    <string name="history_error_category">Scegli una categoria compatibile.</string>
+    <string name="history_error_linked_transfer">le transazioni di trasferimento collegate non possono essere modificate o cancellate dalla cronologia.</string>
+    <string name="history_error_not_found">Transazione non trovata.</string>
+</resources>

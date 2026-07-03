@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">İşlem ekle</string>
+    <string name="add_transaction_subtitle">Yerel defterinize bir gider veya gelir kaydedin.</string>
+    <string name="add_transaction_quick_templates">Hızlı şablonlar</string>
+    <string name="add_transaction_template_variable">Değişken</string>
+    <string name="add_transaction_template_amount_title">Tutarı girin</string>
+    <string name="add_transaction_template_amount_body">Bu şablon değişken bir miktar kullanıyor.</string>
+    <string name="add_transaction_template_apply">Uygula</string>
+    <string name="add_transaction_template_cancel">İptal</string>
+    <string name="add_transaction_loading">Form verileri yükleniyor...</string>
+    <string name="add_transaction_expense">Gider</string>
+    <string name="add_transaction_income">Gelir</string>
+    <string name="add_transaction_amount">Tutar</string>
+    <string name="add_transaction_account">Hesap</string>
+    <string name="add_transaction_category">Kategori</string>
+    <string name="add_transaction_note">Not</string>
+    <string name="add_transaction_note_placeholder">İsteğe bağlı not</string>
+    <string name="add_transaction_date">Tarih</string>
+    <string name="add_transaction_date_hint">YYYY-AA-GG</string>
+    <string name="add_transaction_save">İşlemi kaydet</string>
+    <string name="add_transaction_saving">Kaydediliyor...</string>
+    <string name="add_transaction_no_accounts_title">Henüz hesap yok</string>
+    <string name="add_transaction_no_accounts_body">İşlemleri kaydetmeden önce bir hesap oluşturun.</string>
+    <string name="add_transaction_no_categories_title">Bu tür için kategori yok</string>
+    <string name="add_transaction_no_categories_body">Tasarruf etmeden önce bir gider veya gelir kategorisi oluşturun.</string>
+    <string name="add_transaction_retry">Tekrar dene</string>
+    <string name="add_transaction_error_generic">İşlem kaydedilemedi.</string>
+    <string name="add_transaction_error_invalid_amount">Sıfırdan büyük bir miktar girin.</string>
+    <string name="add_transaction_error_invalid_date">Geçerli bir tarihi YYYY-AA-GG olarak girin.</string>
+    <string name="add_transaction_error_account_required">Bir hesap seçin.</string>
+    <string name="add_transaction_error_category_required">Bir kategori seçin.</string>
+    <string name="add_transaction_error_account_not_found">Seçilen hesap artık mevcut değil.</string>
+    <string name="add_transaction_error_category_not_found">Seçilen kategori artık mevcut değil.</string>
+    <string name="add_transaction_error_category_type">İşlem türüne uygun bir kategori seçin.</string>
+</resources>

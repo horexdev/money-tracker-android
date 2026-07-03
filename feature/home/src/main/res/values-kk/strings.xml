@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Басқару тақтасы</string>
+    <string name="feature_home_subtitle">Түбірлік навигация дайын.</string>
+    <string name="home_subtitle">баланстар мен соңғы әрекеттің офлайн суреті.</string>
+    <string name="home_loading">бақылау тақтасы жүктелуде...</string>
+    <string name="home_retry">Қайталау</string>
+    <string name="home_error_generic">бақылау тақтасы деректерін жүктеу мүмкін емес.</string>
+    <string name="home_net_balance">Таза баланс</string>
+    <string name="home_all_accounts">Барлық шоттар</string>
+    <string name="home_add_transaction">транзакцияны қосыңыз</string>
+    <string name="home_income">Кіріс</string>
+    <string name="home_expense">Шығыс</string>
+    <string name="home_recent_transactions">Соңғы транзакциялар</string>
+    <string name="home_quick_templates">Жылдам үлгілер</string>
+    <string name="home_quick_templates_empty">бақылау тақтасынан жиі транзакцияларды қолдану үшін үлгілерді жасаңыз.</string>
+    <string name="home_template_amount_prompt_title">соманы енгізіңіз</string>
+    <string name="home_template_amount_prompt_body">Бұл үлгі айнымалы соманы пайдаланады.</string>
+    <string name="home_template_amount">Сома</string>
+    <string name="home_template_apply">Қолдану</string>
+    <string name="home_template_cancel">Болдырмау</string>
+    <string name="home_template_variable">Айнымалы</string>
+    <string name="home_view_all">Барлығын көру</string>
+    <string name="home_empty_title">Транзакциялар жоқ</string>
+    <string name="home_empty_body">Бақылауды бастау үшін бірінші транзакцияны қосыңыз.</string>
+</resources>

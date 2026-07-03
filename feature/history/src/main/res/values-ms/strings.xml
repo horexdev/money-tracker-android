@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Sejarah</string>
+    <string name="history_subtitle">Cari, tapis, edit dan padamkan transaksi luar talian</string>
+    <string name="history_empty_title">Tiada transaksi</string>
+    <string name="history_empty_body">Pendapatan dan perbelanjaan baharu akan muncul di sini selepas ia disimpan.</string>
+    <string name="history_loading">Memuatkan sejarah</string>
+    <string name="history_search">Cari transaksi</string>
+    <string name="history_apply_filters">Gunakan penapis</string>
+    <string name="history_clear_filters">Jelas</string>
+    <string name="history_all_accounts">Semua akaun</string>
+    <string name="history_all_categories">Semua kategori</string>
+    <string name="history_load_more">Muatkan lagi</string>
+    <string name="history_page_label">Halaman %1$d daripada %2$d</string>
+    <string name="history_income">Pendapatan</string>
+    <string name="history_expense">Perbelanjaan</string>
+    <string name="history_edit">Edit transaksi</string>
+    <string name="history_delete">Padamkan transaksi</string>
+    <string name="history_delete_title">Padamkan transaksi?</string>
+    <string name="history_delete_body">Urus niaga ini akan dialih keluar daripada lejar tempatan.</string>
+    <string name="history_cancel">Batal</string>
+    <string name="history_save">Simpan transaksi</string>
+    <string name="history_amount">Jumlah</string>
+    <string name="history_date">Tarikh</string>
+    <string name="history_date_hint">YYYY-MM-DD</string>
+    <string name="history_category">Kategori</string>
+    <string name="history_note">Nota</string>
+    <string name="history_note_empty">Tiada nota</string>
+    <string name="history_account">Akaun</string>
+    <string name="history_retry">Cuba lagi</string>
+    <string name="history_error_generic">Tidak dapat menyelesaikan tindakan.</string>
+    <string name="history_error_invalid_amount">Masukkan jumlah positif.</string>
+    <string name="history_error_invalid_date">Gunakan tarikh yang sah dalam format YYYY-MM-DD.</string>
+    <string name="history_error_category">Pilih kategori yang serasi.</string>
+    <string name="history_error_linked_transfer">Transaksi pemindahan terpaut tidak boleh diedit atau dipadamkan daripada sejarah.</string>
+    <string name="history_error_not_found">Transaksi tidak ditemui.</string>
+</resources>

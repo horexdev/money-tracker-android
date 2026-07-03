@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">Сповіщення про бюджет</string>
+    <string name="notification_channel_budget_alerts_description">місцеві сповіщення, коли порогові значення бюджету потребують уваги.</string>
+    <string name="notification_channel_recurring_reminders_name">повторювані нагадування</string>
+    <string name="notification_channel_recurring_reminders_description">локальні нагадування про повторювані транзакції.</string>
+    <string name="notification_channel_goal_milestones_name">віхи цілі</string>
+    <string name="notification_channel_goal_milestones_description">локальні оновлення щодо досягнення мети заощаджень.</string>
+    <string name="notification_channel_weekly_summary_name">Підсумок за тиждень</string>
+    <string name="notification_channel_weekly_summary_description">сповіщення про місцеві фінанси щотижня.</string>
+</resources>

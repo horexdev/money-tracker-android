@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Poupança</string>
+    <string name="savings_subtitle">Acompanhe o progresso da meta, depósitos, retiradas e histórico.</string>
+    <string name="savings_loading">Carregando metas de economia</string>
+    <string name="savings_empty_title">Ainda sem metas</string>
+    <string name="savings_empty_body">Crie uma meta para acompanhar o progresso em direção a um valor alvo.</string>
+    <string name="savings_add">Adicionar meta</string>
+    <string name="savings_create">Criar meta</string>
+    <string name="savings_edit">Editar meta</string>
+    <string name="savings_save">Salvar meta</string>
+    <string name="savings_delete">Excluir meta</string>
+    <string name="savings_cancel">Cancelar</string>
+    <string name="savings_retry">Tentar novamente</string>
+    <string name="savings_name">Nome da meta</string>
+    <string name="savings_target">Valor alvo</string>
+    <string name="savings_currency">Moeda</string>
+    <string name="savings_deadline_optional">Prazo (AAAA-MM-DD, opcional)</string>
+    <string name="savings_account">conta vinculada</string>
+    <string name="savings_no_account">Nenhuma conta vinculada</string>
+    <string name="savings_progress_percent">%1$d%% concluído</string>
+    <string name="savings_amount_progress">%1$s de %2$s</string>
+    <string name="savings_remaining">Restante: %1$s</string>
+    <string name="savings_completed">Concluído</string>
+    <string name="savings_deposit">Depositar</string>
+    <string name="savings_withdraw">Sacar</string>
+    <string name="savings_history">Histórico</string>
+    <string name="savings_history_title">Histórico de gols</string>
+    <string name="savings_history_empty">Ainda não há depósitos ou retiradas.</string>
+    <string name="savings_operation_amount">Valor</string>
+    <string name="savings_operation_note">Nota</string>
+    <string name="savings_operation_note_placeholder">Nota de operação opcional</string>
+    <string name="savings_delete_title">Excluir meta?</string>
+    <string name="savings_delete_body">Isto remove o gol e seu histórico de gols. As transações de contas vinculadas permanecem inalteradas.</string>
+    <string name="savings_error_generic">Falha na ação de economia.</string>
+    <string name="savings_error_name">O nome da meta é obrigatório.</string>
+    <string name="savings_error_amount">O valor deve ser positivo.</string>
+    <string name="savings_error_currency">A moeda deve ser um código ISO de 3 letras.</string>
+    <string name="savings_error_deadline">O prazo deve usar AAAA-MM-DD.</string>
+    <string name="savings_error_account">A conta vinculada não foi encontrada.</string>
+    <string name="savings_error_category">A categoria Poupança está faltando.</string>
+    <string name="savings_error_funds">A retirada é maior que o valor da meta atual.</string>
+    <string name="savings_error_not_found">Meta de economia não encontrada.</string>
+</resources>

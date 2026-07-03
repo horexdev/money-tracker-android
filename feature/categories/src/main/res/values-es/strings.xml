@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Categorías</string>
+    <string name="categories_subtitle">Administrar nombres, íconos, colores y tipos de transacciones</string>
+    <string name="categories_empty_title">Sin categorías</string>
+    <string name="categories_empty_body">Crear una categoría para clasificar ingresos y gastos fuera de línea.</string>
+    <string name="categories_add">Agregar categoría</string>
+    <string name="categories_edit">Editar categoría</string>
+    <string name="categories_create">Crear categoría</string>
+    <string name="categories_save">Guardar categoría</string>
+    <string name="categories_delete">eliminar categoría</string>
+    <string name="categories_delete_title">¿Eliminar categoría?</string>
+    <string name="categories_delete_body">La categoría quedará oculta para nuevas transacciones. La historia existente mantiene su etiqueta.</string>
+    <string name="categories_cancel">Cancelar</string>
+    <string name="categories_retry">Reintentar</string>
+    <string name="categories_loading">Cargando categorías</string>
+    <string name="categories_name">Nombre</string>
+    <string name="categories_name_placeholder">comestibles</string>
+    <string name="categories_type">Tipo</string>
+    <string name="categories_color">Color de categoría</string>
+    <string name="categories_icon">Icono</string>
+    <string name="categories_all">Todo</string>
+    <string name="categories_type_expense">Gasto</string>
+    <string name="categories_type_income">Ingreso</string>
+    <string name="categories_type_both">Ambos</string>
+    <string name="categories_type_savings">Ahorro</string>
+    <string name="categories_type_transfer">Transferir</string>
+    <string name="categories_type_adjustment">Ajuste</string>
+    <string name="categories_protected">Protegido</string>
+    <string name="categories_system">Sistema</string>
+    <string name="categories_error_generic">No se pudo completar la acción.</string>
+    <string name="categories_error_empty_name">Ingrese un nombre de categoría.</string>
+    <string name="categories_error_duplicate_name">Ya existe una categoría con este nombre.</string>
+    <string name="categories_error_protected">Las categorías protegidas no se pueden modificar.</string>
+    <string name="categories_error_not_found">No se encontró la categoría.</string>
+    <string name="categories_icon_food">Comida</string>
+    <string name="categories_icon_transport">Transporte</string>
+    <string name="categories_icon_home">Inicio</string>
+    <string name="categories_icon_shopping">Compras</string>
+    <string name="categories_icon_work">trabajo</string>
+    <string name="categories_icon_money">dinero</string>
+    <string name="categories_icon_savings">Ahorro</string>
+    <string name="categories_icon_transfer">Transferir</string>
+    <string name="categories_icon_other">Otros</string>
+</resources>

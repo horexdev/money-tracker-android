@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Статистика</string>
+    <string name="stats_subtitle">Санаттарды бөлу, трендтер және егжей-тегжейлі мәліметтер.</string>
+    <string name="stats_loading">Жүктеу статистикасы</string>
+    <string name="stats_retry">Қайталау</string>
+    <string name="stats_error_generic">статистиканы жүктеу мүмкін емес.</string>
+    <string name="stats_empty_title">Бұл сүзгіге қатысты статистика жоқ</string>
+    <string name="stats_empty_body">Диаграммаларды көру үшін есептік жазбаны, кезеңді өзгертіңіз немесе транзакцияларды қосыңыз.</string>
+    <string name="stats_filter_accounts">Шоттар</string>
+    <string name="stats_filter_period">Кезең</string>
+    <string name="stats_filter_currency">Валюта</string>
+    <string name="stats_filter_type">бұзылу</string>
+    <string name="stats_filter_chart_style">Диаграмма стилі</string>
+    <string name="stats_all_accounts">Барлық шоттар</string>
+    <string name="stats_today">Бүгін</string>
+    <string name="stats_week">Апта</string>
+    <string name="stats_month">Ай</string>
+    <string name="stats_last_month">Өткен ай</string>
+    <string name="stats_expense">Шығыс</string>
+    <string name="stats_income">Кіріс</string>
+    <string name="stats_style_donut">пончик</string>
+    <string name="stats_style_stacked_bar">жинақталған</string>
+    <string name="stats_style_dual_bar">Кіріс/шығыс</string>
+    <string name="stats_style_profit_bars">Пайда</string>
+    <string name="stats_income_total">Кіріс</string>
+    <string name="stats_expense_total">Шығыс</string>
+    <string name="stats_net_total">таза</string>
+    <string name="stats_transactions_count">%1$d операция</string>
+    <string name="stats_open_history">%1$s үшін ашық транзакциялар</string>
+</resources>

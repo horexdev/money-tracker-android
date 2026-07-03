@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">Ajouter une transaction</string>
+    <string name="add_transaction_subtitle">Enregistrez une dépense ou un revenu dans votre grand livre local.</string>
+    <string name="add_transaction_quick_templates">Modèles rapides</string>
+    <string name="add_transaction_template_variable">Montant variable</string>
+    <string name="add_transaction_template_amount_title">Saisir le montant</string>
+    <string name="add_transaction_template_amount_body">Ce modèle utilise un montant variable.</string>
+    <string name="add_transaction_template_apply">Appliquer</string>
+    <string name="add_transaction_template_cancel">Annuler</string>
+    <string name="add_transaction_loading">Chargement des données du formulaire...</string>
+    <string name="add_transaction_expense">Dépense</string>
+    <string name="add_transaction_income">Revenu</string>
+    <string name="add_transaction_amount">Montant</string>
+    <string name="add_transaction_account">Compte</string>
+    <string name="add_transaction_category">Catégorie</string>
+    <string name="add_transaction_note">Remarque</string>
+    <string name="add_transaction_note_placeholder">Note facultative</string>
+    <string name="add_transaction_date">Date de l’opération</string>
+    <string name="add_transaction_date_hint">AAAA-MM-JJ</string>
+    <string name="add_transaction_save">Enregistrer la transaction</string>
+    <string name="add_transaction_saving">Enregistrement...</string>
+    <string name="add_transaction_no_accounts_title">Aucun compte pour l\'instant</string>
+    <string name="add_transaction_no_accounts_body">Créez un compte avant d’enregistrer les transactions.</string>
+    <string name="add_transaction_no_categories_title">Aucune catégorie pour ce type</string>
+    <string name="add_transaction_no_categories_body">Créez une catégorie de dépenses ou de revenus avant d\'épargner.</string>
+    <string name="add_transaction_retry">Réessayer</string>
+    <string name="add_transaction_error_generic">Impossible de sauvegarder la transaction.</string>
+    <string name="add_transaction_error_invalid_amount">Saisissez un montant supérieur à zéro.</string>
+    <string name="add_transaction_error_invalid_date">saisissez une date valide sous la forme AAAA-MM-JJ.</string>
+    <string name="add_transaction_error_account_required">Choisissez un compte.</string>
+    <string name="add_transaction_error_category_required">Choisissez une catégorie.</string>
+    <string name="add_transaction_error_account_not_found">Le compte sélectionné n\'est plus disponible.</string>
+    <string name="add_transaction_error_category_not_found">La catégorie sélectionnée n\'est plus disponible.</string>
+    <string name="add_transaction_error_category_type">Choisissez une catégorie qui correspond au type de transaction.</string>
+</resources>

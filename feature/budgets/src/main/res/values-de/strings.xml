@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Budgetplanung</string>
+    <string name="budgets_subtitle">Verfolgen Sie die Ausgabengrenzen nach Kategorie und aktuellem Zeitraum.</string>
+    <string name="budgets_loading">Budgets werden geladen</string>
+    <string name="budgets_empty_title">Noch keine Budgets</string>
+    <string name="budgets_empty_body">Erstellen Sie ein Limit für eine Ausgabenkategorie, um den Fortschritt hier anzuzeigen.</string>
+    <string name="budgets_no_categories_title">Keine Ausgabenkategorien</string>
+    <string name="budgets_no_categories_body">Erstellen Sie eine Ausgabenkategorie, bevor Sie ein Budget hinzufügen.</string>
+    <string name="budgets_add">Budget hinzufügen</string>
+    <string name="budgets_create">Budget erstellen</string>
+    <string name="budgets_edit">Budget bearbeiten</string>
+    <string name="budgets_save">Budget speichern</string>
+    <string name="budgets_delete">Budget löschen</string>
+    <string name="budgets_cancel">Abbrechen</string>
+    <string name="budgets_retry">Erneut versuchen</string>
+    <string name="budgets_category">Kategorie</string>
+    <string name="budgets_period">Zeitraum</string>
+    <string name="budgets_period_weekly">Wöchentlich</string>
+    <string name="budgets_period_monthly">Monatlich</string>
+    <string name="budgets_limit">Budgetgrenze</string>
+    <string name="budgets_spent_of_limit">%1$s von %2$s</string>
+    <string name="budgets_remaining">Verbleibend: %1$s</string>
+    <string name="budgets_over_limit">Überschreitung des Limits um %1$s</string>
+    <string name="budgets_over_limit_chip">Grenzwert überschritten</string>
+    <string name="budgets_progress_percent">%1$d%% verwendet</string>
+    <string name="budgets_currency">Währung</string>
+    <string name="budgets_notifications">Benachrichtigungen</string>
+    <string name="budgets_notifications_enabled">Benachrichtigungen aktiviert</string>
+    <string name="budgets_notifications_disabled">Benachrichtigungen deaktiviert</string>
+    <string name="budgets_notify_at">Bei Prozent benachrichtigen</string>
+    <string name="budgets_transactions">Transaktionen</string>
+    <string name="budgets_transactions_title">Budgettransaktionen</string>
+    <string name="budgets_transactions_empty">Keine Transaktionen in der aktuellen Periode.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Budget löschen?</string>
+    <string name="budgets_delete_body">Dadurch wird das Budgetlimit aufgehoben. Transaktionen bleiben unverändert.</string>
+    <string name="budgets_error_generic">Budgetaktion fehlgeschlagen.</string>
+    <string name="budgets_error_amount">Das Budgetlimit muss ein positiver Betrag sein.</string>
+    <string name="budgets_error_currency">Die Währung muss ein dreibuchstabiger ISO-Code sein.</string>
+    <string name="budgets_error_notify_percent">Der Benachrichtigungsprozentsatz muss positiv sein.</string>
+    <string name="budgets_error_duplicate">Diese Kategorie verfügt bereits über ein Budget für den ausgewählten Zeitraum.</string>
+    <string name="budgets_error_category">Wählen Sie eine Ausgabenkategorie aus.</string>
+    <string name="budgets_error_not_found">Budget wurde nicht gefunden.</string>
+</resources>

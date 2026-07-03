@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Boshqaruv paneli</string>
+    <string name="feature_home_subtitle">Ildiz navigatsiyasi tayyor.</string>
+    <string name="home_subtitle">Balanslar va oxirgi faoliyatning oflayn surati.</string>
+    <string name="home_loading">Boshqaruv paneli yuklanmoqda...</string>
+    <string name="home_retry">Qayta urinish</string>
+    <string name="home_error_generic">Boshqaruv paneli maʼlumotlarini yuklab boʻlmadi.</string>
+    <string name="home_net_balance">Sof balans</string>
+    <string name="home_all_accounts">Barcha hisoblar</string>
+    <string name="home_add_transaction">tranzaksiya qo\'shing</string>
+    <string name="home_income">Daromad</string>
+    <string name="home_expense">Xarajat</string>
+    <string name="home_recent_transactions">Oxirgi operatsiyalar</string>
+    <string name="home_quick_templates">Tezkor shablonlar</string>
+    <string name="home_quick_templates_empty">Boshqaruv panelidan tez-tez bajariladigan tranzaktsiyalarni qo\'llash uchun shablonlarni yarating.</string>
+    <string name="home_template_amount_prompt_title">summani kiriting</string>
+    <string name="home_template_amount_prompt_body">Ushbu shablon o\'zgaruvchan miqdorni ishlatadi.</string>
+    <string name="home_template_amount">Summa</string>
+    <string name="home_template_apply">Qo\'llash</string>
+    <string name="home_template_cancel">Bekor qilish</string>
+    <string name="home_template_variable">o\'zgaruvchan</string>
+    <string name="home_view_all">Hammasini ko‘rish</string>
+    <string name="home_empty_title">Tranzaksiyalar yo\'q</string>
+    <string name="home_empty_body">Kuzatishni boshlash uchun birinchi tranzaksiyani qo\'shing.</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">예산</string>
+    <string name="budgets_subtitle">카테고리 및 현재 기간별로 지출 한도를 추적합니다.</string>
+    <string name="budgets_loading">예산 로드 중</string>
+    <string name="budgets_empty_title">아직 예산이 없음</string>
+    <string name="budgets_empty_body">여기에서 진행 상황을 보려면 비용 범주에 대한 한도를 만듭니다.</string>
+    <string name="budgets_no_categories_title">비용 항목 없음</string>
+    <string name="budgets_no_categories_body">예산을 추가하기 전에 비용 카테고리를 생성하세요.</string>
+    <string name="budgets_add">예산 추가</string>
+    <string name="budgets_create">예산 만들기</string>
+    <string name="budgets_edit">예산 편집</string>
+    <string name="budgets_save">예산 절약</string>
+    <string name="budgets_delete">예산 삭제</string>
+    <string name="budgets_cancel">취소</string>
+    <string name="budgets_retry">다시 시도</string>
+    <string name="budgets_category">카테고리</string>
+    <string name="budgets_period">기간</string>
+    <string name="budgets_period_weekly">매주</string>
+    <string name="budgets_period_monthly">매월</string>
+    <string name="budgets_limit">한도</string>
+    <string name="budgets_spent_of_limit">%2$s의 %1$s</string>
+    <string name="budgets_remaining">남은: %1$s</string>
+    <string name="budgets_over_limit">%1$s 한도 초과</string>
+    <string name="budgets_over_limit_chip">한도 초과</string>
+    <string name="budgets_progress_percent">%1$d%% 사용됨</string>
+    <string name="budgets_currency">통화</string>
+    <string name="budgets_notifications">알림</string>
+    <string name="budgets_notifications_enabled">알림 켜기</string>
+    <string name="budgets_notifications_disabled">알림 끄기</string>
+    <string name="budgets_notify_at">백분율로 알림</string>
+    <string name="budgets_transactions">거래 내역</string>
+    <string name="budgets_transactions_title">예산 거래</string>
+    <string name="budgets_transactions_empty">해당 기간에는 거래가 없습니다.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">예산을 삭제하시겠습니까?</string>
+    <string name="budgets_delete_body">예산 한도가 제거됩니다. 거래는 변경되지 않습니다.</string>
+    <string name="budgets_error_generic">예산 조치가 실패했습니다.</string>
+    <string name="budgets_error_amount">예산 한도는 양수 금액이어야 합니다.</string>
+    <string name="budgets_error_currency">통화는 3자리 ISO 코드여야 합니다.</string>
+    <string name="budgets_error_notify_percent">알림 비율은 양수여야 합니다.</string>
+    <string name="budgets_error_duplicate">이 카테고리에는 선택한 기간에 대한 예산이 이미 있습니다.</string>
+    <string name="budgets_error_category">비용 카테고리를 선택하세요.</string>
+    <string name="budgets_error_not_found">예산을 찾을 수 없습니다.</string>
+</resources>

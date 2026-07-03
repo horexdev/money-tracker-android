@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">Budgetwaarschuwingen</string>
+    <string name="notification_channel_budget_alerts_description">Lokale waarschuwingen wanneer budgetdrempels aandacht behoeven.</string>
+    <string name="notification_channel_recurring_reminders_name">Terugkerende herinneringen</string>
+    <string name="notification_channel_recurring_reminders_description">Lokale herinneringen voor terugkerende transacties.</string>
+    <string name="notification_channel_goal_milestones_name">Doelmijlpalen</string>
+    <string name="notification_channel_goal_milestones_description">Lokale updates over de voortgang van het spaardoel.</string>
+    <string name="notification_channel_weekly_summary_name">Weekoverzicht</string>
+    <string name="notification_channel_weekly_summary_description">Lokale wekelijkse financiële overzichtsmeldingen.</string>
+</resources>

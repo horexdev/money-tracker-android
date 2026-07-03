@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Ahorro</string>
+    <string name="savings_subtitle">seguimiento del progreso de los objetivos, depósitos, retiros e historial.</string>
+    <string name="savings_loading">Cargando metas de ahorro</string>
+    <string name="savings_empty_title">Aún no hay goles</string>
+    <string name="savings_empty_body">cree una meta para realizar un seguimiento del progreso hacia una cantidad objetivo.</string>
+    <string name="savings_add">Agregar objetivo</string>
+    <string name="savings_create">Crear meta</string>
+    <string name="savings_edit">Editar objetivo</string>
+    <string name="savings_save">Salvar gol</string>
+    <string name="savings_delete">eliminar objetivo</string>
+    <string name="savings_cancel">Cancelar</string>
+    <string name="savings_retry">Reintentar</string>
+    <string name="savings_name">nombre del objetivo</string>
+    <string name="savings_target">importe objetivo</string>
+    <string name="savings_currency">moneda</string>
+    <string name="savings_deadline_optional">Fecha límite (AAAA-MM-DD, opcional)</string>
+    <string name="savings_account">cuenta vinculada</string>
+    <string name="savings_no_account">Sin cuenta vinculada</string>
+    <string name="savings_progress_percent">%1$d%% completo</string>
+    <string name="savings_amount_progress">%1$s de %2$s</string>
+    <string name="savings_remaining">Restante: %1$s</string>
+    <string name="savings_completed">Completado</string>
+    <string name="savings_deposit">Depositar</string>
+    <string name="savings_withdraw">Retirar</string>
+    <string name="savings_history">Historial</string>
+    <string name="savings_history_title">historial de goles</string>
+    <string name="savings_history_empty">Aún no hay depósitos ni retiros.</string>
+    <string name="savings_operation_amount">Monto</string>
+    <string name="savings_operation_note">Nota</string>
+    <string name="savings_operation_note_placeholder">nota de operación opcional</string>
+    <string name="savings_delete_title">¿Eliminar gol?</string>
+    <string name="savings_delete_body">Esto elimina el gol y su historial de goles. Las transacciones de cuentas vinculadas permanecen sin cambios.</string>
+    <string name="savings_error_generic">La acción de ahorro falló.</string>
+    <string name="savings_error_name">Se requiere el nombre del objetivo.</string>
+    <string name="savings_error_amount">El importe debe ser positivo.</string>
+    <string name="savings_error_currency">La moneda debe ser un código ISO de 3 letras.</string>
+    <string name="savings_error_deadline">La fecha límite debe ser AAAA-MM-DD.</string>
+    <string name="savings_error_account">No se encontró la cuenta vinculada.</string>
+    <string name="savings_error_category">Falta la categoría de ahorro.</string>
+    <string name="savings_error_funds">El retiro es mayor que el monto objetivo actual.</string>
+    <string name="savings_error_not_found">No se encontró la meta de ahorro.</string>
+</resources>

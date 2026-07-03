@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Назапашвальны</string>
+    <string name="savings_subtitle">адсочвайце дасягненне мэты, дэпазіты, зняцце сродкаў і гісторыю.</string>
+    <string name="savings_loading">Загрузка мэт эканоміі</string>
+    <string name="savings_empty_title">Галоў пакуль няма</string>
+    <string name="savings_empty_body">Стварыце мэту, каб адсочваць прагрэс у дасягненні мэтавай сумы.</string>
+    <string name="savings_add">Дадаць гол</string>
+    <string name="savings_create">Стварыць гол</string>
+    <string name="savings_edit">Рэдагаваць мэту</string>
+    <string name="savings_save">Захаваць гол</string>
+    <string name="savings_delete">Выдаліць гол</string>
+    <string name="savings_cancel">Скасаваць</string>
+    <string name="savings_retry">Паўтарыць</string>
+    <string name="savings_name">Назва мэты</string>
+    <string name="savings_target">Мэтавая сума</string>
+    <string name="savings_currency">Валюта</string>
+    <string name="savings_deadline_optional">Апошні тэрмін (ГГГГ-ММ-ДД, неабавязкова)</string>
+    <string name="savings_account">Звязаны ўліковы запіс</string>
+    <string name="savings_no_account">Няма звязанага ўліковага запісу</string>
+    <string name="savings_progress_percent">%1$d%% завершаны</string>
+    <string name="savings_amount_progress">%1$s з %2$s</string>
+    <string name="savings_remaining">Засталося: %1$s</string>
+    <string name="savings_completed">Завершана</string>
+    <string name="savings_deposit">Папоўніць</string>
+    <string name="savings_withdraw">Зняць</string>
+    <string name="savings_history">Гісторыя</string>
+    <string name="savings_history_title">Гісторыя галоў</string>
+    <string name="savings_history_empty">Пакуль няма дэпазітаў і зняцця сродкаў.</string>
+    <string name="savings_operation_amount">Сума</string>
+    <string name="savings_operation_note">Нататка</string>
+    <string name="savings_operation_note_placeholder">Заўвага да дадатковай аперацыі</string>
+    <string name="savings_delete_title">Выдаліць гол?</string>
+    <string name="savings_delete_body">Гэта выдаляе гол і гісторыю яго галоў. Транзакцыі па звязаным рахунку застаюцца нязменнымі.</string>
+    <string name="savings_error_generic">няўдалае дзеянне захавання.</string>
+    <string name="savings_error_name">патрабуецца назва мэты.</string>
+    <string name="savings_error_amount">Сума павінна быць станоўчай.</string>
+    <string name="savings_error_currency">Валюта павінна быць 3-літарным кодам ISO.</string>
+    <string name="savings_error_deadline">тэрмін павінен выкарыстоўваць ГГГГ-ММ-ДД.</string>
+    <string name="savings_error_account">звязаны ўліковы запіс не знойдзены.</string>
+    <string name="savings_error_category">Адсутнічае катэгорыя зберажэнняў.</string>
+    <string name="savings_error_funds">Вывад перавышае бягучую мэтавую суму.</string>
+    <string name="savings_error_not_found">мэта эканоміі не знойдзена.</string>
+</resources>

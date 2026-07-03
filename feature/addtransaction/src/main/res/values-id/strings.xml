@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">Tambahkan transaksi</string>
+    <string name="add_transaction_subtitle">Catat pengeluaran atau pemasukan di buku besar setempat.</string>
+    <string name="add_transaction_quick_templates">Template cepat</string>
+    <string name="add_transaction_template_variable">Variabel</string>
+    <string name="add_transaction_template_amount_title">Masukkan jumlah</string>
+    <string name="add_transaction_template_amount_body">Templat ini menggunakan jumlah variabel.</string>
+    <string name="add_transaction_template_apply">Terapkan</string>
+    <string name="add_transaction_template_cancel">Batal</string>
+    <string name="add_transaction_loading">Memuat data formulir...</string>
+    <string name="add_transaction_expense">Pengeluaran</string>
+    <string name="add_transaction_income">Pemasukan</string>
+    <string name="add_transaction_amount">Jumlah</string>
+    <string name="add_transaction_account">Akun</string>
+    <string name="add_transaction_category">Kategori</string>
+    <string name="add_transaction_note">Catatan</string>
+    <string name="add_transaction_note_placeholder">Catatan opsional</string>
+    <string name="add_transaction_date">Tanggal</string>
+    <string name="add_transaction_date_hint">YYYY-MM-DD</string>
+    <string name="add_transaction_save">Simpan transaksi</string>
+    <string name="add_transaction_saving">Menyimpan...</string>
+    <string name="add_transaction_no_accounts_title">Belum ada akun</string>
+    <string name="add_transaction_no_accounts_body">Membuat akun sebelum mencatat transaksi.</string>
+    <string name="add_transaction_no_categories_title">Tidak ada kategori untuk jenis ini</string>
+    <string name="add_transaction_no_categories_body">Buat kategori pengeluaran atau pendapatan sebelum menabung.</string>
+    <string name="add_transaction_retry">Coba lagi</string>
+    <string name="add_transaction_error_generic">Tidak dapat menyimpan transaksi.</string>
+    <string name="add_transaction_error_invalid_amount">Masukkan jumlah yang lebih besar dari nol.</string>
+    <string name="add_transaction_error_invalid_date">Masukkan tanggal yang valid sebagai YYYY-MM-DD.</string>
+    <string name="add_transaction_error_account_required">Pilih akun.</string>
+    <string name="add_transaction_error_category_required">Pilih kategori.</string>
+    <string name="add_transaction_error_account_not_found">Akun yang dipilih tidak lagi tersedia.</string>
+    <string name="add_transaction_error_category_not_found">Kategori yang dipilih tidak lagi tersedia.</string>
+    <string name="add_transaction_error_category_type">Pilih kategori yang sesuai dengan jenis transaksi.</string>
+</resources>
