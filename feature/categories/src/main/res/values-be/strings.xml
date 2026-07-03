@@ -3,7 +3,7 @@
     <string name="categories_title">Катэгорыі</string>
     <string name="categories_subtitle">Кіраванне назвамі, значкамі, колерамі і тыпамі транзакцый</string>
     <string name="categories_empty_title">Катэгорый няма</string>
-    <string name="categories_empty_body">Стварыце катэгорыю для класіфікацыі даходаў і выдаткаў у аўтаномным рэжыме.</string>
+    <string name="categories_empty_body">Стварыце катэгорыю для класіфікацыі даходаў і выдаткаў.</string>
     <string name="categories_add">Дадаць катэгорыю</string>
     <string name="categories_edit">Рэдагаваць катэгорыю</string>
     <string name="categories_create">Стварыць катэгорыю</string>

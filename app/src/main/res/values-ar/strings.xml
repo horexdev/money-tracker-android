@@ -17,7 +17,7 @@
     <string name="settings_title">الإعدادات</string>
     <string name="settings_placeholder_subtitle">تم تسجيل مسار الإعدادات.</string>
     <string name="settings_more_subtitle">اللغة والخصوصية والإشعارات والأسعار والبيانات المحلية.</string>
-    <string name="settings_subtitle">إعدادات عدم الاتصال لملفات تعريف Android المحلية.</string>
+    <string name="settings_subtitle">إعدادات ملفات تعريف Android المحلية.</string>
     <string name="settings_loading">تحميل الإعدادات</string>
     <string name="settings_processing">حفظ الإعدادات</string>
     <string name="settings_retry">إعادة المحاولة</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">البيانات</string>
     <string name="settings_open_import_export">الاستيراد / التصدير</string>
     <string name="settings_reset_data">إعادة تعيين الوضع الحالي</string>
-    <string name="settings_reset_data_desc">حذف بيانات ملف التعريف المحلي النشط وإنشاء ملف تعريف جديد غير متصل بالإنترنت.</string>
+    <string name="settings_reset_data_desc">يحذف بيانات ملف التعريف المحلي النشط وينشئ ملف تعريف محليًا جديدًا.</string>
     <string name="settings_reset_confirm_title">إعادة تعيين الوضع الحالي؟</string>
     <string name="settings_reset_confirm_body">يؤدي هذا إلى حذف بيانات الملف الشخصي المحلية النشطة على هذا الجهاز. لا تتم إعادة تعيين ملفات التعريف المحلية الأخرى.</string>
     <string name="settings_reset_confirm_button">إعادة ضبط الملف الشخصي</string>

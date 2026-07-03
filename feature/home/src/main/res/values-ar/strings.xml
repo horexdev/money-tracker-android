@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">لوحة التحكم</string>
     <string name="feature_home_subtitle">التنقل الجذري جاهز.</string>
-    <string name="home_subtitle">لقطة للأرصدة والأنشطة الحديثة دون اتصال بالإنترنت.</string>
+    <string name="home_subtitle">نظرة عامة على الأرصدة والأنشطة الحديثة.</string>
     <string name="home_loading">جارٍ تحميل لوحة المعلومات...</string>
     <string name="home_retry">إعادة المحاولة</string>
     <string name="home_error_generic">لا يمكن تحميل بيانات لوحة المعلومات.</string>

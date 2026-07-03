@@ -17,7 +17,7 @@
     <string name="settings_title">Sozlamalar</string>
     <string name="settings_placeholder_subtitle">Marshrut sozlamalari qayd etildi.</string>
     <string name="settings_more_subtitle">Til, maxfiylik, bildirishnomalar, tariflar va mahalliy maʼlumotlar.</string>
-    <string name="settings_subtitle">Mahalliy Android profillari uchun oflayn sozlamalar.</string>
+    <string name="settings_subtitle">Mahalliy Android profillari uchun sozlamalar.</string>
     <string name="settings_loading">Sozlamalar yuklanmoqda</string>
     <string name="settings_processing">Sozlamalarni saqlash</string>
     <string name="settings_retry">Qayta urinish</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">Ma\'lumotlar</string>
     <string name="settings_open_import_export">Import / eksport</string>
     <string name="settings_reset_data">Joriy profilni tiklash</string>
-    <string name="settings_reset_data_desc">Faol mahalliy profil ma\'lumotlarini o\'chiradi va yangi oflayn profil yaratadi.</string>
+    <string name="settings_reset_data_desc">Faol mahalliy profil ma\'lumotlarini o\'chiradi va yangi mahalliy profil yaratadi.</string>
     <string name="settings_reset_confirm_title">Joriy profil qayta tiklansinmi?</string>
     <string name="settings_reset_confirm_body">Bu qurilmadagi faol mahalliy profil ma\'lumotlarini o\'chiradi. Boshqa mahalliy profillar tiklanmaydi.</string>
     <string name="settings_reset_confirm_button">Profilni tiklash</string>

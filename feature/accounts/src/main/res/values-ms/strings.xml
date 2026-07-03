@@ -3,7 +3,7 @@
     <string name="accounts_title">Akaun</string>
     <string name="accounts_subtitle">Pembetulan kad, wang tunai, simpanan dan baki</string>
     <string name="accounts_empty_title">Tiada akaun lagi</string>
-    <string name="accounts_empty_body">Buat akaun pertama untuk mula menjejaki baki di luar talian.</string>
+    <string name="accounts_empty_body">Buat akaun pertama untuk mula menjejaki baki.</string>
     <string name="accounts_add">Tambah akaun</string>
     <string name="accounts_edit">Edit akaun</string>
     <string name="accounts_create">Buat akaun</string>

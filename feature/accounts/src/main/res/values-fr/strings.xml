@@ -3,7 +3,7 @@
     <string name="accounts_title">Comptes</string>
     <string name="accounts_subtitle">Cartes, espèces, épargne et corrections de solde</string>
     <string name="accounts_empty_title">Aucun compte pour l\'instant</string>
-    <string name="accounts_empty_body">Créez le premier compte pour commencer à suivre les soldes hors ligne.</string>
+    <string name="accounts_empty_body">Créez le premier compte pour commencer à suivre les soldes.</string>
     <string name="accounts_add">Ajouter un compte</string>
     <string name="accounts_edit">Modifier le compte</string>
     <string name="accounts_create">Créer un compte</string>

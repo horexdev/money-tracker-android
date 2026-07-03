@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Papan Pemuka</string>
     <string name="feature_home_subtitle">Navigasi akar sudah sedia.</string>
-    <string name="home_subtitle">Gambar baki luar talian dan aktiviti terkini.</string>
+    <string name="home_subtitle">Ringkasan baki dan aktiviti terkini.</string>
     <string name="home_loading">Memuatkan papan pemuka...</string>
     <string name="home_retry">Cuba lagi</string>
     <string name="home_error_generic">Data papan pemuka tidak dapat dimuatkan.</string>

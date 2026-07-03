@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Панэль</string>
     <string name="feature_home_subtitle">каранёвая навігацыя гатовая.</string>
-    <string name="home_subtitle">аўтаномны здымак балансаў і апошніх дзеянняў.</string>
+    <string name="home_subtitle">Зводка балансаў і апошніх дзеянняў.</string>
     <string name="home_loading">Загрузка прыборнай панэлі...</string>
     <string name="home_retry">Паўтарыць</string>
     <string name="home_error_generic">Немагчыма загрузіць даныя прыборнай панэлі.</string>

@@ -3,7 +3,7 @@
     <string name="accounts_title">계좌</string>
     <string name="accounts_subtitle">카드, 현금, 저축, 잔액 정정</string>
     <string name="accounts_empty_title">아직 계정이 없습니다</string>
-    <string name="accounts_empty_body">오프라인에서 잔액 추적을 시작하려면 첫 번째 계정을 만드세요.</string>
+    <string name="accounts_empty_body">잔액 추적을 시작하려면 첫 번째 계정을 만드세요.</string>
     <string name="accounts_add">계정 추가</string>
     <string name="accounts_edit">계정 편집</string>
     <string name="accounts_create">계정 만들기</string>

@@ -17,7 +17,7 @@
     <string name="settings_title">Налады</string>
     <string name="settings_placeholder_subtitle">маршрут налад зарэгістраваны.</string>
     <string name="settings_more_subtitle">Мова, прыватнасць, апавяшчэнні, тарыфы і мясцовыя дадзеныя.</string>
-    <string name="settings_subtitle">аўтаномныя налады для лакальных профіляў Android.</string>
+    <string name="settings_subtitle">Налады лакальных профіляў Android.</string>
     <string name="settings_loading">Загрузка налад</string>
     <string name="settings_processing">Захаванне налад</string>
     <string name="settings_retry">Паўтарыць</string>

@@ -3,7 +3,7 @@
     <string name="categories_title">Kategoriyalar</string>
     <string name="categories_subtitle">Ismlar, piktogrammalar, ranglar va tranzaksiya turlarini boshqaring</string>
     <string name="categories_empty_title">Kategoriyalar yo\'q</string>
-    <string name="categories_empty_body">Daromad va xarajatlarni oflayn rejimda tasniflash uchun toifa yarating.</string>
+    <string name="categories_empty_body">Daromad va xarajatlarni tasniflash uchun toifa yarating.</string>
     <string name="categories_add">Turkum qo‘shing</string>
     <string name="categories_edit">Kategoriyani tahrirlash</string>
     <string name="categories_create">Kategoriya yaratish</string>

@@ -3,7 +3,7 @@
     <string name="accounts_title">الحسابات</string>
     <string name="accounts_subtitle">تصحيح البطاقات والنقد والمدخرات والرصيد</string>
     <string name="accounts_empty_title">لا يوجد حسابات بعد</string>
-    <string name="accounts_empty_body">قم بإنشاء الحساب الأول لبدء متابعة الأرصدة دون الاتصال بالإنترنت.</string>
+    <string name="accounts_empty_body">قم بإنشاء الحساب الأول لبدء متابعة الأرصدة.</string>
     <string name="accounts_add">إضافة حساب</string>
     <string name="accounts_edit">تعديل الحساب</string>
     <string name="accounts_create">إنشاء حساب</string>

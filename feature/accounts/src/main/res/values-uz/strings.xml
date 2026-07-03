@@ -3,7 +3,7 @@
     <string name="accounts_title">Hisoblar</string>
     <string name="accounts_subtitle">Kartalar, naqd pul, jamg\'arma va balansga tuzatishlar</string>
     <string name="accounts_empty_title">Hozircha hisoblar yo\'q</string>
-    <string name="accounts_empty_body">Balanslarni oflayn rejimda kuzatishni boshlash uchun birinchi hisob yarating.</string>
+    <string name="accounts_empty_body">Balanslarni kuzatishni boshlash uchun birinchi hisob yarating.</string>
     <string name="accounts_add">Hisobni qo\'shish</string>
     <string name="accounts_edit">Hisobni tahrirlash</string>
     <string name="accounts_create">Hisob yaratish</string>

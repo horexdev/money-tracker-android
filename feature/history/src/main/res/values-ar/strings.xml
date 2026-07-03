@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">السجل</string>
-    <string name="history_subtitle">البحث عن المعاملات غير المتصلة بالإنترنت وتصفيتها وتحريرها وحذفها</string>
+    <string name="history_subtitle">البحث عن المعاملات وتصفيتها وتحريرها وحذفها</string>
     <string name="history_empty_title">لا توجد معاملات</string>
     <string name="history_empty_body">ستظهر هنا الإيرادات والمصروفات الجديدة بعد حفظها.</string>
     <string name="history_loading">تحميل التاريخ</string>

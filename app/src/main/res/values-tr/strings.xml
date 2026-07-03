@@ -17,7 +17,7 @@
     <string name="settings_title">Ayarlar</string>
     <string name="settings_placeholder_subtitle">Ayarlar rotası kaydedildi.</string>
     <string name="settings_more_subtitle">Dil, gizlilik, bildirimler, ücretler ve yerel veriler.</string>
-    <string name="settings_subtitle">Yerel Android profilleri için çevrimdışı ayarlar.</string>
+    <string name="settings_subtitle">Yerel Android profilleri için ayarlar.</string>
     <string name="settings_loading">Ayarlar yükleniyor</string>
     <string name="settings_processing">Ayarları kaydetme</string>
     <string name="settings_retry">Tekrar dene</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">Veri</string>
     <string name="settings_open_import_export">İthalat / İhracat</string>
     <string name="settings_reset_data">Mevcut profili sıfırla</string>
-    <string name="settings_reset_data_desc">Etkin yerel profil verilerini siler ve yeni bir çevrimdışı profil oluşturur.</string>
+    <string name="settings_reset_data_desc">Etkin yerel profil verilerini siler ve yeni bir yerel profil oluşturur.</string>
     <string name="settings_reset_confirm_title">Mevcut profil sıfırlansın mı?</string>
     <string name="settings_reset_confirm_body">Bu, bu cihazdaki etkin yerel profil verilerini siler. Diğer yerel profiller sıfırlanmaz.</string>
     <string name="settings_reset_confirm_button">Profili sıfırla</string>

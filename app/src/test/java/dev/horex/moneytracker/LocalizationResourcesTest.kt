@@ -309,7 +309,32 @@ class LocalizationResourcesTest {
         val WHITESPACE = Regex("\\s+")
         val ENGLISH_FRAGMENT_SEPARATOR = Regex("[.!?;]+")
         val ENGLISH_WORD = Regex("[A-Za-z][A-Za-z']+")
-        val FORBIDDEN_USER_FACING_OFFLINE_WORDING = Regex("""\boffline\b|оф+лайн""", RegexOption.IGNORE_CASE)
+        val FORBIDDEN_USER_FACING_OFFLINE_WORDING = Regex(
+            listOf(
+                """\boffline\b""",
+                """oflayn""",
+                """оф+лайн""",
+                """аўтаном\p{L}*""",
+                """hors\s+ligne""",
+                """sin\s+conexi[oó]n""",
+                """sem\s+conex[aã]o""",
+                """senza\s+connessione""",
+                """zonder\s+(?:internet|verbinding)""",
+                """ohne\s+verbindung""",
+                """çevrim\s*dışı""",
+                """cevrim\s*disi""",
+                """luar\s+talian""",
+                """오프라인""",
+                """عدم\s+الاتصال""",
+                """دون\s+الاتصال""",
+                """دون\s+اتصال""",
+                """بلا\s+اتصال""",
+                """بدون\s+اتصال""",
+                """غير\s+المتصلة""",
+                """غير\s+متصل(?:ة|ون|ين)?""",
+            ).joinToString("|"),
+            RegexOption.IGNORE_CASE,
+        )
         val RTL_TEXT = Regex("[\\u0600-\\u06FF]")
     }
 }

@@ -3,7 +3,7 @@
     <string name="categories_title">Kategoriler</string>
     <string name="categories_subtitle">Adları, simgeleri, renkleri ve işlem türlerini yönetin</string>
     <string name="categories_empty_title">Kategori yok</string>
-    <string name="categories_empty_body">Gelir ve giderleri çevrimdışı olarak sınıflandırmak için bir kategori oluşturun.</string>
+    <string name="categories_empty_body">Gelir ve giderleri sınıflandırmak için bir kategori oluşturun.</string>
     <string name="categories_add">Kategori ekle</string>
     <string name="categories_edit">Kategoriyi düzenle</string>
     <string name="categories_create">Kategori oluştur</string>

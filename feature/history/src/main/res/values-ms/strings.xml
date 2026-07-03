@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">Sejarah</string>
-    <string name="history_subtitle">Cari, tapis, edit dan padamkan transaksi luar talian</string>
+    <string name="history_subtitle">Cari, tapis, edit dan padamkan transaksi</string>
     <string name="history_empty_title">Tiada transaksi</string>
     <string name="history_empty_body">Pendapatan dan perbelanjaan baharu akan muncul di sini selepas ia disimpan.</string>
     <string name="history_loading">Memuatkan sejarah</string>
