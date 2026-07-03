@@ -5,6 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import dev.horex.moneytracker.core.database.seed.DefaultProfileSeedRepository
 import dev.horex.moneytracker.core.database.security.AndroidDatabasePassphraseStore
 import kotlinx.coroutines.runBlocking
@@ -115,26 +116,41 @@ class LocalProfileRepositoryTest {
 
             val categories = database.categoryDao().listByProfile(profile.id)
             assertEquals(11, categories.size)
+            assertEquals(
+                SystemCategoryLocalization.definitions.map { it.localizationKey }.toSet(),
+                categories.map { it.localizationKey }.toSet(),
+            )
+            assertEquals(
+                SystemCategoryLocalization.definitions.size,
+                SystemCategoryLocalization.definitions.map { it.localizationKey }.toSet().size,
+            )
+            SystemCategoryLocalization.definitions.forEach { definition ->
+                assertEquals(SystemCategoryLocalization.supportedLanguageCodes, definition.names.keys)
+            }
 
             val categoriesByName = categories.associateBy { it.name }
             val food = checkNotNull(categoriesByName["\u0415\u0434\u0430"])
+            assertEquals(SystemCategoryLocalization.FOOD, food.localizationKey)
             assertEquals("fork-knife", food.icon)
             assertEquals("expense", food.type)
             assertEquals("#f97316", food.color)
 
             val savings = checkNotNull(categoriesByName["\u041d\u0430\u043a\u043e\u043f\u043b\u0435\u043d\u0438\u044f"])
+            assertEquals(SystemCategoryLocalization.SAVINGS, savings.localizationKey)
             assertEquals("piggy-bank", savings.icon)
             assertEquals("savings", savings.type)
             assertEquals("#3b82f6", savings.color)
 
             val transfer = checkNotNull(database.categoryDao().getProtectedByType(profile.id, "transfer"))
             assertEquals("Transfer", transfer.name)
+            assertEquals(SystemCategoryLocalization.TRANSFER, transfer.localizationKey)
             assertEquals("arrows-left-right", transfer.icon)
             assertEquals("#6366f1", transfer.color)
             assertTrue(transfer.isProtected)
 
             val adjustment = checkNotNull(database.categoryDao().getProtectedByType(profile.id, "adjustment"))
             assertEquals("Adjustment", adjustment.name)
+            assertEquals(SystemCategoryLocalization.ADJUSTMENT, adjustment.localizationKey)
             assertEquals("scales", adjustment.icon)
             assertEquals("#94a3b8", adjustment.color)
             assertTrue(adjustment.isProtected)

@@ -5,6 +5,7 @@ import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.dao.TransactionTemplateWithRelations
 import dev.horex.moneytracker.core.database.model.AccountEntity
 import dev.horex.moneytracker.core.database.model.CategoryEntity
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import dev.horex.moneytracker.core.database.model.TransactionTemplateEntity
 import dev.horex.moneytracker.core.transactions.CreateTransactionInput
 import dev.horex.moneytracker.core.transactions.MoneyTransaction
@@ -19,14 +20,17 @@ class RoomTransactionTemplatesRepository(
 ) : TransactionTemplatesRepository {
     private val accountDao = database.accountDao()
     private val categoryDao = database.categoryDao()
+    private val localProfileDao = database.localProfileDao()
     private val templateDao = database.transactionTemplateDao()
 
     override suspend fun listTemplates(profileId: Long): List<TransactionTemplate> {
-        return templateDao.listWithRelationsByProfile(profileId).map(TransactionTemplateWithRelations::toTemplate)
+        val languageCode = requireProfileLanguage(profileId)
+        return templateDao.listWithRelationsByProfile(profileId).map { it.toTemplate(languageCode) }
     }
 
     override suspend fun getTemplate(profileId: Long, templateId: Long): TransactionTemplate {
-        return templateDao.getWithRelationsById(profileId, templateId)?.toTemplate()
+        val languageCode = requireProfileLanguage(profileId)
+        return templateDao.getWithRelationsById(profileId, templateId)?.toTemplate(languageCode)
             ?: throw TransactionTemplateNotFoundException()
     }
 
@@ -158,6 +162,10 @@ class RoomTransactionTemplatesRepository(
     private suspend fun requireActiveCategory(profileId: Long, categoryId: Long): CategoryEntity {
         return categoryDao.getActiveById(profileId, categoryId) ?: throw TransactionTemplateCategoryNotFoundException()
     }
+
+    private suspend fun requireProfileLanguage(profileId: Long): String {
+        return localProfileDao.getById(profileId)?.languageCode ?: throw TransactionTemplateNotFoundException()
+    }
 }
 
 private const val BOTH_CATEGORY_TYPE = "both"
@@ -177,7 +185,7 @@ private fun requireCategorySupportsType(category: CategoryEntity, type: Transact
     }
 }
 
-private fun TransactionTemplateWithRelations.toTemplate(): TransactionTemplate {
+private fun TransactionTemplateWithRelations.toTemplate(languageCode: String): TransactionTemplate {
     return TransactionTemplate(
         id = template.id,
         profileId = template.profileId,
@@ -186,7 +194,7 @@ private fun TransactionTemplateWithRelations.toTemplate(): TransactionTemplate {
         amountCents = template.amountCents,
         amountMode = TransactionTemplateAmountMode.fromAmountFixed(template.amountFixed),
         categoryId = template.categoryId,
-        categoryName = categoryName,
+        categoryName = SystemCategoryLocalization.displayName(categoryLocalizationKey, languageCode, categoryName),
         categoryIcon = categoryIcon,
         categoryColor = categoryColor,
         accountId = template.accountId,

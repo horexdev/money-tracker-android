@@ -306,6 +306,7 @@ private fun CategoryEntity.toBackup(ref: String): BackupCategory {
     return BackupCategory(
         ref = ref,
         name = name,
+        localizationKey = localizationKey,
         icon = icon,
         type = type.toBackupCategoryType(),
         color = color,

@@ -108,6 +108,7 @@ data class AccountEntity(
     indices = [
         Index(value = ["profile_id"]),
         Index(value = ["profile_id", "name"], unique = true),
+        Index(value = ["profile_id", "localization_key"]),
         Index(value = ["profile_id", "type"]),
         Index(value = ["profile_id", "deleted_at_epoch_millis"]),
     ],
@@ -119,6 +120,8 @@ data class CategoryEntity(
     val profileId: Long,
     @ColumnInfo(name = "name")
     val name: String,
+    @ColumnInfo(name = "localization_key")
+    val localizationKey: String? = null,
     @ColumnInfo(name = "icon", defaultValue = "'star'")
     val icon: String = "star",
     @ColumnInfo(name = "type", defaultValue = "'both'")

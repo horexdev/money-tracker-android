@@ -9,6 +9,7 @@ import dev.horex.moneytracker.core.database.model.GoalTransactionEntity
 import dev.horex.moneytracker.core.database.model.LocalProfileEntity
 import dev.horex.moneytracker.core.database.model.RecurringTransactionEntity
 import dev.horex.moneytracker.core.database.model.SavingsGoalEntity
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import dev.horex.moneytracker.core.database.model.TransactionEntity
 import dev.horex.moneytracker.core.database.model.TransactionTemplateEntity
 import dev.horex.moneytracker.core.database.model.TransferEntity
@@ -60,6 +61,14 @@ class MoneyTrackerBackupExporterTest {
         assertEquals(EXPORT_TIME, exported.createdAtEpochMillis)
         assertEquals("profile:1", exported.profiles.single().ref)
         assertEquals(listOf("account:1", "account:2"), exported.profiles.single().accounts.map { it.ref })
+        assertEquals(
+            mapOf(
+                "Food" to SystemCategoryLocalization.FOOD,
+                "Transfer" to SystemCategoryLocalization.TRANSFER,
+                "Archived" to null,
+            ),
+            exported.profiles.single().categories.associate { it.name to it.localizationKey },
+        )
         assertEquals(listOf("transaction:1", "transaction:2", "transaction:3"), exported.profiles.single().transactions.map { it.ref })
         assertPortableJson(encoded)
 
@@ -255,9 +264,10 @@ private class InMemoryBackupDatabase(
                 id = foodCategoryId,
                 profileId = profileId,
                 name = "Food",
+                localizationKey = SystemCategoryLocalization.FOOD,
                 icon = "fork-knife",
                 type = "expense",
-                color = "#ef4444",
+                color = "#f97316",
                 isProtected = false,
                 updatedAtEpochMillis = TEST_TIME,
             )
@@ -265,6 +275,7 @@ private class InMemoryBackupDatabase(
                 id = transferCategoryId,
                 profileId = profileId,
                 name = "Transfer",
+                localizationKey = SystemCategoryLocalization.TRANSFER,
                 icon = "arrows-left-right",
                 type = "transfer",
                 color = "#6366f1",
@@ -582,6 +593,7 @@ private class InMemoryBackupImportStore(
             id = id,
             profileId = profileId,
             name = category.name,
+            localizationKey = category.localizationKey,
             icon = category.icon,
             type = category.type.storageValue,
             color = category.color,

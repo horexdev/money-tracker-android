@@ -13,6 +13,7 @@ data class Category(
     val isProtected: Boolean,
     val updatedAtEpochMillis: Long,
     val deletedAtEpochMillis: Long?,
+    val localizationKey: String? = null,
 ) {
     val isDeleted: Boolean
         get() = deletedAtEpochMillis != null

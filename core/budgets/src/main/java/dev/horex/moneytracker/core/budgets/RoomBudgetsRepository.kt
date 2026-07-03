@@ -6,6 +6,7 @@ import dev.horex.moneytracker.core.database.dao.BudgetTransactionWithRelations
 import dev.horex.moneytracker.core.database.dao.BudgetWithCategory
 import dev.horex.moneytracker.core.database.model.BudgetEntity
 import dev.horex.moneytracker.core.database.model.CategoryEntity
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import java.time.ZoneId
 import java.util.Locale
 
@@ -16,16 +17,19 @@ class RoomBudgetsRepository(
 ) : BudgetsRepository {
     private val budgetDao = database.budgetDao()
     private val categoryDao = database.categoryDao()
+    private val localProfileDao = database.localProfileDao()
 
     override suspend fun listBudgets(profileId: Long): List<Budget> {
+        val languageCode = requireProfileLanguage(profileId)
         return budgetDao.listWithCategoryByProfile(profileId).map { row ->
-            row.toBudget(spentCents = row.budget.spentCentsForCurrentPeriod())
+            row.toBudget(spentCents = row.budget.spentCentsForCurrentPeriod(), languageCode = languageCode)
         }
     }
 
     override suspend fun getBudget(profileId: Long, budgetId: Long): Budget {
+        val languageCode = requireProfileLanguage(profileId)
         val row = budgetDao.getWithCategoryById(profileId, budgetId) ?: throw BudgetNotFoundException()
-        return row.toBudget(spentCents = row.budget.spentCentsForCurrentPeriod())
+        return row.toBudget(spentCents = row.budget.spentCentsForCurrentPeriod(), languageCode = languageCode)
     }
 
     override suspend fun createBudget(profileId: Long, input: CreateBudgetInput): Budget {
@@ -91,6 +95,7 @@ class RoomBudgetsRepository(
     }
 
     override suspend fun listBudgetTransactions(profileId: Long, budgetId: Long): List<BudgetTransaction> {
+        val languageCode = requireProfileLanguage(profileId)
         val budget = budgetDao.getById(profileId, budgetId) ?: throw BudgetNotFoundException()
         val range = BudgetPeriod.fromStorageValue(budget.period).currentRange(clock(), zoneId)
         return budgetDao.listTransactionsInPeriod(
@@ -98,7 +103,7 @@ class RoomBudgetsRepository(
             categoryId = budget.categoryId,
             fromEpochMillisInclusive = range.fromEpochMillisInclusive,
             toEpochMillisExclusive = range.toEpochMillisExclusive,
-        ).map(BudgetTransactionWithRelations::toBudgetTransaction)
+        ).map { it.toBudgetTransaction(languageCode) }
     }
 
     override suspend fun recordBudgetThresholdNotification(
@@ -151,6 +156,10 @@ class RoomBudgetsRepository(
             toEpochMillisExclusive = range.toEpochMillisExclusive,
         )
     }
+
+    private suspend fun requireProfileLanguage(profileId: Long): String {
+        return localProfileDao.getById(profileId)?.languageCode ?: throw BudgetNotFoundException()
+    }
 }
 
 private const val EXPENSE_CATEGORY_TYPE = "expense"
@@ -188,12 +197,12 @@ private fun String.normalizedCurrencyCode(): String {
         ?: throw InvalidBudgetCurrencyException()
 }
 
-private fun BudgetWithCategory.toBudget(spentCents: Long): Budget {
+private fun BudgetWithCategory.toBudget(spentCents: Long, languageCode: String): Budget {
     return Budget(
         id = budget.id,
         profileId = budget.profileId,
         categoryId = budget.categoryId,
-        categoryName = categoryName,
+        categoryName = SystemCategoryLocalization.displayName(categoryLocalizationKey, languageCode, categoryName),
         categoryIcon = categoryIcon,
         categoryColor = categoryColor,
         limitCents = budget.limitCents,
@@ -209,13 +218,13 @@ private fun BudgetWithCategory.toBudget(spentCents: Long): Budget {
     )
 }
 
-private fun BudgetTransactionWithRelations.toBudgetTransaction(): BudgetTransaction {
+private fun BudgetTransactionWithRelations.toBudgetTransaction(languageCode: String): BudgetTransaction {
     return BudgetTransaction(
         id = transaction.id,
         profileId = transaction.profileId,
         amountCents = transaction.amountCents,
         categoryId = transaction.categoryId,
-        categoryName = categoryName,
+        categoryName = SystemCategoryLocalization.displayName(categoryLocalizationKey, languageCode, categoryName),
         categoryIcon = categoryIcon,
         categoryColor = categoryColor,
         accountId = transaction.accountId,

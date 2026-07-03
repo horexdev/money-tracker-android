@@ -28,6 +28,8 @@ data class TransactionWithRelations(
     val transaction: TransactionEntity,
     @ColumnInfo(name = "category_name")
     val categoryName: String,
+    @ColumnInfo(name = "category_localization_key")
+    val categoryLocalizationKey: String?,
     @ColumnInfo(name = "category_icon")
     val categoryIcon: String,
     @ColumnInfo(name = "category_color")
@@ -68,6 +70,8 @@ data class CategoryStatsRow(
     val categoryId: Long,
     @ColumnInfo(name = "category_name")
     val categoryName: String,
+    @ColumnInfo(name = "category_localization_key")
+    val categoryLocalizationKey: String?,
     @ColumnInfo(name = "category_icon")
     val categoryIcon: String,
     @ColumnInfo(name = "category_color")
@@ -87,6 +91,8 @@ data class BudgetWithCategory(
     val budget: BudgetEntity,
     @ColumnInfo(name = "category_name")
     val categoryName: String,
+    @ColumnInfo(name = "category_localization_key")
+    val categoryLocalizationKey: String?,
     @ColumnInfo(name = "category_icon")
     val categoryIcon: String,
     @ColumnInfo(name = "category_color")
@@ -98,6 +104,8 @@ data class BudgetTransactionWithRelations(
     val transaction: TransactionEntity,
     @ColumnInfo(name = "category_name")
     val categoryName: String,
+    @ColumnInfo(name = "category_localization_key")
+    val categoryLocalizationKey: String?,
     @ColumnInfo(name = "category_icon")
     val categoryIcon: String,
     @ColumnInfo(name = "category_color")
@@ -111,6 +119,8 @@ data class RecurringTransactionWithCategory(
     val recurring: RecurringTransactionEntity,
     @ColumnInfo(name = "category_name")
     val categoryName: String,
+    @ColumnInfo(name = "category_localization_key")
+    val categoryLocalizationKey: String?,
     @ColumnInfo(name = "category_icon")
     val categoryIcon: String,
     @ColumnInfo(name = "category_color")
@@ -122,6 +132,8 @@ data class TransactionTemplateWithRelations(
     val template: TransactionTemplateEntity,
     @ColumnInfo(name = "category_name")
     val categoryName: String,
+    @ColumnInfo(name = "category_localization_key")
+    val categoryLocalizationKey: String?,
     @ColumnInfo(name = "category_icon")
     val categoryIcon: String,
     @ColumnInfo(name = "category_color")
@@ -467,6 +479,7 @@ interface TransactionDao {
         SELECT
             t.*,
             c.name AS category_name,
+            c.localization_key AS category_localization_key,
             c.icon AS category_icon,
             c.color AS category_color,
             a.name AS account_name
@@ -522,6 +535,7 @@ interface TransactionDao {
         SELECT
             t.*,
             c.name AS category_name,
+            c.localization_key AS category_localization_key,
             c.icon AS category_icon,
             c.color AS category_color,
             a.name AS account_name
@@ -664,6 +678,7 @@ interface TransactionDao {
         SELECT
             c.id AS category_id,
             c.name AS category_name,
+            c.localization_key AS category_localization_key,
             c.icon AS category_icon,
             c.color AS category_color,
             t.type AS type,
@@ -682,7 +697,7 @@ interface TransactionDao {
               WHERE x.profile_id = t.profile_id
                 AND (x.from_transaction_id = t.id OR x.to_transaction_id = t.id)
           )
-        GROUP BY c.id, c.name, c.icon, c.color, t.type, t.currency_code
+        GROUP BY c.id, c.name, c.localization_key, c.icon, c.color, t.type, t.currency_code
         ORDER BY total_cents DESC, c.name ASC, t.currency_code ASC
         """,
     )
@@ -806,6 +821,7 @@ interface BudgetDao {
         SELECT
             b.*,
             c.name AS category_name,
+            c.localization_key AS category_localization_key,
             c.icon AS category_icon,
             c.color AS category_color
         FROM budgets b
@@ -827,6 +843,7 @@ interface BudgetDao {
         SELECT
             b.*,
             c.name AS category_name,
+            c.localization_key AS category_localization_key,
             c.icon AS category_icon,
             c.color AS category_color
         FROM budgets b
@@ -874,6 +891,7 @@ interface BudgetDao {
         SELECT
             t.*,
             c.name AS category_name,
+            c.localization_key AS category_localization_key,
             c.icon AS category_icon,
             c.color AS category_color,
             a.name AS account_name
@@ -943,6 +961,7 @@ interface RecurringTransactionDao {
         SELECT
             r.*,
             c.name AS category_name,
+            c.localization_key AS category_localization_key,
             c.icon AS category_icon,
             c.color AS category_color
         FROM recurring_transactions r
@@ -960,6 +979,7 @@ interface RecurringTransactionDao {
         SELECT
             r.*,
             c.name AS category_name,
+            c.localization_key AS category_localization_key,
             c.icon AS category_icon,
             c.color AS category_color
         FROM recurring_transactions r
@@ -1253,6 +1273,7 @@ interface TransactionTemplateDao {
         SELECT
             t.*,
             c.name AS category_name,
+            c.localization_key AS category_localization_key,
             c.icon AS category_icon,
             c.color AS category_color,
             a.name AS account_name
@@ -1282,6 +1303,7 @@ interface TransactionTemplateDao {
         SELECT
             t.*,
             c.name AS category_name,
+            c.localization_key AS category_localization_key,
             c.icon AS category_icon,
             c.color AS category_color,
             a.name AS account_name
