@@ -55,5 +55,40 @@ object MoneyTrackerDatabaseMigrations {
         }
     }
 
-    val ALL: Array<Migration> = arrayOf(MIGRATION_1_2)
+    val MIGRATION_2_3 = object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                """
+                CREATE INDEX IF NOT EXISTS `index_transactions_profile_id_is_adjustment_created_at_epoch_millis_id`
+                ON `transactions` (`profile_id`, `is_adjustment`, `created_at_epoch_millis`, `id`)
+                """.trimIndent(),
+            )
+            db.execSQL(
+                """
+                CREATE INDEX IF NOT EXISTS `index_transactions_profile_id_account_id_is_adjustment_created_at_epoch_millis_id`
+                ON `transactions` (`profile_id`, `account_id`, `is_adjustment`, `created_at_epoch_millis`, `id`)
+                """.trimIndent(),
+            )
+            db.execSQL(
+                """
+                CREATE INDEX IF NOT EXISTS `index_transactions_profile_id_category_id_is_adjustment_created_at_epoch_millis_id`
+                ON `transactions` (`profile_id`, `category_id`, `is_adjustment`, `created_at_epoch_millis`, `id`)
+                """.trimIndent(),
+            )
+            db.execSQL(
+                """
+                CREATE INDEX IF NOT EXISTS `index_transactions_profile_id_type_is_adjustment_created_at_epoch_millis_id`
+                ON `transactions` (`profile_id`, `type`, `is_adjustment`, `created_at_epoch_millis`, `id`)
+                """.trimIndent(),
+            )
+            db.execSQL(
+                """
+                CREATE INDEX IF NOT EXISTS `index_transactions_profile_id_currency_code_is_adjustment_created_at_epoch_millis_id`
+                ON `transactions` (`profile_id`, `currency_code`, `is_adjustment`, `created_at_epoch_millis`, `id`)
+                """.trimIndent(),
+            )
+        }
+    }
+
+    val ALL: Array<Migration> = arrayOf(MIGRATION_1_2, MIGRATION_2_3)
 }

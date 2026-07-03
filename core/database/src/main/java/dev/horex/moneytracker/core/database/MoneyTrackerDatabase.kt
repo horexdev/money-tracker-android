@@ -65,6 +65,6 @@ abstract class MoneyTrackerDatabase : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "money_tracker.db"
-        const val SCHEMA_VERSION = 2
+        const val SCHEMA_VERSION = 3
     }
 }

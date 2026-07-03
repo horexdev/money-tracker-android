@@ -562,6 +562,29 @@ interface TransactionDao {
     @Query(
         """
         SELECT COUNT(*) FROM transactions t
+        WHERE t.profile_id = :profileId
+          AND t.is_adjustment = 0
+          AND (:accountId IS NULL OR t.account_id = :accountId)
+          AND (:categoryId IS NULL OR t.category_id = :categoryId)
+          AND (:type IS NULL OR t.type = :type)
+          AND (:currencyCode IS NULL OR t.currency_code = :currencyCode)
+          AND (:fromEpochMillis IS NULL OR t.created_at_epoch_millis >= :fromEpochMillis)
+          AND (:toEpochMillis IS NULL OR t.created_at_epoch_millis <= :toEpochMillis)
+        """,
+    )
+    suspend fun countVisibleWithFiltersNoSearch(
+        profileId: Long,
+        accountId: Long?,
+        categoryId: Long?,
+        type: String?,
+        currencyCode: String?,
+        fromEpochMillis: Long?,
+        toEpochMillis: Long?,
+    ): Int
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM transactions t
         JOIN categories c ON c.id = t.category_id
         JOIN accounts a ON a.id = t.account_id
         WHERE t.profile_id = :profileId

@@ -158,8 +158,13 @@ data class CategoryEntity(
     indices = [
         Index(value = ["profile_id"]),
         Index(value = ["profile_id", "created_at_epoch_millis"]),
+        Index(value = ["profile_id", "is_adjustment", "created_at_epoch_millis", "id"]),
         Index(value = ["profile_id", "account_id", "created_at_epoch_millis"]),
+        Index(value = ["profile_id", "account_id", "is_adjustment", "created_at_epoch_millis", "id"]),
         Index(value = ["profile_id", "category_id", "created_at_epoch_millis"]),
+        Index(value = ["profile_id", "category_id", "is_adjustment", "created_at_epoch_millis", "id"]),
+        Index(value = ["profile_id", "type", "is_adjustment", "created_at_epoch_millis", "id"]),
+        Index(value = ["profile_id", "currency_code", "is_adjustment", "created_at_epoch_millis", "id"]),
         Index(value = ["account_id"]),
         Index(value = ["category_id"]),
         Index(value = ["snapshot_date"]),

@@ -126,12 +126,23 @@ fun HistoryRoute(
             }
             try {
                 val profile = localProfileBootstrapper.ensureActiveProfile()
+                val canReuseLookups = profileId == profile.id &&
+                    uiState.accounts.isNotEmpty() &&
+                    uiState.categories.isNotEmpty()
                 profileId = profile.id
-                val accounts = accountsRepository.listAccounts(profile.id)
-                val categories = categoriesRepository.listCategories(
-                    profileId = profile.id,
-                    sortOrder = CategorySortOrder.NameAsc,
-                )
+                val accounts = if (canReuseLookups) {
+                    uiState.accounts
+                } else {
+                    accountsRepository.listAccounts(profile.id)
+                }
+                val categories = if (canReuseLookups) {
+                    uiState.categories
+                } else {
+                    categoriesRepository.listCategories(
+                        profileId = profile.id,
+                        sortOrder = CategorySortOrder.NameAsc,
+                    )
+                }
                 val transactionPage = transactionsRepository.listTransactions(
                     profileId = profile.id,
                     query = filterSnapshot.toQuery(page),
