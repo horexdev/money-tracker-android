@@ -35,6 +35,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -83,7 +84,16 @@ import dev.horex.moneytracker.core.backup.MoneyTrackerBackupWrongPasswordExcepti
 import dev.horex.moneytracker.core.database.profile.LocalProfile
 import dev.horex.moneytracker.core.database.profile.LocalProfileRepository
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
+import dev.horex.moneytracker.core.transactions.TransactionCsvExportFilters
+import dev.horex.moneytracker.core.transactions.TransactionType
+import dev.horex.moneytracker.csv.MoneyTrackerCsvDocumentContracts
+import dev.horex.moneytracker.csv.MoneyTrackerCsvDocumentExportRequest
+import dev.horex.moneytracker.csv.MoneyTrackerCsvDocumentExportResult
+import dev.horex.moneytracker.csv.MoneyTrackerCsvDocumentRepository
 import java.text.DateFormat
+import java.time.DateTimeException
+import java.time.LocalDate
+import java.time.ZoneOffset
 import java.util.Date
 import kotlinx.coroutines.launch
 
@@ -91,11 +101,22 @@ import kotlinx.coroutines.launch
 fun ImportExportRoute(
     localProfileRepository: LocalProfileRepository,
     backupDocumentRepository: MoneyTrackerBackupDocumentRepository,
+    csvDocumentRepository: MoneyTrackerCsvDocumentRepository,
     modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
-    var state by remember { mutableStateOf(ImportExportUiState(isLoading = true)) }
+    val defaultCsvRange = remember { defaultCsvDateRange() }
+    var state by remember {
+        mutableStateOf(
+            ImportExportUiState(
+                isLoading = true,
+                csvFromDate = defaultCsvRange.fromDate,
+                csvToDate = defaultCsvRange.toDate,
+            ),
+        )
+    }
     var pendingExportRequest by remember { mutableStateOf<PendingExportRequest?>(null) }
+    var pendingCsvExportRequest by remember { mutableStateOf<PendingCsvExportRequest?>(null) }
     var pendingRestoreUri by remember { mutableStateOf<Uri?>(null) }
     var restorePreview by remember { mutableStateOf<MoneyTrackerBackupDocumentRestorePreview?>(null) }
 
@@ -155,6 +176,31 @@ fun ImportExportRoute(
                 )
             } finally {
                 password?.fill('\u0000')
+            }
+        }
+    }
+
+    fun exportCsvToDocument(uri: Uri, request: PendingCsvExportRequest) {
+        scope.launch {
+            state = state.copy(isBusy = true, error = null, csvResult = null)
+            try {
+                val result = csvDocumentRepository.exportTransactions(
+                    uri = uri,
+                    request = MoneyTrackerCsvDocumentExportRequest(
+                        selectedLocalProfileIds = request.selectedLocalProfileIds,
+                        filters = request.filters,
+                    ),
+                )
+                state = state.copy(
+                    isBusy = false,
+                    csvResult = result.toCsvResultUi(),
+                    error = null,
+                )
+            } catch (error: Throwable) {
+                state = state.copy(
+                    isBusy = false,
+                    error = error.toImportExportError(),
+                )
             }
         }
     }
@@ -249,6 +295,16 @@ fun ImportExportRoute(
         }
     }
 
+    val createCsvDocumentLauncher = rememberLauncherForActivityResult(
+        MoneyTrackerCsvDocumentContracts.CreateCsvDocument(),
+    ) { uri ->
+        val request = pendingCsvExportRequest
+        pendingCsvExportRequest = null
+        if (uri != null && request != null) {
+            exportCsvToDocument(uri, request)
+        }
+    }
+
     val openDocumentLauncher = rememberLauncherForActivityResult(
         MoneyTrackerBackupDocumentContracts.OpenBackupDocument(),
     ) { uri ->
@@ -270,6 +326,7 @@ fun ImportExportRoute(
             state = state.copy(
                 selectedExportProfileIds = state.selectedExportProfileIds.toggle(profileId, selected),
                 exportResult = null,
+                csvResult = null,
                 error = null,
             )
         },
@@ -277,6 +334,7 @@ fun ImportExportRoute(
             state = state.copy(
                 selectedExportProfileIds = state.exportProfiles.mapTo(linkedSetOf()) { it.id },
                 exportResult = null,
+                csvResult = null,
                 error = null,
             )
         },
@@ -284,6 +342,7 @@ fun ImportExportRoute(
             state = state.copy(
                 selectedExportProfileIds = emptySet(),
                 exportResult = null,
+                csvResult = null,
                 error = null,
             )
         },
@@ -306,6 +365,33 @@ fun ImportExportRoute(
                 password = password,
             )
             createDocumentLauncher.launch(defaultBackupFileName(encrypted))
+        },
+        onCsvFromDateChange = { date ->
+            state = state.copy(csvFromDate = date.take(MAX_CSV_DATE_LENGTH), csvResult = null, error = null)
+        },
+        onCsvToDateChange = { date ->
+            state = state.copy(csvToDate = date.take(MAX_CSV_DATE_LENGTH), csvResult = null, error = null)
+        },
+        onCsvTypeChange = { type ->
+            state = state.copy(csvTransactionType = type, csvResult = null, error = null)
+        },
+        onCsvCurrencyChange = { currency ->
+            state = state.copy(csvCurrencyCode = currency.take(MAX_CSV_CURRENCY_LENGTH), csvResult = null, error = null)
+        },
+        onCsvSearchChange = { searchText ->
+            state = state.copy(csvSearchText = searchText.take(MAX_CSV_SEARCH_LENGTH), csvResult = null, error = null)
+        },
+        onExportCsv = {
+            val filters = state.toCsvExportFilters()
+            if (filters == null) {
+                state = state.copy(error = ImportExportError.InvalidInput)
+            } else {
+                pendingCsvExportRequest = PendingCsvExportRequest(
+                    selectedLocalProfileIds = state.selectedExportProfileIds,
+                    filters = filters,
+                )
+                createCsvDocumentLauncher.launch(defaultCsvFileName(state.csvFromDate, state.csvToDate))
+            }
         },
         onChooseRestoreDocument = {
             openDocumentLauncher.launch(Unit)
@@ -346,6 +432,12 @@ fun ImportExportScreen(
     onExportEncryptedChange: (Boolean) -> Unit,
     onExportPasswordChange: (String) -> Unit,
     onExport: () -> Unit,
+    onCsvFromDateChange: (String) -> Unit,
+    onCsvToDateChange: (String) -> Unit,
+    onCsvTypeChange: (TransactionType?) -> Unit,
+    onCsvCurrencyChange: (String) -> Unit,
+    onCsvSearchChange: (String) -> Unit,
+    onExportCsv: () -> Unit,
     onChooseRestoreDocument: () -> Unit,
     onRestorePasswordChange: (String) -> Unit,
     onPreviewRestoreDocument: () -> Unit,
@@ -381,6 +473,19 @@ fun ImportExportScreen(
                     )
                 }
             }
+            state.csvResult?.let { result ->
+                item {
+                    ImportExportResultBanner(
+                        icon = Icons.Filled.CheckCircle,
+                        title = stringResource(R.string.import_export_csv_done),
+                        body = stringResource(
+                            R.string.import_export_csv_done_body,
+                            result.exportedRows,
+                            result.bytesWritten,
+                        ),
+                    )
+                }
+            }
             state.restoreResult?.let { result ->
                 item {
                     ImportExportResultBanner(
@@ -406,6 +511,20 @@ fun ImportExportScreen(
                     onEncryptedChange = onExportEncryptedChange,
                     onPasswordChange = onExportPasswordChange,
                     onExport = onExport,
+                )
+            }
+            item {
+                HorizontalDivider()
+            }
+            item {
+                CsvExportSection(
+                    state = state,
+                    onFromDateChange = onCsvFromDateChange,
+                    onToDateChange = onCsvToDateChange,
+                    onTypeChange = onCsvTypeChange,
+                    onCurrencyChange = onCsvCurrencyChange,
+                    onSearchChange = onCsvSearchChange,
+                    onExportCsv = onExportCsv,
                 )
             }
             item {
@@ -544,6 +663,109 @@ private fun ExportSection(
             Text(text = stringResource(R.string.import_export_save_backup))
         }
     }
+}
+
+@Composable
+private fun CsvExportSection(
+    state: ImportExportUiState,
+    onFromDateChange: (String) -> Unit,
+    onToDateChange: (String) -> Unit,
+    onTypeChange: (TransactionType?) -> Unit,
+    onCurrencyChange: (String) -> Unit,
+    onSearchChange: (String) -> Unit,
+    onExportCsv: () -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        SectionTitle(
+            icon = Icons.Filled.Description,
+            title = stringResource(R.string.import_export_csv_section),
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            OutlinedTextField(
+                value = state.csvFromDate,
+                onValueChange = onFromDateChange,
+                modifier = Modifier.weight(1f),
+                label = { Text(stringResource(R.string.import_export_csv_from_date)) },
+                singleLine = true,
+                isError = state.csvFromDate.isNotBlank() && state.csvDateRange == null,
+            )
+            OutlinedTextField(
+                value = state.csvToDate,
+                onValueChange = onToDateChange,
+                modifier = Modifier.weight(1f),
+                label = { Text(stringResource(R.string.import_export_csv_to_date)) },
+                singleLine = true,
+                isError = state.csvToDate.isNotBlank() && state.csvDateRange == null,
+            )
+        }
+
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            CsvTypeFilterChip(
+                label = stringResource(R.string.import_export_csv_type_all),
+                selected = state.csvTransactionType == null,
+                enabled = !state.isBusy,
+                onClick = { onTypeChange(null) },
+            )
+            CsvTypeFilterChip(
+                label = stringResource(R.string.import_export_csv_type_income),
+                selected = state.csvTransactionType == TransactionType.Income,
+                enabled = !state.isBusy,
+                onClick = { onTypeChange(TransactionType.Income) },
+            )
+            CsvTypeFilterChip(
+                label = stringResource(R.string.import_export_csv_type_expense),
+                selected = state.csvTransactionType == TransactionType.Expense,
+                enabled = !state.isBusy,
+                onClick = { onTypeChange(TransactionType.Expense) },
+            )
+        }
+
+        OutlinedTextField(
+            value = state.csvCurrencyCode,
+            onValueChange = onCurrencyChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(R.string.import_export_csv_currency)) },
+            singleLine = true,
+        )
+        OutlinedTextField(
+            value = state.csvSearchText,
+            onValueChange = onSearchChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(R.string.import_export_csv_search)) },
+            singleLine = true,
+        )
+
+        Button(
+            onClick = onExportCsv,
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag("import-export-csv-button"),
+            enabled = state.canStartCsvExport,
+        ) {
+            Icon(Icons.Filled.FileDownload, contentDescription = null)
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(text = stringResource(R.string.import_export_save_csv))
+        }
+    }
+}
+
+@Composable
+private fun CsvTypeFilterChip(
+    label: String,
+    selected: Boolean,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    FilterChip(
+        selected = selected,
+        enabled = enabled,
+        onClick = onClick,
+        label = { Text(text = label) },
+    )
 }
 
 @Composable
@@ -1033,6 +1255,12 @@ data class ImportExportUiState(
     val exportEncrypted: Boolean = false,
     val exportPassword: String = "",
     val exportResult: ExportResultUi? = null,
+    val csvFromDate: String = "",
+    val csvToDate: String = "",
+    val csvTransactionType: TransactionType? = null,
+    val csvCurrencyCode: String = "",
+    val csvSearchText: String = "",
+    val csvResult: CsvExportResultUi? = null,
     val restoreDocumentSelected: Boolean = false,
     val restorePasswordRequired: Boolean = false,
     val restorePassword: String = "",
@@ -1053,6 +1281,15 @@ data class ImportExportUiState(
             restorePreview?.canRestore == true &&
             selectedRestoreProfileRefs.isNotEmpty() &&
             selectedRestoreProfileRefs.all { ref -> restoreProfileLabels[ref]?.isNotBlank() == true }
+
+    val canStartCsvExport: Boolean
+        get() = !isLoading &&
+            !isBusy &&
+            selectedExportProfileIds.isNotEmpty() &&
+            csvDateRange != null
+
+    val csvDateRange: CsvDateRange?
+        get() = parseCsvDateRange(csvFromDate, csvToDate)
 }
 
 data class ExportProfileUi(
@@ -1064,6 +1301,11 @@ data class ExportProfileUi(
 
 data class ExportResultUi(
     val exportedProfiles: Int,
+    val bytesWritten: Long,
+)
+
+data class CsvExportResultUi(
+    val exportedRows: Int,
     val bytesWritten: Long,
 )
 
@@ -1148,6 +1390,18 @@ private data class PendingExportRequest(
     val password: String?,
 )
 
+private data class PendingCsvExportRequest(
+    val selectedLocalProfileIds: Set<Long>,
+    val filters: TransactionCsvExportFilters,
+)
+
+data class CsvDateRange(
+    val fromDate: String,
+    val toDate: String,
+    val fromEpochMillis: Long,
+    val toEpochMillis: Long,
+)
+
 private fun LocalProfile.toExportProfileUi(): ExportProfileUi {
     return ExportProfileUi(
         id = id,
@@ -1200,6 +1454,13 @@ private fun MoneyTrackerBackupDocumentExportResult.toExportResultUi(): ExportRes
     )
 }
 
+private fun MoneyTrackerCsvDocumentExportResult.toCsvResultUi(): CsvExportResultUi {
+    return CsvExportResultUi(
+        exportedRows = exportedRows,
+        bytesWritten = bytesWritten,
+    )
+}
+
 private fun MoneyTrackerBackupImportResult.toRestoreResultUi(): RestoreResultUi {
     return RestoreResultUi(
         importedProfiles = importedProfileCount,
@@ -1234,12 +1495,63 @@ private fun Set<String>.toggle(value: String, selected: Boolean): Set<String> {
     }
 }
 
+private fun ImportExportUiState.toCsvExportFilters(): TransactionCsvExportFilters? {
+    val dateRange = csvDateRange ?: return null
+    return TransactionCsvExportFilters(
+        type = csvTransactionType,
+        currencyCode = csvCurrencyCode.trim().takeIf(String::isNotEmpty),
+        fromEpochMillis = dateRange.fromEpochMillis,
+        toEpochMillis = dateRange.toEpochMillis,
+        searchText = csvSearchText.trim().takeIf(String::isNotEmpty),
+    )
+}
+
 private fun defaultBackupFileName(encrypted: Boolean): String {
     val defaultName = MoneyTrackerBackupDocumentContracts.defaultBackupFileName()
     return if (encrypted) {
         defaultName.replace(".json", "-encrypted.json")
     } else {
         defaultName
+    }
+}
+
+private fun defaultCsvFileName(fromDate: String, toDate: String): String {
+    return if (parseCsvDateRange(fromDate, toDate) != null) {
+        "money-tracker-transactions-$fromDate-$toDate.csv"
+    } else {
+        MoneyTrackerCsvDocumentContracts.defaultCsvFileName()
+    }
+}
+
+private fun defaultCsvDateRange(): CsvDateRange {
+    val toDate = LocalDate.now(ZoneOffset.UTC)
+    val fromDate = toDate.minusDays(DEFAULT_CSV_RANGE_DAYS)
+    return CsvDateRange(
+        fromDate = fromDate.toString(),
+        toDate = toDate.toString(),
+        fromEpochMillis = fromDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli(),
+        toEpochMillis = toDate.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli() - 1,
+    )
+}
+
+private fun parseCsvDateRange(fromDate: String, toDate: String): CsvDateRange? {
+    return try {
+        val from = LocalDate.parse(fromDate.trim())
+        val to = LocalDate.parse(toDate.trim())
+        val fromEpochMillis = from.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+        val toEpochMillis = to.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli() - 1
+        if (fromEpochMillis > toEpochMillis) {
+            null
+        } else {
+            CsvDateRange(
+                fromDate = from.toString(),
+                toDate = to.toString(),
+                fromEpochMillis = fromEpochMillis,
+                toEpochMillis = toEpochMillis,
+            )
+        }
+    } catch (_: DateTimeException) {
+        null
     }
 }
 
@@ -1280,6 +1592,10 @@ private val MoneyTrackerBackupValidationCode.titleResId: Int
 
 private const val MAX_BACKUP_PASSWORD_LENGTH = 128
 private const val MAX_PROFILE_LABEL_LENGTH = 48
+private const val MAX_CSV_DATE_LENGTH = 10
+private const val MAX_CSV_CURRENCY_LENGTH = 3
+private const val MAX_CSV_SEARCH_LENGTH = 80
+private const val DEFAULT_CSV_RANGE_DAYS = 30L
 
 @Preview(showBackground = true, widthDp = 360, heightDp = 760)
 @Composable
@@ -1329,6 +1645,12 @@ private fun ImportExportScreenPreview() {
             onExportEncryptedChange = {},
             onExportPasswordChange = {},
             onExport = {},
+            onCsvFromDateChange = {},
+            onCsvToDateChange = {},
+            onCsvTypeChange = {},
+            onCsvCurrencyChange = {},
+            onCsvSearchChange = {},
+            onExportCsv = {},
             onChooseRestoreDocument = {},
             onRestorePasswordChange = {},
             onPreviewRestoreDocument = {},

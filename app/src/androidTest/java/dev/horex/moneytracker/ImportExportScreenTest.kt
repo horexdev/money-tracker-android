@@ -28,7 +28,7 @@ class ImportExportScreenTest {
     fun importExportScreenRendersSelectionWithoutBackupRefs() {
         composeRule.setContent {
             MoneyTrackerTheme {
-                Box(modifier = Modifier.size(width = 360.dp, height = 960.dp)) {
+                Box(modifier = Modifier.size(width = 360.dp, height = 1400.dp)) {
                     ImportExportScreen(
                         state = screenState,
                         onRetry = {},
@@ -38,6 +38,12 @@ class ImportExportScreenTest {
                         onExportEncryptedChange = {},
                         onExportPasswordChange = {},
                         onExport = {},
+                        onCsvFromDateChange = {},
+                        onCsvToDateChange = {},
+                        onCsvTypeChange = {},
+                        onCsvCurrencyChange = {},
+                        onCsvSearchChange = {},
+                        onExportCsv = {},
                         onChooseRestoreDocument = {},
                         onRestorePasswordChange = {},
                         onPreviewRestoreDocument = {},
@@ -55,6 +61,8 @@ class ImportExportScreenTest {
         composeRule.onAllNodesWithText("profile:1").assertCountEquals(0)
         composeRule.onNodeWithText("Local profile name").assertIsDisplayed()
         composeRule.onNodeWithText("Save backup").assertIsDisplayed()
+        composeRule.onNodeWithText("CSV transactions").assertIsDisplayed()
+        composeRule.onNodeWithText("Save CSV").assertIsDisplayed()
     }
 
     @Test
@@ -68,7 +76,7 @@ class ImportExportScreenTest {
 
         composeRule.setContent {
             MoneyTrackerTheme {
-                Box(modifier = Modifier.size(width = 360.dp, height = 760.dp)) {
+                Box(modifier = Modifier.size(width = 360.dp, height = 1200.dp)) {
                     ImportExportScreen(
                         state = screenState.copy(
                             restorePreview = RestorePreviewUi(
@@ -89,6 +97,12 @@ class ImportExportScreenTest {
                         onExportEncryptedChange = {},
                         onExportPasswordChange = {},
                         onExport = {},
+                        onCsvFromDateChange = {},
+                        onCsvToDateChange = {},
+                        onCsvTypeChange = {},
+                        onCsvCurrencyChange = {},
+                        onCsvSearchChange = {},
+                        onExportCsv = {},
                         onChooseRestoreDocument = {},
                         onRestorePasswordChange = {},
                         onPreviewRestoreDocument = {},

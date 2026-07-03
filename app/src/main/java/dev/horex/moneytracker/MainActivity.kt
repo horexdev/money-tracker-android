@@ -38,6 +38,7 @@ class MainActivity : ComponentActivity() {
                 localProfileRepository = appContainer.localProfileRepository,
                 appPreferencesRepository = appContainer.appPreferencesRepository,
                 backupDocumentRepository = appContainer.backupDocumentRepository,
+                csvDocumentRepository = appContainer.csvDocumentRepository,
                 notificationPermissionStatusProvider = {
                     appContainer.notificationPermissionController.permissionStatus()
                 },

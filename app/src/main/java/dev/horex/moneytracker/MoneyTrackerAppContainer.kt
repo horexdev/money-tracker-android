@@ -44,7 +44,9 @@ import dev.horex.moneytracker.core.savings.SavingsGoal
 import dev.horex.moneytracker.core.stats.RoomStatsRepository
 import dev.horex.moneytracker.core.templates.RoomTransactionTemplatesRepository
 import dev.horex.moneytracker.core.transactions.RoomTransactionsRepository
+import dev.horex.moneytracker.core.transactions.TransactionCsvExporter
 import dev.horex.moneytracker.backup.MoneyTrackerBackupDocumentRepository
+import dev.horex.moneytracker.csv.MoneyTrackerCsvDocumentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -145,6 +147,10 @@ internal class MoneyTrackerAppContainer(
         RoomTransactionsRepository(database)
     }
 
+    private val transactionCsvExporter: TransactionCsvExporter by lazy {
+        TransactionCsvExporter(transactionsRepository)
+    }
+
     private val backupExporter: MoneyTrackerBackupExporter by lazy {
         MoneyTrackerBackupExporter(database)
     }
@@ -166,6 +172,14 @@ internal class MoneyTrackerAppContainer(
             contentResolver = appContext.contentResolver,
             safRepository = backupSafRepository,
             importer = backupImporter,
+        )
+    }
+
+    val csvDocumentRepository: MoneyTrackerCsvDocumentRepository by lazy {
+        MoneyTrackerCsvDocumentRepository(
+            contentResolver = appContext.contentResolver,
+            localProfileRepository = localProfileRepository,
+            exporter = transactionCsvExporter,
         )
     }
 
