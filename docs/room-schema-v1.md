@@ -30,7 +30,7 @@ Android persistent storage must use local identifiers only:
 | --- | --- |
 | `local_profiles` | Local settings owner: language, display currencies, notification preferences, UI preferences, timestamps. |
 | `accounts` | Local wallets/accounts with type, currency, default flag, include-in-total flag. |
-| `categories` | Per-profile categories, including protected infrastructure categories for transfers and adjustments. |
+| `categories` | Per-profile categories, including protected infrastructure categories for transfers and adjustments. System categories carry a stable `localization_key`; custom or user-renamed categories keep only their stored `name`. |
 | `transactions` | Income/expense rows, account/category links, snapshot date, adjustment flag, local timestamp. |
 | `transfers` | Account-to-account movements with linked local debit/credit transaction IDs. |
 | `budgets` | Category budgets with notification state. |
@@ -48,7 +48,7 @@ The v1 contract includes indexes for the expected offline reads:
 - history and stats: `transactions(profile_id, created_at_epoch_millis)`, account/date, category/date, `snapshot_date`;
 - account screens: `accounts(profile_id)`, `accounts(profile_id, name)`;
 - default account changes must go through `AccountDao.setDefault()`, which marks and validates the new account before clearing other defaults in the same profile;
-- categories: `categories(profile_id, name)`, profile/type, soft-delete filtering;
+- categories: `categories(profile_id, name)`, profile/type, `categories(profile_id, localization_key)`, soft-delete filtering;
 - budgets: unique `budgets(profile_id, category_id, period)`;
 - recurring work: `recurring_transactions(profile_id, is_active, next_run_at_epoch_millis)` for profile reads and `recurring_transactions(is_active, next_run_at_epoch_millis)` for global due work;
 - savings: goal/profile and goal transaction history indexes;
@@ -76,6 +76,8 @@ Foreign keys use local IDs. Profile deletion cascades profile-owned data. Accoun
 `RoomCategoriesRepository` in `core:categories` owns the local category data contract above Room:
 
 - editable category lists are profile-scoped, hide soft-deleted rows, and exclude protected infrastructure categories;
+- system category rows use `localization_key` to resolve the display name for the current profile language at read time;
+- user-created categories and system categories renamed by the user keep their stored `name` and have no localization key;
 - type filters include `both` for `expense` and `income`, while `savings` remains its own category type;
 - frequency sorting counts non-adjustment transactions in the same profile and uses name ascending as the tie-breaker;
 - category creation and updates normalize text fields, reject empty names, and reject runtime creation or conversion to `transfer`/`adjustment`;
@@ -100,14 +102,16 @@ Foreign keys use local IDs. Profile deletion cascades profile-owned data. Accoun
 
 - creates one default checking account when the profile has no accounts;
 - localizes the default account name and derives currency from the normalized profile language (`en` -> `USD`, `ru` -> `RUB`, `uk` -> `UAH`, and the rest of the source-supported language table);
-- seeds the 9 user-editable source categories only when the profile has no editable categories;
-- always ensures protected per-profile infrastructure categories for `transfer` and `adjustment`;
+- seeds the 9 user-editable source categories with stable system localization keys only when the profile has no editable categories;
+- always ensures protected per-profile infrastructure categories for `transfer` and `adjustment` with stable system localization keys;
 - uses idempotent inserts, so repeated app startup does not duplicate seed rows.
 
 ## Migrations
 
 Room version `1` is the initial schema. Room version `2` adds the recurring run marker table.
-`MoneyTrackerDatabaseMigrations.ALL` contains the `1 -> 2` migration.
+Room version `3` adds local notification and UI preference fields.
+Room version `4` adds `categories.localization_key` and `index_categories_profile_id_localization_key`.
+`MoneyTrackerDatabaseMigrations.ALL` contains every consecutive migration from version `1`.
 
 When the schema changes:
 
@@ -124,3 +128,7 @@ and links to the generated local transaction when one is created.
 
 This marker is not a user-authored financial template and is not part of the backup contract or UI contract.
 It exists to keep app-open catch-up and periodic WorkManager processing idempotent if the same due run is observed more than once.
+
+## Version 4 Addendum
+
+Room version `4` adds `categories.localization_key` for system category display names. The migration maps existing rows only when the stored name, category type, icon, color, and protected flag match a known default/system category translation. This keeps custom categories and user-renamed system categories as stored names while allowing mapped system categories to display in the current profile language after language changes.

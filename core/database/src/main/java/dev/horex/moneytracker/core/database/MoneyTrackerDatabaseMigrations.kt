@@ -2,6 +2,7 @@ package dev.horex.moneytracker.core.database
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 
 object MoneyTrackerDatabaseMigrations {
     const val INITIAL_VERSION = 1
@@ -90,5 +91,41 @@ object MoneyTrackerDatabaseMigrations {
         }
     }
 
-    val ALL: Array<Migration> = arrayOf(MIGRATION_1_2, MIGRATION_2_3)
+    val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE `categories` ADD COLUMN `localization_key` TEXT")
+            db.execSQL(
+                """
+                CREATE INDEX IF NOT EXISTS `index_categories_profile_id_localization_key`
+                ON `categories` (`profile_id`, `localization_key`)
+                """.trimIndent(),
+            )
+            SystemCategoryLocalization.definitions.forEach { definition ->
+                val distinctNames = definition.names.values.distinct()
+                val placeholders = distinctNames.joinToString(separator = ", ") { "?" }
+                db.execSQL(
+                    """
+                    UPDATE `categories`
+                    SET `localization_key` = ?
+                    WHERE `localization_key` IS NULL
+                      AND `type` = ?
+                      AND `icon` = ?
+                      AND LOWER(`color`) = LOWER(?)
+                      AND `is_protected` = ?
+                      AND `name` IN ($placeholders)
+                    """.trimIndent(),
+                    arrayOf<Any>(
+                        definition.localizationKey,
+                        definition.type,
+                        definition.icon,
+                        definition.color,
+                        if (definition.isProtected) 1 else 0,
+                        *distinctNames.toTypedArray(),
+                    ),
+                )
+            }
+        }
+    }
+
+    val ALL: Array<Migration> = arrayOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
 }

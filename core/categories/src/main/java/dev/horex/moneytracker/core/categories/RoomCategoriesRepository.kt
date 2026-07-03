@@ -3,18 +3,21 @@ package dev.horex.moneytracker.core.categories
 import androidx.room.withTransaction
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.model.CategoryEntity
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 
 class RoomCategoriesRepository(
     private val database: MoneyTrackerDatabase,
     private val clock: () -> Long = { System.currentTimeMillis() },
 ) : CategoriesRepository {
     private val categoryDao = database.categoryDao()
+    private val localProfileDao = database.localProfileDao()
 
     override suspend fun listCategories(
         profileId: Long,
         type: CategoryType?,
         sortOrder: CategorySortOrder,
     ): List<Category> {
+        val languageCode = requireProfileLanguage(profileId)
         val entities = when (sortOrder) {
             CategorySortOrder.NameAsc -> if (type == null) {
                 categoryDao.listEditableByProfile(profileId)
@@ -34,7 +37,12 @@ class RoomCategoriesRepository(
                 categoryDao.listByTypeFrequency(profileId, type.storageValue)
             }
         }
-        return entities.map(CategoryEntity::toCategory)
+        val categories = entities.map { it.toCategory(languageCode) }
+        return when (sortOrder) {
+            CategorySortOrder.NameAsc -> categories.sortedBy { it.name.lowercase() }
+            CategorySortOrder.NameDesc -> categories.sortedByDescending { it.name.lowercase() }
+            CategorySortOrder.Frequency -> categories
+        }
     }
 
     override suspend fun listAllCategories(
@@ -42,14 +50,15 @@ class RoomCategoriesRepository(
         type: CategoryType?,
         sortOrder: CategorySortOrder,
     ): List<Category> {
+        val languageCode = requireProfileLanguage(profileId)
         val categories = if (type == null) {
             categoryDao.listByProfile(profileId)
         } else {
             categoryDao.listByType(profileId, type.storageValue)
-        }.map(CategoryEntity::toCategory)
+        }.map { it.toCategory(languageCode) }
 
         return when (sortOrder) {
-            CategorySortOrder.NameAsc,
+            CategorySortOrder.NameAsc -> categories.sortedBy { it.name.lowercase() }
             CategorySortOrder.Frequency -> categories
 
             CategorySortOrder.NameDesc -> categories.sortedByDescending { it.name.lowercase() }
@@ -57,11 +66,12 @@ class RoomCategoriesRepository(
     }
 
     override suspend fun getCategory(profileId: Long, categoryId: Long): Category {
-        return requireCategory(profileId, categoryId).toCategory()
+        return requireCategory(profileId, categoryId).toCategory(requireProfileLanguage(profileId))
     }
 
     override suspend fun getProtectedCategoryByType(profileId: Long, type: CategoryType): Category {
-        return categoryDao.getProtectedByType(profileId, type.storageValue)?.toCategory()
+        val languageCode = requireProfileLanguage(profileId)
+        return categoryDao.getProtectedByType(profileId, type.storageValue)?.toCategory(languageCode)
             ?: throw CategoryNotFoundException()
     }
 
@@ -92,14 +102,28 @@ class RoomCategoriesRepository(
         input: UpdateCategoryInput,
     ): Category {
         val now = clock()
+        val languageCode = requireProfileLanguage(profileId)
         database.withTransaction {
             val existing = requireActiveCategory(profileId, categoryId)
             if (existing.isProtected) {
                 throw CategoryProtectedException()
             }
 
+            val requestedName = input.name.normalizedName()
+            val existingDisplayName = SystemCategoryLocalization.displayName(
+                existing.localizationKey,
+                languageCode,
+                existing.name,
+            )
+            val preservesLocalizedName = requestedName == null || requestedName == existingDisplayName
+            val updatedName = if (preservesLocalizedName) {
+                existing.name
+            } else {
+                checkNotNull(requestedName)
+            }
             val updated = existing.copy(
-                name = input.name.normalizedName() ?: existing.name,
+                name = updatedName,
+                localizationKey = if (preservesLocalizedName) existing.localizationKey else null,
                 icon = input.icon.normalizedText() ?: existing.icon,
                 type = input.type.normalizedEditableType() ?: existing.type,
                 color = input.color.normalizedText() ?: existing.color,
@@ -131,13 +155,18 @@ class RoomCategoriesRepository(
     private suspend fun requireActiveCategory(profileId: Long, categoryId: Long): CategoryEntity {
         return categoryDao.getActiveById(profileId, categoryId) ?: throw CategoryNotFoundException()
     }
+
+    private suspend fun requireProfileLanguage(profileId: Long): String {
+        return localProfileDao.getById(profileId)?.languageCode ?: throw CategoryNotFoundException()
+    }
 }
 
-private fun CategoryEntity.toCategory(): Category {
+private fun CategoryEntity.toCategory(languageCode: String): Category {
     return Category(
         id = id,
         profileId = profileId,
-        name = name,
+        name = SystemCategoryLocalization.displayName(localizationKey, languageCode, name),
+        localizationKey = localizationKey,
         icon = icon,
         type = CategoryType.fromStorageValue(type),
         color = color,

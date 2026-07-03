@@ -11,6 +11,7 @@ import dev.horex.moneytracker.core.database.model.GoalTransactionEntity
 import dev.horex.moneytracker.core.database.model.LocalProfileEntity
 import dev.horex.moneytracker.core.database.model.RecurringTransactionEntity
 import dev.horex.moneytracker.core.database.model.SavingsGoalEntity
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import dev.horex.moneytracker.core.database.model.TransactionEntity
 import dev.horex.moneytracker.core.database.model.TransactionTemplateEntity
 import dev.horex.moneytracker.core.database.model.TransferEntity
@@ -66,7 +67,7 @@ class MoneyTrackerBackupImporter internal constructor(
             accountIds[account.ref] = insertAccount(profileId, account)
         }
         profile.categories.forEach { category ->
-            categoryIds[category.ref] = insertCategory(profileId, category)
+            categoryIds[category.ref] = insertCategory(profileId, category.withInferredLocalizationKey())
         }
         profile.transactions.forEach { transaction ->
             transactionIds[transaction.ref] = insertTransaction(
@@ -293,6 +294,7 @@ private class RoomMoneyTrackerBackupImportStore(
             CategoryEntity(
                 profileId = profileId,
                 name = category.name,
+                localizationKey = category.localizationKey,
                 icon = category.icon,
                 type = category.type.storageValue,
                 color = category.color,
@@ -489,6 +491,20 @@ private fun MoneyTrackerBackup.selectedProfiles(
         )
     }
     return profiles.filter { it.ref in selectedRefs }
+}
+
+private fun BackupCategory.withInferredLocalizationKey(): BackupCategory {
+    if (localizationKey != null) {
+        return this
+    }
+    val inferredKey = SystemCategoryLocalization.inferLocalizationKey(
+        name = name,
+        type = type.storageValue,
+        icon = icon,
+        color = color,
+        isProtected = isProtected,
+    )
+    return inferredKey?.let { copy(localizationKey = it) } ?: this
 }
 
 private fun Map<String, Long>.requireLocalId(ref: String): Long {

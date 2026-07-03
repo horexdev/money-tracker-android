@@ -114,6 +114,8 @@ data class BackupCategory(
     val ref: String,
     @SerialName("name")
     val name: String,
+    @SerialName("localization_key")
+    val localizationKey: String? = null,
     @SerialName("icon")
     val icon: String,
     @SerialName("type")

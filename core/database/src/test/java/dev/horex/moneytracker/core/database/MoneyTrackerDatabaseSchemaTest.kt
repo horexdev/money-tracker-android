@@ -66,7 +66,7 @@ class MoneyTrackerDatabaseSchemaTest {
     @Test
     fun migrationListStartsAtInitialVersion() {
         assertTrue(MoneyTrackerDatabaseMigrations.INITIAL_VERSION == 1)
-        assertTrue(MoneyTrackerDatabase.SCHEMA_VERSION == 3)
+        assertTrue(MoneyTrackerDatabase.SCHEMA_VERSION == 4)
         assertTrue(MoneyTrackerDatabaseMigrations.ALL.isNotEmpty())
     }
 
@@ -84,6 +84,7 @@ class MoneyTrackerDatabaseSchemaTest {
             "index_transactions_profile_id_category_id_is_adjustment_created_at_epoch_millis_id",
             "index_transactions_profile_id_type_is_adjustment_created_at_epoch_millis_id",
             "index_transactions_profile_id_currency_code_is_adjustment_created_at_epoch_millis_id",
+            "index_categories_profile_id_localization_key",
         ).forEach { indexName ->
             assertTrue("Schema should contain $indexName", schema.contains(indexName))
         }

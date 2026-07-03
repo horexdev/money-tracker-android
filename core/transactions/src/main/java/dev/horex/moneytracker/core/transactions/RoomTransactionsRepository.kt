@@ -5,6 +5,7 @@ import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.dao.TransactionWithRelations
 import dev.horex.moneytracker.core.database.model.AccountEntity
 import dev.horex.moneytracker.core.database.model.CategoryEntity
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import dev.horex.moneytracker.core.database.model.TransactionEntity
 import java.time.Instant
 import java.time.ZoneOffset
@@ -16,6 +17,7 @@ class RoomTransactionsRepository(
 ) : TransactionsRepository {
     private val accountDao = database.accountDao()
     private val categoryDao = database.categoryDao()
+    private val localProfileDao = database.localProfileDao()
     private val transactionDao = database.transactionDao()
 
     override suspend fun addTransaction(
@@ -56,6 +58,7 @@ class RoomTransactionsRepository(
         val createdAt = input.createdAtEpochMillis ?: clock()
         val (type, amountCents) = input.deltaCents.toAdjustmentTypeAndAmount()
         val snapshotDate = createdAt.toUtcSnapshotDate()
+        val languageCode = requireProfileLanguage(profileId)
 
         return database.withTransaction {
             val account = requireAccount(profileId, input.accountId)
@@ -81,7 +84,7 @@ class RoomTransactionsRepository(
                 type = type,
                 amountCents = amountCents,
                 categoryId = category.id,
-                categoryName = category.name,
+                categoryName = category.displayName(languageCode),
                 categoryIcon = category.icon,
                 categoryColor = category.color,
                 accountId = account.id,
@@ -96,7 +99,8 @@ class RoomTransactionsRepository(
     }
 
     override suspend fun getTransaction(profileId: Long, transactionId: Long): MoneyTransaction {
-        return transactionDao.getVisibleWithRelations(profileId, transactionId)?.toTransaction()
+        val languageCode = requireProfileLanguage(profileId)
+        return transactionDao.getVisibleWithRelations(profileId, transactionId)?.toTransaction(languageCode)
             ?: throw TransactionNotFoundException()
     }
 
@@ -130,6 +134,7 @@ class RoomTransactionsRepository(
         val totalPages = total.totalPages(normalized.pageSize)
         val currentPage = normalized.page.coerceIn(1, totalPages)
         val offset = (currentPage - 1) * normalized.pageSize
+        val languageCode = requireProfileLanguage(profileId)
         val transactions = transactionDao.listVisibleWithFilters(
             profileId = profileId,
             accountId = normalized.accountId,
@@ -141,7 +146,7 @@ class RoomTransactionsRepository(
             searchText = normalized.searchText,
             limit = normalized.pageSize,
             offset = offset,
-        ).map(TransactionWithRelations::toTransaction)
+        ).map { it.toTransaction(languageCode) }
 
         return TransactionPage(
             transactions = transactions,
@@ -211,6 +216,10 @@ class RoomTransactionsRepository(
         }
         return transaction
     }
+
+    private suspend fun requireProfileLanguage(profileId: Long): String {
+        return localProfileDao.getById(profileId)?.languageCode ?: throw TransactionNotFoundException()
+    }
 }
 
 private const val ADJUSTMENT_CATEGORY_TYPE = "adjustment"
@@ -269,14 +278,14 @@ private fun Long.toUtcSnapshotDate(): String {
         .toString()
 }
 
-private fun TransactionWithRelations.toTransaction(): MoneyTransaction {
+private fun TransactionWithRelations.toTransaction(languageCode: String): MoneyTransaction {
     return MoneyTransaction(
         id = transaction.id,
         profileId = transaction.profileId,
         type = TransactionType.fromStorageValue(transaction.type),
         amountCents = transaction.amountCents,
         categoryId = transaction.categoryId,
-        categoryName = categoryName,
+        categoryName = SystemCategoryLocalization.displayName(categoryLocalizationKey, languageCode, categoryName),
         categoryIcon = categoryIcon,
         categoryColor = categoryColor,
         accountId = transaction.accountId,
@@ -287,4 +296,8 @@ private fun TransactionWithRelations.toTransaction(): MoneyTransaction {
         createdAtEpochMillis = transaction.createdAtEpochMillis,
         isAdjustment = transaction.isAdjustment,
     )
+}
+
+private fun CategoryEntity.displayName(languageCode: String): String {
+    return SystemCategoryLocalization.displayName(localizationKey, languageCode, name)
 }

@@ -1,5 +1,6 @@
 package dev.horex.moneytracker.core.backup
 
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -78,6 +79,12 @@ class MoneyTrackerBackupMigrationFixturesTest {
         assertEquals(accountIds.getValue("Travel reserve"), store.savingsGoals.first().accountId)
         assertEquals(goalIds.getValue("Trip fund"), store.goalTransactions.first().goalId)
         assertEquals(accountIds.getValue("Main wallet"), store.transactionTemplates.first().accountId)
+
+        assertEquals(SystemCategoryLocalization.SALARY, store.categories.single { it.name == "Salary" }.localizationKey)
+        assertEquals(SystemCategoryLocalization.TRANSFER, store.categories.single { it.name == "Transfer" }.localizationKey)
+        assertEquals(SystemCategoryLocalization.ADJUSTMENT, store.categories.single { it.name == "Adjustment" }.localizationKey)
+        assertEquals(null, store.categories.single { it.name == "Dining" }.localizationKey)
+        assertEquals(null, store.categories.single { it.name == "General" }.localizationKey)
 
         val persistedText = store.persistedText()
         assertTrue(
@@ -319,7 +326,12 @@ private class FixtureImportStore : MoneyTrackerBackupImportStore {
 
     override suspend fun insertCategory(profileId: Long, category: BackupCategory): Long {
         val id = nextId()
-        categories += ImportedCategory(id = id, profileId = profileId, name = category.name)
+        categories += ImportedCategory(
+            id = id,
+            profileId = profileId,
+            name = category.name,
+            localizationKey = category.localizationKey,
+        )
         return id
     }
 
@@ -447,7 +459,12 @@ private class FixtureImportStore : MoneyTrackerBackupImportStore {
 
 private data class ImportedProfile(val id: Long, val label: String, val languageCode: String)
 private data class ImportedAccount(val id: Long, val profileId: Long, val name: String)
-private data class ImportedCategory(val id: Long, val profileId: Long, val name: String)
+private data class ImportedCategory(
+    val id: Long,
+    val profileId: Long,
+    val name: String,
+    val localizationKey: String?,
+)
 private data class ImportedTransaction(
     val id: Long,
     val profileId: Long,

@@ -7,6 +7,7 @@ import dev.horex.moneytracker.core.database.model.AccountEntity
 import dev.horex.moneytracker.core.database.model.CategoryEntity
 import dev.horex.moneytracker.core.database.model.RecurringTransactionEntity
 import dev.horex.moneytracker.core.database.model.RecurringTransactionRunEntity
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import dev.horex.moneytracker.core.database.model.TransactionEntity
 import dev.horex.moneytracker.core.transactions.TransactionType
 import java.time.Instant
@@ -25,16 +26,19 @@ class RoomRecurringTransactionsRepository(
 
     private val accountDao = database.accountDao()
     private val categoryDao = database.categoryDao()
+    private val localProfileDao = database.localProfileDao()
     private val recurringDao = database.recurringTransactionDao()
     private val recurringRunDao = database.recurringTransactionRunDao()
     private val transactionDao = database.transactionDao()
 
     override suspend fun listRecurring(profileId: Long): List<RecurringTransaction> {
-        return recurringDao.listWithCategoryByProfile(profileId).map(RecurringTransactionWithCategory::toRecurring)
+        val languageCode = requireProfileLanguage(profileId)
+        return recurringDao.listWithCategoryByProfile(profileId).map { it.toRecurring(languageCode) }
     }
 
     override suspend fun getRecurring(profileId: Long, recurringId: Long): RecurringTransaction {
-        return recurringDao.getWithCategoryById(profileId, recurringId)?.toRecurring()
+        val languageCode = requireProfileLanguage(profileId)
+        return recurringDao.getWithCategoryById(profileId, recurringId)?.toRecurring(languageCode)
             ?: throw RecurringTransactionNotFoundException()
     }
 
@@ -236,6 +240,10 @@ class RoomRecurringTransactionsRepository(
     private suspend fun requireActiveCategory(profileId: Long, categoryId: Long): CategoryEntity {
         return categoryDao.getActiveById(profileId, categoryId) ?: throw RecurringCategoryNotFoundException()
     }
+
+    private suspend fun requireProfileLanguage(profileId: Long): String {
+        return localProfileDao.getById(profileId)?.languageCode ?: throw RecurringTransactionNotFoundException()
+    }
 }
 
 private enum class DueProcessStatus {
@@ -274,13 +282,13 @@ private fun requireCategorySupportsType(category: CategoryEntity, type: Transact
     }
 }
 
-private fun RecurringTransactionWithCategory.toRecurring(): RecurringTransaction {
+private fun RecurringTransactionWithCategory.toRecurring(languageCode: String): RecurringTransaction {
     return RecurringTransaction(
         id = recurring.id,
         profileId = recurring.profileId,
         accountId = recurring.accountId,
         categoryId = recurring.categoryId,
-        categoryName = categoryName,
+        categoryName = SystemCategoryLocalization.displayName(categoryLocalizationKey, languageCode, categoryName),
         categoryIcon = categoryIcon,
         categoryColor = categoryColor,
         type = TransactionType.fromStorageValue(recurring.type),

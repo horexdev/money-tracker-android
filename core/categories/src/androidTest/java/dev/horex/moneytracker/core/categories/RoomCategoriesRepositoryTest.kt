@@ -8,6 +8,7 @@ import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
 import dev.horex.moneytracker.core.database.model.AccountEntity
 import dev.horex.moneytracker.core.database.model.CategoryEntity
 import dev.horex.moneytracker.core.database.model.LocalProfileEntity
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import dev.horex.moneytracker.core.database.model.TransactionEntity
 import dev.horex.moneytracker.core.database.security.AndroidDatabasePassphraseStore
 import kotlinx.coroutines.runBlocking
@@ -154,6 +155,64 @@ class RoomCategoriesRepositoryTest {
                     UpdateCategoryInput(type = CategoryType.Adjustment),
                 )
             }
+        } finally {
+            database.close()
+        }
+    }
+
+    @Test
+    fun systemCategoryNamesFollowProfileLanguageUntilUserRename() = runBlocking {
+        cleanUp()
+        val database = createDatabase()
+        try {
+            val profileId = insertProfile(database, languageCode = "en")
+            val definition = SystemCategoryLocalization.requireDefinition(SystemCategoryLocalization.FOOD)
+            val categoryId = database.categoryDao().insert(
+                CategoryEntity(
+                    profileId = profileId,
+                    name = definition.nameForLanguage("en"),
+                    localizationKey = definition.localizationKey,
+                    icon = definition.icon,
+                    type = definition.type,
+                    color = definition.color,
+                    updatedAtEpochMillis = 1L,
+                ),
+            )
+            val repository = RoomCategoriesRepository(database, clock = { 20L })
+
+            assertEquals(definition.nameForLanguage("en"), repository.getCategory(profileId, categoryId).name)
+
+            updateProfileLanguage(database, profileId, "ru")
+
+            val localized = repository.getCategory(profileId, categoryId)
+            assertEquals(definition.nameForLanguage("ru"), localized.name)
+            assertEquals(SystemCategoryLocalization.FOOD, localized.localizationKey)
+
+            val unchangedName = repository.updateCategory(
+                profileId = profileId,
+                categoryId = categoryId,
+                input = UpdateCategoryInput(
+                    name = definition.nameForLanguage("ru"),
+                    color = "#22c55e",
+                ),
+            )
+            assertEquals(definition.nameForLanguage("ru"), unchangedName.name)
+            assertEquals(SystemCategoryLocalization.FOOD, unchangedName.localizationKey)
+
+            val renamed = repository.updateCategory(
+                profileId = profileId,
+                categoryId = categoryId,
+                input = UpdateCategoryInput(name = "Groceries"),
+            )
+            assertEquals("Groceries", renamed.name)
+            assertNull(renamed.localizationKey)
+
+            updateProfileLanguage(database, profileId, "es")
+
+            val afterLanguageChange = repository.getCategory(profileId, categoryId)
+            assertEquals("Groceries", afterLanguageChange.name)
+            assertNull(afterLanguageChange.localizationKey)
+            assertNull(database.categoryDao().getById(profileId, categoryId)?.localizationKey)
         } finally {
             database.close()
         }
@@ -348,13 +407,28 @@ class RoomCategoriesRepositoryTest {
     private suspend fun insertProfile(
         database: MoneyTrackerDatabase,
         label: String = "Personal",
+        languageCode: String = "en",
     ): Long {
         return database.localProfileDao().insert(
             LocalProfileEntity(
                 label = label,
-                languageCode = "en",
+                languageCode = languageCode,
                 createdAtEpochMillis = 1L,
                 updatedAtEpochMillis = 1L,
+            ),
+        )
+    }
+
+    private suspend fun updateProfileLanguage(
+        database: MoneyTrackerDatabase,
+        profileId: Long,
+        languageCode: String,
+    ) {
+        val profile = checkNotNull(database.localProfileDao().getById(profileId))
+        database.localProfileDao().update(
+            profile.copy(
+                languageCode = languageCode,
+                updatedAtEpochMillis = profile.updatedAtEpochMillis + 1,
             ),
         )
     }

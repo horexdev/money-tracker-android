@@ -67,6 +67,10 @@ Refs are opaque strings valid only inside a single backup file. A producer may
 generate sequential refs, but they must be generated for the export and must not
 be copied raw from source database or Room primary keys.
 
+System category identity is expressed through category `localization_key`, not
+through display name. A null key means the category is custom or was renamed by
+the user and must keep its serialized `name` after restore.
+
 ## Android Exporter
 
 `MoneyTrackerBackupExporter` reads the current Room data through backup-specific
@@ -78,6 +82,10 @@ Export refs are generated in memory for the current file only. They are stable
 for deterministic row order, for example `profile:1`, `account:1`, and
 `transaction:1`, but they do not contain Room primary keys and are never stored
 back into the database.
+
+Categories export nullable `localization_key`. System categories keep their
+stable key so restore can display their name in the restored profile language;
+custom and renamed categories export null and preserve their stored name.
 
 The exporter does not read or serialize the SQLCipher passphrase, Android
 Keystore aliases, app-private preferences that hold device-bound secrets, or any
@@ -156,6 +164,11 @@ as `account_id`, `category_id`, `transaction_id`, and `goal_id`; it does not
 persist backup refs, source database IDs, Telegram identifiers, `legacy_*`
 fields, or source metadata.
 
+If an older plain v1 backup has no category `localization_key`, import infers a
+system key only when the category name, type, icon, color, and protected flag
+exactly match a known default/system category translation. Other categories keep
+null and remain custom/renamed.
+
 ## SAF Document Flow
 
 `MoneyTrackerBackupSafRepository` writes export JSON to a caller-provided SAF
@@ -211,7 +224,7 @@ V1 covers the current Android offline domains:
 
 - local profile settings and UI preferences;
 - accounts;
-- categories, including protected transfer/adjustment categories;
+- categories, including nullable system localization keys and protected transfer/adjustment categories;
 - ordinary, adjustment, and transfer-linked transactions;
 - transfers with fixed-point `exchange_rate_e8`;
 - budgets with notification state;

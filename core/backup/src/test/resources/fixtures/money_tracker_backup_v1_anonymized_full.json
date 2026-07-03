@@ -92,6 +92,7 @@
         {
           "ref": "category:c000001",
           "name": "Dining",
+          "localization_key": null,
           "icon": "fork-knife",
           "type": "expense",
           "color": "#ef4444",
@@ -102,6 +103,7 @@
         {
           "ref": "category:c000002",
           "name": "Salary",
+          "localization_key": null,
           "icon": "briefcase",
           "type": "income",
           "color": "#10b981",
@@ -112,6 +114,7 @@
         {
           "ref": "category:c000003",
           "name": "General",
+          "localization_key": null,
           "icon": "tag",
           "type": "both",
           "color": "#64748b",
@@ -122,6 +125,7 @@
         {
           "ref": "category:c000004",
           "name": "Goal saving",
+          "localization_key": null,
           "icon": "piggy-bank",
           "type": "savings",
           "color": "#3b82f6",
@@ -132,6 +136,7 @@
         {
           "ref": "category:c000005",
           "name": "Transfer",
+          "localization_key": null,
           "icon": "arrows-left-right",
           "type": "transfer",
           "color": "#6366f1",
@@ -142,6 +147,7 @@
         {
           "ref": "category:c000006",
           "name": "Adjustment",
+          "localization_key": null,
           "icon": "scales",
           "type": "adjustment",
           "color": "#94a3b8",

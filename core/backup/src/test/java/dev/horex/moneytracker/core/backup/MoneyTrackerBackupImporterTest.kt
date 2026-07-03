@@ -1,5 +1,6 @@
 package dev.horex.moneytracker.core.backup
 
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
@@ -77,6 +78,50 @@ class MoneyTrackerBackupImporterTest {
         assertEquals(store.savingsGoals.single().id, store.goalTransactions.single().goalId)
         assertEquals(accountsByName.getValue("second Main").id, store.transactionTemplates.single().accountId)
         assertEquals(categoriesByName.getValue("Food second").id, store.transactionTemplates.single().categoryId)
+    }
+
+    @Test
+    fun importInfersSystemCategoryLocalizationKeyForLegacyBackupRows() = runTest {
+        val store = FakeImportStore()
+        val importer = MoneyTrackerBackupImporter(store)
+        val food = SystemCategoryLocalization.requireDefinition(SystemCategoryLocalization.FOOD)
+        val backup = MoneyTrackerBackup(
+            createdAtEpochMillis = TEST_TIME,
+            profiles = listOf(
+                BackupProfile(
+                    ref = "profile:main",
+                    label = "Main",
+                    languageCode = "ru",
+                    createdAtEpochMillis = TEST_TIME,
+                    updatedAtEpochMillis = TEST_TIME,
+                    categories = listOf(
+                        BackupCategory(
+                            ref = "category:food",
+                            name = food.nameForLanguage("ru"),
+                            icon = food.icon,
+                            type = BackupCategoryType.Expense,
+                            color = food.color,
+                            isProtected = false,
+                            updatedAtEpochMillis = TEST_TIME,
+                        ),
+                        BackupCategory(
+                            ref = "category:custom",
+                            name = "Groceries",
+                            icon = food.icon,
+                            type = BackupCategoryType.Expense,
+                            color = food.color,
+                            isProtected = false,
+                            updatedAtEpochMillis = TEST_TIME,
+                        ),
+                    ),
+                ),
+            ),
+        )
+
+        importer.importBackup(backup)
+
+        assertEquals(SystemCategoryLocalization.FOOD, store.categories.single { it.name == food.nameForLanguage("ru") }.localizationKey)
+        assertEquals(null, store.categories.single { it.name == "Groceries" }.localizationKey)
     }
 
     @Test
@@ -478,7 +523,12 @@ private class FakeImportStore(
 
     override suspend fun insertCategory(profileId: Long, category: BackupCategory): Long {
         val id = nextId()
-        categories += FakeCategory(id = id, profileId = profileId, name = category.name)
+        categories += FakeCategory(
+            id = id,
+            profileId = profileId,
+            name = category.name,
+            localizationKey = category.localizationKey,
+        )
         return id
     }
 
@@ -667,7 +717,12 @@ private data class FakeImportSnapshot(
 
 private data class FakeProfile(val id: Long, val label: String)
 private data class FakeAccount(val id: Long, val profileId: Long, val name: String)
-private data class FakeCategory(val id: Long, val profileId: Long, val name: String)
+private data class FakeCategory(
+    val id: Long,
+    val profileId: Long,
+    val name: String,
+    val localizationKey: String?,
+)
 private data class FakeTransaction(
     val id: Long,
     val profileId: Long,

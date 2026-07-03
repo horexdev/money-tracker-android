@@ -2,6 +2,7 @@ package dev.horex.moneytracker.core.stats
 
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.dao.CategoryStatsRow
+import dev.horex.moneytracker.core.database.model.SystemCategoryLocalization
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -11,6 +12,7 @@ class RoomStatsRepository(
     private val zoneId: ZoneId = ZoneId.systemDefault(),
 ) : StatsRepository {
     private val accountDao = database.accountDao()
+    private val localProfileDao = database.localProfileDao()
     private val transactionDao = database.transactionDao()
 
     override suspend fun getStats(profileId: Long, query: StatsQuery): StatsSnapshot {
@@ -22,12 +24,13 @@ class RoomStatsRepository(
 
         val range = normalized.customRange ?: normalized.period.toRange()
         val period = if (normalized.customRange != null) CUSTOM_PERIOD else normalized.period.storageValue
+        val languageCode = requireProfileLanguage(profileId)
         val items = transactionDao.getStatsByCategory(
             profileId = profileId,
             accountId = accountId,
             fromEpochMillisInclusive = range.fromEpochMillisInclusive,
             toEpochMillisExclusive = range.toEpochMillisExclusive,
-        ).map(CategoryStatsRow::toCategoryStat)
+        ).map { it.toCategoryStat(languageCode) }
 
         return StatsSnapshot(
             profileId = profileId,
@@ -64,6 +67,10 @@ class RoomStatsRepository(
             toEpochMillisExclusive = endExclusive.atStartOfDay(zoneId).toInstant().toEpochMilli(),
         )
     }
+
+    private suspend fun requireProfileLanguage(profileId: Long): String {
+        return localProfileDao.getById(profileId)?.languageCode ?: throw StatsAccountNotFoundException()
+    }
 }
 
 private const val CUSTOM_PERIOD = "custom"
@@ -76,10 +83,10 @@ private fun StatsQuery.normalized(): StatsQuery {
     return this
 }
 
-private fun CategoryStatsRow.toCategoryStat(): CategoryStat {
+private fun CategoryStatsRow.toCategoryStat(languageCode: String): CategoryStat {
     return CategoryStat(
         categoryId = categoryId,
-        categoryName = categoryName,
+        categoryName = SystemCategoryLocalization.displayName(categoryLocalizationKey, languageCode, categoryName),
         categoryIcon = categoryIcon,
         categoryColor = categoryColor,
         type = StatsTransactionType.fromStorageValue(type),
