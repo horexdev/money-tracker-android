@@ -69,6 +69,7 @@ import dev.horex.moneytracker.core.stats.StatsRepository
 import dev.horex.moneytracker.core.stats.StatsTransactionType
 import dev.horex.moneytracker.core.transactions.TransactionType
 import dev.horex.moneytracker.core.transactions.TransactionsRepository
+import dev.horex.moneytracker.csv.MoneyTrackerCsvDocumentRepository
 import dev.horex.moneytracker.feature.accounts.AccountsRoute
 import dev.horex.moneytracker.feature.addtransaction.AddTransactionRoute
 import dev.horex.moneytracker.feature.budgets.BudgetsRoute
@@ -94,6 +95,7 @@ fun MoneyTrackerApp(
     localProfileRepository: LocalProfileRepository? = null,
     appPreferencesRepository: AppPreferencesRepository? = null,
     backupDocumentRepository: MoneyTrackerBackupDocumentRepository? = null,
+    csvDocumentRepository: MoneyTrackerCsvDocumentRepository? = null,
     notificationPermissionStatusProvider: (() -> NotificationPermissionStatus)? = null,
     areNotificationsEnabledProvider: (() -> Boolean)? = null,
     onOpenNotificationSettings: (() -> Unit)? = null,
@@ -138,6 +140,7 @@ fun MoneyTrackerApp(
                 localProfileRepository = localProfileRepository,
                 appPreferencesRepository = appPreferencesRepository,
                 backupDocumentRepository = backupDocumentRepository,
+                csvDocumentRepository = csvDocumentRepository,
                 notificationPermissionStatusProvider = notificationPermissionStatusProvider,
                 areNotificationsEnabledProvider = areNotificationsEnabledProvider,
                 onOpenNotificationSettings = onOpenNotificationSettings,
@@ -167,6 +170,7 @@ private fun MoneyTrackerNavHost(
     localProfileRepository: LocalProfileRepository?,
     appPreferencesRepository: AppPreferencesRepository?,
     backupDocumentRepository: MoneyTrackerBackupDocumentRepository?,
+    csvDocumentRepository: MoneyTrackerCsvDocumentRepository?,
     notificationPermissionStatusProvider: (() -> NotificationPermissionStatus)?,
     areNotificationsEnabledProvider: (() -> Boolean)?,
     onOpenNotificationSettings: (() -> Unit)?,
@@ -413,11 +417,13 @@ private fun MoneyTrackerNavHost(
         composable(MoneyTrackerRoutes.Export) {
             if (
                 localProfileRepository != null &&
-                backupDocumentRepository != null
+                backupDocumentRepository != null &&
+                csvDocumentRepository != null
             ) {
                 ImportExportRoute(
                     localProfileRepository = localProfileRepository,
                     backupDocumentRepository = backupDocumentRepository,
+                    csvDocumentRepository = csvDocumentRepository,
                 )
             } else {
                 LocalizedPlaceholderScreen(
