@@ -36,6 +36,7 @@ import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
 import dev.horex.moneytracker.core.preferences.DataStoreActiveProfileIdStore
 import dev.horex.moneytracker.core.preferences.RoomSettingsRepository
 import dev.horex.moneytracker.core.preferences.createAppPreferencesDataStore
+import dev.horex.moneytracker.core.recurring.RoomRecurringTransactionsRepository
 import dev.horex.moneytracker.core.stats.RoomStatsRepository
 import dev.horex.moneytracker.core.transactions.RoomTransactionsRepository
 import dev.horex.moneytracker.backup.MoneyTrackerBackupDocumentRepository
@@ -43,6 +44,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import java.util.Locale
 import kotlin.math.absoluteValue
 
@@ -112,6 +114,10 @@ internal class MoneyTrackerAppContainer(
             localProfileBootstrapper = localProfileRepository,
             appPreferencesRepository = appPreferencesRepository,
         )
+    }
+
+    val recurringRepository: RoomRecurringTransactionsRepository by lazy {
+        RoomRecurringTransactionsRepository(database)
     }
 
     val statsRepository: RoomStatsRepository by lazy {
@@ -219,6 +225,14 @@ internal class MoneyTrackerAppContainer(
     }
 
     fun startBackgroundWork() {
+        runRecurringCatchUp()
+        backgroundWorkScheduler.enqueuePeriodic(
+            PeriodicBackgroundWorkSpec(
+                taskId = RecurringDueTaskId,
+                repeatIntervalMinutes = RECURRING_DUE_REPEAT_INTERVAL_MINUTES,
+                flexIntervalMinutes = RECURRING_DUE_FLEX_INTERVAL_MINUTES,
+            ),
+        )
         backgroundWorkScheduler.enqueuePeriodic(
             PeriodicBackgroundWorkSpec(
                 taskId = BudgetThresholdNotificationTaskId,
@@ -236,12 +250,28 @@ internal class MoneyTrackerAppContainer(
     }
 
     private fun registerBackgroundTasks() {
+        backgroundTaskRegistry.register(RecurringDueTaskId) { context ->
+            runCatching {
+                recurringRepository.processDue(context.startedAtEpochMillis)
+                BackgroundTaskResult.Success
+            }.getOrElse {
+                BackgroundTaskResult.Retry
+            }
+        }
         backgroundTaskRegistry.register(BudgetThresholdNotificationTaskId) {
             runCatching {
                 budgetThresholdNotificationProcessor.run()
                 BackgroundTaskResult.Success
             }.getOrElse {
                 BackgroundTaskResult.Retry
+            }
+        }
+    }
+
+    private fun runRecurringCatchUp() {
+        appPreferencesScope.launch {
+            runCatching {
+                recurringRepository.processDue()
             }
         }
     }
@@ -260,5 +290,8 @@ private fun Budget.notificationRequestCode(): Int {
 }
 
 private val BudgetThresholdNotificationTaskId = BackgroundTaskId("budgets.threshold-notifications")
+private val RecurringDueTaskId = BackgroundTaskId("recurring.process-due")
 private const val BUDGET_NOTIFICATION_REPEAT_INTERVAL_MINUTES = 6L * 60L
 private const val BUDGET_NOTIFICATION_FLEX_INTERVAL_MINUTES = 60L
+private const val RECURRING_DUE_REPEAT_INTERVAL_MINUTES = 6L * 60L
+private const val RECURRING_DUE_FLEX_INTERVAL_MINUTES = 60L

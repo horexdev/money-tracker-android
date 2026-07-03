@@ -32,6 +32,7 @@ class MoneyTrackerDatabaseSchemaTest {
             MoneyTrackerTables.TRANSFERS,
             MoneyTrackerTables.BUDGETS,
             MoneyTrackerTables.RECURRING_TRANSACTIONS,
+            MoneyTrackerTables.RECURRING_TRANSACTION_RUNS,
             MoneyTrackerTables.SAVINGS_GOALS,
             MoneyTrackerTables.GOAL_TRANSACTIONS,
             MoneyTrackerTables.EXCHANGE_RATE_SNAPSHOTS,
@@ -65,7 +66,8 @@ class MoneyTrackerDatabaseSchemaTest {
     @Test
     fun migrationListStartsAtInitialVersion() {
         assertTrue(MoneyTrackerDatabaseMigrations.INITIAL_VERSION == 1)
-        assertTrue(MoneyTrackerDatabaseMigrations.ALL.isEmpty())
+        assertTrue(MoneyTrackerDatabase.SCHEMA_VERSION == 2)
+        assertTrue(MoneyTrackerDatabaseMigrations.ALL.isNotEmpty())
     }
 
     @Test
@@ -74,6 +76,7 @@ class MoneyTrackerDatabaseSchemaTest {
 
         listOf(
             "index_recurring_transactions_is_active_next_run_at_epoch_millis",
+            "index_recurring_transaction_runs_profile_id_recurring_transaction_id_scheduled_for_epoch_millis",
             "index_exchange_rate_snapshots_base_currency_target_currency_snapshot_date",
             "index_exchange_rate_overrides_profile_id_base_currency_target_currency_effective_date",
         ).forEach { indexName ->

@@ -14,6 +14,7 @@ object MoneyTrackerTables {
     const val TRANSFERS = "transfers"
     const val BUDGETS = "budgets"
     const val RECURRING_TRANSACTIONS = "recurring_transactions"
+    const val RECURRING_TRANSACTION_RUNS = "recurring_transaction_runs"
     const val SAVINGS_GOALS = "savings_goals"
     const val GOAL_TRANSACTIONS = "goal_transactions"
     const val EXCHANGE_RATE_SNAPSHOTS = "exchange_rate_snapshots"
@@ -366,6 +367,50 @@ data class RecurringTransactionEntity(
     val createdAtEpochMillis: Long = 0,
     @ColumnInfo(name = "updated_at_epoch_millis")
     val updatedAtEpochMillis: Long = 0,
+)
+
+@Entity(
+    tableName = MoneyTrackerTables.RECURRING_TRANSACTION_RUNS,
+    foreignKeys = [
+        ForeignKey(
+            entity = LocalProfileEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["profile_id"],
+            onDelete = ForeignKey.CASCADE,
+        ),
+        ForeignKey(
+            entity = RecurringTransactionEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["recurring_transaction_id"],
+            onDelete = ForeignKey.CASCADE,
+        ),
+        ForeignKey(
+            entity = TransactionEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["transaction_id"],
+            onDelete = ForeignKey.SET_NULL,
+        ),
+    ],
+    indices = [
+        Index(value = ["profile_id"]),
+        Index(value = ["recurring_transaction_id"]),
+        Index(value = ["transaction_id"]),
+        Index(value = ["profile_id", "recurring_transaction_id", "scheduled_for_epoch_millis"], unique = true),
+    ],
+)
+data class RecurringTransactionRunEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+    @ColumnInfo(name = "profile_id")
+    val profileId: Long,
+    @ColumnInfo(name = "recurring_transaction_id")
+    val recurringTransactionId: Long,
+    @ColumnInfo(name = "scheduled_for_epoch_millis")
+    val scheduledForEpochMillis: Long,
+    @ColumnInfo(name = "transaction_id")
+    val transactionId: Long? = null,
+    @ColumnInfo(name = "processed_at_epoch_millis")
+    val processedAtEpochMillis: Long,
 )
 
 @Entity(

@@ -106,7 +106,8 @@ Foreign keys use local IDs. Profile deletion cascades profile-owned data. Accoun
 
 ## Migrations
 
-Room version `1` is the initial schema. `MoneyTrackerDatabaseMigrations.ALL` is empty until version `2`.
+Room version `1` is the initial schema. Room version `2` adds the recurring run marker table.
+`MoneyTrackerDatabaseMigrations.ALL` contains the `1 -> 2` migration.
 
 When the schema changes:
 
@@ -114,3 +115,12 @@ When the schema changes:
 2. Export the new Room schema JSON under `core/database/schemas`.
 3. Update this document with the new table/index/identity behavior.
 4. Keep `MoneyTrackerDatabaseSchemaTest` guarding against source identity fields.
+
+## Version 2 Addendum
+
+Room version `2` adds `recurring_transaction_runs`, a local marker table used by recurring due processing.
+The table records one processed marker per `(profile_id, recurring_transaction_id, scheduled_for_epoch_millis)`
+and links to the generated local transaction when one is created.
+
+This marker is not a user-authored financial template and is not part of the backup contract or UI contract.
+It exists to keep app-open catch-up and periodic WorkManager processing idempotent if the same due run is observed more than once.

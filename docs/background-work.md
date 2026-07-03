@@ -27,3 +27,6 @@ Future domain layers register handlers in `MutableBackgroundTaskRegistry` by `Ba
 `MoneyTrackerApplication` provides WorkManager configuration with `MoneyTrackerWorkerFactory`. `MoneyTrackerAppContainer` owns the registry, executor, worker factory, and scheduler instances.
 
 Budget threshold notifications register the `budgets.threshold-notifications` task and schedule a local-only periodic run. The handler scans local profiles that keep budget alerts enabled, checks crossed budget thresholds, records the notified threshold state, and posts local notifications through the `BudgetAlerts` channel.
+
+Recurring transactions register the `recurring.process-due` task and schedule a local-only periodic run.
+`MoneyTrackerAppContainer` also starts an app-open catch-up pass. The recurring repository keeps per-run markers in Room, so repeated catch-up or worker attempts do not create duplicate transactions for the same scheduled run.
