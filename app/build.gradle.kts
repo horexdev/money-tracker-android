@@ -151,6 +151,7 @@ tasks.matching { task -> task.name == "preReleaseBuild" }.configureEach {
 dependencies {
     implementation(project(":core:accounts"))
     implementation(project(":core:balance"))
+    implementation(project(":core:backup"))
     implementation(project(":core:background"))
     implementation(project(":core:categories"))
     implementation(project(":core:database"))

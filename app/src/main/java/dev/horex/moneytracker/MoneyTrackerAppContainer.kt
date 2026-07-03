@@ -3,6 +3,9 @@ package dev.horex.moneytracker
 import android.content.Context
 import dev.horex.moneytracker.core.accounts.RoomAccountsRepository
 import dev.horex.moneytracker.core.balance.RoomBalancesRepository
+import dev.horex.moneytracker.core.backup.MoneyTrackerBackupExporter
+import dev.horex.moneytracker.core.backup.MoneyTrackerBackupImporter
+import dev.horex.moneytracker.core.backup.MoneyTrackerBackupSafRepository
 import dev.horex.moneytracker.core.background.BackgroundTaskExecutor
 import dev.horex.moneytracker.core.background.MoneyTrackerBackgroundWorkScheduler
 import dev.horex.moneytracker.core.background.MoneyTrackerWorkerFactory
@@ -94,6 +97,14 @@ internal class MoneyTrackerAppContainer(
 
     val transactionsRepository: RoomTransactionsRepository by lazy {
         RoomTransactionsRepository(database)
+    }
+
+    val backupSafRepository: MoneyTrackerBackupSafRepository by lazy {
+        MoneyTrackerBackupSafRepository(
+            contentResolver = appContext.contentResolver,
+            exporter = MoneyTrackerBackupExporter(database),
+            importer = MoneyTrackerBackupImporter(database),
+        )
     }
 
     val notificationPermissionController: AndroidNotificationPermissionController by lazy {

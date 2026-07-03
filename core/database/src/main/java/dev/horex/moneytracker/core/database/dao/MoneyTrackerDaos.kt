@@ -95,6 +95,9 @@ interface LocalProfileDao {
     @Query("SELECT * FROM local_profiles ORDER BY created_at_epoch_millis ASC")
     suspend fun list(): List<LocalProfileEntity>
 
+    @Query("SELECT * FROM local_profiles ORDER BY created_at_epoch_millis ASC, id ASC")
+    suspend fun listForBackup(): List<LocalProfileEntity>
+
     @Query("SELECT * FROM local_profiles ORDER BY created_at_epoch_millis ASC LIMIT 1")
     suspend fun getFirst(): LocalProfileEntity?
 
@@ -118,6 +121,9 @@ interface AccountDao {
 
     @Query("SELECT * FROM accounts WHERE profile_id = :profileId ORDER BY is_default DESC, created_at_epoch_millis ASC")
     suspend fun listByProfile(profileId: Long): List<AccountEntity>
+
+    @Query("SELECT * FROM accounts WHERE profile_id = :profileId ORDER BY created_at_epoch_millis ASC, id ASC")
+    suspend fun listForBackup(profileId: Long): List<AccountEntity>
 
     @Query("SELECT * FROM accounts WHERE id = :accountId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, accountId: Long): AccountEntity?
@@ -222,6 +228,9 @@ interface CategoryDao {
         """,
     )
     suspend fun listByProfile(profileId: Long): List<CategoryEntity>
+
+    @Query("SELECT * FROM categories WHERE profile_id = :profileId ORDER BY updated_at_epoch_millis ASC, id ASC")
+    suspend fun listForBackup(profileId: Long): List<CategoryEntity>
 
     @Query(
         """
@@ -400,6 +409,9 @@ interface TransactionDao {
 
     @Query("SELECT * FROM transactions WHERE id = :transactionId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, transactionId: Long): TransactionEntity?
+
+    @Query("SELECT * FROM transactions WHERE profile_id = :profileId ORDER BY created_at_epoch_millis ASC, id ASC")
+    suspend fun listForBackup(profileId: Long): List<TransactionEntity>
 
     @Query(
         """
@@ -630,6 +642,9 @@ interface TransferDao {
     @Query("SELECT * FROM transfers WHERE id = :transferId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, transferId: Long): TransferEntity?
 
+    @Query("SELECT * FROM transfers WHERE profile_id = :profileId ORDER BY created_at_epoch_millis ASC, id ASC")
+    suspend fun listForBackup(profileId: Long): List<TransferEntity>
+
     @Query(
         """
         SELECT
@@ -711,6 +726,9 @@ interface BudgetDao {
     @Query("SELECT * FROM budgets WHERE profile_id = :profileId ORDER BY created_at_epoch_millis DESC")
     suspend fun listByProfile(profileId: Long): List<BudgetEntity>
 
+    @Query("SELECT * FROM budgets WHERE profile_id = :profileId ORDER BY created_at_epoch_millis ASC, id ASC")
+    suspend fun listForBackup(profileId: Long): List<BudgetEntity>
+
     @Query("SELECT * FROM budgets WHERE id = :budgetId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, budgetId: Long): BudgetEntity?
 
@@ -731,6 +749,15 @@ interface RecurringTransactionDao {
 
     @Query("SELECT * FROM recurring_transactions WHERE profile_id = :profileId ORDER BY created_at_epoch_millis DESC")
     suspend fun listByProfile(profileId: Long): List<RecurringTransactionEntity>
+
+    @Query(
+        """
+        SELECT * FROM recurring_transactions
+        WHERE profile_id = :profileId
+        ORDER BY created_at_epoch_millis ASC, id ASC
+        """,
+    )
+    suspend fun listForBackup(profileId: Long): List<RecurringTransactionEntity>
 
     @Query(
         """
@@ -757,6 +784,9 @@ interface SavingsGoalDao {
     @Query("SELECT * FROM savings_goals WHERE profile_id = :profileId ORDER BY created_at_epoch_millis DESC")
     suspend fun listByProfile(profileId: Long): List<SavingsGoalEntity>
 
+    @Query("SELECT * FROM savings_goals WHERE profile_id = :profileId ORDER BY created_at_epoch_millis ASC, id ASC")
+    suspend fun listForBackup(profileId: Long): List<SavingsGoalEntity>
+
     @Query("SELECT * FROM savings_goals WHERE id = :goalId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, goalId: Long): SavingsGoalEntity?
 
@@ -780,6 +810,9 @@ interface GoalTransactionDao {
         """,
     )
     suspend fun listByGoal(profileId: Long, goalId: Long): List<GoalTransactionEntity>
+
+    @Query("SELECT * FROM goal_transactions WHERE profile_id = :profileId ORDER BY created_at_epoch_millis ASC, id ASC")
+    suspend fun listForBackup(profileId: Long): List<GoalTransactionEntity>
 }
 
 @Dao
@@ -818,6 +851,14 @@ interface ExchangeRateSnapshotDao {
 
     @Query("SELECT COALESCE(MAX(snapshot_date), '1970-01-01') FROM exchange_rate_snapshots")
     suspend fun getLatestSnapshotDate(): String
+
+    @Query(
+        """
+        SELECT * FROM exchange_rate_snapshots
+        ORDER BY snapshot_date ASC, base_currency ASC, target_currency ASC, id ASC
+        """,
+    )
+    suspend fun listForBackup(): List<ExchangeRateSnapshotEntity>
 }
 
 @Dao
@@ -869,6 +910,15 @@ interface ExchangeRateOverrideDao {
     )
     suspend fun listByProfile(profileId: Long): List<ExchangeRateOverrideEntity>
 
+    @Query(
+        """
+        SELECT * FROM exchange_rate_overrides
+        WHERE profile_id = :profileId
+        ORDER BY effective_date ASC, base_currency ASC, target_currency ASC, id ASC
+        """,
+    )
+    suspend fun listForBackup(profileId: Long): List<ExchangeRateOverrideEntity>
+
     @Query("DELETE FROM exchange_rate_overrides WHERE id = :overrideId AND profile_id = :profileId")
     suspend fun deleteById(profileId: Long, overrideId: Long): Int
 }
@@ -883,6 +933,15 @@ interface TransactionTemplateDao {
 
     @Query("SELECT * FROM transaction_templates WHERE profile_id = :profileId ORDER BY sort_order ASC, created_at_epoch_millis ASC")
     suspend fun listByProfile(profileId: Long): List<TransactionTemplateEntity>
+
+    @Query(
+        """
+        SELECT * FROM transaction_templates
+        WHERE profile_id = :profileId
+        ORDER BY sort_order ASC, created_at_epoch_millis ASC, id ASC
+        """,
+    )
+    suspend fun listForBackup(profileId: Long): List<TransactionTemplateEntity>
 
     @Query("SELECT * FROM transaction_templates WHERE id = :templateId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, templateId: Long): TransactionTemplateEntity?

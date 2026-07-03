@@ -2,11 +2,11 @@
 
 ## Scope
 
-`core:backup` owns the JSON DTO contract for `MoneyTrackerBackup` version `1`
-and the Android importer that restores validated backup data into the local Room
-database. The contract is shared by a future source-side exporter and the
-Android importer, but this module does not implement data extraction, SAF file
-selection, restore UI, or encryption.
+`core:backup` owns the JSON DTO contract for `MoneyTrackerBackup` version `1`,
+the Android exporter that extracts a portable snapshot from Room, the Android
+importer that restores validated backup data into the local Room database, and
+SAF document read/write orchestration. Full import/export UI and portable backup
+encryption are tracked separately.
 
 The backup format is intentionally separate from Room entities. It mirrors the
 Android offline data surface and stores only values needed to rebuild local
@@ -46,6 +46,23 @@ All relationships are expressed with export-local refs:
 Refs are opaque strings valid only inside a single backup file. A producer may
 generate sequential refs, but they must be generated for the export and must not
 be copied raw from source database or Room primary keys.
+
+## Android Exporter
+
+`MoneyTrackerBackupExporter` reads the current Room data through backup-specific
+DAO methods and builds a `MoneyTrackerBackup` DTO without changing the DTO/API
+contract. Reads run inside one Room transaction so profiles, child rows, and
+global exchange-rate snapshots come from a consistent local snapshot.
+
+Export refs are generated in memory for the current file only. They are stable
+for deterministic row order, for example `profile:1`, `account:1`, and
+`transaction:1`, but they do not contain Room primary keys and are never stored
+back into the database.
+
+The exporter does not read or serialize the SQLCipher passphrase, Android
+Keystore aliases, app-private preferences that hold device-bound secrets, or any
+Telegram/source identity fields. Portable backup encryption must use a separate
+backup key flow.
 
 ## Contract Checks
 
@@ -118,6 +135,19 @@ is running. The importer stores new local Room IDs in relationship columns such
 as `account_id`, `category_id`, `transaction_id`, and `goal_id`; it does not
 persist backup refs, source database IDs, Telegram identifiers, `legacy_*`
 fields, or source metadata.
+
+## SAF Document Flow
+
+`MoneyTrackerBackupSafRepository` writes export JSON to a caller-provided SAF
+`Uri` through `ContentResolver.openOutputStream(uri, "wt")` and restores from a
+SAF `Uri` through `ContentResolver.openInputStream(uri)`. Restore runs
+`MoneyTrackerBackupV1Validator.validateJson()` on the raw document before
+decoding so forbidden unknown identity fields are rejected before DB writes.
+
+The app module provides reusable Activity Result hooks for
+`Intent.ACTION_CREATE_DOCUMENT` and `Intent.ACTION_OPEN_DOCUMENT`. They return a
+selected `Uri` to the caller; the full user-facing import/export screen is not
+part of this slice.
 
 ## Domain Coverage
 
