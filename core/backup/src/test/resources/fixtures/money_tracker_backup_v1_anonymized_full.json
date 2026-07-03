@@ -154,6 +154,17 @@
           "is_protected": true,
           "updated_at_epoch_millis": 1782907200000,
           "deleted_at_epoch_millis": null
+        },
+        {
+          "ref": "category:c000007",
+          "name": "Archived taxi",
+          "localization_key": null,
+          "icon": "taxi",
+          "type": "expense",
+          "color": "#f59e0b",
+          "is_protected": false,
+          "updated_at_epoch_millis": 1782993600000,
+          "deleted_at_epoch_millis": 1783166400000
         }
       ],
       "transactions": [
@@ -215,6 +226,30 @@
           "currency_code": "EUR",
           "snapshot_date": "2026-07-03",
           "created_at_epoch_millis": 1783080000000,
+          "is_adjustment": false
+        },
+        {
+          "ref": "transaction:t000006",
+          "type": "expense",
+          "amount_cents": 15000,
+          "category_ref": "category:c000004",
+          "account_ref": "account:a000003",
+          "note": "Trip deposit",
+          "currency_code": "EUR",
+          "snapshot_date": "2026-07-03",
+          "created_at_epoch_millis": 1783080000000,
+          "is_adjustment": false
+        },
+        {
+          "ref": "transaction:t000007",
+          "type": "expense",
+          "amount_cents": 1200,
+          "category_ref": "category:c000007",
+          "account_ref": "account:a000001",
+          "note": "Archived ride",
+          "currency_code": "USD",
+          "snapshot_date": "2026-07-04",
+          "created_at_epoch_millis": 1783166400000,
           "is_adjustment": false
         }
       ],

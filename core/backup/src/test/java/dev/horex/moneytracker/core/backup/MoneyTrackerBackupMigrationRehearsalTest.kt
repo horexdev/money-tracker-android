@@ -18,17 +18,17 @@ class MoneyTrackerBackupMigrationRehearsalTest {
 
         assertEquals(
             mapOf(
-                "EUR" to AmountTotals(incomeCents = 46_000, expenseCents = 0, netCents = 46_000),
+                "EUR" to AmountTotals(incomeCents = 46_000, expenseCents = 15_000, netCents = 31_000),
                 "RUB" to AmountTotals(incomeCents = 10_000, expenseCents = 0, netCents = 10_000),
-                "USD" to AmountTotals(incomeCents = 250_000, expenseCents = 52_750, netCents = 197_250),
+                "USD" to AmountTotals(incomeCents = 250_000, expenseCents = 53_950, netCents = 196_050),
             ),
             profile.transactionTotalsByCurrency(),
         )
         assertEquals(
             mapOf(
-                "EUR" to 46_000L,
+                "EUR" to 31_000L,
                 "RUB" to 10_000L,
-                "USD" to 197_250L,
+                "USD" to 196_050L,
             ),
             profile.includedAccountTotalsByCurrency(),
         )
