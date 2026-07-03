@@ -26,6 +26,7 @@
     <string name="stats_income_total">Дохід</string>
     <string name="stats_expense_total">Витрата</string>
     <string name="stats_net_total">Чистий</string>
+    <string name="stats_amount_hidden_a11y">Сума прихована, %1$s</string>
     <string name="stats_transactions_count">%1$d передача</string>
     <string name="stats_open_history">відкриті транзакції для %1$s</string>
 </resources>

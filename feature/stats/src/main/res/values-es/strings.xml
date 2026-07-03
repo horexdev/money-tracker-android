@@ -26,6 +26,7 @@
     <string name="stats_income_total">Ingreso</string>
     <string name="stats_expense_total">Gasto</string>
     <string name="stats_net_total">neto</string>
+    <string name="stats_amount_hidden_a11y">Importe oculto, %1$s</string>
     <string name="stats_transactions_count">%1$d transmisión</string>
     <string name="stats_open_history">Transacciones abiertas para %1$s</string>
 </resources>

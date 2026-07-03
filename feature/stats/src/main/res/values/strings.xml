@@ -26,6 +26,7 @@
     <string name="stats_income_total">Income</string>
     <string name="stats_expense_total">Expense</string>
     <string name="stats_net_total">Net</string>
+    <string name="stats_amount_hidden_a11y">Amount hidden, %1$s</string>
     <string name="stats_transactions_count">%1$d tx</string>
     <string name="stats_open_history">Open transactions for %1$s</string>
 </resources>

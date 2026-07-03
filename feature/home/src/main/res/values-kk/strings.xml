@@ -11,6 +11,7 @@
     <string name="home_add_transaction">транзакцияны қосыңыз</string>
     <string name="home_income">Кіріс</string>
     <string name="home_expense">Шығыс</string>
+    <string name="home_amount_hidden_a11y">Сома жасырылған, %1$s</string>
     <string name="home_recent_transactions">Соңғы транзакциялар</string>
     <string name="home_quick_templates">Жылдам үлгілер</string>
     <string name="home_quick_templates_empty">бақылау тақтасынан жиі транзакцияларды қолдану үшін үлгілерді жасаңыз.</string>

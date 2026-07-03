@@ -26,6 +26,7 @@
     <string name="stats_income_total">Gelir</string>
     <string name="stats_expense_total">Gider</string>
     <string name="stats_net_total">Ağ</string>
+    <string name="stats_amount_hidden_a11y">Tutar gizli, %1$s</string>
     <string name="stats_transactions_count">%1$d işlem</string>
     <string name="stats_open_history">%1$s için açık işlemler</string>
 </resources>

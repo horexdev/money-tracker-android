@@ -11,6 +11,7 @@
     <string name="home_add_transaction">Додати транзакцію</string>
     <string name="home_income">Дохід</string>
     <string name="home_expense">Витрата</string>
+    <string name="home_amount_hidden_a11y">Сума прихована, %1$s</string>
     <string name="home_recent_transactions">Останні операції</string>
     <string name="home_quick_templates">Швидкі шаблони</string>
     <string name="home_quick_templates_empty">створіть шаблони для застосування частих транзакцій з інформаційної панелі.</string>

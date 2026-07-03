@@ -26,6 +26,7 @@
     <string name="stats_income_total">Inkomst</string>
     <string name="stats_expense_total">Uitgave</string>
     <string name="stats_net_total">netto</string>
+    <string name="stats_amount_hidden_a11y">Bedrag verborgen, %1$s</string>
     <string name="stats_transactions_count">%1$d transacties</string>
     <string name="stats_open_history">Openstaande transacties voor %1$s</string>
 </resources>

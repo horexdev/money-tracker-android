@@ -11,6 +11,7 @@
     <string name="home_add_transaction">Tambahkan transaksi</string>
     <string name="home_income">Pemasukan</string>
     <string name="home_expense">Pengeluaran</string>
+    <string name="home_amount_hidden_a11y">Jumlah disembunyikan, %1$s</string>
     <string name="home_recent_transactions">Transaksi terkini</string>
     <string name="home_quick_templates">Template cepat</string>
     <string name="home_quick_templates_empty">Membuat templat untuk menerapkan transaksi yang sering dilakukan dari dasbor.</string>

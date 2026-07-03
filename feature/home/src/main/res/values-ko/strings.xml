@@ -11,6 +11,7 @@
     <string name="home_add_transaction">트랜잭션 추가</string>
     <string name="home_income">수입</string>
     <string name="home_expense">지출</string>
+    <string name="home_amount_hidden_a11y">금액 숨김, %1$s</string>
     <string name="home_recent_transactions">최근 거래</string>
     <string name="home_quick_templates">빠른 템플릿</string>
     <string name="home_quick_templates_empty">대시보드에서 빈번한 거래를 적용하기 위한 템플릿을 만듭니다.</string>

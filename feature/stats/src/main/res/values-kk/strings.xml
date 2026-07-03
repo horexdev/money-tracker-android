@@ -26,6 +26,7 @@
     <string name="stats_income_total">Кіріс</string>
     <string name="stats_expense_total">Шығыс</string>
     <string name="stats_net_total">таза</string>
+    <string name="stats_amount_hidden_a11y">Сома жасырылған, %1$s</string>
     <string name="stats_transactions_count">%1$d операция</string>
     <string name="stats_open_history">%1$s үшін ашық транзакциялар</string>
 </resources>

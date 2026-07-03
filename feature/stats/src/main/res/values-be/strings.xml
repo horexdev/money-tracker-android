@@ -26,6 +26,7 @@
     <string name="stats_income_total">Даход</string>
     <string name="stats_expense_total">Выдатак</string>
     <string name="stats_net_total">Сетка</string>
+    <string name="stats_amount_hidden_a11y">Сума схаваная, %1$s</string>
     <string name="stats_transactions_count">%1$d тх</string>
     <string name="stats_open_history">Адкрытыя транзакцыі для %1$s</string>
 </resources>

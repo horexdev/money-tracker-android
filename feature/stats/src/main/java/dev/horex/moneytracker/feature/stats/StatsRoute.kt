@@ -631,8 +631,18 @@ private fun StatsChart(
     val expenseLabel = stringResource(R.string.stats_expense_total)
     val netLabel = stringResource(R.string.stats_net_total)
     val emptyLabel = stringResource(R.string.stats_empty_title)
+    val hiddenAmountDescription = stringResource(R.string.stats_amount_hidden_a11y, currencyCode)
+    val netAmountDescription = (income - expense).formatAccessibleMoney(
+        currencyCode = currencyCode,
+        hideAmounts = hideAmounts,
+        hiddenAmountDescription = hiddenAmountDescription,
+        signed = true,
+    )
     val transactionCountLabels = selectedItems.associate { item ->
         item.categoryId to stringResource(R.string.stats_transactions_count, item.transactionCount)
+    }
+    val hiddenCategoryAmountDescriptions = selectedItems.associate { item ->
+        item.categoryId to stringResource(R.string.stats_amount_hidden_a11y, item.currencyCode)
     }
     val chartDescription = when (chartStyle) {
         StatsChartStylePreference.Donut,
@@ -641,6 +651,7 @@ private fun StatsChart(
             chartLabel = chartLabel,
             selectedTypeLabel = selectedTypeLabel,
             transactionCountLabels = transactionCountLabels,
+            hiddenAmountDescriptions = hiddenCategoryAmountDescriptions,
             hideAmounts = hideAmounts,
             emptyLabel = emptyLabel,
         )
@@ -649,9 +660,9 @@ private fun StatsChart(
         StatsChartStylePreference.ProfitBars,
         -> listOf(
             chartLabel,
-            "$incomeLabel ${income.formatMoney(currencyCode, hideAmounts)}",
-            "$expenseLabel ${expense.formatMoney(currencyCode, hideAmounts)}",
-            "$netLabel ${(income - expense).formatSignedMoney(currencyCode, hideAmounts)}",
+            "$incomeLabel ${income.formatAccessibleMoney(currencyCode, hideAmounts, hiddenAmountDescription)}",
+            "$expenseLabel ${expense.formatAccessibleMoney(currencyCode, hideAmounts, hiddenAmountDescription)}",
+            "$netLabel $netAmountDescription",
         ).joinToString(". ")
     }
 
@@ -898,9 +909,14 @@ private fun StatsCategoryRow(
 ) {
     val fallback = MaterialTheme.colorScheme.primary
     val openHistoryDescription = stringResource(R.string.stats_open_history, item.categoryName)
+    val hiddenAmountDescription = stringResource(R.string.stats_amount_hidden_a11y, item.currencyCode)
     val rowDescription = listOf(
         item.categoryName,
-        item.totalCents.formatMoney(item.currencyCode, hideAmounts),
+        item.totalCents.formatAccessibleMoney(
+            currencyCode = item.currencyCode,
+            hideAmounts = hideAmounts,
+            hiddenAmountDescription = hiddenAmountDescription,
+        ),
         stringResource(R.string.stats_transactions_count, item.transactionCount),
         openHistoryDescription,
     ).joinToString(". ")
@@ -1002,6 +1018,7 @@ private fun List<CategoryStat>.toCategoryChartDescription(
     chartLabel: String,
     selectedTypeLabel: String,
     transactionCountLabels: Map<Long, String>,
+    hiddenAmountDescriptions: Map<Long, String>,
     hideAmounts: Boolean,
     emptyLabel: String,
 ): String {
@@ -1010,9 +1027,30 @@ private fun List<CategoryStat>.toCategoryChartDescription(
     }
     val categorySummary = joinToString(". ") { item ->
         val countLabel = transactionCountLabels.getValue(item.categoryId)
-        "${item.categoryName}: ${item.totalCents.formatMoney(item.currencyCode, hideAmounts)}, $countLabel"
+        val amountDescription = item.totalCents.formatAccessibleMoney(
+            currencyCode = item.currencyCode,
+            hideAmounts = hideAmounts,
+            hiddenAmountDescription = hiddenAmountDescriptions.getValue(item.categoryId),
+        )
+        "${item.categoryName}: $amountDescription, $countLabel"
     }
     return "$chartLabel. $selectedTypeLabel. $categorySummary"
+}
+
+private fun Long.formatAccessibleMoney(
+    currencyCode: String,
+    hideAmounts: Boolean,
+    hiddenAmountDescription: String,
+    signed: Boolean = false,
+): String {
+    if (hideAmounts) {
+        return hiddenAmountDescription
+    }
+    return if (signed) {
+        formatSignedMoney(currencyCode, hideAmounts = false)
+    } else {
+        formatMoney(currencyCode, hideAmounts = false)
+    }
 }
 
 private fun Long.formatMoney(currencyCode: String, hideAmounts: Boolean): String {

@@ -26,6 +26,7 @@
     <string name="stats_income_total">Revenu</string>
     <string name="stats_expense_total">Dépense</string>
     <string name="stats_net_total">Solde net</string>
+    <string name="stats_amount_hidden_a11y">Montant masqué, %1$s</string>
     <string name="stats_transactions_count">émission %1$d</string>
     <string name="stats_open_history">Transactions ouvertes pour %1$s</string>
 </resources>

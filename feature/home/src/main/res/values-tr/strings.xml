@@ -11,6 +11,7 @@
     <string name="home_add_transaction">İşlem ekle</string>
     <string name="home_income">Gelir</string>
     <string name="home_expense">Gider</string>
+    <string name="home_amount_hidden_a11y">Tutar gizli, %1$s</string>
     <string name="home_recent_transactions">Son işlemler</string>
     <string name="home_quick_templates">Hızlı şablonlar</string>
     <string name="home_quick_templates_empty">Kontrol panelinden sık yapılan işlemleri uygulamak için şablonlar oluşturun.</string>

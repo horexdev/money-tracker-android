@@ -11,6 +11,7 @@
     <string name="home_add_transaction">Дадаць транзакцыю</string>
     <string name="home_income">Даход</string>
     <string name="home_expense">Выдатак</string>
+    <string name="home_amount_hidden_a11y">Сума схаваная, %1$s</string>
     <string name="home_recent_transactions">Апошнія транзакцыі</string>
     <string name="home_quick_templates">Хуткія шаблоны</string>
     <string name="home_quick_templates_empty">Стварыце шаблоны для прымянення частых транзакцый з прыборнай панэлі.</string>

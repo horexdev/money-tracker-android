@@ -26,6 +26,7 @@
     <string name="stats_income_total">Доходы</string>
     <string name="stats_expense_total">Расходы</string>
     <string name="stats_net_total">Итого</string>
+    <string name="stats_amount_hidden_a11y">Сумма скрыта, %1$s</string>
     <string name="stats_transactions_count">%1$d оп.</string>
     <string name="stats_open_history">Открыть операции: %1$s</string>
 </resources>

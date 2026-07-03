@@ -406,8 +406,8 @@ private fun BalanceHeroCard(
     val amountText = formatMoney(amountCents, currencyCode, hideAmounts)
     val amountDescription = accessibleMoneyDescription(
         visibleAmount = amountText,
-        currencyCode = currencyCode,
         hideAmounts = hideAmounts,
+        hiddenAmountDescription = stringResource(R.string.home_amount_hidden_a11y, currencyCode),
     )
     val netBalanceLabel = stringResource(R.string.home_net_balance)
     val accountLabel = account?.name ?: stringResource(R.string.home_all_accounts)
@@ -505,8 +505,11 @@ private fun SummaryCards(
             amount = incomeAmount,
             amountDescription = accessibleMoneyDescription(
                 visibleAmount = incomeAmount,
-                currencyCode = summary.currencyCode,
                 hideAmounts = hideAmounts,
+                hiddenAmountDescription = stringResource(
+                    R.string.home_amount_hidden_a11y,
+                    summary.currencyCode,
+                ),
             ),
             icon = {
                 Icon(
@@ -525,8 +528,11 @@ private fun SummaryCards(
             amount = expenseAmount,
             amountDescription = accessibleMoneyDescription(
                 visibleAmount = expenseAmount,
-                currencyCode = summary.currencyCode,
                 hideAmounts = hideAmounts,
+                hiddenAmountDescription = stringResource(
+                    R.string.home_amount_hidden_a11y,
+                    summary.currencyCode,
+                ),
             ),
             icon = {
                 Icon(
@@ -744,8 +750,11 @@ private fun RecentTransactionRow(
     val amountText = transaction.formatSignedAmount(hideAmounts)
     val amountDescription = accessibleMoneyDescription(
         visibleAmount = amountText,
-        currencyCode = transaction.currencyCode,
         hideAmounts = hideAmounts,
+        hiddenAmountDescription = stringResource(
+            R.string.home_amount_hidden_a11y,
+            transaction.currencyCode,
+        ),
     )
     val secondaryText = transaction.note.takeIf { it.isNotBlank() } ?: transaction.accountName
     val dateText = transaction.createdAtEpochMillis.formatDisplayDate()
@@ -920,11 +929,11 @@ private fun formatMoney(cents: Long, currencyCode: String, hideAmounts: Boolean)
 
 private fun accessibleMoneyDescription(
     visibleAmount: String,
-    currencyCode: String,
     hideAmounts: Boolean,
+    hiddenAmountDescription: String,
 ): String {
     return if (hideAmounts) {
-        "Amount hidden, $currencyCode"
+        hiddenAmountDescription
     } else {
         visibleAmount
     }

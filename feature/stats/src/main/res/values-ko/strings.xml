@@ -26,6 +26,7 @@
     <string name="stats_income_total">수입</string>
     <string name="stats_expense_total">지출</string>
     <string name="stats_net_total">순</string>
+    <string name="stats_amount_hidden_a11y">금액 숨김, %1$s</string>
     <string name="stats_transactions_count">%1$d건</string>
     <string name="stats_open_history">%1$s에 대한 공개 트랜잭션</string>
 </resources>
