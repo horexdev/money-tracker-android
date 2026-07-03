@@ -16,6 +16,7 @@ import dev.horex.moneytracker.core.database.model.ExchangeRateOverrideEntity
 import dev.horex.moneytracker.core.database.model.ExchangeRateSnapshotEntity
 import dev.horex.moneytracker.core.database.model.GoalTransactionEntity
 import dev.horex.moneytracker.core.database.model.LocalProfileEntity
+import dev.horex.moneytracker.core.database.model.RecurringTransactionRunEntity
 import dev.horex.moneytracker.core.database.model.RecurringTransactionEntity
 import dev.horex.moneytracker.core.database.model.SavingsGoalEntity
 import dev.horex.moneytracker.core.database.model.TransactionEntity
@@ -103,6 +104,17 @@ data class BudgetTransactionWithRelations(
     val categoryColor: String,
     @ColumnInfo(name = "account_name")
     val accountName: String,
+)
+
+data class RecurringTransactionWithCategory(
+    @Embedded
+    val recurring: RecurringTransactionEntity,
+    @ColumnInfo(name = "category_name")
+    val categoryName: String,
+    @ColumnInfo(name = "category_icon")
+    val categoryIcon: String,
+    @ColumnInfo(name = "category_color")
+    val categoryColor: String,
 )
 
 @Dao
@@ -884,8 +896,43 @@ interface RecurringTransactionDao {
     @Update
     suspend fun update(recurring: RecurringTransactionEntity)
 
-    @Query("SELECT * FROM recurring_transactions WHERE profile_id = :profileId ORDER BY created_at_epoch_millis DESC")
+    @Update
+    suspend fun updateAndReturnCount(recurring: RecurringTransactionEntity): Int
+
+    @Query("SELECT * FROM recurring_transactions WHERE id = :recurringId AND profile_id = :profileId")
+    suspend fun getById(profileId: Long, recurringId: Long): RecurringTransactionEntity?
+
+    @Query(
+        """
+        SELECT
+            r.*,
+            c.name AS category_name,
+            c.icon AS category_icon,
+            c.color AS category_color
+        FROM recurring_transactions r
+        JOIN categories c ON c.id = r.category_id AND c.profile_id = r.profile_id
+        WHERE r.id = :recurringId AND r.profile_id = :profileId
+        """,
+    )
+    suspend fun getWithCategoryById(profileId: Long, recurringId: Long): RecurringTransactionWithCategory?
+
+    @Query("SELECT * FROM recurring_transactions WHERE profile_id = :profileId ORDER BY created_at_epoch_millis DESC, id DESC")
     suspend fun listByProfile(profileId: Long): List<RecurringTransactionEntity>
+
+    @Query(
+        """
+        SELECT
+            r.*,
+            c.name AS category_name,
+            c.icon AS category_icon,
+            c.color AS category_color
+        FROM recurring_transactions r
+        JOIN categories c ON c.id = r.category_id AND c.profile_id = r.profile_id
+        WHERE r.profile_id = :profileId
+        ORDER BY r.created_at_epoch_millis DESC, r.id DESC
+        """,
+    )
+    suspend fun listWithCategoryByProfile(profileId: Long): List<RecurringTransactionWithCategory>
 
     @Query(
         """
@@ -906,8 +953,60 @@ interface RecurringTransactionDao {
     )
     suspend fun listDue(nowEpochMillis: Long, limit: Int): List<RecurringTransactionEntity>
 
+    @Query(
+        """
+        UPDATE recurring_transactions
+        SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END,
+            updated_at_epoch_millis = :updatedAtEpochMillis
+        WHERE id = :recurringId AND profile_id = :profileId
+        """,
+    )
+    suspend fun toggleActive(profileId: Long, recurringId: Long, updatedAtEpochMillis: Long): Int
+
+    @Query(
+        """
+        UPDATE recurring_transactions
+        SET next_run_at_epoch_millis = :nextRunAtEpochMillis,
+            updated_at_epoch_millis = :updatedAtEpochMillis
+        WHERE id = :recurringId
+          AND profile_id = :profileId
+          AND next_run_at_epoch_millis = :expectedCurrentRunAtEpochMillis
+        """,
+    )
+    suspend fun advanceNextRunIfCurrent(
+        profileId: Long,
+        recurringId: Long,
+        expectedCurrentRunAtEpochMillis: Long,
+        nextRunAtEpochMillis: Long,
+        updatedAtEpochMillis: Long,
+    ): Int
+
     @Query("DELETE FROM recurring_transactions WHERE id = :recurringId AND profile_id = :profileId")
-    suspend fun deleteById(profileId: Long, recurringId: Long)
+    suspend fun deleteById(profileId: Long, recurringId: Long): Int
+}
+
+@Dao
+interface RecurringTransactionRunDao {
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertIgnore(run: RecurringTransactionRunEntity): Long
+
+    @Query(
+        """
+        UPDATE recurring_transaction_runs
+        SET transaction_id = :transactionId
+        WHERE id = :runId
+        """,
+    )
+    suspend fun attachTransaction(runId: Long, transactionId: Long): Int
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM recurring_transaction_runs
+        WHERE profile_id = :profileId
+          AND recurring_transaction_id = :recurringId
+        """,
+    )
+    suspend fun countByRecurring(profileId: Long, recurringId: Long): Int
 }
 
 @Dao

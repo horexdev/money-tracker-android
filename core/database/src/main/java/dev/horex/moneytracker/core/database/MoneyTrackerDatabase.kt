@@ -9,6 +9,7 @@ import dev.horex.moneytracker.core.database.dao.ExchangeRateOverrideDao
 import dev.horex.moneytracker.core.database.dao.ExchangeRateSnapshotDao
 import dev.horex.moneytracker.core.database.dao.GoalTransactionDao
 import dev.horex.moneytracker.core.database.dao.LocalProfileDao
+import dev.horex.moneytracker.core.database.dao.RecurringTransactionRunDao
 import dev.horex.moneytracker.core.database.dao.RecurringTransactionDao
 import dev.horex.moneytracker.core.database.dao.SavingsGoalDao
 import dev.horex.moneytracker.core.database.dao.TransactionDao
@@ -21,6 +22,7 @@ import dev.horex.moneytracker.core.database.model.ExchangeRateOverrideEntity
 import dev.horex.moneytracker.core.database.model.ExchangeRateSnapshotEntity
 import dev.horex.moneytracker.core.database.model.GoalTransactionEntity
 import dev.horex.moneytracker.core.database.model.LocalProfileEntity
+import dev.horex.moneytracker.core.database.model.RecurringTransactionRunEntity
 import dev.horex.moneytracker.core.database.model.RecurringTransactionEntity
 import dev.horex.moneytracker.core.database.model.SavingsGoalEntity
 import dev.horex.moneytracker.core.database.model.TransactionEntity
@@ -36,6 +38,7 @@ import dev.horex.moneytracker.core.database.model.TransferEntity
         TransferEntity::class,
         BudgetEntity::class,
         RecurringTransactionEntity::class,
+        RecurringTransactionRunEntity::class,
         SavingsGoalEntity::class,
         GoalTransactionEntity::class,
         ExchangeRateSnapshotEntity::class,
@@ -53,6 +56,7 @@ abstract class MoneyTrackerDatabase : RoomDatabase() {
     abstract fun transferDao(): TransferDao
     abstract fun budgetDao(): BudgetDao
     abstract fun recurringTransactionDao(): RecurringTransactionDao
+    abstract fun recurringTransactionRunDao(): RecurringTransactionRunDao
     abstract fun savingsGoalDao(): SavingsGoalDao
     abstract fun goalTransactionDao(): GoalTransactionDao
     abstract fun exchangeRateSnapshotDao(): ExchangeRateSnapshotDao
@@ -61,6 +65,6 @@ abstract class MoneyTrackerDatabase : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "money_tracker.db"
-        const val SCHEMA_VERSION = 1
+        const val SCHEMA_VERSION = 2
     }
 }
