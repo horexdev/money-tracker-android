@@ -18,6 +18,8 @@ release candidate before Play Console submission.
 - The Room database is encrypted with SQLCipher and a device-bound Android
   Keystore key; the database key is not portable and must not be reused for
   export files.
+- Support-facing user limitations and backup/import FAQ are tracked in
+  `docs/support-and-known-limitations.md`.
 - Android backup is disabled for app-private data with `android:allowBackup="false"`.
 - The app does not use Telegram auth, Telegram sessions, server sync, ads,
   analytics, crash reporting, remote push, or payments in the current manifest
@@ -240,6 +242,7 @@ denied.
 
 - [ ] App name, short description, full description, category, contact email,
   support URL, and privacy policy URL are filled.
+- [ ] Support URL content matches `docs/support-and-known-limitations.md`.
 - [ ] Feature graphic and screenshots meet Play asset requirements.
 - [ ] Screenshots are from the release candidate and contain only sample data.
 - [ ] Listing text does not claim online sync, bank integration, investment
