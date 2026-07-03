@@ -69,6 +69,21 @@ class MoneyTrackerAppComposeTest {
     }
 
     @Test
+    fun moreRouteLinksToRecurringRoute() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+
+        composeRule.setContent {
+            MoneyTrackerApp()
+        }
+
+        composeRule.onNodeWithText(context.getString(R.string.tab_more)).performClick()
+        composeRule.onNodeWithText(context.getString(R.string.recurring_title)).assertIsDisplayed()
+        composeRule.onNodeWithText(context.getString(R.string.recurring_more_subtitle)).assertIsDisplayed()
+        composeRule.onNodeWithText(context.getString(R.string.recurring_title)).performClick()
+        composeRule.onNodeWithText(context.getString(R.string.recurring_placeholder_subtitle)).assertIsDisplayed()
+    }
+
+    @Test
     fun appBootstrapsLocalProfile() {
         val bootstrapCalls = AtomicInteger(0)
         val bootstrapper = LocalProfileBootstrapper {

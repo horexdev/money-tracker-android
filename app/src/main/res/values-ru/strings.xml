@@ -115,6 +115,7 @@
     <string name="budgets_more_subtitle">Управление бюджетами, прогрессом и уведомлениями.</string>
     <string name="recurring_title">Повторяющиеся</string>
     <string name="recurring_placeholder_subtitle">Маршрут повторяющихся операций зарегистрирован.</string>
+    <string name="recurring_more_subtitle">Управление запланированными доходами и расходами.</string>
     <string name="templates_title">Шаблоны</string>
     <string name="templates_placeholder_subtitle">Маршрут шаблонов операций зарегистрирован.</string>
     <string name="savings_title">Цели</string>

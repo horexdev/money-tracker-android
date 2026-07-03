@@ -172,6 +172,7 @@ dependencies {
     implementation(project(":feature:categories"))
     implementation(project(":feature:home"))
     implementation(project(":feature:history"))
+    implementation(project(":feature:recurring"))
     implementation(project(":feature:stats"))
 
     implementation(platform(libs.androidx.compose.bom))
