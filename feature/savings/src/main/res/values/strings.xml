@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Savings</string>
+    <string name="savings_subtitle">Track goal progress, deposits, withdrawals, and history.</string>
+    <string name="savings_loading">Loading savings goals</string>
+    <string name="savings_empty_title">No goals yet</string>
+    <string name="savings_empty_body">Create a goal to track progress toward a target amount.</string>
+    <string name="savings_add">Add goal</string>
+    <string name="savings_create">Create goal</string>
+    <string name="savings_edit">Edit goal</string>
+    <string name="savings_save">Save goal</string>
+    <string name="savings_delete">Delete goal</string>
+    <string name="savings_cancel">Cancel</string>
+    <string name="savings_retry">Retry</string>
+    <string name="savings_name">Goal name</string>
+    <string name="savings_target">Target amount</string>
+    <string name="savings_currency">Currency</string>
+    <string name="savings_deadline_optional">Deadline (YYYY-MM-DD, optional)</string>
+    <string name="savings_account">Linked account</string>
+    <string name="savings_no_account">No linked account</string>
+    <string name="savings_progress_percent">%1$d%% complete</string>
+    <string name="savings_amount_progress">%1$s of %2$s</string>
+    <string name="savings_remaining">Remaining: %1$s</string>
+    <string name="savings_completed">Completed</string>
+    <string name="savings_deposit">Deposit</string>
+    <string name="savings_withdraw">Withdraw</string>
+    <string name="savings_history">History</string>
+    <string name="savings_history_title">Goal history</string>
+    <string name="savings_history_empty">No deposits or withdrawals yet.</string>
+    <string name="savings_operation_amount">Amount</string>
+    <string name="savings_operation_note">Note</string>
+    <string name="savings_operation_note_placeholder">Optional operation note</string>
+    <string name="savings_delete_title">Delete goal?</string>
+    <string name="savings_delete_body">This removes the goal and its goal history. Linked account transactions stay unchanged.</string>
+    <string name="savings_error_generic">Savings action failed.</string>
+    <string name="savings_error_name">Goal name is required.</string>
+    <string name="savings_error_amount">Amount must be positive.</string>
+    <string name="savings_error_currency">Currency must be a 3-letter ISO code.</string>
+    <string name="savings_error_deadline">Deadline must use YYYY-MM-DD.</string>
+    <string name="savings_error_account">Linked account was not found.</string>
+    <string name="savings_error_category">Savings category is missing.</string>
+    <string name="savings_error_funds">Withdrawal is higher than the current goal amount.</string>
+    <string name="savings_error_not_found">Savings goal was not found.</string>
+</resources>

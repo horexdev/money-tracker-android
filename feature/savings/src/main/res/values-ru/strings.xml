@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Цели</string>
+    <string name="savings_subtitle">Отслеживайте прогресс целей, пополнения, выводы и историю.</string>
+    <string name="savings_loading">Загружаем цели</string>
+    <string name="savings_empty_title">Целей пока нет</string>
+    <string name="savings_empty_body">Создайте цель, чтобы видеть прогресс к нужной сумме.</string>
+    <string name="savings_add">Добавить цель</string>
+    <string name="savings_create">Создать цель</string>
+    <string name="savings_edit">Изменить цель</string>
+    <string name="savings_save">Сохранить</string>
+    <string name="savings_delete">Удалить цель</string>
+    <string name="savings_cancel">Отмена</string>
+    <string name="savings_retry">Повторить</string>
+    <string name="savings_name">Название цели</string>
+    <string name="savings_target">Целевая сумма</string>
+    <string name="savings_currency">Валюта</string>
+    <string name="savings_deadline_optional">Срок (YYYY-MM-DD, необязательно)</string>
+    <string name="savings_account">Связанный счет</string>
+    <string name="savings_no_account">Без связанного счета</string>
+    <string name="savings_progress_percent">Выполнено на %1$d%%</string>
+    <string name="savings_amount_progress">%1$s из %2$s</string>
+    <string name="savings_remaining">Осталось: %1$s</string>
+    <string name="savings_completed">Выполнено</string>
+    <string name="savings_deposit">Пополнить</string>
+    <string name="savings_withdraw">Вывести</string>
+    <string name="savings_history">История</string>
+    <string name="savings_history_title">История цели</string>
+    <string name="savings_history_empty">Пополнений и выводов пока нет.</string>
+    <string name="savings_operation_amount">Сумма</string>
+    <string name="savings_operation_note">Заметка</string>
+    <string name="savings_operation_note_placeholder">Необязательная заметка к операции</string>
+    <string name="savings_delete_title">Удалить цель?</string>
+    <string name="savings_delete_body">Цель и ее история будут удалены. Связанные операции счета останутся без изменений.</string>
+    <string name="savings_error_generic">Не удалось выполнить действие с целью.</string>
+    <string name="savings_error_name">Укажите название цели.</string>
+    <string name="savings_error_amount">Сумма должна быть положительной.</string>
+    <string name="savings_error_currency">Валюта должна быть ISO-кодом из 3 букв.</string>
+    <string name="savings_error_deadline">Срок должен быть в формате YYYY-MM-DD.</string>
+    <string name="savings_error_account">Связанный счет не найден.</string>
+    <string name="savings_error_category">Категория накоплений не найдена.</string>
+    <string name="savings_error_funds">Сумма вывода больше текущей суммы цели.</string>
+    <string name="savings_error_not_found">Цель не найдена.</string>
+</resources>
