@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">Byudjet ogohlantirishlari</string>
+    <string name="notification_channel_budget_alerts_description">Byudjet chegaralariga e\'tibor berish kerak bo\'lganda mahalliy ogohlantirishlar.</string>
+    <string name="notification_channel_recurring_reminders_name">Takroriy eslatmalar</string>
+    <string name="notification_channel_recurring_reminders_description">Takroriy tranzaktsiyalar uchun mahalliy eslatmalar.</string>
+    <string name="notification_channel_goal_milestones_name">Maqsad bosqichlari</string>
+    <string name="notification_channel_goal_milestones_description">Jamgʻarma maqsadiga erishish haqidagi mahalliy yangilanishlar.</string>
+    <string name="notification_channel_weekly_summary_name">Haftalik xulosasi</string>
+    <string name="notification_channel_weekly_summary_description">Mahalliy haftalik moliya xulosalari bildirishnomalari.</string>
+</resources>

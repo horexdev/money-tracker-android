@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">транзакцияны қосыңыз</string>
+    <string name="add_transaction_subtitle">Жергілікті кітапқа шығыс немесе кірісті жазыңыз.</string>
+    <string name="add_transaction_quick_templates">Жылдам үлгілер</string>
+    <string name="add_transaction_template_variable">Айнымалы</string>
+    <string name="add_transaction_template_amount_title">соманы енгізіңіз</string>
+    <string name="add_transaction_template_amount_body">Бұл үлгі айнымалы соманы пайдаланады.</string>
+    <string name="add_transaction_template_apply">Қолдану</string>
+    <string name="add_transaction_template_cancel">Болдырмау</string>
+    <string name="add_transaction_loading">Пішін деректері жүктелуде...</string>
+    <string name="add_transaction_expense">Шығыс</string>
+    <string name="add_transaction_income">Кіріс</string>
+    <string name="add_transaction_amount">Сома</string>
+    <string name="add_transaction_account">Шот</string>
+    <string name="add_transaction_category">Санат</string>
+    <string name="add_transaction_note">Жазба</string>
+    <string name="add_transaction_note_placeholder">Қосымша ескертпе</string>
+    <string name="add_transaction_date">Күні</string>
+    <string name="add_transaction_date_hint">ЖЖЖЖ-АА-КК</string>
+    <string name="add_transaction_save">транзакцияны сақтау</string>
+    <string name="add_transaction_saving">Сақтау...</string>
+    <string name="add_transaction_no_accounts_title">әлі тіркелгі жоқ</string>
+    <string name="add_transaction_no_accounts_body">транзакцияларды жазбас бұрын тіркелгі жасаңыз.</string>
+    <string name="add_transaction_no_categories_title">Бұл түр үшін санаттар жоқ</string>
+    <string name="add_transaction_no_categories_body">үнемдеу алдында шығыс немесе кіріс санатын жасаңыз.</string>
+    <string name="add_transaction_retry">Қайталау</string>
+    <string name="add_transaction_error_generic">транзакцияны сақтау мүмкін болмады.</string>
+    <string name="add_transaction_error_invalid_amount">Нөлден үлкен соманы енгізіңіз.</string>
+    <string name="add_transaction_error_invalid_date">ЖЖЖЖ-АА-КК ретінде жарамды күнді енгізіңіз.</string>
+    <string name="add_transaction_error_account_required">тіркелгіні таңдаңыз.</string>
+    <string name="add_transaction_error_category_required">санатты таңдаңыз.</string>
+    <string name="add_transaction_error_account_not_found">Таңдалған тіркелгі енді қолжетімсіз.</string>
+    <string name="add_transaction_error_category_not_found">Таңдалған санат енді қолжетімді емес.</string>
+    <string name="add_transaction_error_category_type">транзакция түріне сәйкес санатты таңдаңыз.</string>
+</resources>

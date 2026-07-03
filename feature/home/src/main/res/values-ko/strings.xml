@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">대시보드</string>
+    <string name="feature_home_subtitle">루트 탐색이 준비되었습니다.</string>
+    <string name="home_subtitle">잔액 및 최근 활동의 오프라인 스냅샷입니다.</string>
+    <string name="home_loading">대시보드 로드 중...</string>
+    <string name="home_retry">다시 시도</string>
+    <string name="home_error_generic">대시보드 데이터를 로드할 수 없습니다.</string>
+    <string name="home_net_balance">순잔고</string>
+    <string name="home_all_accounts">모든 계좌</string>
+    <string name="home_add_transaction">Add transaction</string>
+    <string name="home_income">수입</string>
+    <string name="home_expense">지출</string>
+    <string name="home_recent_transactions">최근 거래</string>
+    <string name="home_quick_templates">빠른 템플릿</string>
+    <string name="home_quick_templates_empty">대시보드에서 빈번한 거래를 적용하기 위한 템플릿을 만듭니다.</string>
+    <string name="home_template_amount_prompt_title">금액 입력</string>
+    <string name="home_template_amount_prompt_body">이 템플릿은 가변 금액을 사용합니다.</string>
+    <string name="home_template_amount">금액</string>
+    <string name="home_template_apply">적용</string>
+    <string name="home_template_cancel">취소</string>
+    <string name="home_template_variable">가변</string>
+    <string name="home_view_all">모두 보기</string>
+    <string name="home_empty_title">아직 거래 없음</string>
+    <string name="home_empty_body">Add the first transaction to start tracking.</string>
+</resources>

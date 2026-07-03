@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">İstatistikler</string>
+    <string name="stats_subtitle">Kategori dökümü, trendler ve ayrıntılı inceleme.</string>
+    <string name="stats_loading">İstatistikler yükleniyor</string>
+    <string name="stats_retry">Tekrar dene</string>
+    <string name="stats_error_generic">Stats could not be loaded.</string>
+    <string name="stats_empty_title">No stats for this filter</string>
+    <string name="stats_empty_body">Grafikleri görmek için hesabı, dönemi değiştirin veya işlem ekleyin.</string>
+    <string name="stats_filter_accounts">Hesaplar</string>
+    <string name="stats_filter_period">Dönem</string>
+    <string name="stats_filter_currency">Para birimi</string>
+    <string name="stats_filter_type">Arıza</string>
+    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_all_accounts">Tüm hesaplar</string>
+    <string name="stats_today">Bugün</string>
+    <string name="stats_week">Hafta</string>
+    <string name="stats_month">Ay</string>
+    <string name="stats_last_month">Geçen ay</string>
+    <string name="stats_expense">Gider</string>
+    <string name="stats_income">Gelir</string>
+    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_stacked_bar">Yığılmış</string>
+    <string name="stats_style_dual_bar">Gelir / gider</string>
+    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_income_total">Gelir</string>
+    <string name="stats_expense_total">Gider</string>
+    <string name="stats_net_total">Ağ</string>
+    <string name="stats_transactions_count">%1$d tx</string>
+    <string name="stats_open_history">%1$s için açık işlemler</string>
+</resources>

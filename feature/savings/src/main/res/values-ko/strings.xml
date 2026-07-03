@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">저축</string>
+    <string name="savings_subtitle">목표 진행 상황, 입금, 출금 및 내역을 추적합니다.</string>
+    <string name="savings_loading">저축 목표 로드 중</string>
+    <string name="savings_empty_title">아직 목표가 없습니다</string>
+    <string name="savings_empty_body">목표 금액에 대한 진행 상황을 추적하는 목표를 만듭니다.</string>
+    <string name="savings_add">골 추가</string>
+    <string name="savings_create">목표 생성</string>
+    <string name="savings_edit">목표 편집</string>
+    <string name="savings_save">목표 저장</string>
+    <string name="savings_delete">목표 삭제</string>
+    <string name="savings_cancel">취소</string>
+    <string name="savings_retry">다시 시도</string>
+    <string name="savings_name">목표 이름</string>
+    <string name="savings_target">목표 금액</string>
+    <string name="savings_currency">통화</string>
+    <string name="savings_deadline_optional">마감일(YYYY-MM-DD, 선택 사항)</string>
+    <string name="savings_account">연결된 계정</string>
+    <string name="savings_no_account">연결된 계정이 없습니다</string>
+    <string name="savings_progress_percent">%1$d%% complete</string>
+    <string name="savings_amount_progress">%1$s of %2$s</string>
+    <string name="savings_remaining">남은: %1$s</string>
+    <string name="savings_completed">완료</string>
+    <string name="savings_deposit">입금</string>
+    <string name="savings_withdraw">출금</string>
+    <string name="savings_history">내역</string>
+    <string name="savings_history_title">목표 이력</string>
+    <string name="savings_history_empty">아직 입출금이 없습니다.</string>
+    <string name="savings_operation_amount">금액</string>
+    <string name="savings_operation_note">메모</string>
+    <string name="savings_operation_note_placeholder">선택적 작업 참고 사항</string>
+    <string name="savings_delete_title">목표를 삭제하시겠습니까?</string>
+    <string name="savings_delete_body">목표와 목표 기록이 제거됩니다. 연결된 계정 거래는 변경되지 않습니다.</string>
+    <string name="savings_error_generic">저축 작업에 실패했습니다.</string>
+    <string name="savings_error_name">목표 이름이 필요합니다.</string>
+    <string name="savings_error_amount">Amount must be positive.</string>
+    <string name="savings_error_currency">통화는 3자리 ISO 코드여야 합니다.</string>
+    <string name="savings_error_deadline">마감일은 YYYY-MM-DD를 사용해야 합니다.</string>
+    <string name="savings_error_account">연결된 계정을 찾을 수 없습니다.</string>
+    <string name="savings_error_category">저축 카테고리가 누락되었습니다.</string>
+    <string name="savings_error_funds">출금이 현재 목표 금액보다 높습니다.</string>
+    <string name="savings_error_not_found">저축 목표를 찾을 수 없습니다.</string>
+</resources>

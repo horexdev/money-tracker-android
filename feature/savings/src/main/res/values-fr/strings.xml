@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Épargne</string>
+    <string name="savings_subtitle">suivez la progression des objectifs, les dépôts, les retraits et l\'historique.</string>
+    <string name="savings_loading">Chargement des objectifs d\'épargne</string>
+    <string name="savings_empty_title">Aucun but pour l\'instant</string>
+    <string name="savings_empty_body">Créez un objectif pour suivre les progrès vers un montant cible.</string>
+    <string name="savings_add">Ajouter un objectif</string>
+    <string name="savings_create">Créer un objectif</string>
+    <string name="savings_edit">Modifier l\'objectif</string>
+    <string name="savings_save">Enregistrer l\'objectif</string>
+    <string name="savings_delete">Supprimer l\'objectif</string>
+    <string name="savings_cancel">Annuler</string>
+    <string name="savings_retry">Réessayer</string>
+    <string name="savings_name">Nom de l\'objectif</string>
+    <string name="savings_target">Montant cible</string>
+    <string name="savings_currency">Devise</string>
+    <string name="savings_deadline_optional">Date limite (AAAA-MM-JJ, facultatif)</string>
+    <string name="savings_account">Compte lié</string>
+    <string name="savings_no_account">Aucun compte lié</string>
+    <string name="savings_progress_percent">%1$d%% terminé</string>
+    <string name="savings_amount_progress">%1$s de %2$s</string>
+    <string name="savings_remaining">Restant : %1$s</string>
+    <string name="savings_completed">Terminé</string>
+    <string name="savings_deposit">Déposer</string>
+    <string name="savings_withdraw">Retirer</string>
+    <string name="savings_history">Historique</string>
+    <string name="savings_history_title">Historique des buts</string>
+    <string name="savings_history_empty">Aucun dépôt ni retrait pour l’instant.</string>
+    <string name="savings_operation_amount">Montant</string>
+    <string name="savings_operation_note">Note</string>
+    <string name="savings_operation_note_placeholder">Note d’opération facultative</string>
+    <string name="savings_delete_title">Supprimer l\'objectif ?</string>
+    <string name="savings_delete_body">cela supprime l\'objectif et son historique d\'objectifs. Les transactions des comptes liés restent inchangées.</string>
+    <string name="savings_error_generic">L’action d’épargne a échoué.</string>
+    <string name="savings_error_name">le nom de l\'objectif est requis.</string>
+    <string name="savings_error_amount">Le montant doit être positif.</string>
+    <string name="savings_error_currency">La devise doit être un code ISO à 3 lettres.</string>
+    <string name="savings_error_deadline">La date limite doit être AAAA-MM-JJ.</string>
+    <string name="savings_error_account">Le compte lié est introuvable.</string>
+    <string name="savings_error_category">La catégorie d\'épargne est manquante.</string>
+    <string name="savings_error_funds">Le retrait est supérieur au montant de l’objectif actuel.</string>
+    <string name="savings_error_not_found">L\'objectif d\'économies n\'a pas été trouvé.</string>
+</resources>

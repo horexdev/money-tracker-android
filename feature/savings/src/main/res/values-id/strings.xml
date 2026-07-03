@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Tabungan</string>
+    <string name="savings_subtitle">Lacak kemajuan tujuan, penyetoran, penarikan, dan riwayat.</string>
+    <string name="savings_loading">Memuat sasaran tabungan</string>
+    <string name="savings_empty_title">Belum ada gol</string>
+    <string name="savings_empty_body">Buat sasaran untuk melacak kemajuan menuju jumlah target.</string>
+    <string name="savings_add">Tambahkan sasaran</string>
+    <string name="savings_create">Buat tujuan</string>
+    <string name="savings_edit">Edit sasaran</string>
+    <string name="savings_save">Simpan sasaran</string>
+    <string name="savings_delete">Hapus sasaran</string>
+    <string name="savings_cancel">Batal</string>
+    <string name="savings_retry">Coba lagi</string>
+    <string name="savings_name">Nama sasaran</string>
+    <string name="savings_target">Jumlah sasaran</string>
+    <string name="savings_currency">Mata uang</string>
+    <string name="savings_deadline_optional">Batas waktu (YYYY-MM-DD, opsional)</string>
+    <string name="savings_account">Akun tertaut</string>
+    <string name="savings_no_account">Tidak ada akun tertaut</string>
+    <string name="savings_progress_percent">%1$d%% selesai</string>
+    <string name="savings_amount_progress">%1$s dari %2$s</string>
+    <string name="savings_remaining">Tersisa: %1$s</string>
+    <string name="savings_completed">Selesai</string>
+    <string name="savings_deposit">Setor</string>
+    <string name="savings_withdraw">Tarik</string>
+    <string name="savings_history">Riwayat</string>
+    <string name="savings_history_title">Sejarah gol</string>
+    <string name="savings_history_empty">Belum ada setoran atau penarikan.</string>
+    <string name="savings_operation_amount">Jumlah</string>
+    <string name="savings_operation_note">Catatan</string>
+    <string name="savings_operation_note_placeholder">Catatan pengoperasian opsional</string>
+    <string name="savings_delete_title">Hapus sasaran?</string>
+    <string name="savings_delete_body">Ini menghapus sasaran dan riwayat sasarannya. Transaksi akun tertaut tetap tidak berubah.</string>
+    <string name="savings_error_generic">Tindakan penghematan gagal.</string>
+    <string name="savings_error_name">Nama sasaran wajib diisi.</string>
+    <string name="savings_error_amount">Jumlahnya harus positif.</string>
+    <string name="savings_error_currency">Mata uang harus berupa kode ISO 3 huruf.</string>
+    <string name="savings_error_deadline">Batas waktu harus menggunakan YYYY-MM-DD.</string>
+    <string name="savings_error_account">Akun tertaut tidak ditemukan.</string>
+    <string name="savings_error_category">Kategori tabungan tidak ada.</string>
+    <string name="savings_error_funds">Penarikan lebih tinggi dari jumlah sasaran saat ini.</string>
+    <string name="savings_error_not_found">Sasaran penghematan tidak ditemukan.</string>
+</resources>

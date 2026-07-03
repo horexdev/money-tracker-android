@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Гісторыя</string>
+    <string name="history_subtitle">Пошук, фільтраванне, рэдагаванне і выдаленне пазасеткавых транзакцый</string>
+    <string name="history_empty_title">Няма транзакцый</string>
+    <string name="history_empty_body">новыя даходы і выдаткі з\'явяцца тут пасля іх захавання.</string>
+    <string name="history_loading">Гісторыя загрузкі</string>
+    <string name="history_search">Пошук транзакцый</string>
+    <string name="history_apply_filters">Ужыць фільтры</string>
+    <string name="history_clear_filters">Ясна</string>
+    <string name="history_all_accounts">Усе рахункі</string>
+    <string name="history_all_categories">Усе катэгорыі</string>
+    <string name="history_load_more">Загрузіць больш</string>
+    <string name="history_page_label">старонка %1$d з %2$d</string>
+    <string name="history_income">Даход</string>
+    <string name="history_expense">Выдатак</string>
+    <string name="history_edit">Рэдагаваць транзакцыю</string>
+    <string name="history_delete">Выдаліць транзакцыю</string>
+    <string name="history_delete_title">Выдаліць транзакцыю?</string>
+    <string name="history_delete_body">Гэтая транзакцыя будзе выдалена з лакальнай кнігі.</string>
+    <string name="history_cancel">Скасаваць</string>
+    <string name="history_save">Захаваць транзакцыю</string>
+    <string name="history_amount">Сума</string>
+    <string name="history_date">Дата</string>
+    <string name="history_date_hint">ГГГГ-ММ-ДД</string>
+    <string name="history_category">Катэгорыя</string>
+    <string name="history_note">Нататка</string>
+    <string name="history_note_empty">Няма нататкі</string>
+    <string name="history_account">Рахунак</string>
+    <string name="history_retry">Паўтарыць</string>
+    <string name="history_error_generic">Немагчыма завяршыць дзеянне.</string>
+    <string name="history_error_invalid_amount">увядзіце станоўчую суму.</string>
+    <string name="history_error_invalid_date">Выкарыстоўвайце сапраўдную дату ў фармаце ГГГГ-ММ-ДД.</string>
+    <string name="history_error_category">Выберыце сумяшчальную катэгорыю.</string>
+    <string name="history_error_linked_transfer">звязаныя транзакцыі перадачы нельга рэдагаваць або выдаляць з гісторыі.</string>
+    <string name="history_error_not_found">Транзакцыя не знойдзена.</string>
+</resources>

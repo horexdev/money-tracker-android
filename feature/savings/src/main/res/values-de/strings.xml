@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Sparkonto</string>
+    <string name="savings_subtitle">Verfolgen Sie den Zielfortschritt, Einzahlungen, Auszahlungen und den Verlauf.</string>
+    <string name="savings_loading">Sparziele werden geladen</string>
+    <string name="savings_empty_title">Noch keine Tore</string>
+    <string name="savings_empty_body">Erstellen Sie ein Ziel, um den Fortschritt in Richtung eines Zielbetrags zu verfolgen.</string>
+    <string name="savings_add">Ziel hinzufügen</string>
+    <string name="savings_create">Ziel erstellen</string>
+    <string name="savings_edit">Ziel bearbeiten</string>
+    <string name="savings_save">Ziel speichern</string>
+    <string name="savings_delete">Ziel löschen</string>
+    <string name="savings_cancel">Abbrechen</string>
+    <string name="savings_retry">Erneut versuchen</string>
+    <string name="savings_name">Zielname</string>
+    <string name="savings_target">Zielbetrag</string>
+    <string name="savings_currency">Währung</string>
+    <string name="savings_deadline_optional">Frist (JJJJ-MM-TT, optional)</string>
+    <string name="savings_account">Verknüpftes Konto</string>
+    <string name="savings_no_account">Kein verknüpftes Konto</string>
+    <string name="savings_progress_percent">%1$d%% abgeschlossen</string>
+    <string name="savings_amount_progress">%1$s von %2$s</string>
+    <string name="savings_remaining">Verbleibend: %1$s</string>
+    <string name="savings_completed">Abgeschlossen</string>
+    <string name="savings_deposit">Einzahlen</string>
+    <string name="savings_withdraw">Abheben</string>
+    <string name="savings_history">Verlauf</string>
+    <string name="savings_history_title">Torhistorie</string>
+    <string name="savings_history_empty">Noch keine Ein- oder Auszahlungen.</string>
+    <string name="savings_operation_amount">Betrag</string>
+    <string name="savings_operation_note">Notiz</string>
+    <string name="savings_operation_note_placeholder">Optionaler Betriebshinweis</string>
+    <string name="savings_delete_title">Ziel löschen?</string>
+    <string name="savings_delete_body">Dadurch werden das Ziel und sein Zielverlauf entfernt. Verknüpfte Kontotransaktionen bleiben unverändert.</string>
+    <string name="savings_error_generic">Sparaktion fehlgeschlagen.</string>
+    <string name="savings_error_name">Zielname ist erforderlich.</string>
+    <string name="savings_error_amount">Betrag muss positiv sein.</string>
+    <string name="savings_error_currency">Die Währung muss ein dreibuchstabiger ISO-Code sein.</string>
+    <string name="savings_error_deadline">Als Frist muss JJJJ-MM-TT angegeben werden.</string>
+    <string name="savings_error_account">Das verknüpfte Konto wurde nicht gefunden.</string>
+    <string name="savings_error_category">Sparkategorie fehlt.</string>
+    <string name="savings_error_funds">Die Auszahlung ist höher als der aktuelle Zielbetrag.</string>
+    <string name="savings_error_not_found">Sparziel wurde nicht gefunden.</string>
+</resources>

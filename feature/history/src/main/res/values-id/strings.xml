@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Riwayat</string>
+    <string name="history_subtitle">Mencari, memfilter, mengedit, dan menghapus transaksi offline</string>
+    <string name="history_empty_title">Tidak ada transaksi</string>
+    <string name="history_empty_body">Pendapatan dan pengeluaran baru akan muncul di sini setelah disimpan.</string>
+    <string name="history_loading">Memuat riwayat</string>
+    <string name="history_search">Pencarian transaksi</string>
+    <string name="history_apply_filters">Terapkan filter</string>
+    <string name="history_clear_filters">Jelas</string>
+    <string name="history_all_accounts">Semua akun</string>
+    <string name="history_all_categories">Semua kategori</string>
+    <string name="history_load_more">Muat lebih banyak</string>
+    <string name="history_page_label">Halaman %1$d dari %2$d</string>
+    <string name="history_income">Pemasukan</string>
+    <string name="history_expense">Pengeluaran</string>
+    <string name="history_edit">Edit transaksi</string>
+    <string name="history_delete">Hapus transaksi</string>
+    <string name="history_delete_title">Hapus transaksi?</string>
+    <string name="history_delete_body">Transaksi ini akan dihapus dari buku besar lokal.</string>
+    <string name="history_cancel">Batal</string>
+    <string name="history_save">Simpan transaksi</string>
+    <string name="history_amount">Jumlah</string>
+    <string name="history_date">Tanggal</string>
+    <string name="history_date_hint">YYYY-MM-DD</string>
+    <string name="history_category">Kategori</string>
+    <string name="history_note">Catatan</string>
+    <string name="history_note_empty">Tidak ada catatan</string>
+    <string name="history_account">Akun</string>
+    <string name="history_retry">Coba lagi</string>
+    <string name="history_error_generic">Tidak dapat menyelesaikan tindakan.</string>
+    <string name="history_error_invalid_amount">Masukkan jumlah positif.</string>
+    <string name="history_error_invalid_date">Gunakan tanggal yang valid dalam format YYYY-MM-DD.</string>
+    <string name="history_error_category">Pilih kategori yang kompatibel.</string>
+    <string name="history_error_linked_transfer">Transaksi transfer tertaut tidak dapat diedit atau dihapus dari riwayat.</string>
+    <string name="history_error_not_found">Transaksi tidak ditemukan.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">Alertas de orçamento</string>
+    <string name="notification_channel_budget_alerts_description">Alertas locais quando os limites orçamentários precisam de atenção.</string>
+    <string name="notification_channel_recurring_reminders_name">Lembretes recorrentes</string>
+    <string name="notification_channel_recurring_reminders_description">Lembretes locais para transações recorrentes.</string>
+    <string name="notification_channel_goal_milestones_name">Marcos de metas</string>
+    <string name="notification_channel_goal_milestones_description">Atualizações locais sobre o progresso da meta de poupança.</string>
+    <string name="notification_channel_weekly_summary_name">Resumo semanal</string>
+    <string name="notification_channel_weekly_summary_description">Notificações de resumo financeiro semanal local.</string>
+</resources>

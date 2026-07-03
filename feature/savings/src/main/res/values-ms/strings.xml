@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Simpanan</string>
+    <string name="savings_subtitle">Jejaki kemajuan matlamat, deposit, pengeluaran dan sejarah.</string>
+    <string name="savings_loading">Memuatkan matlamat simpanan</string>
+    <string name="savings_empty_title">Tiada gol lagi</string>
+    <string name="savings_empty_body">Buat matlamat untuk menjejak kemajuan ke arah jumlah sasaran.</string>
+    <string name="savings_add">Tambah matlamat</string>
+    <string name="savings_create">Cipta matlamat</string>
+    <string name="savings_edit">Edit matlamat</string>
+    <string name="savings_save">Simpan matlamat</string>
+    <string name="savings_delete">Padamkan matlamat</string>
+    <string name="savings_cancel">Batal</string>
+    <string name="savings_retry">Cuba lagi</string>
+    <string name="savings_name">Nama matlamat</string>
+    <string name="savings_target">Jumlah sasaran</string>
+    <string name="savings_currency">Mata Wang</string>
+    <string name="savings_deadline_optional">Tarikh Akhir (TTTT-MM-DD, pilihan)</string>
+    <string name="savings_account">Akaun terpaut</string>
+    <string name="savings_no_account">Tiada akaun terpaut</string>
+    <string name="savings_progress_percent">%1$d%% selesai</string>
+    <string name="savings_amount_progress">%1$s daripada %2$s</string>
+    <string name="savings_remaining">Baki: %1$s</string>
+    <string name="savings_completed">Selesai</string>
+    <string name="savings_deposit">Deposit</string>
+    <string name="savings_withdraw">Pengeluaran</string>
+    <string name="savings_history">Sejarah</string>
+    <string name="savings_history_title">Sejarah matlamat</string>
+    <string name="savings_history_empty">Tiada deposit atau pengeluaran lagi.</string>
+    <string name="savings_operation_amount">Jumlah</string>
+    <string name="savings_operation_note">Nota</string>
+    <string name="savings_operation_note_placeholder">Nota operasi pilihan</string>
+    <string name="savings_delete_title">Padamkan matlamat?</string>
+    <string name="savings_delete_body">Ini mengalih keluar matlamat dan sejarah matlamatnya. Urus niaga akaun terpaut kekal tidak berubah.</string>
+    <string name="savings_error_generic">Tindakan penjimatan gagal.</string>
+    <string name="savings_error_name">Nama matlamat diperlukan.</string>
+    <string name="savings_error_amount">Jumlah mestilah positif.</string>
+    <string name="savings_error_currency">Mata wang mestilah kod ISO 3 huruf.</string>
+    <string name="savings_error_deadline">Tarikh akhir mesti menggunakan YYYY-MM-DD.</string>
+    <string name="savings_error_account">Akaun terpaut tidak ditemui.</string>
+    <string name="savings_error_category">Kategori simpanan tiada.</string>
+    <string name="savings_error_funds">Pengeluaran adalah lebih tinggi daripada jumlah matlamat semasa.</string>
+    <string name="savings_error_not_found">Matlamat simpanan tidak ditemui.</string>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Жинақтау</string>
+    <string name="savings_subtitle">Мақсаттың орындалу барысын, депозиттерді, ақшаны алуды және тарихты бақылаңыз.</string>
+    <string name="savings_loading">Жинақтау мақсаттары жүктелуде</string>
+    <string name="savings_empty_title">Әлі мақсат жоқ</string>
+    <string name="savings_empty_body">Мақсатты сомаға жету барысын бақылау үшін мақсат жасаңыз.</string>
+    <string name="savings_add">Мақсат қосыңыз</string>
+    <string name="savings_create">Мақсат жасаңыз</string>
+    <string name="savings_edit">Мақсатты өңдеу</string>
+    <string name="savings_save">Мақсатты сақтау</string>
+    <string name="savings_delete">Мақсатты жою</string>
+    <string name="savings_cancel">Болдырмау</string>
+    <string name="savings_retry">Қайталау</string>
+    <string name="savings_name">Мақсат атауы</string>
+    <string name="savings_target">Мақсатты сома</string>
+    <string name="savings_currency">Валюта</string>
+    <string name="savings_deadline_optional">Мерзімі (ЖЖЖЖ-АА-КК, міндетті емес)</string>
+    <string name="savings_account">байланыстырылған тіркелгі</string>
+    <string name="savings_no_account">байланыстырылған тіркелгі жоқ</string>
+    <string name="savings_progress_percent">%1$d%% аяқталды</string>
+    <string name="savings_amount_progress">%2$s %1$s</string>
+    <string name="savings_remaining">Қалған: %1$s</string>
+    <string name="savings_completed">Аяқталды</string>
+    <string name="savings_deposit">Толтыру</string>
+    <string name="savings_withdraw">Алу</string>
+    <string name="savings_history">Тарих</string>
+    <string name="savings_history_title">Гол тарихы</string>
+    <string name="savings_history_empty">Әзірге салымдар немесе қаражаттар жоқ.</string>
+    <string name="savings_operation_amount">Сома</string>
+    <string name="savings_operation_note">Жазба</string>
+    <string name="savings_operation_note_placeholder">Қосымша операция ескертуі</string>
+    <string name="savings_delete_title">Мақсатты жою керек пе?</string>
+    <string name="savings_delete_body">Бұл мақсатты және оның мақсаттар тарихын жояды. Байланыстырылған шот транзакциялары өзгеріссіз қалады.</string>
+    <string name="savings_error_generic">үнемдеу әрекеті орындалмады.</string>
+    <string name="savings_error_name">Мақсат атауы қажет.</string>
+    <string name="savings_error_amount">Сома оң болуы керек.</string>
+    <string name="savings_error_currency">Валюта 3 әріпті ISO коды болуы керек.</string>
+    <string name="savings_error_deadline">Мерзімі ЖЖЖЖ-АА-КК қолданылуы керек.</string>
+    <string name="savings_error_account">Байланыстырылған тіркелгі табылмады.</string>
+    <string name="savings_error_category">Жинақ санаты жоқ.</string>
+    <string name="savings_error_funds">Шешім ағымдағы мақсат сомасынан жоғары.</string>
+    <string name="savings_error_not_found">үнемдеу мақсаты табылмады.</string>
+</resources>

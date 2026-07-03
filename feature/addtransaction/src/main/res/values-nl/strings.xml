@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">Transactie toevoegen</string>
+    <string name="add_transaction_subtitle">Registreer een uitgave of inkomen in uw lokale grootboek.</string>
+    <string name="add_transaction_quick_templates">Snelle sjablonen</string>
+    <string name="add_transaction_template_variable">Variabel</string>
+    <string name="add_transaction_template_amount_title">Bedrag invoeren</string>
+    <string name="add_transaction_template_amount_body">Deze sjabloon gebruikt een variabel bedrag.</string>
+    <string name="add_transaction_template_apply">Toepassen</string>
+    <string name="add_transaction_template_cancel">Annuleren</string>
+    <string name="add_transaction_loading">Formuliergegevens laden...</string>
+    <string name="add_transaction_expense">Uitgave</string>
+    <string name="add_transaction_income">Inkomst</string>
+    <string name="add_transaction_amount">Bedrag</string>
+    <string name="add_transaction_account">Rekening</string>
+    <string name="add_transaction_category">Categorie</string>
+    <string name="add_transaction_note">Notitie</string>
+    <string name="add_transaction_note_placeholder">Optionele opmerking</string>
+    <string name="add_transaction_date">Datum</string>
+    <string name="add_transaction_date_hint">JJJJ-MM-DD</string>
+    <string name="add_transaction_save">Transactie opslaan</string>
+    <string name="add_transaction_saving">Opslaan...</string>
+    <string name="add_transaction_no_accounts_title">Nog geen accounts</string>
+    <string name="add_transaction_no_accounts_body">Maak een account aan voordat u transacties registreert.</string>
+    <string name="add_transaction_no_categories_title">Geen categorieën voor dit type</string>
+    <string name="add_transaction_no_categories_body">Maak een uitgaven- of inkomstencategorie voordat u opslaat.</string>
+    <string name="add_transaction_retry">Opnieuw proberen</string>
+    <string name="add_transaction_error_generic">Kan de transactie niet opslaan.</string>
+    <string name="add_transaction_error_invalid_amount">Voer een bedrag in dat groter is dan nul.</string>
+    <string name="add_transaction_error_invalid_date">Voer een geldige datum in als JJJJ-MM-DD.</string>
+    <string name="add_transaction_error_account_required">Kies een account.</string>
+    <string name="add_transaction_error_category_required">Kies een categorie.</string>
+    <string name="add_transaction_error_account_not_found">Het geselecteerde account is niet langer beschikbaar.</string>
+    <string name="add_transaction_error_category_not_found">De geselecteerde categorie is niet langer beschikbaar.</string>
+    <string name="add_transaction_error_category_type">Kies een categorie die overeenkomt met het transactietype.</string>
+</resources>

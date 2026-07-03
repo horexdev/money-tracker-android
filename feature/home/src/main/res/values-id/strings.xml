@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Dasbor</string>
+    <string name="feature_home_subtitle">Navigasi root sudah siap.</string>
+    <string name="home_subtitle">Potret offline saldo dan aktivitas terkini.</string>
+    <string name="home_loading">Memuat dasbor...</string>
+    <string name="home_retry">Coba lagi</string>
+    <string name="home_error_generic">Data dasbor tidak dapat dimuat.</string>
+    <string name="home_net_balance">Saldo bersih</string>
+    <string name="home_all_accounts">Semua akun</string>
+    <string name="home_add_transaction">Tambahkan transaksi</string>
+    <string name="home_income">Pemasukan</string>
+    <string name="home_expense">Pengeluaran</string>
+    <string name="home_recent_transactions">Transaksi terkini</string>
+    <string name="home_quick_templates">Template cepat</string>
+    <string name="home_quick_templates_empty">Membuat templat untuk menerapkan transaksi yang sering dilakukan dari dasbor.</string>
+    <string name="home_template_amount_prompt_title">Masukkan jumlah</string>
+    <string name="home_template_amount_prompt_body">Templat ini menggunakan jumlah variabel.</string>
+    <string name="home_template_amount">Jumlah</string>
+    <string name="home_template_apply">Terapkan</string>
+    <string name="home_template_cancel">Batal</string>
+    <string name="home_template_variable">Variabel</string>
+    <string name="home_view_all">Lihat semua</string>
+    <string name="home_empty_title">Belum ada transaksi</string>
+    <string name="home_empty_body">Tambahkan transaksi pertama untuk memulai pelacakan.</string>
+</resources>

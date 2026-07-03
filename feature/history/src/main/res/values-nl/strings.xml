@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Geschiedenis</string>
+    <string name="history_subtitle">offline transacties zoeken, filteren, bewerken en verwijderen</string>
+    <string name="history_empty_title">Geen transacties</string>
+    <string name="history_empty_body">Nieuwe inkomsten en uitgaven verschijnen hier nadat ze zijn opgeslagen.</string>
+    <string name="history_loading">Geschiedenis laden</string>
+    <string name="history_search">Transacties zoeken</string>
+    <string name="history_apply_filters">filters toepassen</string>
+    <string name="history_clear_filters">Helder</string>
+    <string name="history_all_accounts">Alle rekeningen</string>
+    <string name="history_all_categories">Alle categorieën</string>
+    <string name="history_load_more">meer laden</string>
+    <string name="history_page_label">Pagina %1$d van %2$d</string>
+    <string name="history_income">Inkomst</string>
+    <string name="history_expense">Uitgave</string>
+    <string name="history_edit">Transactie bewerken</string>
+    <string name="history_delete">Transactie verwijderen</string>
+    <string name="history_delete_title">Transactie verwijderen?</string>
+    <string name="history_delete_body">Deze transactie wordt verwijderd uit het lokale grootboek.</string>
+    <string name="history_cancel">Annuleren</string>
+    <string name="history_save">Transactie opslaan</string>
+    <string name="history_amount">Bedrag</string>
+    <string name="history_date">Datum</string>
+    <string name="history_date_hint">JJJJ-MM-DD</string>
+    <string name="history_category">Categorie</string>
+    <string name="history_note">Notitie</string>
+    <string name="history_note_empty">Geen opmerking</string>
+    <string name="history_account">Rekening</string>
+    <string name="history_retry">Opnieuw proberen</string>
+    <string name="history_error_generic">Kan de actie niet voltooien.</string>
+    <string name="history_error_invalid_amount">Voer een positief bedrag in.</string>
+    <string name="history_error_invalid_date">Gebruik een geldige datum in het formaat JJJJ-MM-DD.</string>
+    <string name="history_error_category">Kies een compatibele categorie.</string>
+    <string name="history_error_linked_transfer">Gekoppelde overdrachtstransacties kunnen niet worden bewerkt of uit de geschiedenis worden verwijderd.</string>
+    <string name="history_error_not_found">Transactie is niet gevonden.</string>
+</resources>

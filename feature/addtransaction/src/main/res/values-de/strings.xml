@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">Transaktion hinzufügen</string>
+    <string name="add_transaction_subtitle">Erfassen Sie eine Ausgabe oder einen Ertrag in Ihrem lokalen Hauptbuch.</string>
+    <string name="add_transaction_quick_templates">Schnellvorlagen</string>
+    <string name="add_transaction_template_variable">Variable</string>
+    <string name="add_transaction_template_amount_title">Betrag eingeben</string>
+    <string name="add_transaction_template_amount_body">Diese Vorlage verwendet einen variablen Betrag.</string>
+    <string name="add_transaction_template_apply">Anwenden</string>
+    <string name="add_transaction_template_cancel">Abbrechen</string>
+    <string name="add_transaction_loading">Formulardaten werden geladen...</string>
+    <string name="add_transaction_expense">Ausgabe</string>
+    <string name="add_transaction_income">Einnahme</string>
+    <string name="add_transaction_amount">Betrag</string>
+    <string name="add_transaction_account">Konto</string>
+    <string name="add_transaction_category">Kategorie</string>
+    <string name="add_transaction_note">Notiz</string>
+    <string name="add_transaction_note_placeholder">Optionaler Hinweis</string>
+    <string name="add_transaction_date">Datum</string>
+    <string name="add_transaction_date_hint">JJJJ-MM-TT</string>
+    <string name="add_transaction_save">Transaktion speichern</string>
+    <string name="add_transaction_saving">Speichern...</string>
+    <string name="add_transaction_no_accounts_title">Noch keine Konten</string>
+    <string name="add_transaction_no_accounts_body">Erstellen Sie ein Konto, bevor Sie Transaktionen aufzeichnen.</string>
+    <string name="add_transaction_no_categories_title">Keine Kategorien für diesen Typ</string>
+    <string name="add_transaction_no_categories_body">Erstellen Sie vor dem Speichern eine Ausgaben- oder Einnahmenkategorie.</string>
+    <string name="add_transaction_retry">Erneut versuchen</string>
+    <string name="add_transaction_error_generic">Die Transaktion konnte nicht gespeichert werden.</string>
+    <string name="add_transaction_error_invalid_amount">Geben Sie einen Betrag größer als Null ein.</string>
+    <string name="add_transaction_error_invalid_date">Geben Sie ein gültiges Datum im Format JJJJ-MM-TT ein.</string>
+    <string name="add_transaction_error_account_required">Wählen Sie ein Konto.</string>
+    <string name="add_transaction_error_category_required">Wählen Sie eine Kategorie.</string>
+    <string name="add_transaction_error_account_not_found">Das ausgewählte Konto ist nicht mehr verfügbar.</string>
+    <string name="add_transaction_error_category_not_found">Die ausgewählte Kategorie ist nicht mehr verfügbar.</string>
+    <string name="add_transaction_error_category_type">Wählen Sie eine Kategorie, die zum Transaktionstyp passt.</string>
+</resources>

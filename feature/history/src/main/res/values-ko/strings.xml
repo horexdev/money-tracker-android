@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">내역</string>
+    <string name="history_subtitle">오프라인 거래 검색, 필터링, 편집 및 삭제</string>
+    <string name="history_empty_title">거래 없음</string>
+    <string name="history_empty_body">새로운 수입과 지출이 저장되면 여기에 나타납니다.</string>
+    <string name="history_loading">로딩 이력</string>
+    <string name="history_search">거래 검색</string>
+    <string name="history_apply_filters">Apply filters</string>
+    <string name="history_clear_filters">클리어</string>
+    <string name="history_all_accounts">모든 계좌</string>
+    <string name="history_all_categories">All categories</string>
+    <string name="history_load_more">더 로드</string>
+    <string name="history_page_label">%2$d의 페이지 %1$d</string>
+    <string name="history_income">수입</string>
+    <string name="history_expense">지출</string>
+    <string name="history_edit">거래 편집</string>
+    <string name="history_delete">거래 삭제</string>
+    <string name="history_delete_title">거래를 삭제하시겠습니까?</string>
+    <string name="history_delete_body">이 거래는 로컬 원장에서 제거됩니다.</string>
+    <string name="history_cancel">취소</string>
+    <string name="history_save">거래 저장</string>
+    <string name="history_amount">금액</string>
+    <string name="history_date">날짜</string>
+    <string name="history_date_hint">YYYY-MM-DD</string>
+    <string name="history_category">카테고리</string>
+    <string name="history_note">메모</string>
+    <string name="history_note_empty">음표 없음</string>
+    <string name="history_account">계좌</string>
+    <string name="history_retry">다시 시도</string>
+    <string name="history_error_generic">작업을 완료할 수 없습니다.</string>
+    <string name="history_error_invalid_amount">양수 금액을 입력하세요.</string>
+    <string name="history_error_invalid_date">YYYY-MM-DD 형식의 유효한 날짜를 사용하세요.</string>
+    <string name="history_error_category">호환되는 카테고리를 선택하세요.</string>
+    <string name="history_error_linked_transfer">연계 이체 거래 내역을 편집하거나 삭제할 수 없습니다.</string>
+    <string name="history_error_not_found">거래를 찾을 수 없습니다.</string>
+</resources>

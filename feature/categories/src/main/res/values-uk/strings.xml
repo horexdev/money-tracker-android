@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Категорії</string>
+    <string name="categories_subtitle">Керуйте іменами, значками, кольорами та типами транзакцій</string>
+    <string name="categories_empty_title">немає категорій</string>
+    <string name="categories_empty_body">Створіть категорію для класифікації доходів і витрат офлайн.</string>
+    <string name="categories_add">Додати категорію</string>
+    <string name="categories_edit">Редагувати категорію</string>
+    <string name="categories_create">Створити категорію</string>
+    <string name="categories_save">Зберегти категорію</string>
+    <string name="categories_delete">Видалити категорію</string>
+    <string name="categories_delete_title">Видалити категорію?</string>
+    <string name="categories_delete_body">Категорія буде прихована від нових транзакцій. Існуюча історія зберігає свій ярлик.</string>
+    <string name="categories_cancel">Скасувати</string>
+    <string name="categories_retry">Повторити</string>
+    <string name="categories_loading">Завантаження категорій</string>
+    <string name="categories_name">Назва</string>
+    <string name="categories_name_placeholder">Бакалія</string>
+    <string name="categories_type">Тип</string>
+    <string name="categories_color">Колір</string>
+    <string name="categories_icon">Іконка</string>
+    <string name="categories_all">Усі</string>
+    <string name="categories_type_expense">Витрата</string>
+    <string name="categories_type_income">Дохід</string>
+    <string name="categories_type_both">Обидва</string>
+    <string name="categories_type_savings">Накопичувальний</string>
+    <string name="categories_type_transfer">Перевести</string>
+    <string name="categories_type_adjustment">Коригування</string>
+    <string name="categories_protected">Захищено</string>
+    <string name="categories_system">Системні</string>
+    <string name="categories_error_generic">Не вдалося завершити дію.</string>
+    <string name="categories_error_empty_name">Введіть назву категорії.</string>
+    <string name="categories_error_duplicate_name">категорія з такою назвою вже існує.</string>
+    <string name="categories_error_protected">Захищені категорії не можна змінити.</string>
+    <string name="categories_error_not_found">категорію не знайдено.</string>
+    <string name="categories_icon_food">Їжа</string>
+    <string name="categories_icon_transport">Транспорт</string>
+    <string name="categories_icon_home">Головна</string>
+    <string name="categories_icon_shopping">Покупки</string>
+    <string name="categories_icon_work">Робота</string>
+    <string name="categories_icon_money">Гроші</string>
+    <string name="categories_icon_savings">Накопичувальний</string>
+    <string name="categories_icon_transfer">Перевести</string>
+    <string name="categories_icon_other">Інше</string>
+</resources>

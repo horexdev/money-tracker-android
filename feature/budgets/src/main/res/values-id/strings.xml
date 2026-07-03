@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Anggaran</string>
+    <string name="budgets_subtitle">Lacak batas pengeluaran berdasarkan kategori dan periode saat ini.</string>
+    <string name="budgets_loading">Memuat anggaran</string>
+    <string name="budgets_empty_title">Belum ada anggaran</string>
+    <string name="budgets_empty_body">Buat batas kategori pengeluaran untuk melihat kemajuan di sini.</string>
+    <string name="budgets_no_categories_title">Tidak ada kategori pengeluaran</string>
+    <string name="budgets_no_categories_body">Buat kategori pengeluaran sebelum menambahkan anggaran.</string>
+    <string name="budgets_add">Tambahkan anggaran</string>
+    <string name="budgets_create">Buat anggaran</string>
+    <string name="budgets_edit">Edit anggaran</string>
+    <string name="budgets_save">Menghemat anggaran</string>
+    <string name="budgets_delete">Hapus anggaran</string>
+    <string name="budgets_cancel">Batal</string>
+    <string name="budgets_retry">Coba lagi</string>
+    <string name="budgets_category">Kategori</string>
+    <string name="budgets_period">Periode</string>
+    <string name="budgets_period_weekly">Mingguan</string>
+    <string name="budgets_period_monthly">Bulanan</string>
+    <string name="budgets_limit">Batas</string>
+    <string name="budgets_spent_of_limit">%1$s dari %2$s</string>
+    <string name="budgets_remaining">Tersisa: %1$s</string>
+    <string name="budgets_over_limit">Melebihi batas sebesar %1$s</string>
+    <string name="budgets_over_limit_chip">Melebihi batas</string>
+    <string name="budgets_progress_percent">%1$d%% digunakan</string>
+    <string name="budgets_currency">Mata uang</string>
+    <string name="budgets_notifications">Notifikasi</string>
+    <string name="budgets_notifications_enabled">Notifikasi aktif</string>
+    <string name="budgets_notifications_disabled">Notifikasi mati</string>
+    <string name="budgets_notify_at">Beritahukan dalam persen</string>
+    <string name="budgets_transactions">Transaksi</string>
+    <string name="budgets_transactions_title">Transaksi anggaran</string>
+    <string name="budgets_transactions_empty">Tidak ada transaksi pada periode berjalan.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Hapus anggaran?</string>
+    <string name="budgets_delete_body">Ini menghilangkan batas anggaran. Transaksi tetap tidak berubah.</string>
+    <string name="budgets_error_generic">Tindakan anggaran gagal.</string>
+    <string name="budgets_error_amount">Batasan anggaran harus dalam jumlah positif.</string>
+    <string name="budgets_error_currency">Mata uang harus berupa kode ISO 3 huruf.</string>
+    <string name="budgets_error_notify_percent">Persentase notifikasi harus positif.</string>
+    <string name="budgets_error_duplicate">Kategori ini sudah memiliki anggaran untuk periode yang dipilih.</string>
+    <string name="budgets_error_category">Pilih kategori pengeluaran.</string>
+    <string name="budgets_error_not_found">Anggaran tidak ditemukan.</string>
+</resources>

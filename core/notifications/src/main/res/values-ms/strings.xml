@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_budget_alerts_name">Makluman belanjawan</string>
+    <string name="notification_channel_budget_alerts_description">Makluman tempatan apabila ambang belanjawan memerlukan perhatian.</string>
+    <string name="notification_channel_recurring_reminders_name">Peringatan berulang</string>
+    <string name="notification_channel_recurring_reminders_description">Peringatan tempatan untuk transaksi berulang.</string>
+    <string name="notification_channel_goal_milestones_name">Pencapaian matlamat</string>
+    <string name="notification_channel_goal_milestones_description">Kemas kini tempatan tentang kemajuan matlamat simpanan.</string>
+    <string name="notification_channel_weekly_summary_name">Ringkasan mingguan</string>
+    <string name="notification_channel_weekly_summary_description">Pemberitahuan ringkasan kewangan mingguan tempatan.</string>
+</resources>

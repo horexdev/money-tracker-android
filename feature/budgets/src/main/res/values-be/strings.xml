@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Бюджэты</string>
+    <string name="budgets_subtitle">адсочвайце ліміты выдаткаў па катэгорыях і бягучым перыядзе.</string>
+    <string name="budgets_loading">Загрузка бюджэтаў</string>
+    <string name="budgets_empty_title">Бюджэтаў пакуль няма</string>
+    <string name="budgets_empty_body">Стварыце ліміт для катэгорыі выдаткаў, каб бачыць прагрэс тут.</string>
+    <string name="budgets_no_categories_title">Няма катэгорый выдаткаў</string>
+    <string name="budgets_no_categories_body">Стварыце катэгорыю выдаткаў перад даданнем бюджэту.</string>
+    <string name="budgets_add">Дадаць бюджэт</string>
+    <string name="budgets_create">Стварыце бюджэт</string>
+    <string name="budgets_edit">Рэдагаваць бюджэт</string>
+    <string name="budgets_save">Эканомія бюджэту</string>
+    <string name="budgets_delete">Выдаліць бюджэт</string>
+    <string name="budgets_cancel">Скасаваць</string>
+    <string name="budgets_retry">Паўтарыць</string>
+    <string name="budgets_category">Катэгорыя</string>
+    <string name="budgets_period">Перыяд</string>
+    <string name="budgets_period_weekly">Штотыдзень</string>
+    <string name="budgets_period_monthly">Штомесяц</string>
+    <string name="budgets_limit">Ліміт</string>
+    <string name="budgets_spent_of_limit">%1$s з %2$s</string>
+    <string name="budgets_remaining">Засталося: %1$s</string>
+    <string name="budgets_over_limit">Перавышэнне ліміту %1$s</string>
+    <string name="budgets_over_limit_chip">Перавышэнне ліміту</string>
+    <string name="budgets_progress_percent">%1$d%% выкарыстоўваецца</string>
+    <string name="budgets_currency">Валюта</string>
+    <string name="budgets_notifications">Апавяшчэнні</string>
+    <string name="budgets_notifications_enabled">Апавяшчэнні ўключаны</string>
+    <string name="budgets_notifications_disabled">Апавяшчэнні выключаны</string>
+    <string name="budgets_notify_at">Апавяшчаць у працэнтах</string>
+    <string name="budgets_transactions">Транзакцыі</string>
+    <string name="budgets_transactions_title">Бюджэтныя аперацыі</string>
+    <string name="budgets_transactions_empty">Няма транзакцый у бягучым перыядзе.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Выдаліць бюджэт?</string>
+    <string name="budgets_delete_body">гэта здымае абмежаванне бюджэту. Транзакцыі застаюцца нязменнымі.</string>
+    <string name="budgets_error_generic">дзеянне бюджэту не выканана.</string>
+    <string name="budgets_error_amount">Ліміт бюджэту павінен быць станоўчай велічынёй.</string>
+    <string name="budgets_error_currency">Валюта павінна быць 3-літарным кодам ISO.</string>
+    <string name="budgets_error_notify_percent">працэнт апавяшчэння павінен быць станоўчым.</string>
+    <string name="budgets_error_duplicate">У гэтай катэгорыі ўжо ёсць бюджэт на выбраны перыяд.</string>
+    <string name="budgets_error_category">Выберыце катэгорыю выдаткаў.</string>
+    <string name="budgets_error_not_found">Бюджэт не знойдзены.</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Übersicht</string>
+    <string name="feature_home_subtitle">Die Root-Navigation ist bereit.</string>
+    <string name="home_subtitle">Offline-Übersicht der Guthaben und letzten Aktivitäten.</string>
+    <string name="home_loading">Dashboard wird geladen...</string>
+    <string name="home_retry">Erneut versuchen</string>
+    <string name="home_error_generic">Dashboard-Daten konnten nicht geladen werden.</string>
+    <string name="home_net_balance">Nettosaldo</string>
+    <string name="home_all_accounts">Alle Konten</string>
+    <string name="home_add_transaction">Transaktion hinzufügen</string>
+    <string name="home_income">Einnahme</string>
+    <string name="home_expense">Ausgabe</string>
+    <string name="home_recent_transactions">Letzte Transaktionen</string>
+    <string name="home_quick_templates">Schnellvorlagen</string>
+    <string name="home_quick_templates_empty">Erstellen Sie Vorlagen, um häufige Transaktionen über das Dashboard anzuwenden.</string>
+    <string name="home_template_amount_prompt_title">Betrag eingeben</string>
+    <string name="home_template_amount_prompt_body">Diese Vorlage verwendet einen variablen Betrag.</string>
+    <string name="home_template_amount">Betrag</string>
+    <string name="home_template_apply">Anwenden</string>
+    <string name="home_template_cancel">Abbrechen</string>
+    <string name="home_template_variable">Variable</string>
+    <string name="home_view_all">Alle anzeigen</string>
+    <string name="home_empty_title">Noch keine Transaktionen</string>
+    <string name="home_empty_body">Fügen Sie die erste Transaktion hinzu, um mit der Verfolgung zu beginnen.</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Overzicht</string>
+    <string name="feature_home_subtitle">Rootnavigatie is gereed.</string>
+    <string name="home_subtitle">Offline momentopname van saldi en recente activiteit.</string>
+    <string name="home_loading">Dashboard laden...</string>
+    <string name="home_retry">Opnieuw proberen</string>
+    <string name="home_error_generic">Dashboardgegevens konden niet worden geladen.</string>
+    <string name="home_net_balance">Nettosaldo</string>
+    <string name="home_all_accounts">Alle rekeningen</string>
+    <string name="home_add_transaction">Transactie toevoegen</string>
+    <string name="home_income">Inkomst</string>
+    <string name="home_expense">Uitgave</string>
+    <string name="home_recent_transactions">Recente transacties</string>
+    <string name="home_quick_templates">Snelle sjablonen</string>
+    <string name="home_quick_templates_empty">Maak sjablonen om frequente transacties vanaf het dashboard toe te passen.</string>
+    <string name="home_template_amount_prompt_title">Bedrag invoeren</string>
+    <string name="home_template_amount_prompt_body">Deze sjabloon gebruikt een variabel bedrag.</string>
+    <string name="home_template_amount">Bedrag</string>
+    <string name="home_template_apply">Toepassen</string>
+    <string name="home_template_cancel">Annuleren</string>
+    <string name="home_template_variable">Variabel</string>
+    <string name="home_view_all">Alles bekijken</string>
+    <string name="home_empty_title">Nog geen transacties</string>
+    <string name="home_empty_body">Voeg de eerste transactie toe om het volgen te starten.</string>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">الإحصائيات</string>
+    <string name="stats_subtitle">تصنيف الفئات والاتجاهات والتنقل.</string>
+    <string name="stats_loading">تحميل الإحصائيات</string>
+    <string name="stats_retry">إعادة المحاولة</string>
+    <string name="stats_error_generic">تعذر تحميل الإحصائيات.</string>
+    <string name="stats_empty_title">لا توجد إحصائيات لهذا الفلتر</string>
+    <string name="stats_empty_body">تغيير الحساب أو الفترة أو إضافة المعاملات لرؤية الرسوم البيانية.</string>
+    <string name="stats_filter_accounts">الحسابات</string>
+    <string name="stats_filter_period">الفترة</string>
+    <string name="stats_filter_currency">العملة</string>
+    <string name="stats_filter_type">الانهيار</string>
+    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_all_accounts">جميع الحسابات</string>
+    <string name="stats_today">اليوم</string>
+    <string name="stats_week">الأسبوع</string>
+    <string name="stats_month">شهر</string>
+    <string name="stats_last_month">الشهر الماضي</string>
+    <string name="stats_expense">مصروف</string>
+    <string name="stats_income">دخل</string>
+    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_stacked_bar">Stacked</string>
+    <string name="stats_style_dual_bar">الدخل / المصروفات</string>
+    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_income_total">دخل</string>
+    <string name="stats_expense_total">مصروف</string>
+    <string name="stats_net_total">صافي</string>
+    <string name="stats_transactions_count">%1$d تكساس</string>
+    <string name="stats_open_history">المعاملات المفتوحة لـ %1$s</string>
+</resources>

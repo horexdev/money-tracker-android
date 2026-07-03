@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Bütçeler</string>
+    <string name="budgets_subtitle">Harcama limitlerini kategoriye ve cari döneme göre takip edin.</string>
+    <string name="budgets_loading">Bütçeler yükleniyor</string>
+    <string name="budgets_empty_title">Henüz bütçe yok</string>
+    <string name="budgets_empty_body">Buradaki ilerlemeyi görmek için gider kategorisine yönelik bir sınır oluşturun.</string>
+    <string name="budgets_no_categories_title">Gider kategorisi yok</string>
+    <string name="budgets_no_categories_body">Bütçe eklemeden önce gider kategorisi oluşturun.</string>
+    <string name="budgets_add">Bütçe ekle</string>
+    <string name="budgets_create">Bütçe oluştur</string>
+    <string name="budgets_edit">Edit budget</string>
+    <string name="budgets_save">Bütçeden tasarruf edin</string>
+    <string name="budgets_delete">Bütçeyi sil</string>
+    <string name="budgets_cancel">İptal</string>
+    <string name="budgets_retry">Tekrar dene</string>
+    <string name="budgets_category">Kategori</string>
+    <string name="budgets_period">Dönem</string>
+    <string name="budgets_period_weekly">Haftalık</string>
+    <string name="budgets_period_monthly">Aylık</string>
+    <string name="budgets_limit">Limit</string>
+    <string name="budgets_spent_of_limit">%2$s\'in %1$s\'i</string>
+    <string name="budgets_remaining">Remaining: %1$s</string>
+    <string name="budgets_over_limit">Over limit by %1$s</string>
+    <string name="budgets_over_limit_chip">Limit aşımı</string>
+    <string name="budgets_progress_percent">%1$d%% kullanıldı</string>
+    <string name="budgets_currency">Para birimi</string>
+    <string name="budgets_notifications">Bildirimler</string>
+    <string name="budgets_notifications_enabled">Bildirimler açık</string>
+    <string name="budgets_notifications_disabled">Bildirimler kapalı</string>
+    <string name="budgets_notify_at">Yüzde olarak bildir</string>
+    <string name="budgets_transactions">İşlemler</string>
+    <string name="budgets_transactions_title">Budget transactions</string>
+    <string name="budgets_transactions_empty">No transactions in the current period.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Bütçe silinsin mi?</string>
+    <string name="budgets_delete_body">This removes the budget limit. İşlemler değişmeden kalır.</string>
+    <string name="budgets_error_generic">Bütçe eylemi başarısız oldu.</string>
+    <string name="budgets_error_amount">Budget limit must be a positive amount.</string>
+    <string name="budgets_error_currency">Para birimi 3 harfli ISO kodu olmalıdır.</string>
+    <string name="budgets_error_notify_percent">Notification percent must be positive.</string>
+    <string name="budgets_error_duplicate">Bu kategorinin seçilen dönem için zaten bir bütçesi var.</string>
+    <string name="budgets_error_category">Select an expense category.</string>
+    <string name="budgets_error_not_found">Budget was not found.</string>
+</resources>

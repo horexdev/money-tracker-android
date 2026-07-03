@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Verlauf</string>
+    <string name="history_subtitle">Offline-Transaktionen suchen, filtern, bearbeiten und löschen</string>
+    <string name="history_empty_title">Keine Transaktionen</string>
+    <string name="history_empty_body">Neue Einnahmen und Ausgaben werden hier angezeigt, nachdem sie gespeichert wurden.</string>
+    <string name="history_loading">Ladeverlauf</string>
+    <string name="history_search">Transaktionen suchen</string>
+    <string name="history_apply_filters">Filter anwenden</string>
+    <string name="history_clear_filters">Klar</string>
+    <string name="history_all_accounts">Alle Konten</string>
+    <string name="history_all_categories">Alle Kategorien</string>
+    <string name="history_load_more">Mehr laden</string>
+    <string name="history_page_label">Seite %1$d von %2$d</string>
+    <string name="history_income">Einnahme</string>
+    <string name="history_expense">Ausgabe</string>
+    <string name="history_edit">Transaktion bearbeiten</string>
+    <string name="history_delete">Transaktion löschen</string>
+    <string name="history_delete_title">Transaktion löschen?</string>
+    <string name="history_delete_body">Diese Transaktion wird aus dem lokalen Hauptbuch entfernt.</string>
+    <string name="history_cancel">Abbrechen</string>
+    <string name="history_save">Transaktion speichern</string>
+    <string name="history_amount">Betrag</string>
+    <string name="history_date">Datum</string>
+    <string name="history_date_hint">JJJJ-MM-TT</string>
+    <string name="history_category">Kategorie</string>
+    <string name="history_note">Notiz</string>
+    <string name="history_note_empty">Keine Notiz</string>
+    <string name="history_account">Konto</string>
+    <string name="history_retry">Erneut versuchen</string>
+    <string name="history_error_generic">Die Aktion konnte nicht abgeschlossen werden.</string>
+    <string name="history_error_invalid_amount">Geben Sie einen positiven Betrag ein.</string>
+    <string name="history_error_invalid_date">Verwenden Sie ein gültiges Datum im Format JJJJ-MM-TT.</string>
+    <string name="history_error_category">Wählen Sie eine kompatible Kategorie.</string>
+    <string name="history_error_linked_transfer">Verknüpfte Überweisungstransaktionen können nicht bearbeitet oder aus dem Verlauf gelöscht werden.</string>
+    <string name="history_error_not_found">Transaktion wurde nicht gefunden.</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Санаттар</string>
+    <string name="categories_subtitle">атауларды, белгішелерді, түстерді және транзакция түрлерін басқарыңыз</string>
+    <string name="categories_empty_title">Санаттар жоқ</string>
+    <string name="categories_empty_body">кірістер мен шығыстарды желіден тыс жіктеу үшін санат жасаңыз.</string>
+    <string name="categories_add">Санат қосу</string>
+    <string name="categories_edit">Санатты өңдеу</string>
+    <string name="categories_create">Санат жасау</string>
+    <string name="categories_save">Санатты сақтау</string>
+    <string name="categories_delete">Санатты жою</string>
+    <string name="categories_delete_title">Санатты жою керек пе?</string>
+    <string name="categories_delete_body">Санат жаңа транзакциялардан жасырылады. Бар тарих өз белгісін сақтайды.</string>
+    <string name="categories_cancel">Болдырмау</string>
+    <string name="categories_retry">Қайталау</string>
+    <string name="categories_loading">Санаттар жүктелуде</string>
+    <string name="categories_name">Атауы</string>
+    <string name="categories_name_placeholder">Азық-түлік</string>
+    <string name="categories_type">Түрі</string>
+    <string name="categories_color">Түс</string>
+    <string name="categories_icon">Белгіше</string>
+    <string name="categories_all">Барлығы</string>
+    <string name="categories_type_expense">Шығыс</string>
+    <string name="categories_type_income">Кіріс</string>
+    <string name="categories_type_both">Екеуі де</string>
+    <string name="categories_type_savings">Жинақтау</string>
+    <string name="categories_type_transfer">Аудару</string>
+    <string name="categories_type_adjustment">Реттеу</string>
+    <string name="categories_protected">қорғалған</string>
+    <string name="categories_system">Жүйелік</string>
+    <string name="categories_error_generic">әрекетті аяқтау мүмкін емес.</string>
+    <string name="categories_error_empty_name">санат атауын енгізіңіз.</string>
+    <string name="categories_error_duplicate_name">Мұндай атау бар санат бұрыннан бар.</string>
+    <string name="categories_error_protected">қорғалған санаттарды өзгерту мүмкін емес.</string>
+    <string name="categories_error_not_found">Санат табылмады.</string>
+    <string name="categories_icon_food">Тамақ</string>
+    <string name="categories_icon_transport">Көлік</string>
+    <string name="categories_icon_home">Басты бет</string>
+    <string name="categories_icon_shopping">Сауда</string>
+    <string name="categories_icon_work">Жұмыс</string>
+    <string name="categories_icon_money">Ақша</string>
+    <string name="categories_icon_savings">Жинақтау</string>
+    <string name="categories_icon_transfer">Аудару</string>
+    <string name="categories_icon_other">Басқа</string>
+</resources>

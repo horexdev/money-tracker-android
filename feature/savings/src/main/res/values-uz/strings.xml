@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Jamg\'arma</string>
+    <string name="savings_subtitle">Maqsad taraqqiyoti, depozitlar, pul yechib olish va tarixni kuzatib boring.</string>
+    <string name="savings_loading">tejash maqsadlari yuklanmoqda</string>
+    <string name="savings_empty_title">Hozircha maqsadlar yo\'q</string>
+    <string name="savings_empty_body">Maqsadli miqdorga erishishni kuzatish uchun maqsad yarating.</string>
+    <string name="savings_add">Maqsad qo\'shing</string>
+    <string name="savings_create">Maqsad yarating</string>
+    <string name="savings_edit">Maqsadni tahrirlash</string>
+    <string name="savings_save">Maqsadni saqlang</string>
+    <string name="savings_delete">Maqsadni o\'chirish</string>
+    <string name="savings_cancel">Bekor qilish</string>
+    <string name="savings_retry">Qayta urinish</string>
+    <string name="savings_name">Maqsad nomi</string>
+    <string name="savings_target">Maqsadli miqdor</string>
+    <string name="savings_currency">Valyuta</string>
+    <string name="savings_deadline_optional">Tugatish muddati (YYYY-AA-DD, ixtiyoriy)</string>
+    <string name="savings_account">Bog\'langan hisob</string>
+    <string name="savings_no_account">Bog\'langan hisob yo\'q</string>
+    <string name="savings_progress_percent">%1$d%% tugallandi</string>
+    <string name="savings_amount_progress">%2$sning %1$s</string>
+    <string name="savings_remaining">Qolgan: %1$s</string>
+    <string name="savings_completed">Bajarildi</string>
+    <string name="savings_deposit">Kiritish</string>
+    <string name="savings_withdraw">Yechish</string>
+    <string name="savings_history">Tarix</string>
+    <string name="savings_history_title">Gollar tarixi</string>
+    <string name="savings_history_empty">Hozircha depozit yoki pul yechilmagan.</string>
+    <string name="savings_operation_amount">Summa</string>
+    <string name="savings_operation_note">Izoh</string>
+    <string name="savings_operation_note_placeholder">ixtiyoriy operatsiya eslatmasi</string>
+    <string name="savings_delete_title">Maqsad o\'chirilsinmi?</string>
+    <string name="savings_delete_body">Bu maqsad va uning gol tarixini olib tashlaydi. Bog\'langan hisob operatsiyalari o\'zgarishsiz qoladi.</string>
+    <string name="savings_error_generic">Saqlash amali bajarilmadi.</string>
+    <string name="savings_error_name">Maqsad nomi kerak.</string>
+    <string name="savings_error_amount">Miqdor ijobiy bo\'lishi kerak.</string>
+    <string name="savings_error_currency">Valyuta 3 harfli ISO kodi boʻlishi kerak.</string>
+    <string name="savings_error_deadline">Yakuniy muddat YYYY-MM-DDdan foydalanishi kerak.</string>
+    <string name="savings_error_account">Bog\'langan hisob topilmadi.</string>
+    <string name="savings_error_category">Tejamkorlik toifasi yo\'q.</string>
+    <string name="savings_error_funds">Pul olish joriy maqsad miqdoridan yuqori.</string>
+    <string name="savings_error_not_found">Tejamkorlik maqsadi topilmadi.</string>
+</resources>

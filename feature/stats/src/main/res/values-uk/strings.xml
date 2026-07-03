@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Статистика</string>
+    <string name="stats_subtitle">Розбивка категорій, тенденції та деталізація.</string>
+    <string name="stats_loading">Завантаження статистики</string>
+    <string name="stats_retry">Повторити</string>
+    <string name="stats_error_generic">Не вдалося завантажити статистику.</string>
+    <string name="stats_empty_title">Немає статистики для цього фільтра</string>
+    <string name="stats_empty_body">змініть рахунок, період або додайте транзакції, щоб переглянути діаграми.</string>
+    <string name="stats_filter_accounts">Рахунки</string>
+    <string name="stats_filter_period">Період</string>
+    <string name="stats_filter_currency">Валюта</string>
+    <string name="stats_filter_type">Поломка</string>
+    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_all_accounts">Всі рахунки</string>
+    <string name="stats_today">Сьогодні</string>
+    <string name="stats_week">тиждень</string>
+    <string name="stats_month">Місяць</string>
+    <string name="stats_last_month">Минулого місяця</string>
+    <string name="stats_expense">Витрата</string>
+    <string name="stats_income">Дохід</string>
+    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_stacked_bar">складено</string>
+    <string name="stats_style_dual_bar">Доходи / витрати</string>
+    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_income_total">Дохід</string>
+    <string name="stats_expense_total">Витрата</string>
+    <string name="stats_net_total">Чистий</string>
+    <string name="stats_transactions_count">%1$d передача</string>
+    <string name="stats_open_history">відкриті транзакції для %1$s</string>
+</resources>

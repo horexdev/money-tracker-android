@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="savings_title">Накопичувальний</string>
+    <string name="savings_subtitle">відстежуйте досягнення мети, депозити, зняття коштів та історію.</string>
+    <string name="savings_loading">Завантаження цілей заощаджень</string>
+    <string name="savings_empty_title">Голів ще немає</string>
+    <string name="savings_empty_body">Створіть ціль, щоб відстежувати прогрес у досягненні цільової суми.</string>
+    <string name="savings_add">Додати гол</string>
+    <string name="savings_create">Створити гол</string>
+    <string name="savings_edit">Редагувати ціль</string>
+    <string name="savings_save">Зберегти гол</string>
+    <string name="savings_delete">Видалити гол</string>
+    <string name="savings_cancel">Скасувати</string>
+    <string name="savings_retry">Повторити</string>
+    <string name="savings_name">Назва цілі</string>
+    <string name="savings_target">Цільова сума</string>
+    <string name="savings_currency">Валюта</string>
+    <string name="savings_deadline_optional">Кінцевий термін (РРРР-ММ-ДД, необов’язково)</string>
+    <string name="savings_account">пов’язаний обліковий запис</string>
+    <string name="savings_no_account">немає пов’язаного облікового запису</string>
+    <string name="savings_progress_percent">%1$d%% завершено</string>
+    <string name="savings_amount_progress">%1$s з %2$s</string>
+    <string name="savings_remaining">Залишилося: %1$s</string>
+    <string name="savings_completed">Завершено</string>
+    <string name="savings_deposit">Поповнити</string>
+    <string name="savings_withdraw">Зняти</string>
+    <string name="savings_history">Історія</string>
+    <string name="savings_history_title">Історія голів</string>
+    <string name="savings_history_empty">Поки що немає депозитів або зняття коштів.</string>
+    <string name="savings_operation_amount">Сума</string>
+    <string name="savings_operation_note">Нотатка</string>
+    <string name="savings_operation_note_placeholder">Додаткова примітка щодо операції</string>
+    <string name="savings_delete_title">Видалити гол?</string>
+    <string name="savings_delete_body">Це видаляє ціль і історію голів. Трансакції пов’язаних облікових записів залишаються незмінними.</string>
+    <string name="savings_error_generic">Помилка збереження.</string>
+    <string name="savings_error_name">потрібно вказати назву цілі.</string>
+    <string name="savings_error_amount">сума має бути позитивною.</string>
+    <string name="savings_error_currency">валюта має бути 3-буквеним кодом ISO.</string>
+    <string name="savings_error_deadline">кінцевий термін має використовуватися у вигляді РРРР-ММ-ДД.</string>
+    <string name="savings_error_account">пов’язаний обліковий запис не знайдено.</string>
+    <string name="savings_error_category">Відсутня категорія заощаджень.</string>
+    <string name="savings_error_funds">Зняття коштів перевищує поточну цільову суму.</string>
+    <string name="savings_error_not_found">мета економії не знайдена.</string>
+</resources>

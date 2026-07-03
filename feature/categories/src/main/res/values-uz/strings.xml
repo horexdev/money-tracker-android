@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Kategoriyalar</string>
+    <string name="categories_subtitle">Ismlar, piktogrammalar, ranglar va tranzaksiya turlarini boshqaring</string>
+    <string name="categories_empty_title">Kategoriyalar yo\'q</string>
+    <string name="categories_empty_body">Daromad va xarajatlarni oflayn rejimda tasniflash uchun toifa yarating.</string>
+    <string name="categories_add">Turkum qo‘shing</string>
+    <string name="categories_edit">Kategoriyani tahrirlash</string>
+    <string name="categories_create">Kategoriya yaratish</string>
+    <string name="categories_save">Kategoriyani saqlang</string>
+    <string name="categories_delete">Kategoriyani oʻchirish</string>
+    <string name="categories_delete_title">Kategoriya o‘chirilsinmi?</string>
+    <string name="categories_delete_body">Kategoriya yangi tranzaksiyalardan yashiriladi. Mavjud tarix o\'z belgisini saqlab qoladi.</string>
+    <string name="categories_cancel">Bekor qilish</string>
+    <string name="categories_retry">Qayta urinish</string>
+    <string name="categories_loading">Kategoriyalar yuklanmoqda</string>
+    <string name="categories_name">Nomi</string>
+    <string name="categories_name_placeholder">Oziq-ovqat</string>
+    <string name="categories_type">Turi</string>
+    <string name="categories_color">Rang</string>
+    <string name="categories_icon">Belgi</string>
+    <string name="categories_all">Barchasi</string>
+    <string name="categories_type_expense">Xarajat</string>
+    <string name="categories_type_income">Daromad</string>
+    <string name="categories_type_both">Ikkalasi</string>
+    <string name="categories_type_savings">Jamg\'arma</string>
+    <string name="categories_type_transfer">O\'tkazish</string>
+    <string name="categories_type_adjustment">Sozlash</string>
+    <string name="categories_protected">Himoyalangan</string>
+    <string name="categories_system">Tizimiy</string>
+    <string name="categories_error_generic">Amalni yakunlab bo‘lmadi.</string>
+    <string name="categories_error_empty_name">Kategoriya nomini kiriting.</string>
+    <string name="categories_error_duplicate_name">Bu nomdagi turkum allaqachon mavjud.</string>
+    <string name="categories_error_protected">Himoyalangan toifalarni o\'zgartirib bo\'lmaydi.</string>
+    <string name="categories_error_not_found">Turkum topilmadi.</string>
+    <string name="categories_icon_food">Oziq-ovqat</string>
+    <string name="categories_icon_transport">Transport</string>
+    <string name="categories_icon_home">Bosh sahifa</string>
+    <string name="categories_icon_shopping">Xarid</string>
+    <string name="categories_icon_work">Ish</string>
+    <string name="categories_icon_money">Pul</string>
+    <string name="categories_icon_savings">Jamg\'arma</string>
+    <string name="categories_icon_transfer">O\'tkazish</string>
+    <string name="categories_icon_other">Boshqa</string>
+</resources>

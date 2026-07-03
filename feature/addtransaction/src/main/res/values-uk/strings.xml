@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_transaction_title">Додати транзакцію</string>
+    <string name="add_transaction_subtitle">Запишіть витрати або доходи у вашій місцевій книзі.</string>
+    <string name="add_transaction_quick_templates">Швидкі шаблони</string>
+    <string name="add_transaction_template_variable">змінна</string>
+    <string name="add_transaction_template_amount_title">Введіть суму</string>
+    <string name="add_transaction_template_amount_body">цей шаблон використовує змінну суму.</string>
+    <string name="add_transaction_template_apply">Застосувати</string>
+    <string name="add_transaction_template_cancel">Скасувати</string>
+    <string name="add_transaction_loading">Завантаження даних форми...</string>
+    <string name="add_transaction_expense">Витрата</string>
+    <string name="add_transaction_income">Дохід</string>
+    <string name="add_transaction_amount">Сума</string>
+    <string name="add_transaction_account">Рахунок</string>
+    <string name="add_transaction_category">Категорія</string>
+    <string name="add_transaction_note">Нотатка</string>
+    <string name="add_transaction_note_placeholder">необов\'язкова примітка</string>
+    <string name="add_transaction_date">Дата</string>
+    <string name="add_transaction_date_hint">РРРР-ММ-ДД</string>
+    <string name="add_transaction_save">Зберегти транзакцію</string>
+    <string name="add_transaction_saving">Збереження...</string>
+    <string name="add_transaction_no_accounts_title">облікових записів ще немає</string>
+    <string name="add_transaction_no_accounts_body">створіть обліковий запис перед записом транзакцій.</string>
+    <string name="add_transaction_no_categories_title">Немає категорій для цього типу</string>
+    <string name="add_transaction_no_categories_body">Створіть категорію витрат або доходів перед збереженням.</string>
+    <string name="add_transaction_retry">Повторити</string>
+    <string name="add_transaction_error_generic">Не вдалося зберегти транзакцію.</string>
+    <string name="add_transaction_error_invalid_amount">введіть суму, більшу за нуль.</string>
+    <string name="add_transaction_error_invalid_date">Введіть дійсну дату як РРРР-ММ-ДД.</string>
+    <string name="add_transaction_error_account_required">Виберіть обліковий запис.</string>
+    <string name="add_transaction_error_category_required">Виберіть категорію.</string>
+    <string name="add_transaction_error_account_not_found">вибраний обліковий запис більше не доступний.</string>
+    <string name="add_transaction_error_category_not_found">Вибрана категорія більше не доступна.</string>
+    <string name="add_transaction_error_category_type">Виберіть категорію, яка відповідає типу транзакції.</string>
+</resources>

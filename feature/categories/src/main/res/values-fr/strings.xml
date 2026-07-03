@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Catégories</string>
+    <string name="categories_subtitle">Gérer les noms, les icônes, les couleurs et les types de transactions</string>
+    <string name="categories_empty_title">Aucune catégorie</string>
+    <string name="categories_empty_body">Créez une catégorie pour classer les revenus et les dépenses hors ligne.</string>
+    <string name="categories_add">Ajouter une catégorie</string>
+    <string name="categories_edit">Modifier la catégorie</string>
+    <string name="categories_create">Créer une catégorie</string>
+    <string name="categories_save">Enregistrer la catégorie</string>
+    <string name="categories_delete">Supprimer la catégorie</string>
+    <string name="categories_delete_title">Supprimer la catégorie ?</string>
+    <string name="categories_delete_body">La catégorie sera masquée des nouvelles transactions. L\'histoire existante garde son étiquette.</string>
+    <string name="categories_cancel">Annuler</string>
+    <string name="categories_retry">Réessayer</string>
+    <string name="categories_loading">Chargement des catégories</string>
+    <string name="categories_name">Nom</string>
+    <string name="categories_name_placeholder">Épicerie</string>
+    <string name="categories_type">Type</string>
+    <string name="categories_color">Couleur</string>
+    <string name="categories_icon">Icône</string>
+    <string name="categories_all">Tout</string>
+    <string name="categories_type_expense">Dépense</string>
+    <string name="categories_type_income">Revenu</string>
+    <string name="categories_type_both">Les deux</string>
+    <string name="categories_type_savings">Épargne</string>
+    <string name="categories_type_transfer">Virer</string>
+    <string name="categories_type_adjustment">Ajustement</string>
+    <string name="categories_protected">Protégé</string>
+    <string name="categories_system">Système</string>
+    <string name="categories_error_generic">Impossible de terminer l\'action.</string>
+    <string name="categories_error_empty_name">saisissez un nom de catégorie.</string>
+    <string name="categories_error_duplicate_name">Une catégorie portant ce nom existe déjà.</string>
+    <string name="categories_error_protected">Les catégories protégées ne peuvent pas être modifiées.</string>
+    <string name="categories_error_not_found">La catégorie n\'a pas été trouvée.</string>
+    <string name="categories_icon_food">Alimentation</string>
+    <string name="categories_icon_transport">Transport</string>
+    <string name="categories_icon_home">Accueil</string>
+    <string name="categories_icon_shopping">Shopping</string>
+    <string name="categories_icon_work">Travail</string>
+    <string name="categories_icon_money">Argent</string>
+    <string name="categories_icon_savings">Épargne</string>
+    <string name="categories_icon_transfer">Virer</string>
+    <string name="categories_icon_other">Autre</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Gösterge Paneli</string>
+    <string name="feature_home_subtitle">Kök navigasyonu hazır.</string>
+    <string name="home_subtitle">Bakiyelerin ve son etkinliklerin çevrimdışı anlık görüntüsü.</string>
+    <string name="home_loading">Loading dashboard...</string>
+    <string name="home_retry">Tekrar dene</string>
+    <string name="home_error_generic">Kontrol paneli verileri yüklenemedi.</string>
+    <string name="home_net_balance">Net bakiye</string>
+    <string name="home_all_accounts">Tüm hesaplar</string>
+    <string name="home_add_transaction">İşlem ekle</string>
+    <string name="home_income">Gelir</string>
+    <string name="home_expense">Gider</string>
+    <string name="home_recent_transactions">Son işlemler</string>
+    <string name="home_quick_templates">Hızlı şablonlar</string>
+    <string name="home_quick_templates_empty">Kontrol panelinden sık yapılan işlemleri uygulamak için şablonlar oluşturun.</string>
+    <string name="home_template_amount_prompt_title">Tutarı girin</string>
+    <string name="home_template_amount_prompt_body">Bu şablon değişken bir miktar kullanıyor.</string>
+    <string name="home_template_amount">Tutar</string>
+    <string name="home_template_apply">Uygula</string>
+    <string name="home_template_cancel">İptal</string>
+    <string name="home_template_variable">Değişken</string>
+    <string name="home_view_all">Tümünü görüntüle</string>
+    <string name="home_empty_title">Henüz işlem yok</string>
+    <string name="home_empty_body">Takibi başlatmak için ilk işlemi ekleyin.</string>
+</resources>

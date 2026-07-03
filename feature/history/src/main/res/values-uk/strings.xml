@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Історія</string>
+    <string name="history_subtitle">пошук, фільтрація, редагування та видалення транзакцій поза мережею</string>
+    <string name="history_empty_title">Жодних транзакцій</string>
+    <string name="history_empty_body">Нові доходи та витрати з’являться тут після їх збереження.</string>
+    <string name="history_loading">Історія завантаження</string>
+    <string name="history_search">Пошук транзакцій</string>
+    <string name="history_apply_filters">Застосувати фільтри</string>
+    <string name="history_clear_filters">Чисто</string>
+    <string name="history_all_accounts">Всі рахунки</string>
+    <string name="history_all_categories">Усі категорії</string>
+    <string name="history_load_more">Завантажте більше</string>
+    <string name="history_page_label">сторінка %1$d з %2$d</string>
+    <string name="history_income">Дохід</string>
+    <string name="history_expense">Витрата</string>
+    <string name="history_edit">Редагувати транзакцію</string>
+    <string name="history_delete">Видалити транзакцію</string>
+    <string name="history_delete_title">Видалити транзакцію?</string>
+    <string name="history_delete_body">цю транзакцію буде видалено з локальної книги.</string>
+    <string name="history_cancel">Скасувати</string>
+    <string name="history_save">Зберегти транзакцію</string>
+    <string name="history_amount">Сума</string>
+    <string name="history_date">Дата</string>
+    <string name="history_date_hint">РРРР-ММ-ДД</string>
+    <string name="history_category">Категорія</string>
+    <string name="history_note">Нотатка</string>
+    <string name="history_note_empty">Без примітки</string>
+    <string name="history_account">Рахунок</string>
+    <string name="history_retry">Повторити</string>
+    <string name="history_error_generic">Не вдалося завершити дію.</string>
+    <string name="history_error_invalid_amount">Введіть позитивну суму.</string>
+    <string name="history_error_invalid_date">використовуйте дійсну дату у форматі РРРР-ММ-ДД.</string>
+    <string name="history_error_category">Виберіть сумісну категорію.</string>
+    <string name="history_error_linked_transfer">транзакції пов’язаних переказів не можна редагувати або видаляти з історії.</string>
+    <string name="history_error_not_found">транзакцію не знайдено.</string>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">Statistik</string>
+    <string name="stats_subtitle">Pecahan kategori, arah aliran dan gerudi.</string>
+    <string name="stats_loading">Memuatkan statistik</string>
+    <string name="stats_retry">Cuba lagi</string>
+    <string name="stats_error_generic">Statistik tidak dapat dimuatkan.</string>
+    <string name="stats_empty_title">Tiada statistik untuk penapis ini</string>
+    <string name="stats_empty_body">Tukar akaun, tempoh atau tambah urus niaga untuk melihat carta.</string>
+    <string name="stats_filter_accounts">Akaun</string>
+    <string name="stats_filter_period">Tempoh</string>
+    <string name="stats_filter_currency">Mata Wang</string>
+    <string name="stats_filter_type">Pecahan</string>
+    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_all_accounts">Semua akaun</string>
+    <string name="stats_today">Hari Ini</string>
+    <string name="stats_week">Minggu</string>
+    <string name="stats_month">Bulan</string>
+    <string name="stats_last_month">Bulan lepas</string>
+    <string name="stats_expense">Perbelanjaan</string>
+    <string name="stats_income">Pendapatan</string>
+    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_stacked_bar">Bertindan</string>
+    <string name="stats_style_dual_bar">Pendapatan / perbelanjaan</string>
+    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_income_total">Pendapatan</string>
+    <string name="stats_expense_total">Perbelanjaan</string>
+    <string name="stats_net_total">Bersih</string>
+    <string name="stats_transactions_count">%1$d tx</string>
+    <string name="stats_open_history">Buka transaksi untuk %1$s</string>
+</resources>

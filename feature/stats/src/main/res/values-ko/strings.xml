@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_title">통계</string>
+    <string name="stats_subtitle">카테고리 분석, 동향 및 드릴다운.</string>
+    <string name="stats_loading">통계 로드 중</string>
+    <string name="stats_retry">다시 시도</string>
+    <string name="stats_error_generic">통계를 로드할 수 없습니다.</string>
+    <string name="stats_empty_title">이 필터에 대한 통계가 없습니다.</string>
+    <string name="stats_empty_body">차트를 보려면 계좌, 기간을 변경하거나 거래를 추가하세요.</string>
+    <string name="stats_filter_accounts">계좌</string>
+    <string name="stats_filter_period">기간</string>
+    <string name="stats_filter_currency">통화</string>
+    <string name="stats_filter_type">고장</string>
+    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_all_accounts">모든 계좌</string>
+    <string name="stats_today">오늘</string>
+    <string name="stats_week">주</string>
+    <string name="stats_month">월</string>
+    <string name="stats_last_month">지난달</string>
+    <string name="stats_expense">지출</string>
+    <string name="stats_income">수입</string>
+    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_stacked_bar">스택</string>
+    <string name="stats_style_dual_bar">수입/지출</string>
+    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_income_total">수입</string>
+    <string name="stats_expense_total">지출</string>
+    <string name="stats_net_total">순</string>
+    <string name="stats_transactions_count">%1$d tx</string>
+    <string name="stats_open_history">%1$s에 대한 공개 트랜잭션</string>
+</resources>

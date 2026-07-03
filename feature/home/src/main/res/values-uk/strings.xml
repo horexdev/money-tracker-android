@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Панель</string>
+    <string name="feature_home_subtitle">коренева навігація готова.</string>
+    <string name="home_subtitle">офлайн-знімок балансів і останні дії.</string>
+    <string name="home_loading">Завантаження приладової панелі...</string>
+    <string name="home_retry">Повторити</string>
+    <string name="home_error_generic">Не вдалося завантажити дані інформаційної панелі.</string>
+    <string name="home_net_balance">Чистий баланс</string>
+    <string name="home_all_accounts">Всі рахунки</string>
+    <string name="home_add_transaction">Додати транзакцію</string>
+    <string name="home_income">Дохід</string>
+    <string name="home_expense">Витрата</string>
+    <string name="home_recent_transactions">Останні операції</string>
+    <string name="home_quick_templates">Швидкі шаблони</string>
+    <string name="home_quick_templates_empty">створіть шаблони для застосування частих транзакцій з інформаційної панелі.</string>
+    <string name="home_template_amount_prompt_title">Введіть суму</string>
+    <string name="home_template_amount_prompt_body">цей шаблон використовує змінну суму.</string>
+    <string name="home_template_amount">Сума</string>
+    <string name="home_template_apply">Застосувати</string>
+    <string name="home_template_cancel">Скасувати</string>
+    <string name="home_template_variable">змінна</string>
+    <string name="home_view_all">Переглянути все</string>
+    <string name="home_empty_title">Немає транзакцій</string>
+    <string name="home_empty_body">додайте першу транзакцію для початку відстеження.</string>
+</resources>
