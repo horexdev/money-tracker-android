@@ -106,6 +106,12 @@ class RoomAccountsRepositoryTest {
                     UpdateAccountInput(currencyCode = "EU"),
                 )
             }
+            assertFailsWithType<InvalidAccountCurrencyException> {
+                repository.createAccount(
+                    profileId,
+                    CreateAccountInput(name = "Unsupported", currencyCode = "XXX"),
+                )
+            }
         } finally {
             database.close()
         }

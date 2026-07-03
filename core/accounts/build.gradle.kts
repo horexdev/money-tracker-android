@@ -18,6 +18,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:currency"))
     implementation(project(":core:database"))
 
     api(libs.kotlinx.coroutines.core)

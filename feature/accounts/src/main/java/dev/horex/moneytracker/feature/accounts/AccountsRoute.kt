@@ -64,6 +64,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -88,7 +90,13 @@ import dev.horex.moneytracker.core.accounts.CurrencyImmutableException
 import dev.horex.moneytracker.core.accounts.InvalidAccountCurrencyException
 import dev.horex.moneytracker.core.accounts.MustSetNewDefaultAccountException
 import dev.horex.moneytracker.core.accounts.UpdateAccountInput
+import dev.horex.moneytracker.core.currency.CurrencyInfo
+import dev.horex.moneytracker.core.currency.IsoCurrencyCatalog
+import dev.horex.moneytracker.core.currency.currencyDisplayText
+import dev.horex.moneytracker.core.currency.currencySymbolOrNull
+import dev.horex.moneytracker.core.currency.matchesCurrencyQuery
 import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
+import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerSearchablePickerField
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.money.MoneyParser
 import dev.horex.moneytracker.core.transactions.BalanceAdjustmentInput
@@ -580,6 +588,7 @@ private fun AccountFormSheet(
     var adjustNote by remember(mode) { mutableStateOf("") }
     val parsedTarget = MoneyParser.parseSignedCentsOrZero(adjustTarget)
     val deltaCents = account?.let { parsedTarget - it.balanceCents } ?: 0L
+    val currencyOptions = rememberCurrencyOptions()
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -612,7 +621,7 @@ private fun AccountFormSheet(
             OutlinedTextField(
                 value = form.name,
                 onValueChange = { form = form.copy(name = it.take(MAX_ACCOUNT_NAME_LENGTH)) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("accounts-name"),
                 label = { Text(stringResource(R.string.accounts_name)) },
                 placeholder = { Text(stringResource(R.string.accounts_name_placeholder)) },
                 singleLine = true,
@@ -642,15 +651,18 @@ private fun AccountFormSheet(
                 }
             }
 
-            OutlinedTextField(
-                value = form.currencyCode,
-                onValueChange = {
-                    form = form.copy(currencyCode = it.uppercase(Locale.US).filter(Char::isLetter).take(3))
-                },
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(stringResource(R.string.accounts_currency)) },
-                singleLine = true,
+            CurrencyPickerField(
+                selectedCurrencyCode = form.currencyCode,
+                currencies = currencyOptions,
+                label = stringResource(R.string.accounts_currency),
                 enabled = account == null,
+                dismissText = stringResource(R.string.accounts_cancel),
+                fieldTestTag = "accounts-currency",
+                searchTestTag = "accounts-currency-search",
+                optionTestTagPrefix = "accounts-currency-option-",
+                onCurrencySelected = { currency ->
+                    form = form.copy(currencyCode = currency.code)
+                },
             )
 
             error?.let {
@@ -976,6 +988,55 @@ private fun String.toColorOrFallback(): Color {
 
 private fun Long.formatMoney(currencyCode: String): String {
     return "${MoneyParser.formatPlainCents(this)} $currencyCode"
+}
+
+@Composable
+private fun CurrencyPickerField(
+    selectedCurrencyCode: String,
+    currencies: List<CurrencyInfo>,
+    label: String,
+    enabled: Boolean,
+    dismissText: String,
+    fieldTestTag: String,
+    searchTestTag: String,
+    optionTestTagPrefix: String,
+    onCurrencySelected: (CurrencyInfo) -> Unit,
+) {
+    val locale = currentLocale()
+    MoneyTrackerSearchablePickerField(
+        value = selectedCurrencyCode.currencyDisplayText(currencies),
+        label = label,
+        options = currencies,
+        optionKey = { it.code },
+        optionHeadline = { it.code },
+        optionSupporting = { it.displayName },
+        optionTrailing = { it.currencySymbolOrNull() },
+        optionMatchesQuery = { currency, query ->
+            currency.matchesCurrencyQuery(query, locale)
+        },
+        selectedKey = selectedCurrencyCode,
+        enabled = enabled,
+        dismissText = dismissText,
+        fieldTestTag = fieldTestTag,
+        searchTestTag = searchTestTag,
+        optionTestTagPrefix = optionTestTagPrefix,
+        onOptionSelected = onCurrencySelected,
+    )
+}
+
+@Composable
+private fun rememberCurrencyOptions(): List<CurrencyInfo> {
+    val locale = currentLocale()
+    return remember(locale) { IsoCurrencyCatalog.listCurrencies(locale) }
+}
+
+@Composable
+private fun currentLocale(): Locale {
+    return LocalConfiguration.current.locales[0]
+}
+
+private fun String.currencyDisplayText(currencies: List<CurrencyInfo>): String {
+    return currencies.firstOrNull { it.code == this }?.currencyDisplayText() ?: this
 }
 
 private const val DEFAULT_CURRENCY = "USD"

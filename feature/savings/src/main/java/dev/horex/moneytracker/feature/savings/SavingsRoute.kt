@@ -63,6 +63,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -75,7 +76,13 @@ import androidx.compose.ui.unit.dp
 import dev.horex.moneytracker.core.accounts.Account
 import dev.horex.moneytracker.core.accounts.AccountType
 import dev.horex.moneytracker.core.accounts.AccountsRepository
+import dev.horex.moneytracker.core.currency.CurrencyInfo
+import dev.horex.moneytracker.core.currency.IsoCurrencyCatalog
+import dev.horex.moneytracker.core.currency.currencyDisplayText
+import dev.horex.moneytracker.core.currency.currencySymbolOrNull
+import dev.horex.moneytracker.core.currency.matchesCurrencyQuery
 import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
+import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerSearchablePickerField
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.money.InvalidMoneyAmountException
 import dev.horex.moneytracker.core.money.MoneyOverflowException
@@ -499,6 +506,7 @@ private fun SavingsGoalFormSheet(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val goal = (mode as? SavingsGoalSheetMode.Edit)?.goal
     var form by remember(mode, accounts) { mutableStateOf(SavingsGoalFormState.fromGoal(goal, accounts)) }
+    val currencyOptions = rememberCurrencyOptions()
     val canSave = !isMutating && form.name.isNotBlank() && form.targetAmount.isNotBlank() && form.currencyCode.length == CURRENCY_CODE_LENGTH
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
         Column(
@@ -524,12 +532,18 @@ private fun SavingsGoalFormSheet(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             )
             if (goal == null) {
-                OutlinedTextField(
-                    value = form.currencyCode,
-                    onValueChange = { form = form.copy(currencyCode = it.normalizedCurrencyCode()); onFormChanged() },
-                    modifier = Modifier.fillMaxWidth().testTag("savings-currency"),
-                    label = { Text(stringResource(R.string.savings_currency)) },
-                    singleLine = true,
+                CurrencyPickerField(
+                    selectedCurrencyCode = form.currencyCode,
+                    currencies = currencyOptions,
+                    label = stringResource(R.string.savings_currency),
+                    dismissText = stringResource(R.string.savings_cancel),
+                    fieldTestTag = "savings-currency",
+                    searchTestTag = "savings-currency-search",
+                    optionTestTagPrefix = "savings-currency-option-",
+                    onCurrencySelected = { currency ->
+                        form = form.copy(currencyCode = currency.code)
+                        onFormChanged()
+                    },
                 )
             } else {
                 Text("${stringResource(R.string.savings_currency)}: ${goal.currencyCode}", color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -830,11 +844,56 @@ private fun Throwable.toSavingsError(): SavingsError = when (this) {
     else -> SavingsError.Generic
 }
 
-private fun String.normalizedCurrencyCode(): String = uppercase(Locale.US).filter(Char::isLetter).take(CURRENCY_CODE_LENGTH)
-
 private fun Long.formatMoney(currencyCode: String): String = "${MoneyParser.formatPlainCents(abs(this))} $currencyCode"
 
 private fun Long.toDisplayDate(): String = Instant.ofEpochMilli(this).atZone(ZoneOffset.UTC).toLocalDate().toString()
+
+@Composable
+private fun CurrencyPickerField(
+    selectedCurrencyCode: String,
+    currencies: List<CurrencyInfo>,
+    label: String,
+    dismissText: String,
+    fieldTestTag: String,
+    searchTestTag: String,
+    optionTestTagPrefix: String,
+    onCurrencySelected: (CurrencyInfo) -> Unit,
+) {
+    val locale = currentLocale()
+    MoneyTrackerSearchablePickerField(
+        value = selectedCurrencyCode.currencyDisplayText(currencies),
+        label = label,
+        options = currencies,
+        optionKey = { it.code },
+        optionHeadline = { it.code },
+        optionSupporting = { it.displayName },
+        optionTrailing = { it.currencySymbolOrNull() },
+        optionMatchesQuery = { currency, query ->
+            currency.matchesCurrencyQuery(query, locale)
+        },
+        selectedKey = selectedCurrencyCode,
+        dismissText = dismissText,
+        fieldTestTag = fieldTestTag,
+        searchTestTag = searchTestTag,
+        optionTestTagPrefix = optionTestTagPrefix,
+        onOptionSelected = onCurrencySelected,
+    )
+}
+
+@Composable
+private fun rememberCurrencyOptions(): List<CurrencyInfo> {
+    val locale = currentLocale()
+    return remember(locale) { IsoCurrencyCatalog.listCurrencies(locale) }
+}
+
+@Composable
+private fun currentLocale(): Locale {
+    return LocalConfiguration.current.locales[0]
+}
+
+private fun String.currencyDisplayText(currencies: List<CurrencyInfo>): String {
+    return currencies.firstOrNull { it.code == this }?.currencyDisplayText() ?: this
+}
 
 private const val DEFAULT_CURRENCY = "USD"
 private const val CURRENCY_CODE_LENGTH = 3

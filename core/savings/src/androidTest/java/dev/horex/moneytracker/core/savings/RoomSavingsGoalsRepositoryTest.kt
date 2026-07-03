@@ -107,6 +107,9 @@ class RoomSavingsGoalsRepositoryTest {
             assertFailsWithType<InvalidSavingsGoalCurrencyException> {
                 repository.createGoal(profileId, CreateSavingsGoalInput("Bad currency", 1_000, "US"))
             }
+            assertFailsWithType<InvalidSavingsGoalCurrencyException> {
+                repository.createGoal(profileId, CreateSavingsGoalInput("Test currency", 1_000, "XTS"))
+            }
             assertFailsWithType<InvalidSavingsGoalDeadlineException> {
                 repository.updateGoal(profileId, created.id, UpdateSavingsGoalInput(deadlineDate = "31-12-2026"))
             }

@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextReplacement
@@ -114,6 +115,34 @@ class AccountsScreenTest {
         assertEquals(-250L, transactionsRepository.lastAdjustmentDeltaCents)
     }
 
+    @Test
+    fun accountsRouteCreatesAccountWithCurrencyPickerSelection() {
+        val accountsRepository = FakeAccountsRepository(accountsFixture.first())
+
+        composeRule.setContent {
+            MoneyTrackerTheme {
+                AccountsRoute(
+                    localProfileBootstrapper = LocalProfileBootstrapper { profileFixture },
+                    accountsRepository = accountsRepository,
+                    transactionsRepository = FakeTransactionsRepository(),
+                )
+            }
+        }
+
+        composeRule.onNodeWithContentDescription("Add account").performClick()
+        composeRule.onNodeWithTag("accounts-name").performTextReplacement("Euro cash")
+        composeRule.onNodeWithTag("accounts-currency").performClick()
+        composeRule.onNodeWithTag("accounts-currency-search").performTextReplacement("Euro")
+        composeRule.onNodeWithTag("accounts-currency-option-EUR").performClick()
+        composeRule.onNodeWithText("Create account").performClick()
+
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            accountsRepository.createdInputs.isNotEmpty()
+        }
+        assertEquals("Euro cash", accountsRepository.createdInputs.single().name)
+        assertEquals("EUR", accountsRepository.createdInputs.single().currencyCode)
+    }
+
     private companion object {
         val profileFixture = LocalProfile(
             id = 1,
@@ -168,6 +197,8 @@ class AccountsScreenTest {
 private class FakeAccountsRepository(
     private val account: Account,
 ) : AccountsRepository {
+    val createdInputs = mutableListOf<CreateAccountInput>()
+
     override suspend fun listAccounts(profileId: Long): List<Account> {
         return listOf(account)
     }
@@ -181,6 +212,7 @@ private class FakeAccountsRepository(
     }
 
     override suspend fun createAccount(profileId: Long, input: CreateAccountInput): Account {
+        createdInputs += input
         return account
     }
 

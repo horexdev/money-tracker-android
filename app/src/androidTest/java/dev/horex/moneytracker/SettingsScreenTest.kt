@@ -12,6 +12,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
@@ -298,6 +299,70 @@ class SettingsScreenTest {
         composeRule.onNodeWithText("Replace rate").performClick()
 
         assertTrue(confirmed)
+    }
+
+    @Test
+    fun settingsScreenSelectsDisplayAndManualRateCurrenciesFromCatalog() {
+        var displayCurrenciesInput = ""
+        var rateBaseInput = ""
+        var rateTargetInput = ""
+
+        composeRule.setContent {
+            MoneyTrackerTheme {
+                Box(modifier = Modifier.size(width = 360.dp, height = 960.dp)) {
+                    SettingsScreen(
+                        state = screenState.copy(
+                            displayCurrenciesInput = "EUR",
+                            rateBaseInput = "USD",
+                            rateTargetInput = "EUR",
+                        ),
+                        onRetry = {},
+                        onDismissMessage = {},
+                        onSelectProfile = {},
+                        onProfileLabelInputChange = {},
+                        onSaveProfileLabel = {},
+                        onNewProfileLabelChange = {},
+                        onCreateProfile = {},
+                        onLanguageSelected = {},
+                        onThemeSelected = {},
+                        onHideAmountsChanged = {},
+                        onAnimateNumbersChanged = {},
+                        onChartStyleSelected = {},
+                        onNotificationChanged = { _, _ -> },
+                        onOpenNotificationSettings = {},
+                        onDisplayCurrenciesInputChange = { displayCurrenciesInput = it },
+                        onSaveDisplayCurrencies = {},
+                        onRateBaseChange = { rateBaseInput = it },
+                        onRateTargetChange = { rateTargetInput = it },
+                        onRateDateChange = {},
+                        onRateValueChange = {},
+                        onSaveRateOverride = {},
+                        onDeleteRateOverride = {},
+                        onOpenImportExport = {},
+                        onResetRequested = {},
+                        onResetDismiss = {},
+                        onResetConfirmed = {},
+                    )
+                }
+            }
+        }
+
+        composeRule.onNodeWithTag("settings-screen")
+            .performScrollToNode(hasText("Currencies and rates"))
+        composeRule.onNodeWithTag("settings-display-currency-add").performClick()
+        composeRule.onNodeWithTag("settings-display-currency-search").performTextReplacement("TJS")
+        composeRule.onNodeWithTag("settings-display-currency-option-TJS").performClick()
+        assertTrue(displayCurrenciesInput == "EUR, TJS")
+
+        composeRule.onNodeWithTag("settings-rate-base").performClick()
+        composeRule.onNodeWithTag("settings-rate-base-search").performTextReplacement("Euro")
+        composeRule.onNodeWithTag("settings-rate-base-option-EUR").performClick()
+        assertTrue(rateBaseInput == "EUR")
+
+        composeRule.onNodeWithTag("settings-rate-target").performClick()
+        composeRule.onNodeWithTag("settings-rate-target-search").performTextReplacement("TJS")
+        composeRule.onNodeWithTag("settings-rate-target-option-TJS").performClick()
+        assertTrue(rateTargetInput == "TJS")
     }
 
     private companion object {

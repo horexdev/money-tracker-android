@@ -38,6 +38,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -64,6 +65,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -74,22 +76,29 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.horex.moneytracker.core.currency.CurrencyException
+import dev.horex.moneytracker.core.currency.CurrencyInfo
 import dev.horex.moneytracker.core.currency.CurrencyRatesRepository
 import dev.horex.moneytracker.core.currency.ExchangeRateUpdateService
 import dev.horex.moneytracker.core.currency.ExchangeRateNotFoundException
 import dev.horex.moneytracker.core.currency.ExchangeRateOverride
 import dev.horex.moneytracker.core.currency.ExchangeRateOverrideAlreadyExistsException
 import dev.horex.moneytracker.core.currency.ExchangeRateSource
+import dev.horex.moneytracker.core.currency.IsoCurrencyCatalog
 import dev.horex.moneytracker.core.currency.RATE_SCALE_E8
 import dev.horex.moneytracker.core.currency.ResolvedExchangeRate
 import dev.horex.moneytracker.core.currency.SaveExchangeRateOverrideInput
+import dev.horex.moneytracker.core.currency.currencyDisplayText
+import dev.horex.moneytracker.core.currency.currencySymbolOrNull
+import dev.horex.moneytracker.core.currency.matchesCurrencyQuery
 import dev.horex.moneytracker.core.database.profile.LocalProfile
 import dev.horex.moneytracker.core.database.profile.LocalProfileRepository
+import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerSearchablePickerField
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.notifications.NotificationPermissionStatus
 import dev.horex.moneytracker.core.notifications.canPostNotifications
 import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
 import dev.horex.moneytracker.core.preferences.AppThemePreference
+import dev.horex.moneytracker.core.preferences.MAX_SETTINGS_DISPLAY_CURRENCIES
 import dev.horex.moneytracker.core.preferences.MoneyTrackerSettings
 import dev.horex.moneytracker.core.preferences.SettingsException
 import dev.horex.moneytracker.core.preferences.SettingsNotificationPreferences
@@ -939,6 +948,8 @@ private fun RatesSection(
     onUpdateOnlineRates: () -> Unit,
     onDeleteRateOverride: (Long) -> Unit,
 ) {
+    val currencyOptions = rememberCurrencyOptions()
+    val displayCurrencyCodes = state.displayCurrenciesInput.toCurrencyCodesInput()
     SettingsSection(
         icon = Icons.Filled.CurrencyExchange,
         title = stringResource(R.string.settings_rates_section),
@@ -948,14 +959,13 @@ private fun RatesSection(
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        OutlinedTextField(
-            value = state.displayCurrenciesInput,
-            onValueChange = onDisplayCurrenciesInputChange,
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text(stringResource(R.string.settings_display_currencies)) },
-            supportingText = { Text(stringResource(R.string.settings_display_currencies_hint)) },
-            singleLine = true,
-            enabled = !state.isBusy,
+        DisplayCurrencySelector(
+            selectedCodes = displayCurrencyCodes,
+            currencies = currencyOptions,
+            isBusy = state.isBusy,
+            onSelectedCodesChange = { codes ->
+                onDisplayCurrenciesInputChange(codes.joinToString(", "))
+            },
         )
         Button(
             onClick = onSaveDisplayCurrencies,
@@ -1004,21 +1014,33 @@ private fun RatesSection(
             fontWeight = FontWeight.SemiBold,
         )
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedTextField(
-                value = state.rateBaseInput,
-                onValueChange = onRateBaseChange,
-                modifier = Modifier.weight(1f),
-                label = { Text(stringResource(R.string.settings_rate_base)) },
-                singleLine = true,
+            CurrencyPickerField(
+                selectedCurrencyCode = state.rateBaseInput,
+                currencies = currencyOptions,
+                label = stringResource(R.string.settings_rate_base),
                 enabled = !state.isBusy,
+                dismissText = stringResource(R.string.settings_cancel),
+                modifier = Modifier.weight(1f),
+                fieldTestTag = "settings-rate-base",
+                searchTestTag = "settings-rate-base-search",
+                optionTestTagPrefix = "settings-rate-base-option-",
+                onCurrencySelected = { currency ->
+                    onRateBaseChange(currency.code)
+                },
             )
-            OutlinedTextField(
-                value = state.rateTargetInput,
-                onValueChange = onRateTargetChange,
-                modifier = Modifier.weight(1f),
-                label = { Text(stringResource(R.string.settings_rate_target)) },
-                singleLine = true,
+            CurrencyPickerField(
+                selectedCurrencyCode = state.rateTargetInput,
+                currencies = currencyOptions,
+                label = stringResource(R.string.settings_rate_target),
                 enabled = !state.isBusy,
+                dismissText = stringResource(R.string.settings_cancel),
+                modifier = Modifier.weight(1f),
+                fieldTestTag = "settings-rate-target",
+                searchTestTag = "settings-rate-target-search",
+                optionTestTagPrefix = "settings-rate-target-option-",
+                onCurrencySelected = { currency ->
+                    onRateTargetChange(currency.code)
+                },
             )
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -1094,6 +1116,110 @@ private fun RatesSection(
             }
         }
     }
+}
+
+@Composable
+private fun DisplayCurrencySelector(
+    selectedCodes: List<String>,
+    currencies: List<CurrencyInfo>,
+    isBusy: Boolean,
+    onSelectedCodesChange: (List<String>) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(
+            text = stringResource(R.string.settings_display_currencies),
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold,
+        )
+        if (selectedCodes.isNotEmpty()) {
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                items(
+                    items = selectedCodes,
+                    key = { it },
+                ) { code ->
+                    AssistChip(
+                        onClick = {
+                            onSelectedCodesChange(selectedCodes.filterNot { it == code })
+                        },
+                        enabled = !isBusy,
+                        label = { Text(code) },
+                        leadingIcon = {
+                            Icon(Icons.Filled.Delete, contentDescription = null)
+                        },
+                        modifier = Modifier.testTag("settings-display-currency-$code"),
+                    )
+                }
+            }
+        }
+        CurrencyPickerField(
+            selectedCurrencyCode = null,
+            currencies = currencies.filterNot { it.code in selectedCodes },
+            label = stringResource(R.string.settings_display_currencies),
+            enabled = !isBusy && selectedCodes.size < MAX_SETTINGS_DISPLAY_CURRENCIES,
+            dismissText = stringResource(R.string.settings_cancel),
+            supportingText = stringResource(R.string.settings_display_currencies_hint),
+            modifier = Modifier.fillMaxWidth(),
+            fieldTestTag = "settings-display-currency-add",
+            searchTestTag = "settings-display-currency-search",
+            optionTestTagPrefix = "settings-display-currency-option-",
+            onCurrencySelected = { currency ->
+                onSelectedCodesChange((selectedCodes + currency.code).distinct())
+            },
+        )
+    }
+}
+
+@Composable
+private fun CurrencyPickerField(
+    selectedCurrencyCode: String?,
+    currencies: List<CurrencyInfo>,
+    label: String,
+    enabled: Boolean,
+    dismissText: String,
+    modifier: Modifier = Modifier,
+    supportingText: String? = null,
+    fieldTestTag: String,
+    searchTestTag: String,
+    optionTestTagPrefix: String,
+    onCurrencySelected: (CurrencyInfo) -> Unit,
+) {
+    val locale = currentLocale()
+    MoneyTrackerSearchablePickerField(
+        value = selectedCurrencyCode?.currencyDisplayText(currencies).orEmpty(),
+        label = label,
+        options = currencies,
+        optionKey = { it.code },
+        optionHeadline = { it.code },
+        optionSupporting = { it.displayName },
+        optionTrailing = { it.currencySymbolOrNull() },
+        optionMatchesQuery = { currency, query ->
+            currency.matchesCurrencyQuery(query, locale)
+        },
+        selectedKey = selectedCurrencyCode,
+        enabled = enabled,
+        dismissText = dismissText,
+        supportingText = supportingText,
+        modifier = modifier,
+        fieldTestTag = fieldTestTag,
+        searchTestTag = searchTestTag,
+        optionTestTagPrefix = optionTestTagPrefix,
+        onOptionSelected = onCurrencySelected,
+    )
+}
+
+@Composable
+private fun rememberCurrencyOptions(): List<CurrencyInfo> {
+    val locale = currentLocale()
+    return remember(locale) { IsoCurrencyCatalog.listCurrencies(locale) }
+}
+
+@Composable
+private fun currentLocale(): Locale {
+    return LocalConfiguration.current.locales[0]
+}
+
+private fun String.currencyDisplayText(currencies: List<CurrencyInfo>): String {
+    return currencies.firstOrNull { it.code == this }?.currencyDisplayText() ?: this
 }
 
 @Composable

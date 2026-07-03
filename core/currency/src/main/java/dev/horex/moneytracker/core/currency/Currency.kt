@@ -1,5 +1,7 @@
 package dev.horex.moneytracker.core.currency
 
+import java.util.Locale
+
 const val RATE_SCALE_E8: Long = 100_000_000L
 
 data class CurrencyInfo(
@@ -56,3 +58,32 @@ data class SaveExchangeRateOverrideInput(
     val targetCurrency: String,
     val rateE8: Long,
 )
+
+fun CurrencyInfo.currencyDisplayText(): String {
+    val symbol = currencySymbolOrNull()
+    return if (symbol == null) {
+        "$code - $displayName"
+    } else {
+        "$code - $displayName ($symbol)"
+    }
+}
+
+fun CurrencyInfo.currencySymbolOrNull(): String? {
+    return symbol
+        .trim()
+        .takeIf { it.isNotEmpty() && it != code }
+}
+
+fun CurrencyInfo.matchesCurrencyQuery(
+    query: String,
+    locale: Locale = Locale.getDefault(),
+): Boolean {
+    val normalized = query.trim()
+    if (normalized.isEmpty()) {
+        return true
+    }
+
+    val codeQuery = normalized.uppercase(Locale.US)
+    val nameQuery = normalized.lowercase(locale)
+    return code.contains(codeQuery) || displayName.lowercase(locale).contains(nameQuery)
+}
