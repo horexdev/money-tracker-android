@@ -167,6 +167,7 @@ dependencies {
     implementation(project(":core:transactions"))
     implementation(project(":feature:accounts"))
     implementation(project(":feature:addtransaction"))
+    implementation(project(":feature:budgets"))
     implementation(project(":feature:categories"))
     implementation(project(":feature:home"))
     implementation(project(":feature:history"))

@@ -112,6 +112,7 @@
     <string name="categories_more_subtitle">Управление названиями, иконками, цветами и типами категорий.</string>
     <string name="budgets_title">Бюджеты</string>
     <string name="budgets_placeholder_subtitle">Маршрут бюджетов зарегистрирован.</string>
+    <string name="budgets_more_subtitle">Управление бюджетами, прогрессом и уведомлениями.</string>
     <string name="recurring_title">Повторяющиеся</string>
     <string name="recurring_placeholder_subtitle">Маршрут повторяющихся операций зарегистрирован.</string>
     <string name="templates_title">Шаблоны</string>
