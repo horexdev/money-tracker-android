@@ -84,6 +84,7 @@ private val AvailableCurrencies: List<Currency> = Currency.getAvailableCurrencie
     .asSequence()
     .filter { CurrencyCodePattern.matches(it.currencyCode) }
     .filterNot { it.currencyCode in ExcludedCurrencyCodes }
+    .filter { SystemExchangeRates.hasUsdQuote(it.currencyCode) }
     .sortedBy { it.currencyCode }
     .toList()
 

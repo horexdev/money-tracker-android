@@ -13,21 +13,24 @@ class IsoCurrencyCatalogTest {
         assertTrue(IsoCurrencyCatalog.isSupported(" eur "))
         assertTrue(IsoCurrencyCatalog.isSupported("TJS"))
         assertFalse(IsoCurrencyCatalog.isSupported("XYZ"))
+        assertFalse(IsoCurrencyCatalog.isSupported("ADP"))
         assertFalse(IsoCurrencyCatalog.isSupported("XXX"))
         assertFalse(IsoCurrencyCatalog.isSupported("XTS"))
         assertFalse(IsoCurrencyCatalog.isSupported(""))
     }
 
     @Test
-    fun listsRuntimeIsoCurrenciesWithDisplayMetadataExcludingPseudoCodes() {
+    fun listsRuntimeIsoCurrenciesWithSystemQuotesAndDisplayMetadata() {
         val currencies = IsoCurrencyCatalog.listCurrencies(locale = Locale.US)
         val codes = currencies.map { it.code }
 
         assertTrue("USD should be available in the runtime currency catalog", "USD" in codes)
         assertTrue("EUR should be available in the runtime currency catalog", "EUR" in codes)
+        assertFalse("Runtime currency without a system quote should be excluded", "ADP" in codes)
         assertFalse("Pseudo no-currency code should be excluded", "XXX" in codes)
         assertFalse("Test currency code should be excluded", "XTS" in codes)
         assertEquals(codes.sorted(), codes)
+        assertTrue(codes.all(SystemExchangeRates::hasUsdQuote))
         assertTrue(currencies.any { it.code == "USD" && it.displayName.isNotBlank() })
     }
 

@@ -88,7 +88,7 @@ Foreign keys use local IDs. Profile deletion cascades profile-owned data. Accoun
 
 `core:currency` owns the local currency catalog and rate behavior above Room:
 
-- `IsoCurrencyCatalog` exposes offline ISO 4217 currencies from the platform runtime, supports code/name search, and excludes non-currency test/no-currency pseudo codes;
+- `IsoCurrencyCatalog` exposes offline ISO 4217 currencies from the platform runtime only when a built-in system quote exists, supports code/name search, and excludes non-currency test/no-currency pseudo codes plus runtime legacy/special codes without a system rate;
 - `RoomCurrencyRatesRepository` stores seed and daily snapshot rates in `exchange_rate_snapshots`;
 - rates use `rate_e8` fixed-point values, where `100_000_000` means `1.0`;
 - same-currency conversion returns `1.0` without requiring a database row;

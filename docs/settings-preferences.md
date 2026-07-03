@@ -11,7 +11,7 @@ Profile-owned settings live in Room `local_profiles` and are exposed through `Ro
   - `theme`, `hide_amounts`, `animate_numbers`: mirrored UI values for compatibility with existing app-level observers.
 - Room `local_profiles`:
   - `language_code`: one of the 17 supported app language codes.
-  - `display_currencies_csv`: up to 3 ISO currency codes.
+  - `display_currencies_csv`: up to 3 supported currency codes from `core:currency`.
   - notification flags: budget alerts, recurring reminders, weekly summary, goal milestones.
   - UI preferences: stats chart style, nullable animate numbers, theme, hide amounts.
   - profile timestamps.
