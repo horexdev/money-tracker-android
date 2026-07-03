@@ -9,6 +9,7 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.androidMinSdk.get().toInt()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -18,7 +19,13 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:database"))
+    implementation(libs.androidx.room.ktx)
+
     api(libs.kotlinx.serialization.json)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    androidTestImplementation(project(":core:testing"))
 }
