@@ -125,6 +125,7 @@
     <string name="templates_more_subtitle">Управление быстрыми шаблонами операций.</string>
     <string name="savings_title">Цели</string>
     <string name="savings_placeholder_subtitle">Маршрут целей накоплений зарегистрирован.</string>
+    <string name="savings_more_subtitle">Прогресс целей и операции накоплений.</string>
     <string name="export_title">Импорт / экспорт</string>
     <string name="export_placeholder_subtitle">Маршрут импорта и экспорта резервных копий зарегистрирован.</string>
     <string name="export_more_subtitle">Создание резервных копий и восстановление локальных профилей.</string>

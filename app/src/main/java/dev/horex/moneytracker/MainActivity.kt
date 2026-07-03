@@ -34,6 +34,7 @@ class MainActivity : ComponentActivity() {
                 exchangeRateUpdateService = appContainer.exchangeRateUpdateService,
                 settingsRepository = appContainer.settingsRepository,
                 recurringRepository = appContainer.recurringRepository,
+                savingsGoalsRepository = appContainer.savingsGoalsRepository,
                 statsRepository = appContainer.statsRepository,
                 transactionTemplatesRepository = appContainer.transactionTemplatesRepository,
                 transactionsRepository = appContainer.transactionsRepository,

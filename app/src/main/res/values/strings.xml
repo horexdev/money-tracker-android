@@ -125,6 +125,7 @@
     <string name="templates_more_subtitle">Manage quick transaction shortcuts.</string>
     <string name="savings_title">Savings</string>
     <string name="savings_placeholder_subtitle">Savings goals route is registered.</string>
+    <string name="savings_more_subtitle">Track goal progress and operations.</string>
     <string name="export_title">Import / Export</string>
     <string name="export_placeholder_subtitle">Backup import and export route is registered.</string>
     <string name="export_more_subtitle">Create backups and restore local profiles.</string>

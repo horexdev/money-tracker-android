@@ -67,6 +67,7 @@ import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
 import dev.horex.moneytracker.core.preferences.AppThemePreference
 import dev.horex.moneytracker.core.preferences.SettingsRepository
 import dev.horex.moneytracker.core.recurring.RecurringTransactionsRepository
+import dev.horex.moneytracker.core.savings.SavingsGoalsRepository
 import dev.horex.moneytracker.core.stats.StatsRepository
 import dev.horex.moneytracker.core.stats.StatsTransactionType
 import dev.horex.moneytracker.core.templates.TransactionTemplatesRepository
@@ -81,6 +82,7 @@ import dev.horex.moneytracker.feature.home.HomeRoute
 import dev.horex.moneytracker.feature.history.HistoryFilters
 import dev.horex.moneytracker.feature.history.HistoryRoute
 import dev.horex.moneytracker.feature.recurring.RecurringRoute
+import dev.horex.moneytracker.feature.savings.SavingsRoute
 import dev.horex.moneytracker.feature.stats.StatsRoute
 import dev.horex.moneytracker.feature.templates.TemplatesRoute
 
@@ -95,6 +97,7 @@ fun MoneyTrackerApp(
     exchangeRateUpdateService: ExchangeRateUpdateService? = null,
     settingsRepository: SettingsRepository? = null,
     recurringRepository: RecurringTransactionsRepository? = null,
+    savingsGoalsRepository: SavingsGoalsRepository? = null,
     statsRepository: StatsRepository? = null,
     transactionTemplatesRepository: TransactionTemplatesRepository? = null,
     transactionsRepository: TransactionsRepository? = null,
@@ -142,6 +145,7 @@ fun MoneyTrackerApp(
                 exchangeRateUpdateService = exchangeRateUpdateService,
                 settingsRepository = settingsRepository,
                 recurringRepository = recurringRepository,
+                savingsGoalsRepository = savingsGoalsRepository,
                 statsRepository = statsRepository,
                 transactionTemplatesRepository = transactionTemplatesRepository,
                 transactionsRepository = transactionsRepository,
@@ -174,6 +178,7 @@ private fun MoneyTrackerNavHost(
     exchangeRateUpdateService: ExchangeRateUpdateService?,
     settingsRepository: SettingsRepository?,
     recurringRepository: RecurringTransactionsRepository?,
+    savingsGoalsRepository: SavingsGoalsRepository?,
     statsRepository: StatsRepository?,
     transactionTemplatesRepository: TransactionTemplatesRepository?,
     transactionsRepository: TransactionsRepository?,
@@ -323,6 +328,9 @@ private fun MoneyTrackerNavHost(
                 onOpenTemplates = {
                     navController.navigate(MoneyTrackerRoutes.Templates)
                 },
+                onOpenSavings = {
+                    navController.navigate(MoneyTrackerRoutes.Savings)
+                },
                 onOpenCategories = {
                     navController.navigate(MoneyTrackerRoutes.Categories)
                 },
@@ -439,10 +447,22 @@ private fun MoneyTrackerNavHost(
             }
         }
         composable(MoneyTrackerRoutes.Savings) {
-            LocalizedPlaceholderScreen(
-                titleResId = R.string.savings_title,
-                subtitleResId = R.string.savings_placeholder_subtitle,
-            )
+            if (
+                localProfileBootstrapper != null &&
+                savingsGoalsRepository != null &&
+                accountsRepository != null
+            ) {
+                SavingsRoute(
+                    localProfileBootstrapper = localProfileBootstrapper,
+                    savingsGoalsRepository = savingsGoalsRepository,
+                    accountsRepository = accountsRepository,
+                )
+            } else {
+                LocalizedPlaceholderScreen(
+                    titleResId = R.string.savings_title,
+                    subtitleResId = R.string.savings_placeholder_subtitle,
+                )
+            }
         }
         composable(MoneyTrackerRoutes.Export) {
             if (
@@ -489,6 +509,7 @@ private fun MoreRoute(
     onOpenBudgets: () -> Unit,
     onOpenRecurring: () -> Unit,
     onOpenTemplates: () -> Unit,
+    onOpenSavings: () -> Unit,
     onOpenCategories: () -> Unit,
     onOpenSettings: () -> Unit,
     onOpenExport: () -> Unit,
@@ -511,6 +532,32 @@ private fun MoreRoute(
                 leadingContent = {
                     Icon(
                         imageVector = Icons.Filled.AccountBalanceWallet,
+                        contentDescription = null,
+                    )
+                },
+                trailingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.ChevronRight,
+                        contentDescription = null,
+                    )
+                },
+            )
+            HorizontalDivider()
+        }
+        item {
+            ListItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onOpenSavings),
+                headlineContent = {
+                    Text(text = stringResource(R.string.savings_title))
+                },
+                supportingContent = {
+                    Text(text = stringResource(R.string.savings_more_subtitle))
+                },
+                leadingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.Savings,
                         contentDescription = null,
                     )
                 },
@@ -679,17 +726,6 @@ private fun MoreRoute(
             )
             HorizontalDivider()
         }
-        items(morePlaceholderRoutes) { route ->
-            ListItem(
-                headlineContent = {
-                    Text(text = stringResource(route.titleResId))
-                },
-                supportingContent = {
-                    Text(text = stringResource(route.subtitleResId))
-                },
-            )
-            HorizontalDivider()
-        }
     }
 }
 
@@ -800,15 +836,6 @@ private val topLevelDestinations = listOf(
         labelResId = R.string.tab_more,
         icon = Icons.Filled.MoreHoriz,
     ),
-)
-
-private data class MorePlaceholderRoute(
-    @StringRes val titleResId: Int,
-    @StringRes val subtitleResId: Int,
-)
-
-private val morePlaceholderRoutes = listOf(
-    MorePlaceholderRoute(R.string.savings_title, R.string.savings_placeholder_subtitle),
 )
 
 @Preview(showBackground = true)

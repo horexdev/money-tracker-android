@@ -173,6 +173,7 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:history"))
     implementation(project(":feature:recurring"))
+    implementation(project(":feature:savings"))
     implementation(project(":feature:stats"))
     implementation(project(":feature:templates"))
 
