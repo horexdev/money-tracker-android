@@ -1,0 +1,76 @@
+{
+  "global": {
+    "exchange_rate_snapshot_count": 2
+  },
+  "profiles": {
+    "profile:p000001": {
+      "budget_limits_by_currency": {
+        "USD": 100000
+      },
+      "counts": {
+        "accounts": 5,
+        "budgets": 2,
+        "categories": 6,
+        "exchange_rate_overrides": 1,
+        "goal_transactions": 2,
+        "recurring_transactions": 2,
+        "savings_goals": 2,
+        "transaction_templates": 2,
+        "transactions": 5,
+        "transfers": 1
+      },
+      "goal_transaction_totals_by_currency": {
+        "EUR": {
+          "expense_cents": 0,
+          "income_cents": 46000,
+          "net_cents": 46000
+        },
+        "USD": {
+          "expense_cents": 5000,
+          "income_cents": 0,
+          "net_cents": -5000
+        }
+      },
+      "included_account_totals_by_currency": {
+        "EUR": 46000,
+        "RUB": 10000,
+        "USD": 197250
+      },
+      "recurring_totals_by_currency": {
+        "USD": {
+          "expense_cents": 121500,
+          "income_cents": 0,
+          "net_cents": -121500
+        }
+      },
+      "savings_current_by_currency": {
+        "EUR": 46000,
+        "USD": 15000
+      },
+      "transaction_totals_by_currency": {
+        "EUR": {
+          "expense_cents": 0,
+          "income_cents": 46000,
+          "net_cents": 46000
+        },
+        "RUB": {
+          "expense_cents": 0,
+          "income_cents": 10000,
+          "net_cents": 10000
+        },
+        "USD": {
+          "expense_cents": 52750,
+          "income_cents": 250000,
+          "net_cents": 197250
+        }
+      },
+      "transfer_totals_by_pair": {
+        "USD->EUR": {
+          "from_amount_cents": 50000,
+          "to_amount_cents": 46000,
+          "transfer_count": 1
+        }
+      }
+    }
+  }
+}
