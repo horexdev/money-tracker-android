@@ -25,6 +25,26 @@ Every file contains:
 The empty golden fixture is tracked at
 `core/backup/src/test/resources/fixtures/money_tracker_backup_v1_empty.json`.
 
+The anonymized full-domain migration fixture is tracked at
+`core/backup/src/test/resources/fixtures/money_tracker_backup_v1_anonymized_full.json`.
+It uses export-local refs such as `profile:p000001` and `account:a000001`
+that mirror the source-side exporter shape without copying source database IDs.
+The fixture covers profile preferences, accounts, categories, transactions,
+transfers, budgets, recurring transactions, savings goals, goal transactions,
+exchange rate snapshots, exchange rate overrides, and transaction templates.
+
+`MoneyTrackerBackupMigrationFixturesTest` keeps this fixture golden by asserting:
+
+- decode -> encode output matches the checked-in JSON after line-ending
+  normalization;
+- decode -> encode -> decode returns the same DTO graph;
+- `MoneyTrackerBackupV1Validator.validateJson()` reports no warnings or errors;
+- importing the fixture remaps relationship refs to generated local IDs rather
+  than persisting export-local refs;
+- the raw JSON contains no Telegram/source identity keys or values, source
+  database IDs, `legacy_*` markers, init data, bot/chat metadata, SQLCipher
+  passphrases, Android Keystore material, or device-bound secrets.
+
 ## Identity Boundary
 
 The DTO must not contain Telegram, server, source database, Room, `legacy_*`,
