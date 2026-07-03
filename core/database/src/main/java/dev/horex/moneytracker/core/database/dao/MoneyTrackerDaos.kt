@@ -81,6 +81,30 @@ data class CategoryStatsRow(
     val currencyCode: String,
 )
 
+data class BudgetWithCategory(
+    @Embedded
+    val budget: BudgetEntity,
+    @ColumnInfo(name = "category_name")
+    val categoryName: String,
+    @ColumnInfo(name = "category_icon")
+    val categoryIcon: String,
+    @ColumnInfo(name = "category_color")
+    val categoryColor: String,
+)
+
+data class BudgetTransactionWithRelations(
+    @Embedded
+    val transaction: TransactionEntity,
+    @ColumnInfo(name = "category_name")
+    val categoryName: String,
+    @ColumnInfo(name = "category_icon")
+    val categoryIcon: String,
+    @ColumnInfo(name = "category_color")
+    val categoryColor: String,
+    @ColumnInfo(name = "account_name")
+    val accountName: String,
+)
+
 @Dao
 interface LocalProfileDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
@@ -723,8 +747,26 @@ interface BudgetDao {
     @Update
     suspend fun update(budget: BudgetEntity)
 
+    @Update
+    suspend fun updateAndReturnCount(budget: BudgetEntity): Int
+
     @Query("SELECT * FROM budgets WHERE profile_id = :profileId ORDER BY created_at_epoch_millis DESC")
     suspend fun listByProfile(profileId: Long): List<BudgetEntity>
+
+    @Query(
+        """
+        SELECT
+            b.*,
+            c.name AS category_name,
+            c.icon AS category_icon,
+            c.color AS category_color
+        FROM budgets b
+        JOIN categories c ON c.id = b.category_id AND c.profile_id = b.profile_id
+        WHERE b.profile_id = :profileId
+        ORDER BY b.created_at_epoch_millis DESC, b.id DESC
+        """,
+    )
+    suspend fun listWithCategoryByProfile(profileId: Long): List<BudgetWithCategory>
 
     @Query("SELECT * FROM budgets WHERE profile_id = :profileId ORDER BY created_at_epoch_millis ASC, id ASC")
     suspend fun listForBackup(profileId: Long): List<BudgetEntity>
@@ -732,11 +774,82 @@ interface BudgetDao {
     @Query("SELECT * FROM budgets WHERE id = :budgetId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, budgetId: Long): BudgetEntity?
 
+    @Query(
+        """
+        SELECT
+            b.*,
+            c.name AS category_name,
+            c.icon AS category_icon,
+            c.color AS category_color
+        FROM budgets b
+        JOIN categories c ON c.id = b.category_id AND c.profile_id = b.profile_id
+        WHERE b.id = :budgetId AND b.profile_id = :profileId
+        """,
+    )
+    suspend fun getWithCategoryById(profileId: Long, budgetId: Long): BudgetWithCategory?
+
     @Query("SELECT * FROM budgets WHERE profile_id = :profileId AND category_id = :categoryId AND period = :period")
     suspend fun getByCategoryPeriod(profileId: Long, categoryId: Long, period: String): BudgetEntity?
 
+    @Query(
+        """
+        SELECT COALESCE(SUM(
+            CASE
+                WHEN t.currency_code = :currencyCode THEN t.amount_cents
+                WHEN ers.rate_e8 IS NOT NULL THEN CAST(ROUND(t.amount_cents * (ers.rate_e8 / 100000000.0)) AS INTEGER)
+                ELSE 0
+            END
+        ), 0)
+        FROM transactions t
+        LEFT JOIN exchange_rate_snapshots ers
+            ON ers.snapshot_date = t.snapshot_date
+           AND ers.base_currency = t.currency_code
+           AND ers.target_currency = :currencyCode
+        WHERE t.profile_id = :profileId
+          AND t.category_id = :categoryId
+          AND t.type = 'expense'
+          AND t.is_adjustment = 0
+          AND t.created_at_epoch_millis >= :fromEpochMillisInclusive
+          AND t.created_at_epoch_millis < :toEpochMillisExclusive
+        """,
+    )
+    suspend fun getSpentInPeriod(
+        profileId: Long,
+        categoryId: Long,
+        currencyCode: String,
+        fromEpochMillisInclusive: Long,
+        toEpochMillisExclusive: Long,
+    ): Long
+
+    @Query(
+        """
+        SELECT
+            t.*,
+            c.name AS category_name,
+            c.icon AS category_icon,
+            c.color AS category_color,
+            a.name AS account_name
+        FROM transactions t
+        JOIN categories c ON c.id = t.category_id AND c.profile_id = t.profile_id
+        JOIN accounts a ON a.id = t.account_id AND a.profile_id = t.profile_id
+        WHERE t.profile_id = :profileId
+          AND t.category_id = :categoryId
+          AND t.type = 'expense'
+          AND t.is_adjustment = 0
+          AND t.created_at_epoch_millis >= :fromEpochMillisInclusive
+          AND t.created_at_epoch_millis < :toEpochMillisExclusive
+        ORDER BY t.created_at_epoch_millis DESC, t.id DESC
+        """,
+    )
+    suspend fun listTransactionsInPeriod(
+        profileId: Long,
+        categoryId: Long,
+        fromEpochMillisInclusive: Long,
+        toEpochMillisExclusive: Long,
+    ): List<BudgetTransactionWithRelations>
+
     @Query("DELETE FROM budgets WHERE id = :budgetId AND profile_id = :profileId")
-    suspend fun deleteById(profileId: Long, budgetId: Long)
+    suspend fun deleteById(profileId: Long, budgetId: Long): Int
 }
 
 @Dao

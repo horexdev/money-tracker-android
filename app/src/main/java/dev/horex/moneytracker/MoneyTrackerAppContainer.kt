@@ -10,6 +10,7 @@ import dev.horex.moneytracker.core.background.BackgroundTaskExecutor
 import dev.horex.moneytracker.core.background.MoneyTrackerBackgroundWorkScheduler
 import dev.horex.moneytracker.core.background.MoneyTrackerWorkerFactory
 import dev.horex.moneytracker.core.background.MutableBackgroundTaskRegistry
+import dev.horex.moneytracker.core.budgets.RoomBudgetsRepository
 import dev.horex.moneytracker.core.categories.RoomCategoriesRepository
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
@@ -78,6 +79,10 @@ internal class MoneyTrackerAppContainer(
 
     val balancesRepository: RoomBalancesRepository by lazy {
         RoomBalancesRepository(database)
+    }
+
+    val budgetsRepository: RoomBudgetsRepository by lazy {
+        RoomBudgetsRepository(database)
     }
 
     val categoriesRepository: RoomCategoriesRepository by lazy {
