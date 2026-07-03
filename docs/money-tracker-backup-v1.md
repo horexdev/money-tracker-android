@@ -4,9 +4,9 @@
 
 `core:backup` owns the JSON DTO contract for `MoneyTrackerBackup` version `1`,
 the Android exporter that extracts a portable snapshot from Room, the Android
-importer that restores validated backup data into the local Room database, and
-SAF document read/write orchestration. Full import/export UI and portable backup
-encryption are tracked separately.
+importer that restores validated backup data into the local Room database, SAF
+document read/write orchestration, and the optional password-encrypted backup
+container. Full import/export UI is tracked separately.
 
 The backup format is intentionally separate from Room entities. It mirrors the
 Android offline data surface and stores only values needed to rebuild local
@@ -143,6 +143,42 @@ fields, or source metadata.
 SAF `Uri` through `ContentResolver.openInputStream(uri)`. Restore runs
 `MoneyTrackerBackupV1Validator.validateJson()` on the raw document before
 decoding so forbidden unknown identity fields are rejected before DB writes.
+
+Plain v1 JSON stays backward compatible. `restoreFromDocument(uri)` imports only
+plain `MoneyTrackerBackup` JSON; when the document is an encrypted container it
+fails with `MoneyTrackerBackupPasswordRequiredException` so callers can ask for a
+password and retry through `restoreEncryptedFromDocument()`.
+
+## Password Encryption Container
+
+Password-protected backups wrap the unchanged `MoneyTrackerBackup` v1 JSON
+payload in a `MoneyTrackerBackupEncryptedContainer` JSON document. The wrapper
+stores only portable crypto metadata:
+
+- `format`: `MoneyTrackerBackupEncryptedContainer`;
+- `version`: container version `1`;
+- `payload_format`: `MoneyTrackerBackup`;
+- `payload_version`: `1`;
+- `payload_encoding`: `utf-8-json`;
+- `encryption.algorithm`: `AES-256-GCM`;
+- `encryption.kdf.algorithm`: `PBKDF2-HMAC-SHA256`;
+- `encryption.kdf.iterations`: PBKDF2 iteration count used for this file;
+- `encryption.kdf.salt`: Base64-encoded per-file salt;
+- `encryption.kdf.key_length_bits`: `256`;
+- `encryption.nonce`: Base64-encoded per-file AES-GCM nonce;
+- `encryption.ciphertext`: Base64-encoded ciphertext with the GCM tag appended.
+
+The password is never serialized. The SQLCipher passphrase, Android Keystore
+alias, and any device-bound database secret are not inputs to backup encryption
+and are never exported. Container metadata is authenticated with AES-GCM AAD, so
+changing KDF parameters, payload contract fields, or nonce makes decryption fail.
+
+After password decryption, restore still runs
+`MoneyTrackerBackupV1Validator.validateJson()` on the decrypted payload before
+opening a DB write transaction. This preserves the same Telegram/source identity
+field ban for encrypted backups as for plain backups. A wrong password or a
+tampered encrypted payload fails with `MoneyTrackerBackupWrongPasswordException`
+and does not start an import transaction.
 
 The app module provides reusable Activity Result hooks for
 `Intent.ACTION_CREATE_DOCUMENT` and `Intent.ACTION_OPEN_DOCUMENT`. They return a

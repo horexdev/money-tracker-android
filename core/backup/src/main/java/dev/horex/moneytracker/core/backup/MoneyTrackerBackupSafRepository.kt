@@ -26,11 +26,60 @@ class MoneyTrackerBackupSafRepository(
         )
     }
 
+    suspend fun exportEncryptedToDocument(
+        uri: Uri,
+        password: CharArray,
+        options: MoneyTrackerBackupExportOptions = MoneyTrackerBackupExportOptions(),
+        encryptionOptions: MoneyTrackerBackupEncryptionOptions = MoneyTrackerBackupEncryptionOptions(),
+    ): MoneyTrackerBackupDocumentExportResult {
+        val backup = exporter.exportBackup(options)
+        val json = MoneyTrackerBackupEncryptedContainerJson.encodeEncryptedBackup(
+            backup = backup,
+            password = password,
+            options = encryptionOptions,
+        )
+        val bytes = json.toByteArray(Charsets.UTF_8)
+        writeBytes(uri, bytes)
+        return MoneyTrackerBackupDocumentExportResult(
+            exportedProfiles = backup.profiles.size,
+            exportedExchangeRateSnapshots = backup.exchangeRateSnapshots.size,
+            bytesWritten = bytes.size.toLong(),
+        )
+    }
+
     suspend fun restoreFromDocument(
         uri: Uri,
         options: MoneyTrackerBackupImportOptions = MoneyTrackerBackupImportOptions(),
     ): MoneyTrackerBackupImportResult {
         val json = readText(uri)
+        if (MoneyTrackerBackupEncryptedContainerJson.isEncryptedContainer(json)) {
+            throw MoneyTrackerBackupPasswordRequiredException()
+        }
+        return restoreBackupJson(json, options)
+    }
+
+    suspend fun restoreFromDocument(
+        uri: Uri,
+        password: CharArray,
+        options: MoneyTrackerBackupImportOptions = MoneyTrackerBackupImportOptions(),
+    ): MoneyTrackerBackupImportResult {
+        return restoreEncryptedFromDocument(uri, password, options)
+    }
+
+    suspend fun restoreEncryptedFromDocument(
+        uri: Uri,
+        password: CharArray,
+        options: MoneyTrackerBackupImportOptions = MoneyTrackerBackupImportOptions(),
+    ): MoneyTrackerBackupImportResult {
+        val containerJson = readText(uri)
+        val json = MoneyTrackerBackupEncryptedContainerJson.decryptToBackupJson(containerJson, password)
+        return restoreBackupJson(json, options)
+    }
+
+    private suspend fun restoreBackupJson(
+        json: String,
+        options: MoneyTrackerBackupImportOptions,
+    ): MoneyTrackerBackupImportResult {
         val validation = MoneyTrackerBackupV1Validator.validateJson(json)
         if (!validation.canImport) {
             throw MoneyTrackerBackupImportValidationException(validation)
