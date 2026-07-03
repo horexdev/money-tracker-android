@@ -86,6 +86,9 @@ back into the database.
 Categories export nullable `localization_key`. System categories keep their
 stable key so restore can display their name in the restored profile language;
 custom and renamed categories export null and preserve their stored name.
+Soft-deleted categories are exported with `deleted_at_epoch_millis` so historical
+transactions and reusable rows that still reference them can be restored with
+referential integrity.
 
 The exporter does not read or serialize the SQLCipher passphrase, Android
 Keystore aliases, app-private preferences that hold device-bound secrets, or any
@@ -168,6 +171,19 @@ If an older plain v1 backup has no category `localization_key`, import infers a
 system key only when the category name, type, icon, color, and protected flag
 exactly match a known default/system category translation. Other categories keep
 null and remain custom/renamed.
+
+Android backup/import currently carries categories as first-class profile rows:
+custom categories, user-renamed default categories, and soft-deleted categories
+are inserted before transactions, budgets, recurring transactions, and
+transaction templates. Those child rows store newly generated local `category_id`
+values resolved from the backup `category_ref`; they never store backup refs or
+source database IDs.
+
+Source-side PostgreSQL conversion must emit the same category rows and
+export-local `category_ref` links. The anonymized source-style fixture includes
+custom, renamed default, savings, protected, and soft-deleted categories and
+checks that transactions, budgets, recurring transactions, and transaction
+templates all remap through imported category rows.
 
 ## SAF Document Flow
 

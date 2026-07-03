@@ -103,6 +103,54 @@ class MoneyTrackerBackupExporterTest {
     }
 
     @Test
+    fun categoryRowsRoundTripWithCustomRenamedDefaultAndSoftDeletedReferences() = runTest {
+        val source = InMemoryBackupDatabase.categoryRegression()
+        val exported = MoneyTrackerBackupExporter(
+            store = InMemoryBackupExportStore(source),
+            currentTimeMillis = { EXPORT_TIME },
+        ).exportBackup()
+        val exportedProfile = exported.profiles.single()
+        val exportedCategories = exportedProfile.categories.associateBy { it.name }
+
+        val customCategory = exportedCategories.getValue("Custom groceries")
+        val renamedDefaultCategory = exportedCategories.getValue("Family meals")
+        val softDeletedCategory = exportedCategories.getValue("Archived taxi")
+
+        assertEquals(null, customCategory.localizationKey)
+        assertEquals(null, renamedDefaultCategory.localizationKey)
+        assertEquals(null, softDeletedCategory.localizationKey)
+        assertEquals(TEST_TIME + 9, softDeletedCategory.deletedAtEpochMillis)
+        assertEquals(softDeletedCategory.ref, exportedProfile.transactions.single().categoryRef)
+        assertEquals(customCategory.ref, exportedProfile.budgets.single().categoryRef)
+        assertEquals(renamedDefaultCategory.ref, exportedProfile.recurringTransactions.single().categoryRef)
+        assertEquals(softDeletedCategory.ref, exportedProfile.transactionTemplates.single().categoryRef)
+
+        val target = InMemoryBackupDatabase()
+        MoneyTrackerBackupImporter(InMemoryBackupImportStore(target)).importBackup(exported)
+
+        val importedCategories = target.categories.associateBy { it.name }
+        val importedCustomCategory = importedCategories.getValue("Custom groceries")
+        val importedRenamedDefaultCategory = importedCategories.getValue("Family meals")
+        val importedSoftDeletedCategory = importedCategories.getValue("Archived taxi")
+
+        assertEquals(null, importedCustomCategory.localizationKey)
+        assertEquals(null, importedRenamedDefaultCategory.localizationKey)
+        assertEquals(null, importedSoftDeletedCategory.localizationKey)
+        assertEquals(TEST_TIME + 9, importedSoftDeletedCategory.deletedAtEpochMillis)
+        assertEquals(importedSoftDeletedCategory.id, target.transactions.single().categoryId)
+        assertEquals(importedCustomCategory.id, target.budgets.single().categoryId)
+        assertEquals(importedRenamedDefaultCategory.id, target.recurringTransactions.single().categoryId)
+        assertEquals(importedSoftDeletedCategory.id, target.transactionTemplates.single().categoryId)
+
+        val reexported = MoneyTrackerBackupExporter(
+            store = InMemoryBackupExportStore(target),
+            currentTimeMillis = { EXPORT_TIME },
+        ).exportBackup()
+
+        assertEquals(exported, reexported)
+    }
+
+    @Test
     fun missingSelectedLocalProfileFailsExportBeforeDocumentWrite() {
         val exporter = MoneyTrackerBackupExporter(
             store = InMemoryBackupExportStore(InMemoryBackupDatabase.seeded()),
@@ -423,6 +471,125 @@ private class InMemoryBackupDatabase(
                 sortOrder = 1,
                 createdAtEpochMillis = TEST_TIME,
                 updatedAtEpochMillis = TEST_TIME,
+            )
+            return database
+        }
+
+        fun categoryRegression(): InMemoryBackupDatabase {
+            val database = InMemoryBackupDatabase(nextId = 20_000)
+            val profileId = 1_901L
+            val accountId = 1_902L
+            val customCategoryId = 1_903L
+            val renamedDefaultCategoryId = 1_904L
+            val softDeletedCategoryId = 1_905L
+
+            database.profiles += LocalProfileEntity(
+                id = profileId,
+                label = "Category regression",
+                languageCode = "en",
+                displayCurrenciesCsv = "USD",
+                createdAtEpochMillis = TEST_TIME,
+                updatedAtEpochMillis = TEST_TIME,
+            )
+            database.accounts += AccountEntity(
+                id = accountId,
+                profileId = profileId,
+                name = "Main",
+                icon = "wallet",
+                color = "#6366f1",
+                type = "checking",
+                currencyCode = "USD",
+                isDefault = true,
+                includeInTotal = true,
+                createdAtEpochMillis = TEST_TIME,
+                updatedAtEpochMillis = TEST_TIME,
+            )
+            database.categories += CategoryEntity(
+                id = customCategoryId,
+                profileId = profileId,
+                name = "Custom groceries",
+                icon = "shopping-bag",
+                type = "expense",
+                color = "#22c55e",
+                isProtected = false,
+                updatedAtEpochMillis = TEST_TIME + 1,
+            )
+            database.categories += CategoryEntity(
+                id = renamedDefaultCategoryId,
+                profileId = profileId,
+                name = "Family meals",
+                localizationKey = null,
+                icon = "fork-knife",
+                type = "expense",
+                color = "#f97316",
+                isProtected = false,
+                updatedAtEpochMillis = TEST_TIME + 2,
+            )
+            database.categories += CategoryEntity(
+                id = softDeletedCategoryId,
+                profileId = profileId,
+                name = "Archived taxi",
+                icon = "taxi",
+                type = "expense",
+                color = "#f59e0b",
+                isProtected = false,
+                updatedAtEpochMillis = TEST_TIME + 3,
+                deletedAtEpochMillis = TEST_TIME + 9,
+            )
+            database.transactions += TransactionEntity(
+                id = 1_906L,
+                profileId = profileId,
+                type = "expense",
+                amountCents = 2_400,
+                categoryId = softDeletedCategoryId,
+                accountId = accountId,
+                note = "Archived history",
+                currencyCode = "USD",
+                snapshotDate = "2026-07-01",
+                createdAtEpochMillis = TEST_TIME + 4,
+            )
+            database.budgets += BudgetEntity(
+                id = 1_907L,
+                profileId = profileId,
+                categoryId = customCategoryId,
+                limitCents = 50_000,
+                period = "monthly",
+                currencyCode = "USD",
+                notifyAtPercent = 80,
+                notificationsEnabled = true,
+                lastNotifiedPercent = 0,
+                createdAtEpochMillis = TEST_TIME + 5,
+                updatedAtEpochMillis = TEST_TIME + 5,
+            )
+            database.recurringTransactions += RecurringTransactionEntity(
+                id = 1_908L,
+                profileId = profileId,
+                accountId = accountId,
+                categoryId = renamedDefaultCategoryId,
+                type = "expense",
+                amountCents = 10_000,
+                currencyCode = "USD",
+                note = "Meal plan",
+                frequency = "monthly",
+                nextRunAtEpochMillis = TEST_TIME + 86_400_000,
+                isActive = true,
+                createdAtEpochMillis = TEST_TIME + 6,
+                updatedAtEpochMillis = TEST_TIME + 6,
+            )
+            database.transactionTemplates += TransactionTemplateEntity(
+                id = 1_909L,
+                profileId = profileId,
+                name = "Archived ride",
+                type = "expense",
+                amountCents = 2_400,
+                amountFixed = true,
+                categoryId = softDeletedCategoryId,
+                accountId = accountId,
+                currencyCode = "USD",
+                note = "Taxi",
+                sortOrder = 0,
+                createdAtEpochMillis = TEST_TIME + 7,
+                updatedAtEpochMillis = TEST_TIME + 7,
             )
             return database
         }

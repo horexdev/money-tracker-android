@@ -81,9 +81,9 @@ python .\tools\migration_rehearsal.py `
 
 | Currency | Income | Expense | Net | Included account total |
 | --- | ---: | ---: | ---: | ---: |
-| EUR | 46000 | 0 | 46000 | 46000 |
+| EUR | 46000 | 15000 | 31000 | 31000 |
 | RUB | 10000 | 0 | 10000 | 10000 |
-| USD | 250000 | 52750 | 197250 | 197250 |
+| USD | 250000 | 53950 | 196050 | 196050 |
 
 Дополнительные сверки:
 

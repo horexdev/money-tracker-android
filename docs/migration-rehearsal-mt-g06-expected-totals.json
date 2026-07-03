@@ -10,13 +10,13 @@
       "counts": {
         "accounts": 5,
         "budgets": 2,
-        "categories": 6,
+        "categories": 7,
         "exchange_rate_overrides": 1,
         "goal_transactions": 2,
         "recurring_transactions": 2,
         "savings_goals": 2,
         "transaction_templates": 2,
-        "transactions": 5,
+        "transactions": 7,
         "transfers": 1
       },
       "goal_transaction_totals_by_currency": {
@@ -32,9 +32,9 @@
         }
       },
       "included_account_totals_by_currency": {
-        "EUR": 46000,
+        "EUR": 31000,
         "RUB": 10000,
-        "USD": 197250
+        "USD": 196050
       },
       "recurring_totals_by_currency": {
         "USD": {
@@ -49,9 +49,9 @@
       },
       "transaction_totals_by_currency": {
         "EUR": {
-          "expense_cents": 0,
+          "expense_cents": 15000,
           "income_cents": 46000,
-          "net_cents": 46000
+          "net_cents": 31000
         },
         "RUB": {
           "expense_cents": 0,
@@ -59,9 +59,9 @@
           "net_cents": 10000
         },
         "USD": {
-          "expense_cents": 52750,
+          "expense_cents": 53950,
           "income_cents": 250000,
-          "net_cents": 197250
+          "net_cents": 196050
         }
       },
       "transfer_totals_by_pair": {

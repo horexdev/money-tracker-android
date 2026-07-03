@@ -50,8 +50,8 @@ class MoneyTrackerBackupMigrationFixturesTest {
         assertEquals(
             MoneyTrackerBackupImportedProfileCounts(
                 accounts = 5,
-                categories = 6,
-                transactions = 5,
+                categories = 7,
+                transactions = 7,
                 transfers = 1,
                 budgets = 2,
                 recurringTransactions = 2,
@@ -79,12 +79,22 @@ class MoneyTrackerBackupMigrationFixturesTest {
         assertEquals(accountIds.getValue("Travel reserve"), store.savingsGoals.first().accountId)
         assertEquals(goalIds.getValue("Trip fund"), store.goalTransactions.first().goalId)
         assertEquals(accountIds.getValue("Main wallet"), store.transactionTemplates.first().accountId)
+        assertEquals(categoryIds.getValue("Goal saving"), store.transactions.single { it.note == "Trip deposit" }.categoryId)
+        assertEquals(categoryIds.getValue("Archived taxi"), store.transactions.single { it.note == "Archived ride" }.categoryId)
+        assertEquals(categoryIds.getValue("Dining"), store.budgets.single { it.refHint == "budget:b000001" }.categoryId)
+        assertEquals(categoryIds.getValue("General"), store.budgets.single { it.refHint == "budget:b000002" }.categoryId)
+        assertEquals(categoryIds.getValue("General"), store.recurringTransactions.single { it.note == "Rent" }.categoryId)
+        assertEquals(categoryIds.getValue("Dining"), store.recurringTransactions.single { it.note == "Membership" }.categoryId)
+        assertEquals(categoryIds.getValue("Dining"), store.transactionTemplates.single { it.name == "Lunch preset" }.categoryId)
+        assertEquals(categoryIds.getValue("General"), store.transactionTemplates.single { it.name == "Taxi preset" }.categoryId)
 
         assertEquals(SystemCategoryLocalization.SALARY, store.categories.single { it.name == "Salary" }.localizationKey)
         assertEquals(SystemCategoryLocalization.TRANSFER, store.categories.single { it.name == "Transfer" }.localizationKey)
         assertEquals(SystemCategoryLocalization.ADJUSTMENT, store.categories.single { it.name == "Adjustment" }.localizationKey)
         assertEquals(null, store.categories.single { it.name == "Dining" }.localizationKey)
         assertEquals(null, store.categories.single { it.name == "General" }.localizationKey)
+        assertEquals(null, store.categories.single { it.name == "Archived taxi" }.localizationKey)
+        assertEquals(1_783_166_400_000L, store.categories.single { it.name == "Archived taxi" }.deletedAtEpochMillis)
 
         val persistedText = store.persistedText()
         assertTrue(
@@ -132,7 +142,7 @@ class MoneyTrackerBackupMigrationFixturesTest {
             ),
             profile.categories.map { it.type }.toSet(),
         )
-        assertEquals(5, profile.transactions.size)
+        assertEquals(7, profile.transactions.size)
         assertTrue(profile.transactions.any { it.isAdjustment })
         assertEquals(1, profile.transfers.size)
         assertEquals(2, profile.budgets.size)
@@ -331,6 +341,7 @@ private class FixtureImportStore : MoneyTrackerBackupImportStore {
             profileId = profileId,
             name = category.name,
             localizationKey = category.localizationKey,
+            deletedAtEpochMillis = category.deletedAtEpochMillis,
         )
         return id
     }
@@ -375,7 +386,7 @@ private class FixtureImportStore : MoneyTrackerBackupImportStore {
 
     override suspend fun insertBudget(profileId: Long, budget: BackupBudget, categoryId: Long): Long {
         val id = nextId()
-        budgets += ImportedBudget(id = id, profileId = profileId, categoryId = categoryId)
+        budgets += ImportedBudget(id = id, profileId = profileId, categoryId = categoryId, refHint = budget.ref)
         return id
     }
 
@@ -464,6 +475,7 @@ private data class ImportedCategory(
     val profileId: Long,
     val name: String,
     val localizationKey: String?,
+    val deletedAtEpochMillis: Long?,
 )
 private data class ImportedTransaction(
     val id: Long,
@@ -481,7 +493,7 @@ private data class ImportedTransfer(
     val toTransactionId: Long?,
     val note: String,
 )
-private data class ImportedBudget(val id: Long, val profileId: Long, val categoryId: Long)
+private data class ImportedBudget(val id: Long, val profileId: Long, val categoryId: Long, val refHint: String)
 private data class ImportedRecurringTransaction(
     val id: Long,
     val profileId: Long,
