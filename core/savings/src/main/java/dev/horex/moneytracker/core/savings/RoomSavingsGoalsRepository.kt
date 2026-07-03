@@ -15,6 +15,9 @@ import java.util.Locale
 
 class RoomSavingsGoalsRepository(
     private val database: MoneyTrackerDatabase,
+    private val goalMilestoneNotificationProcessor: GoalMilestoneNotificationProcessor? = null,
+    private val goalMilestoneNotificationPreferenceProvider: GoalMilestoneNotificationPreferenceProvider =
+        GoalMilestoneNotificationPreferenceProvider { false },
     private val clock: () -> Long = { System.currentTimeMillis() },
 ) : SavingsGoalsRepository {
     private val accountDao = database.accountDao()
@@ -140,10 +143,20 @@ class RoomSavingsGoalsRepository(
     ): SavingsGoal {
         requirePositiveAmount(input.amountCents)
         val createdAt = input.createdAtEpochMillis ?: clock()
+        var currentBefore = 0L
+        var milestoneBaselineCents = 0L
 
         database.withTransaction {
             val goal = requireGoal(profileId, goalId)
-            val currentBefore = historyDao.getCurrentCents(profileId, goalId)
+            currentBefore = historyDao.getCurrentCents(profileId, goalId)
+            milestoneBaselineCents = maxOf(
+                currentBefore,
+                savingsGoalHistoryMaxCurrentCents(
+                    historyDao.listByGoal(profileId, goalId)
+                        .map(GoalTransactionEntity::toHistoryEntry)
+                        .sortedWith(compareBy<SavingsGoalHistoryEntry> { it.createdAtEpochMillis }.thenBy { it.id }),
+                ),
+            )
             if (type == SavingsGoalTransactionType.Withdraw && currentBefore < input.amountCents) {
                 throw SavingsGoalInsufficientFundsException()
             }
@@ -182,7 +195,26 @@ class RoomSavingsGoalsRepository(
             }
         }
 
-        return getGoal(profileId, goalId)
+        val updatedGoal = getGoal(profileId, goalId)
+        notifyGoalMilestoneIfNeeded(profileId, previousCurrentCents = milestoneBaselineCents, goal = updatedGoal)
+        return updatedGoal
+    }
+
+    private suspend fun notifyGoalMilestoneIfNeeded(
+        profileId: Long,
+        previousCurrentCents: Long,
+        goal: SavingsGoal,
+    ) {
+        val processor = goalMilestoneNotificationProcessor ?: return
+        runCatching {
+            val notificationsEnabled = goalMilestoneNotificationPreferenceProvider
+                .areGoalMilestoneNotificationsEnabled(profileId)
+            processor.run(
+                goal = goal,
+                previousCurrentCents = previousCurrentCents,
+                goalMilestoneNotificationsEnabled = notificationsEnabled,
+            )
+        }
     }
 
     private suspend fun requireGoal(profileId: Long, goalId: Long): SavingsGoalEntity {

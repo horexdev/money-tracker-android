@@ -162,6 +162,7 @@ dependencies {
     implementation(project(":core:notifications"))
     implementation(project(":core:preferences"))
     implementation(project(":core:recurring"))
+    implementation(project(":core:savings"))
     implementation(project(":core:stats"))
     implementation(project(":core:templates"))
     implementation(project(":core:transactions"))

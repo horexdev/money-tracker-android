@@ -20,7 +20,16 @@ data class SavingsGoal(
 
     val remainingCents: Long
         get() = (targetCents - currentCents).coerceAtLeast(0L)
+
+    fun crossedMilestones(previousCurrentCents: Long): List<Int> {
+        val previousProgress = savingsGoalProgressPercent(previousCurrentCents, targetCents)
+        return SavingsGoalMilestones.filter { milestone ->
+            previousProgress < milestone && progressPercent >= milestone
+        }
+    }
 }
+
+val SavingsGoalMilestones = listOf(25, 50, 75, 100)
 
 data class SavingsGoalHistoryEntry(
     val id: Long,
@@ -82,4 +91,17 @@ internal fun savingsGoalHistoryCurrentCents(history: List<SavingsGoalHistoryEntr
             SavingsGoalTransactionType.Withdraw -> current - entry.amountCents
         }
     }
+}
+
+internal fun savingsGoalHistoryMaxCurrentCents(history: List<SavingsGoalHistoryEntry>): Long {
+    var current = 0L
+    var maximum = 0L
+    history.forEach { entry ->
+        current = when (entry.type) {
+            SavingsGoalTransactionType.Deposit -> current + entry.amountCents
+            SavingsGoalTransactionType.Withdraw -> current - entry.amountCents
+        }
+        maximum = maxOf(maximum, current)
+    }
+    return maximum
 }

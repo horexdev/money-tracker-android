@@ -40,6 +40,17 @@ class SavingsGoalTest {
     }
 
     @Test
+    fun historyMaxCurrentUsesHighestSavedBalance() {
+        val history = listOf(
+            historyEntry(SavingsGoalTransactionType.Deposit, 5_000),
+            historyEntry(SavingsGoalTransactionType.Withdraw, 2_000),
+            historyEntry(SavingsGoalTransactionType.Deposit, 1_000),
+        )
+
+        assertEquals(5_000L, savingsGoalHistoryMaxCurrentCents(history))
+    }
+
+    @Test
     fun historyTypeParsingRejectsUnknownValues() {
         assertEquals(SavingsGoalTransactionType.Deposit, SavingsGoalTransactionType.fromStorageValue("deposit"))
         assertEquals(SavingsGoalTransactionType.Withdraw, SavingsGoalTransactionType.fromStorageValue("withdraw"))
@@ -68,14 +79,46 @@ class SavingsGoalTest {
         assertEquals(6_000L, goal.remainingCents)
     }
 
-    private fun historyEntry(type: SavingsGoalTransactionType, amountCents: Long): SavingsGoalHistoryEntry {
+    @Test
+    fun crossedMilestonesUsePreviousAndCurrentProgress() {
+        val goal = goal(currentCents = 7_600, targetCents = 10_000)
+
+        assertEquals(listOf(25, 50, 75), goal.crossedMilestones(previousCurrentCents = 2_000))
+        assertEquals(emptyList<Int>(), goal.crossedMilestones(previousCurrentCents = 7_500))
+        assertEquals(emptyList<Int>(), goal(currentCents = 7_000).crossedMilestones(previousCurrentCents = 8_000))
+        assertEquals(listOf(100), goal(currentCents = 12_000).crossedMilestones(previousCurrentCents = 9_000))
+    }
+
+    private fun historyEntry(
+        type: SavingsGoalTransactionType,
+        amountCents: Long,
+        createdAtEpochMillis: Long = 1,
+    ): SavingsGoalHistoryEntry {
         return SavingsGoalHistoryEntry(
             id = 0,
             profileId = 1,
             goalId = 1,
             type = type,
             amountCents = amountCents,
+            createdAtEpochMillis = createdAtEpochMillis,
+        )
+    }
+
+    private fun goal(
+        currentCents: Long,
+        targetCents: Long = 10_000,
+    ): SavingsGoal {
+        return SavingsGoal(
+            id = 1,
+            profileId = 2,
+            name = "Trip",
+            targetCents = targetCents,
+            currentCents = currentCents,
+            currencyCode = "USD",
+            deadlineDate = null,
+            accountId = null,
             createdAtEpochMillis = 1,
+            updatedAtEpochMillis = 1,
         )
     }
 }
