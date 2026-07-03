@@ -317,6 +317,7 @@ class LocalizationResourcesTest {
                 """аўтаном\p{L}*""",
                 """hors\s+ligne""",
                 """sin\s+conexi[oó]n""",
+                """fuera\s+de\s+l[ií]nea""",
                 """sem\s+conex[aã]o""",
                 """senza\s+connessione""",
                 """zonder\s+(?:internet|verbinding)""",

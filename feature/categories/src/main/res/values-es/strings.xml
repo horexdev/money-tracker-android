@@ -3,7 +3,7 @@
     <string name="categories_title">Categorías</string>
     <string name="categories_subtitle">Administrar nombres, íconos, colores y tipos de transacciones</string>
     <string name="categories_empty_title">Sin categorías</string>
-    <string name="categories_empty_body">Crear una categoría para clasificar ingresos y gastos fuera de línea.</string>
+    <string name="categories_empty_body">Crear una categoría para clasificar ingresos y gastos.</string>
     <string name="categories_add">Agregar categoría</string>
     <string name="categories_edit">Editar categoría</string>
     <string name="categories_create">Crear categoría</string>
