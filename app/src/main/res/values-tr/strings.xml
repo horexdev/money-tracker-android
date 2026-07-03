@@ -70,7 +70,7 @@
     <string name="settings_notifications_delivery_permission_required_title">İzin gerekli</string>
     <string name="settings_notifications_delivery_permission_required_desc">Bildirim izni henüz verilmedi. Uyarılar kaydedilir ancak Android, bildirimlere izin verilene kadar dağıtımı engelleyecektir.</string>
     <string name="settings_notifications_delivery_permission_denied_title">İzin reddedildi</string>
-    <string name="settings_notifications_delivery_permission_denied_desc">Notification permission was denied. Uyarılar kaydedilir ancak Android, sistem ayarlarında bildirimlere izin verilene kadar dağıtımı engelleyecektir.</string>
+    <string name="settings_notifications_delivery_permission_denied_desc">Bildirim izni reddedildi. Uyarılar kaydedilir ancak Android, sistem ayarlarında bildirimlere izin verilene kadar dağıtımı engelleyecektir.</string>
     <string name="settings_notifications_delivery_disabled_title">Sistem ayarlarında devre dışı</string>
     <string name="settings_notifications_delivery_disabled_desc">Sistem ayarlarında bu uygulama için bildirimler devre dışı bırakıldı. Uyarılar kaydedilir ancak dağıtım etkinleştirilene kadar engellenir.</string>
     <string name="settings_notifications_open_system_settings">Sistem ayarlarını aç</string>
@@ -102,7 +102,7 @@
     <string name="settings_no_manual_rates">Bu profil için manuel ücret yok.</string>
     <string name="settings_manual_rate_meta">%1$s, %2$s oranı, kaynak: %3$s</string>
     <string name="settings_rate_overwrite_title">Manüel oran değiştirilsin mi?</string>
-    <string name="settings_rate_overwrite_body">%3$s\'de %1$s -&gt; %2$s için manuel bir oran zaten mevcut. Current rate: %4$s. Yeni oran: %5$s.</string>
+    <string name="settings_rate_overwrite_body">%3$s\'de %1$s -&gt; %2$s için manuel bir oran zaten mevcut. Mevcut kur: %4$s. Yeni oran: %5$s.</string>
     <string name="settings_replace_rate">Değiştirme oranı</string>
     <string name="settings_data_section">Veri</string>
     <string name="settings_open_import_export">İthalat / İhracat</string>

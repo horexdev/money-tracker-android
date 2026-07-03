@@ -187,7 +187,7 @@
     <string name="import_export_processing">المعالجة</string>
     <string name="import_export_error_generic">فشل إجراء الاستيراد/التصدير.</string>
     <string name="import_export_error_document">لا يمكن فتح المستند.</string>
-    <string name="import_export_error_password_required">This backup is encrypted. أدخل كلمة المرور وقم بالمعاينة مرة أخرى.</string>
+    <string name="import_export_error_password_required">هذه النسخة الاحتياطية مشفرة. أدخل كلمة المرور وقم بالمعاينة مرة أخرى.</string>
     <string name="import_export_error_wrong_password">كلمة المرور غير صحيحة أو أن النسخة الاحتياطية المشفرة تالفة.</string>
     <string name="import_export_error_invalid_encrypted_container">حاوية النسخ الاحتياطي المشفرة غير مدعومة.</string>
     <string name="import_export_error_validation_blocks_restore">أخطاء التحقق من الصحة تمنع الاستعادة.</string>

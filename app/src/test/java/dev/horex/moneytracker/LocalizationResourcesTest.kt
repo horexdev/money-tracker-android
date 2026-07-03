@@ -87,6 +87,31 @@ class LocalizationResourcesTest {
     }
 
     @Test
+    fun nonEnglishResourcesDoNotContainDefaultEnglishFragments() {
+        val modules = stringResourceModules()
+        val violations = modules.flatMap { module ->
+            val defaultStrings = readStrings(module.defaultStringsFile)
+
+            SUPPORTED_LOCALES
+                .filterNot { it == DEFAULT_LOCALE }
+                .flatMap { locale ->
+                    val localizedStrings = readStrings(module.localizedStringsFile(locale))
+
+                    defaultStrings.flatMap { (name, defaultValue) ->
+                        defaultEnglishFragments(defaultValue)
+                            .filter { fragment -> localizedStrings.getValue(name).contains(fragment) }
+                            .map { fragment -> "${module.relativePath}/values-$locale/$name contains \"$fragment\"" }
+                    }
+                }
+        }
+
+        assertTrue(
+            "Non-English resources contain default English fragments: ${violations.joinToString()}",
+            violations.isEmpty(),
+        )
+    }
+
+    @Test
     fun longLocalizedUiTextStaysWithinSmokeLimit() {
         val modules = stringResourceModules()
         val violations = modules.flatMap { module ->
@@ -188,6 +213,34 @@ class LocalizationResourcesTest {
             value == DATE_FORMAT_TOKEN
     }
 
+    private fun defaultEnglishFragments(defaultValue: String): List<String> {
+        val normalized = defaultValue.normalizeWhitespace()
+        if (isAllowedExactMatch(normalized)) {
+            return emptyList()
+        }
+
+        val splitFragments = ENGLISH_FRAGMENT_SEPARATOR
+            .split(normalized)
+            .map { it.trimEnglishFragment() }
+
+        return (splitFragments + normalized.trimEnglishFragment())
+            .filter { it.isSuspiciousEnglishFragment() }
+            .distinct()
+    }
+
+    private fun String.normalizeWhitespace(): String = trim().replace(WHITESPACE, " ")
+
+    private fun String.trimEnglishFragment(): String =
+        trim { char -> char.isWhitespace() || char == ',' || char == ':' || char == '(' || char == ')' || char == '[' || char == ']' }
+
+    private fun String.isSuspiciousEnglishFragment(): Boolean {
+        val value = trim()
+
+        return value.isNotEmpty() &&
+            !isAllowedExactMatch(value) &&
+            ENGLISH_WORD.findAll(value).count() >= MIN_ENGLISH_FRAGMENT_WORDS
+    }
+
     private data class ResourceModule(
         val resRoot: File,
         val relativePath: String,
@@ -202,6 +255,7 @@ class LocalizationResourcesTest {
         const val DEFAULT_LOCALE = "en"
         const val DATE_FORMAT_TOKEN = "YYYY-MM-DD"
         const val LONG_TEXT_SMOKE_LIMIT = 280
+        const val MIN_ENGLISH_FRAGMENT_WORDS = 2
         val EXACT_MATCH_ALLOWLIST = setOf("Money Tracker")
         val SUPPORTED_LOCALES = listOf(
             "en",
@@ -225,6 +279,9 @@ class LocalizationResourcesTest {
         val PLACEHOLDER = Regex("%(\\d+\\$)?[sd]|%%")
         val PLACEHOLDER_ONLY = Regex("[0-9%\$sd.,: /()-]+")
         val CURRENCY_CODE = Regex("[A-Z]{3}")
+        val WHITESPACE = Regex("\\s+")
+        val ENGLISH_FRAGMENT_SEPARATOR = Regex("[.!?;]+")
+        val ENGLISH_WORD = Regex("[A-Za-z][A-Za-z']+")
         val RTL_TEXT = Regex("[\\u0600-\\u06FF]")
     }
 }
