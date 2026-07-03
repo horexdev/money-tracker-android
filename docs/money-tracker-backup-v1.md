@@ -62,6 +62,39 @@ Business validation such as required default accounts, positive amounts, date
 windows, import conflict handling, and restore behavior belongs to follow-up
 validation/import tasks.
 
+## Dry-Run Validation
+
+`MoneyTrackerBackupV1Validator` is the deterministic dry-run gate for future
+restore flows. It has no Room, repository, SAF, or transaction dependency and
+does not write data. Restore code must run it before opening a DB write
+transaction.
+
+The validator returns `MoneyTrackerBackupValidationResult` with stable
+`errors`, `warnings`, and `canImport` fields:
+
+- `Error` issues block import;
+- `Warning` issues document non-blocking dry-run findings;
+- issue ordering is deterministic by severity, JSON path, code, and message.
+
+`validate(backup)` validates an already decoded DTO. `validateJson(value)` first
+scans the raw JSON tree for source identity fields and then validates the DTO
+shape and relationship graph. This raw scan blocks Telegram/source identity
+fields even when they are not part of the DTO contract, including:
+
+- Telegram user/profile fields such as `telegram_id`, `username`,
+  `first_name`, `last_name`, `initData`, and `init_data`;
+- bot/chat metadata such as `bot_id` and `chat_id`;
+- source or legacy markers such as `source_id`, `source_db_id`, and
+  `legacy_id`;
+- source database identifiers such as `id`, `user_id`, `account_id`,
+  `category_id`, `from_tx_id`, or any other `*_id` field.
+
+Reference validation is complete before restore execution. The dry-run checks
+profile, account, category, transaction, transfer, budget, recurring
+transaction, savings goal, goal transaction, exchange rate override, and
+transaction template refs for valid syntax, forbidden ref parts, duplicates, and
+unresolved relationship refs.
+
 ## Domain Coverage
 
 V1 covers the current Android offline domains:
