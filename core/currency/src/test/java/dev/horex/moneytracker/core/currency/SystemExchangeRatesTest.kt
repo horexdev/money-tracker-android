@@ -48,6 +48,18 @@ class SystemExchangeRatesTest {
     }
 
     @Test
+    fun tinyCrossCurrencyRateDoesNotFallbackToOneToOneRate() {
+        if (!IsoCurrencyCatalog.isSupported("LBP") || !IsoCurrencyCatalog.isSupported("XAU")) {
+            return
+        }
+
+        val rate = SystemExchangeRates.rateE8("LBP", "XAU")
+
+        assertTrue("LBP->XAU should keep a positive E8 rate", rate > 0)
+        assertTrue("LBP->XAU must not fallback to a 1:1 rate", rate < RATE_SCALE_E8)
+    }
+
+    @Test
     fun missingQuoteDoesNotFallbackToOneToOneRate() {
         try {
             SystemExchangeRates.rateE8("USD", "ZZZ")

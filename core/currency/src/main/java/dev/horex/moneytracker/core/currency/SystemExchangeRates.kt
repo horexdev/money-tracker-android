@@ -8,13 +8,15 @@ internal object SystemExchangeRates {
     fun rateE8(baseCurrency: String, targetCurrency: String): Long {
         val baseRate = requireUsdQuoteE8(baseCurrency)
         val targetRate = requireUsdQuoteE8(targetCurrency)
+        if (baseCurrency == targetCurrency) {
+            return RATE_SCALE_E8
+        }
         return BigInteger.valueOf(targetRate)
             .multiply(rateScale)
             .add(BigInteger.valueOf(baseRate).divide(BigInteger.valueOf(2)))
             .divide(BigInteger.valueOf(baseRate))
             .toLong()
-            .takeIf { it > 0L }
-            ?: RATE_SCALE_E8
+            .coerceAtLeast(1L)
     }
 
     fun hasUsdQuote(currencyCode: String): Boolean {
