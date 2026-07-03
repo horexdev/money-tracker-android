@@ -97,6 +97,7 @@ class RoomCurrencyRatesRepositoryTest {
                     targetCurrency = "EUR",
                     rateE8 = 95_000_000L,
                 ),
+                overwriteExisting = false,
             )
 
             val profileRate = repository.getRate(profileId, "USD", "EUR", "2026-04-02")
@@ -108,14 +109,23 @@ class RoomCurrencyRatesRepositoryTest {
             assertEquals(92_000_000L, otherProfileRate.rateE8)
 
             now = 30L
+            val replacementInput = SaveExchangeRateOverrideInput(
+                effectiveDate = "2026-04-01",
+                baseCurrency = "USD",
+                targetCurrency = "EUR",
+                rateE8 = 96_000_000L,
+            )
+            assertFailsWithType<ExchangeRateOverrideAlreadyExistsException> {
+                repository.saveManualOverride(
+                    profileId = profileId,
+                    input = replacementInput,
+                    overwriteExisting = false,
+                )
+            }
             val updated = repository.saveManualOverride(
                 profileId = profileId,
-                input = SaveExchangeRateOverrideInput(
-                    effectiveDate = "2026-04-01",
-                    baseCurrency = "USD",
-                    targetCurrency = "EUR",
-                    rateE8 = 96_000_000L,
-                ),
+                input = replacementInput,
+                overwriteExisting = true,
             )
 
             assertEquals(override.id, updated.id)

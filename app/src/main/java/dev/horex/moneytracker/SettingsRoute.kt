@@ -73,8 +73,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.horex.moneytracker.core.currency.CurrencyException
 import dev.horex.moneytracker.core.currency.CurrencyRatesRepository
+import dev.horex.moneytracker.core.currency.ExchangeRateNotFoundException
 import dev.horex.moneytracker.core.currency.ExchangeRateOverride
+import dev.horex.moneytracker.core.currency.ExchangeRateOverrideAlreadyExistsException
+import dev.horex.moneytracker.core.currency.ExchangeRateSource
 import dev.horex.moneytracker.core.currency.RATE_SCALE_E8
+import dev.horex.moneytracker.core.currency.ResolvedExchangeRate
 import dev.horex.moneytracker.core.currency.SaveExchangeRateOverrideInput
 import dev.horex.moneytracker.core.database.profile.LocalProfile
 import dev.horex.moneytracker.core.database.profile.LocalProfileRepository
@@ -174,8 +178,67 @@ fun SettingsRoute(
         }
     }
 
+    fun buildRateOverrideInput(): SaveExchangeRateOverrideInput? {
+        val rateE8 = state.rateValueInput.toRateE8() ?: return null
+        return SaveExchangeRateOverrideInput(
+            effectiveDate = state.rateDateInput,
+            baseCurrency = state.rateBaseInput,
+            targetCurrency = state.rateTargetInput,
+            rateE8 = rateE8,
+        )
+    }
+
+    fun saveRateOverride(input: SaveExchangeRateOverrideInput, overwriteExisting: Boolean) {
+        val settings = state.settings ?: return
+        scope.launch {
+            state = state.copy(
+                isBusy = true,
+                pendingRateOverwrite = null,
+                error = null,
+                success = null,
+            )
+            try {
+                currencyRatesRepository.saveManualOverride(
+                    profileId = settings.profileId,
+                    input = input,
+                    overwriteExisting = overwriteExisting,
+                )
+                loadSettings(showLoading = false, success = SettingsSuccess.RateSaved)
+            } catch (error: ExchangeRateOverrideAlreadyExistsException) {
+                state = state.copy(
+                    isBusy = false,
+                    pendingRateOverwrite = error.toPendingRateOverwrite(input),
+                    error = null,
+                    success = null,
+                )
+            } catch (error: Throwable) {
+                state = state.copy(isBusy = false, error = error.toSettingsError(), success = null)
+            }
+        }
+    }
+
     LaunchedEffect(settingsRepository, localProfileRepository, currencyRatesRepository) {
         loadSettings(showLoading = true)
+    }
+
+    LaunchedEffect(
+        state.settings?.profileId,
+        state.rateBaseInput,
+        state.rateTargetInput,
+        state.rateDateInput,
+        state.manualRateOverrides,
+        state.latestSnapshotDate,
+    ) {
+        val settings = state.settings ?: return@LaunchedEffect
+        val preview = currencyRatesRepository.resolveRatePreview(
+            profileId = settings.profileId,
+            baseCurrency = state.rateBaseInput,
+            targetCurrency = state.rateTargetInput,
+            effectiveDate = state.rateDateInput,
+        )
+        if (state.ratePreview != preview) {
+            state = state.copy(ratePreview = preview)
+        }
     }
 
     SettingsScreen(
@@ -298,29 +361,12 @@ fun SettingsRoute(
             state = state.copy(rateValueInput = value.take(MAX_RATE_VALUE_INPUT), error = null)
         },
         onSaveRateOverride = {
-            val settings = state.settings ?: return@SettingsScreen
-            val rateE8 = state.rateValueInput.toRateE8()
-            if (rateE8 == null) {
+            val input = buildRateOverrideInput()
+            if (input == null) {
                 state = state.copy(error = SettingsUiError.InvalidInput, success = null)
                 return@SettingsScreen
             }
-            scope.launch {
-                state = state.copy(isBusy = true, error = null, success = null)
-                try {
-                    currencyRatesRepository.saveManualOverride(
-                        profileId = settings.profileId,
-                        input = SaveExchangeRateOverrideInput(
-                            effectiveDate = state.rateDateInput,
-                            baseCurrency = state.rateBaseInput,
-                            targetCurrency = state.rateTargetInput,
-                            rateE8 = rateE8,
-                        ),
-                    )
-                    loadSettings(showLoading = false, success = SettingsSuccess.RateSaved)
-                } catch (error: Throwable) {
-                    state = state.copy(isBusy = false, error = error.toSettingsError(), success = null)
-                }
-            }
+            saveRateOverride(input = input, overwriteExisting = false)
         },
         onDeleteRateOverride = { overrideId ->
             val settings = state.settings ?: return@SettingsScreen
@@ -333,6 +379,13 @@ fun SettingsRoute(
                     state = state.copy(isBusy = false, error = error.toSettingsError(), success = null)
                 }
             }
+        },
+        onConfirmRateOverwrite = {
+            val pending = state.pendingRateOverwrite ?: return@SettingsScreen
+            saveRateOverride(input = pending.input, overwriteExisting = true)
+        },
+        onDismissRateOverwrite = {
+            state = state.copy(pendingRateOverwrite = null)
         },
         onOpenImportExport = onOpenImportExport,
         onResetRequested = {
@@ -387,6 +440,8 @@ fun SettingsScreen(
     onResetRequested: () -> Unit,
     onResetDismiss: () -> Unit,
     onResetConfirmed: () -> Unit,
+    onConfirmRateOverwrite: () -> Unit = {},
+    onDismissRateOverwrite: () -> Unit = onDismissMessage,
     onDismissSuccess: () -> Unit = onDismissMessage,
     modifier: Modifier = Modifier,
 ) {
@@ -528,6 +583,40 @@ fun SettingsScreen(
             },
             dismissButton = {
                 TextButton(onClick = onResetDismiss) {
+                    Text(text = stringResource(R.string.settings_cancel))
+                }
+            },
+        )
+    }
+
+    state.pendingRateOverwrite?.let { pending ->
+        AlertDialog(
+            onDismissRequest = onDismissRateOverwrite,
+            icon = {
+                Icon(Icons.Filled.CurrencyExchange, contentDescription = null)
+            },
+            title = {
+                Text(text = stringResource(R.string.settings_rate_overwrite_title))
+            },
+            text = {
+                Text(
+                    text = stringResource(
+                        R.string.settings_rate_overwrite_body,
+                        pending.baseCurrency,
+                        pending.targetCurrency,
+                        pending.effectiveDate,
+                        pending.existingRate,
+                        pending.newRate,
+                    ),
+                )
+            },
+            confirmButton = {
+                Button(onClick = onConfirmRateOverwrite, enabled = !state.isBusy) {
+                    Text(text = stringResource(R.string.settings_replace_rate))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = onDismissRateOverwrite) {
                     Text(text = stringResource(R.string.settings_cancel))
                 }
             },
@@ -846,6 +935,7 @@ private fun RatesSection(
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        RateSourcePreview(preview = state.ratePreview)
 
         Text(
             text = stringResource(R.string.settings_manual_rate_title),
@@ -904,6 +994,11 @@ private fun RatesSection(
             )
         }
 
+        Text(
+            text = stringResource(R.string.settings_manual_rate_history_title),
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold,
+        )
         if (state.manualRateOverrides.isEmpty()) {
             Text(
                 text = stringResource(R.string.settings_no_manual_rates),
@@ -922,6 +1017,7 @@ private fun RatesSection(
                                 R.string.settings_manual_rate_meta,
                                 override.effectiveDate,
                                 override.rate,
+                                stringResource(override.source.labelResId),
                             ),
                         )
                     },
@@ -933,6 +1029,53 @@ private fun RatesSection(
                             Text(text = stringResource(R.string.settings_delete))
                         }
                     },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun RateSourcePreview(preview: SettingsRatePreviewUi) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text(
+            text = stringResource(R.string.settings_rate_source_title),
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold,
+        )
+        when (preview.status) {
+            SettingsRatePreviewStatus.Ready -> {
+                val rate = preview.resolvedRate
+                if (rate != null) {
+                    ListItem(
+                        headlineContent = {
+                            Text(text = "${rate.baseCurrency} -> ${rate.targetCurrency}")
+                        },
+                        supportingContent = {
+                            Text(
+                                text = stringResource(
+                                    R.string.settings_rate_source_meta,
+                                    rate.effectiveDate,
+                                    stringResource(rate.source.labelResId),
+                                    rate.rate,
+                                ),
+                            )
+                        },
+                    )
+                }
+            }
+            SettingsRatePreviewStatus.Missing -> {
+                Text(
+                    text = stringResource(R.string.settings_rate_source_missing),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            SettingsRatePreviewStatus.Waiting -> {
+                Text(
+                    text = stringResource(R.string.settings_rate_source_waiting),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
@@ -1130,6 +1273,7 @@ data class SettingsUiState(
     val profiles: List<SettingsProfileUi> = emptyList(),
     val latestSnapshotDate: String? = null,
     val manualRateOverrides: List<SettingsRateOverrideUi> = emptyList(),
+    val ratePreview: SettingsRatePreviewUi = SettingsRatePreviewUi(),
     val notificationDeliveryState: SettingsNotificationDeliveryState = SettingsNotificationDeliveryState.Ready,
     val activeProfileLabelInput: String = "",
     val newProfileLabel: String = "",
@@ -1139,6 +1283,7 @@ data class SettingsUiState(
     val rateDateInput: String = "",
     val rateValueInput: String = "",
     val showResetConfirm: Boolean = false,
+    val pendingRateOverwrite: SettingsPendingRateOverwriteUi? = null,
     val error: SettingsUiError? = null,
     val success: SettingsSuccess? = null,
 )
@@ -1156,7 +1301,42 @@ data class SettingsRateOverrideUi(
     val baseCurrency: String,
     val targetCurrency: String,
     val rate: String,
+    val source: SettingsRateSourceUi,
 )
+
+data class SettingsRatePreviewUi(
+    val status: SettingsRatePreviewStatus = SettingsRatePreviewStatus.Waiting,
+    val resolvedRate: SettingsResolvedRateUi? = null,
+)
+
+data class SettingsResolvedRateUi(
+    val effectiveDate: String,
+    val baseCurrency: String,
+    val targetCurrency: String,
+    val rate: String,
+    val source: SettingsRateSourceUi,
+)
+
+data class SettingsPendingRateOverwriteUi(
+    val input: SaveExchangeRateOverrideInput,
+    val effectiveDate: String,
+    val baseCurrency: String,
+    val targetCurrency: String,
+    val existingRate: String,
+    val newRate: String,
+)
+
+enum class SettingsRatePreviewStatus {
+    Waiting,
+    Missing,
+    Ready,
+}
+
+enum class SettingsRateSourceUi(@StringRes val labelResId: Int) {
+    SameCurrency(R.string.settings_rate_source_same),
+    ManualOverride(R.string.settings_rate_source_manual),
+    Snapshot(R.string.settings_rate_source_snapshot),
+}
 
 enum class SettingsNotificationDeliveryState(
     @StringRes val titleResId: Int,
@@ -1275,6 +1455,7 @@ private fun SettingsUiState.toLoadedState(
         rateDateInput = rateDateInput.ifBlank { defaultRateDate },
         rateValueInput = "",
         showResetConfirm = false,
+        pendingRateOverwrite = null,
         error = null,
         success = success,
     )
@@ -1321,7 +1502,69 @@ private fun ExchangeRateOverride.toUi(): SettingsRateOverrideUi {
         baseCurrency = baseCurrency,
         targetCurrency = targetCurrency,
         rate = rateE8.formatRateE8(),
+        source = SettingsRateSourceUi.ManualOverride,
     )
+}
+
+private fun ResolvedExchangeRate.toUi(): SettingsResolvedRateUi {
+    return SettingsResolvedRateUi(
+        effectiveDate = effectiveDate,
+        baseCurrency = baseCurrency,
+        targetCurrency = targetCurrency,
+        rate = rateE8.formatRateE8(),
+        source = source.toUi(),
+    )
+}
+
+private fun ExchangeRateSource.toUi(): SettingsRateSourceUi {
+    return when (this) {
+        ExchangeRateSource.SameCurrency -> SettingsRateSourceUi.SameCurrency
+        ExchangeRateSource.ManualOverride -> SettingsRateSourceUi.ManualOverride
+        ExchangeRateSource.Snapshot -> SettingsRateSourceUi.Snapshot
+    }
+}
+
+private fun ExchangeRateOverrideAlreadyExistsException.toPendingRateOverwrite(
+    input: SaveExchangeRateOverrideInput,
+): SettingsPendingRateOverwriteUi {
+    return SettingsPendingRateOverwriteUi(
+        input = input,
+        effectiveDate = existing.effectiveDate,
+        baseCurrency = existing.baseCurrency,
+        targetCurrency = existing.targetCurrency,
+        existingRate = existing.rateE8.formatRateE8(),
+        newRate = input.rateE8.formatRateE8(),
+    )
+}
+
+private suspend fun CurrencyRatesRepository.resolveRatePreview(
+    profileId: Long,
+    baseCurrency: String,
+    targetCurrency: String,
+    effectiveDate: String,
+): SettingsRatePreviewUi {
+    if (baseCurrency.length != MAX_CURRENCY_INPUT ||
+        targetCurrency.length != MAX_CURRENCY_INPUT ||
+        effectiveDate.length != MAX_RATE_DATE_INPUT
+    ) {
+        return SettingsRatePreviewUi(status = SettingsRatePreviewStatus.Waiting)
+    }
+
+    return try {
+        SettingsRatePreviewUi(
+            status = SettingsRatePreviewStatus.Ready,
+            resolvedRate = getRate(
+                profileId = profileId,
+                baseCurrency = baseCurrency,
+                targetCurrency = targetCurrency,
+                effectiveDate = effectiveDate,
+            ).toUi(),
+        )
+    } catch (error: ExchangeRateNotFoundException) {
+        SettingsRatePreviewUi(status = SettingsRatePreviewStatus.Missing)
+    } catch (error: CurrencyException) {
+        SettingsRatePreviewUi(status = SettingsRatePreviewStatus.Waiting)
+    }
 }
 
 private suspend fun AppPreferencesRepository?.syncUiPreferences(settings: MoneyTrackerSettings) {
@@ -1459,8 +1702,25 @@ private fun SettingsScreenPreview() {
                     SettingsProfileUi(2L, "Family", "ru", false),
                 ),
                 latestSnapshotDate = "2026-07-03",
+                ratePreview = SettingsRatePreviewUi(
+                    status = SettingsRatePreviewStatus.Ready,
+                    resolvedRate = SettingsResolvedRateUi(
+                        effectiveDate = "2026-07-03",
+                        baseCurrency = "USD",
+                        targetCurrency = "EUR",
+                        rate = "0.93",
+                        source = SettingsRateSourceUi.ManualOverride,
+                    ),
+                ),
                 manualRateOverrides = listOf(
-                    SettingsRateOverrideUi(1L, "2026-07-03", "USD", "EUR", "0.93"),
+                    SettingsRateOverrideUi(
+                        id = 1L,
+                        effectiveDate = "2026-07-03",
+                        baseCurrency = "USD",
+                        targetCurrency = "EUR",
+                        rate = "0.93",
+                        source = SettingsRateSourceUi.ManualOverride,
+                    ),
                 ),
                 activeProfileLabelInput = "Personal",
                 newProfileLabel = "",
