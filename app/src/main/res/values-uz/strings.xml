@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Xuddi shu valyuta</string>
     <string name="settings_rate_source_manual">Qo\'lda bekor qilish</string>
     <string name="settings_rate_source_snapshot">Saqlangan surat</string>
+    <string name="settings_rate_source_system">Tizim kursi</string>
     <string name="settings_manual_rate_title">tarifni qo\'lda bekor qilish</string>
     <string name="settings_rate_base">Baza</string>
     <string name="settings_rate_target">Maqsad</string>

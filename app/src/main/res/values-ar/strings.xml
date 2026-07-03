@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">نفس العملة</string>
     <string name="settings_rate_source_manual">التجاوز اليدوي</string>
     <string name="settings_rate_source_snapshot">لقطة محفوظة</string>
+    <string name="settings_rate_source_system">سعر النظام</string>
     <string name="settings_manual_rate_title">تجاوز المعدل اليدوي</string>
     <string name="settings_rate_base">القاعدة</string>
     <string name="settings_rate_target">الهدف</string>

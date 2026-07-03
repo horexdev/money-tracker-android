@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Aynı para birimi</string>
     <string name="settings_rate_source_manual">Manuel geçersiz kılma</string>
     <string name="settings_rate_source_snapshot">Kaydedilen anlık görüntü</string>
+    <string name="settings_rate_source_system">Sistem kuru</string>
     <string name="settings_manual_rate_title">Manuel hız geçersiz kılma</string>
     <string name="settings_rate_base">Baz</string>
     <string name="settings_rate_target">Hedef</string>

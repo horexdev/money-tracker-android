@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">тая ж валюта</string>
     <string name="settings_rate_source_manual">Ручная адмена</string>
     <string name="settings_rate_source_snapshot">Захаваны здымак</string>
+    <string name="settings_rate_source_system">Сістэмны курс</string>
     <string name="settings_manual_rate_title">Перавызначэнне хуткасці ўручную</string>
     <string name="settings_rate_base">База</string>
     <string name="settings_rate_target">Мэта</string>

@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Mesma moeda</string>
     <string name="settings_rate_source_manual">Substituição manual</string>
     <string name="settings_rate_source_snapshot">Instantâneo salvo</string>
+    <string name="settings_rate_source_system">Taxa do sistema</string>
     <string name="settings_manual_rate_title">Substituição manual da taxa</string>
     <string name="settings_rate_base">Moeda base</string>
     <string name="settings_rate_target">Meta</string>

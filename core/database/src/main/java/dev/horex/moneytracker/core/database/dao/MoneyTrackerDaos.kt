@@ -1174,6 +1174,34 @@ interface ExchangeRateSnapshotDao {
     @Query("SELECT DISTINCT currency_code FROM accounts WHERE profile_id = :profileId ORDER BY currency_code ASC")
     suspend fun listDistinctBaseCurrencies(profileId: Long): List<String>
 
+    @Query(
+        """
+        SELECT currency_code FROM (
+            SELECT currency_code AS currency_code FROM accounts WHERE profile_id = :profileId
+            UNION
+            SELECT currency_code AS currency_code FROM transactions WHERE profile_id = :profileId
+            UNION
+            SELECT from_currency_code AS currency_code FROM transfers WHERE profile_id = :profileId
+            UNION
+            SELECT to_currency_code AS currency_code FROM transfers WHERE profile_id = :profileId
+            UNION
+            SELECT currency_code AS currency_code FROM budgets WHERE profile_id = :profileId
+            UNION
+            SELECT currency_code AS currency_code FROM recurring_transactions WHERE profile_id = :profileId
+            UNION
+            SELECT currency_code AS currency_code FROM savings_goals WHERE profile_id = :profileId
+            UNION
+            SELECT currency_code AS currency_code FROM transaction_templates WHERE profile_id = :profileId
+            UNION
+            SELECT base_currency AS currency_code FROM exchange_rate_overrides WHERE profile_id = :profileId
+            UNION
+            SELECT target_currency AS currency_code FROM exchange_rate_overrides WHERE profile_id = :profileId
+        )
+        ORDER BY currency_code ASC
+        """,
+    )
+    suspend fun listActiveCurrencyCodes(profileId: Long): List<String>
+
     @Query("SELECT COALESCE(MAX(snapshot_date), '1970-01-01') FROM exchange_rate_snapshots")
     suspend fun getLatestSnapshotDate(): String
 

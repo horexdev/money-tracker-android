@@ -11,6 +11,7 @@ class RoomCurrencyRatesRepository(
     private val clock: () -> Long = { System.currentTimeMillis() },
     private val catalog: IsoCurrencyCatalog = IsoCurrencyCatalog,
 ) : CurrencyRatesRepository {
+    private val profileDao = database.localProfileDao()
     private val snapshotDao = database.exchangeRateSnapshotDao()
     private val overrideDao = database.exchangeRateOverrideDao()
 
@@ -85,6 +86,17 @@ class RoomCurrencyRatesRepository(
 
     override suspend fun listBaseCurrencies(profileId: Long): List<String> {
         return snapshotDao.listDistinctBaseCurrencies(profileId)
+    }
+
+    override suspend fun listActiveCurrencyCodes(profileId: Long): List<String> {
+        val activeCodes = LinkedHashSet<String>()
+        snapshotDao.listActiveCurrencyCodes(profileId)
+            .mapNotNullTo(activeCodes) { catalog.normalizeCurrencyCode(it) }
+        profileDao.getById(profileId)
+            ?.displayCurrenciesCsv
+            ?.toCurrencyCodes()
+            ?.let(activeCodes::addAll)
+        return activeCodes.sorted()
     }
 
     override suspend fun saveManualOverride(
@@ -172,9 +184,19 @@ class RoomCurrencyRatesRepository(
             baseCurrency = normalizedBase,
             targetCurrency = normalizedTarget,
             snapshotDate = normalizedDate,
-        ) ?: throw ExchangeRateNotFoundException()
+        )
+        if (snapshot != null) {
+            return snapshot.toResolvedRate(profileId)
+        }
 
-        return snapshot.toResolvedRate(profileId)
+        return ResolvedExchangeRate(
+            profileId = profileId,
+            effectiveDate = normalizedDate,
+            baseCurrency = normalizedBase,
+            targetCurrency = normalizedTarget,
+            rateE8 = SystemExchangeRates.rateE8(normalizedBase, normalizedTarget),
+            source = ExchangeRateSource.SystemRate,
+        )
     }
 
     private fun SaveExchangeRateSnapshotInput.normalized(): SaveExchangeRateSnapshotInput {
@@ -198,7 +220,15 @@ class RoomCurrencyRatesRepository(
     private fun String.normalizedCurrencyCode(): String {
         return catalog.normalizeCurrencyCode(this) ?: throw InvalidCurrencyCodeException()
     }
+
+    private fun String.toCurrencyCodes(): List<String> {
+        return split(CurrencyInputSeparator)
+            .mapNotNull { catalog.normalizeCurrencyCode(it) }
+            .distinct()
+    }
 }
+
+private val CurrencyInputSeparator = Regex("[,;\\s]+")
 
 private fun ExchangeRateSnapshotEntity.toSnapshot(): ExchangeRateSnapshot {
     return ExchangeRateSnapshot(

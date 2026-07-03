@@ -31,5 +31,8 @@ profile pointer through DataStore.
 currency from the default account, and returns the current language, display currency,
 notification, chart style, animation, theme, and privacy settings. `updateSettings()`
 updates only the requested settings and mirrors UI preferences back to DataStore.
+The manual online-rate action uses the profile base currency and asks `core:currency` for
+active profile currencies before calling the network update service, so unused catalog
+currencies are not refreshed.
 
 Android does not carry over server/admin or Telegram-specific source fields in this model.

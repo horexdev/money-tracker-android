@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Бірдей валюта</string>
     <string name="settings_rate_source_manual">Қолмен қайта анықтау</string>
     <string name="settings_rate_source_snapshot">Сақталған сурет</string>
+    <string name="settings_rate_source_system">Жүйелік курс</string>
     <string name="settings_manual_rate_title">жылдамдықты қолмен қайта анықтау</string>
     <string name="settings_rate_base">Негізгі</string>
     <string name="settings_rate_target">Мақсат</string>

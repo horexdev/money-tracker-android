@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Mata wang yang sama</string>
     <string name="settings_rate_source_manual">Pembatalan manual</string>
     <string name="settings_rate_source_snapshot">Syot kilat disimpan</string>
+    <string name="settings_rate_source_system">Kadar sistem</string>
     <string name="settings_manual_rate_title">Pembatalan kadar manual</string>
     <string name="settings_rate_base">Pangkalan</string>
     <string name="settings_rate_target">Sasaran</string>

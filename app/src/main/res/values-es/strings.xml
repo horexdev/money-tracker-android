@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Misma moneda</string>
     <string name="settings_rate_source_manual">anulación manual</string>
     <string name="settings_rate_source_snapshot">instantánea guardada</string>
+    <string name="settings_rate_source_system">Tipo del sistema</string>
     <string name="settings_manual_rate_title">Anulación de tasa manual</string>
     <string name="settings_rate_base">base</string>
     <string name="settings_rate_target">Meta</string>

@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">Dezelfde valuta</string>
     <string name="settings_rate_source_manual">Handmatige overschrijving</string>
     <string name="settings_rate_source_snapshot">Opgeslagen momentopname</string>
+    <string name="settings_rate_source_system">Systeemkoers</string>
     <string name="settings_manual_rate_title">Handmatige tariefoverschrijving</string>
     <string name="settings_rate_base">Basis</string>
     <string name="settings_rate_target">Doel</string>

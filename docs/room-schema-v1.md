@@ -94,6 +94,8 @@ Foreign keys use local IDs. Profile deletion cascades profile-owned data. Accoun
 - same-currency conversion returns `1.0` without requiring a database row;
 - historical lookup uses the exact snapshot date or the latest snapshot before it;
 - manual overrides are stored per local profile and take priority over snapshots for the same currency pair on or after the override effective date;
+- if no manual override or saved snapshot exists, `core:currency` resolves a built-in system rate for supported ISO pairs so cross-currency flows can run before the first online update;
+- online updates select target currencies from active profile data, including accounts, transactions, transfers, budgets, recurring transactions, savings goals, transaction templates, display currencies, and manual override pairs;
 - overrides do not affect other local profiles and are removed when their profile is deleted.
 
 ## Default Seed

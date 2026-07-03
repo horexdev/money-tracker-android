@@ -43,6 +43,7 @@ enum class ExchangeRateSource {
     SameCurrency,
     ManualOverride,
     Snapshot,
+    SystemRate,
 }
 
 data class SaveExchangeRateSnapshotInput(

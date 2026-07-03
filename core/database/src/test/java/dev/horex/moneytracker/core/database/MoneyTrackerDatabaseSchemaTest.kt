@@ -109,6 +109,7 @@ class MoneyTrackerDatabaseSchemaTest {
         assertTrue("CategoryDao should expose profile-scoped frequency sorting", "listByFrequency" in categoryMethods)
         assertTrue("ExchangeRateSnapshotDao should expose bulk seed snapshot upsert", "upsertAll" in snapshotMethods)
         assertTrue("ExchangeRateSnapshotDao should expose latest snapshot date", "getLatestSnapshotDate" in snapshotMethods)
+        assertTrue("ExchangeRateSnapshotDao should expose active profile currency selection", "listActiveCurrencyCodes" in snapshotMethods)
         assertTrue("ExchangeRateOverrideDao should expose manual latest lookup", "getLatestAtOrBefore" in overrideMethods)
         assertTrue(
             "SavingsGoalDao.listByAccount should require profileId and accountId",

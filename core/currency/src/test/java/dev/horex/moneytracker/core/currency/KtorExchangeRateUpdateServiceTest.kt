@@ -247,6 +247,8 @@ class KtorExchangeRateUpdateServiceTest {
 
         override suspend fun listBaseCurrencies(profileId: Long): List<String> = emptyList()
 
+        override suspend fun listActiveCurrencyCodes(profileId: Long): List<String> = emptyList()
+
         override suspend fun saveManualOverride(
             profileId: Long,
             input: SaveExchangeRateOverrideInput,

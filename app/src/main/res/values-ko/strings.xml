@@ -92,6 +92,7 @@
     <string name="settings_rate_source_same">동일한 통화</string>
     <string name="settings_rate_source_manual">수동 오버라이드</string>
     <string name="settings_rate_source_snapshot">저장된 스냅샷</string>
+    <string name="settings_rate_source_system">시스템 환율</string>
     <string name="settings_manual_rate_title">수동 속도 재정의</string>
     <string name="settings_rate_base">베이스</string>
     <string name="settings_rate_target">목표</string>
