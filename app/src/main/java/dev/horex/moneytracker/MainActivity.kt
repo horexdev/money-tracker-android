@@ -7,9 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 
 class MainActivity : ComponentActivity() {
-    private val appContainer by lazy {
-        MoneyTrackerAppContainer(applicationContext)
-    }
+    private val appContainer: MoneyTrackerAppContainer
+        get() = (application as MoneyTrackerApplication).appContainer
 
     private val requestNotificationPermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
@@ -33,11 +32,6 @@ class MainActivity : ComponentActivity() {
             )
         }
         requestNotificationPermissionIfNeeded()
-    }
-
-    override fun onDestroy() {
-        appContainer.close()
-        super.onDestroy()
     }
 
     private fun requestNotificationPermissionIfNeeded() {

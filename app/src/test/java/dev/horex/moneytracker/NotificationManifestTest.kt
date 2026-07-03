@@ -16,11 +16,22 @@ class NotificationManifestTest {
         assertEquals(false, "android.permission.INTERNET" in permissions)
     }
 
+    @Test
+    fun manifestRegistersApplicationForWorkManagerConfiguration() {
+        assertEquals(".MoneyTrackerApplication", readApplicationName())
+    }
+
+    private fun readApplicationName(): String {
+        val document = parseManifest()
+        val application = document.getElementsByTagName("application").item(0) as Element
+
+        return application.getAttributeNS(ANDROID_NAMESPACE, "name").ifBlank {
+            application.getAttribute("android:name")
+        }
+    }
+
     private fun readManifestPermissions(): List<String> {
-        val document = DocumentBuilderFactory.newInstance()
-            .apply { isNamespaceAware = true }
-            .newDocumentBuilder()
-            .parse(File("src/main/AndroidManifest.xml"))
+        val document = parseManifest()
         val permissions = document.getElementsByTagName("uses-permission")
 
         return (0 until permissions.length).map { index ->
@@ -30,6 +41,12 @@ class NotificationManifestTest {
             }
         }
     }
+
+    private fun parseManifest() =
+        DocumentBuilderFactory.newInstance()
+            .apply { isNamespaceAware = true }
+            .newDocumentBuilder()
+            .parse(File("src/main/AndroidManifest.xml"))
 
     private companion object {
         const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
