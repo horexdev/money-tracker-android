@@ -163,6 +163,7 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":core:recurring"))
     implementation(project(":core:stats"))
+    implementation(project(":core:templates"))
     implementation(project(":core:transactions"))
     implementation(project(":feature:accounts"))
     implementation(project(":feature:addtransaction"))
