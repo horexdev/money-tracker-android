@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -41,6 +42,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dev.horex.moneytracker.backup.MoneyTrackerBackupDocumentRepository
 import dev.horex.moneytracker.core.accounts.AccountsRepository
 import dev.horex.moneytracker.core.balance.BalancesRepository
 import dev.horex.moneytracker.core.categories.CategoriesRepository
@@ -48,6 +50,7 @@ import dev.horex.moneytracker.core.designsystem.component.MoneyTrackerPlaceholde
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerThemeMode
 import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
+import dev.horex.moneytracker.core.database.profile.LocalProfileRepository
 import dev.horex.moneytracker.core.navigation.MoneyTrackerRoutes
 import dev.horex.moneytracker.core.navigation.MoneyTrackerTopLevelDestination
 import dev.horex.moneytracker.core.preferences.SettingsRepository
@@ -72,6 +75,8 @@ fun MoneyTrackerApp(
     settingsRepository: SettingsRepository? = null,
     statsRepository: StatsRepository? = null,
     transactionsRepository: TransactionsRepository? = null,
+    localProfileRepository: LocalProfileRepository? = null,
+    backupDocumentRepository: MoneyTrackerBackupDocumentRepository? = null,
 ) {
     val navController = rememberNavController()
     var historyInitialFilters by remember { mutableStateOf(HistoryFilters()) }
@@ -103,6 +108,8 @@ fun MoneyTrackerApp(
                 settingsRepository = settingsRepository,
                 statsRepository = statsRepository,
                 transactionsRepository = transactionsRepository,
+                localProfileRepository = localProfileRepository,
+                backupDocumentRepository = backupDocumentRepository,
                 historyInitialFilters = historyInitialFilters,
                 onHistoryInitialFiltersChange = { historyInitialFilters = it },
                 modifier = Modifier
@@ -123,6 +130,8 @@ private fun MoneyTrackerNavHost(
     settingsRepository: SettingsRepository?,
     statsRepository: StatsRepository?,
     transactionsRepository: TransactionsRepository?,
+    localProfileRepository: LocalProfileRepository?,
+    backupDocumentRepository: MoneyTrackerBackupDocumentRepository?,
     historyInitialFilters: HistoryFilters,
     onHistoryInitialFiltersChange: (HistoryFilters) -> Unit,
     modifier: Modifier = Modifier,
@@ -254,6 +263,9 @@ private fun MoneyTrackerNavHost(
                 onOpenCategories = {
                     navController.navigate(MoneyTrackerRoutes.Categories)
                 },
+                onOpenExport = {
+                    navController.navigate(MoneyTrackerRoutes.Export)
+                },
             )
         }
         composable(MoneyTrackerRoutes.Settings) {
@@ -303,10 +315,20 @@ private fun MoneyTrackerNavHost(
             )
         }
         composable(MoneyTrackerRoutes.Export) {
-            LocalizedPlaceholderScreen(
-                titleResId = R.string.export_title,
-                subtitleResId = R.string.export_placeholder_subtitle,
-            )
+            if (
+                localProfileRepository != null &&
+                backupDocumentRepository != null
+            ) {
+                ImportExportRoute(
+                    localProfileRepository = localProfileRepository,
+                    backupDocumentRepository = backupDocumentRepository,
+                )
+            } else {
+                LocalizedPlaceholderScreen(
+                    titleResId = R.string.export_title,
+                    subtitleResId = R.string.export_placeholder_subtitle,
+                )
+            }
         }
         composable(MoneyTrackerRoutes.Accounts) {
             if (
@@ -333,6 +355,7 @@ private fun MoneyTrackerNavHost(
 private fun MoreRoute(
     onOpenAccounts: () -> Unit,
     onOpenCategories: () -> Unit,
+    onOpenExport: () -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -378,6 +401,32 @@ private fun MoreRoute(
                 leadingContent = {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Label,
+                        contentDescription = null,
+                    )
+                },
+                trailingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.ChevronRight,
+                        contentDescription = null,
+                    )
+                },
+            )
+            HorizontalDivider()
+        }
+        item {
+            ListItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onOpenExport),
+                headlineContent = {
+                    Text(text = stringResource(R.string.export_title))
+                },
+                supportingContent = {
+                    Text(text = stringResource(R.string.export_more_subtitle))
+                },
+                leadingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.ImportExport,
                         contentDescription = null,
                     )
                 },
@@ -516,7 +565,6 @@ private val morePlaceholderRoutes = listOf(
     MorePlaceholderRoute(R.string.recurring_title, R.string.recurring_placeholder_subtitle),
     MorePlaceholderRoute(R.string.templates_title, R.string.templates_placeholder_subtitle),
     MorePlaceholderRoute(R.string.savings_title, R.string.savings_placeholder_subtitle),
-    MorePlaceholderRoute(R.string.export_title, R.string.export_placeholder_subtitle),
 )
 
 @Preview(showBackground = true)
