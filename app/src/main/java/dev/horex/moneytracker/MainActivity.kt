@@ -29,6 +29,8 @@ class MainActivity : ComponentActivity() {
                 settingsRepository = appContainer.settingsRepository,
                 statsRepository = appContainer.statsRepository,
                 transactionsRepository = appContainer.transactionsRepository,
+                localProfileRepository = appContainer.localProfileRepository,
+                backupDocumentRepository = appContainer.backupDocumentRepository,
             )
         }
         requestNotificationPermissionIfNeeded()

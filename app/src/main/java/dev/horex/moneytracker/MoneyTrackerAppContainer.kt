@@ -29,6 +29,7 @@ import dev.horex.moneytracker.core.preferences.RoomSettingsRepository
 import dev.horex.moneytracker.core.preferences.createAppPreferencesDataStore
 import dev.horex.moneytracker.core.stats.RoomStatsRepository
 import dev.horex.moneytracker.core.transactions.RoomTransactionsRepository
+import dev.horex.moneytracker.backup.MoneyTrackerBackupDocumentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -99,11 +100,27 @@ internal class MoneyTrackerAppContainer(
         RoomTransactionsRepository(database)
     }
 
+    private val backupExporter: MoneyTrackerBackupExporter by lazy {
+        MoneyTrackerBackupExporter(database)
+    }
+
+    private val backupImporter: MoneyTrackerBackupImporter by lazy {
+        MoneyTrackerBackupImporter(database)
+    }
+
     val backupSafRepository: MoneyTrackerBackupSafRepository by lazy {
         MoneyTrackerBackupSafRepository(
             contentResolver = appContext.contentResolver,
-            exporter = MoneyTrackerBackupExporter(database),
-            importer = MoneyTrackerBackupImporter(database),
+            exporter = backupExporter,
+            importer = backupImporter,
+        )
+    }
+
+    val backupDocumentRepository: MoneyTrackerBackupDocumentRepository by lazy {
+        MoneyTrackerBackupDocumentRepository(
+            contentResolver = appContext.contentResolver,
+            safRepository = backupSafRepository,
+            importer = backupImporter,
         )
     }
 
