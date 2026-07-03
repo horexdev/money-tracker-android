@@ -1030,6 +1030,9 @@ interface SavingsGoalDao {
     @Update
     suspend fun update(goal: SavingsGoalEntity)
 
+    @Update
+    suspend fun updateAndReturnCount(goal: SavingsGoalEntity): Int
+
     @Query("SELECT * FROM savings_goals WHERE profile_id = :profileId ORDER BY created_at_epoch_millis DESC")
     suspend fun listByProfile(profileId: Long): List<SavingsGoalEntity>
 
@@ -1042,8 +1045,23 @@ interface SavingsGoalDao {
     @Query("SELECT * FROM savings_goals WHERE profile_id = :profileId AND account_id = :accountId")
     suspend fun listByAccount(profileId: Long, accountId: Long): List<SavingsGoalEntity>
 
+    @Query(
+        """
+        UPDATE savings_goals
+        SET current_cents = :currentCents,
+            updated_at_epoch_millis = :updatedAtEpochMillis
+        WHERE id = :goalId AND profile_id = :profileId
+        """,
+    )
+    suspend fun updateCurrentCents(
+        profileId: Long,
+        goalId: Long,
+        currentCents: Long,
+        updatedAtEpochMillis: Long,
+    ): Int
+
     @Query("DELETE FROM savings_goals WHERE id = :goalId AND profile_id = :profileId")
-    suspend fun deleteById(profileId: Long, goalId: Long)
+    suspend fun deleteById(profileId: Long, goalId: Long): Int
 }
 
 @Dao
@@ -1059,6 +1077,21 @@ interface GoalTransactionDao {
         """,
     )
     suspend fun listByGoal(profileId: Long, goalId: Long): List<GoalTransactionEntity>
+
+    @Query(
+        """
+        SELECT COALESCE(SUM(
+            CASE type
+                WHEN 'deposit' THEN amount_cents
+                WHEN 'withdraw' THEN -amount_cents
+                ELSE 0
+            END
+        ), 0)
+        FROM goal_transactions
+        WHERE profile_id = :profileId AND goal_id = :goalId
+        """,
+    )
+    suspend fun getCurrentCents(profileId: Long, goalId: Long): Long
 
     @Query("SELECT * FROM goal_transactions WHERE profile_id = :profileId ORDER BY created_at_epoch_millis ASC, id ASC")
     suspend fun listForBackup(profileId: Long): List<GoalTransactionEntity>
