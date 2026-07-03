@@ -12,4 +12,12 @@ interface BudgetsRepository {
     suspend fun deleteBudget(profileId: Long, budgetId: Long)
 
     suspend fun listBudgetTransactions(profileId: Long, budgetId: Long): List<BudgetTransaction>
+
+    suspend fun recordBudgetThresholdNotification(
+        profileId: Long,
+        budgetId: Long,
+        thresholdPercent: Int,
+        periodStartEpochMillis: Long,
+        notifiedAtEpochMillis: Long,
+    ): Boolean
 }

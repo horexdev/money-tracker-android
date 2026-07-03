@@ -848,6 +848,30 @@ interface BudgetDao {
         toEpochMillisExclusive: Long,
     ): List<BudgetTransactionWithRelations>
 
+    @Query(
+        """
+        UPDATE budgets
+        SET last_notified_percent = :thresholdPercent,
+            last_notified_at_epoch_millis = :notifiedAtEpochMillis,
+            updated_at_epoch_millis = :notifiedAtEpochMillis
+        WHERE id = :budgetId
+          AND profile_id = :profileId
+          AND notifications_enabled = 1
+          AND (
+              last_notified_at_epoch_millis IS NULL
+              OR last_notified_at_epoch_millis < :periodStartEpochMillis
+              OR last_notified_percent < :thresholdPercent
+          )
+        """,
+    )
+    suspend fun recordThresholdNotification(
+        profileId: Long,
+        budgetId: Long,
+        thresholdPercent: Int,
+        periodStartEpochMillis: Long,
+        notifiedAtEpochMillis: Long,
+    ): Int
+
     @Query("DELETE FROM budgets WHERE id = :budgetId AND profile_id = :profileId")
     suspend fun deleteById(profileId: Long, budgetId: Long): Int
 }

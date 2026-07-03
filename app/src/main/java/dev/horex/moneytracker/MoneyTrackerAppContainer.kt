@@ -6,10 +6,17 @@ import dev.horex.moneytracker.core.balance.RoomBalancesRepository
 import dev.horex.moneytracker.core.backup.MoneyTrackerBackupExporter
 import dev.horex.moneytracker.core.backup.MoneyTrackerBackupImporter
 import dev.horex.moneytracker.core.backup.MoneyTrackerBackupSafRepository
+import dev.horex.moneytracker.core.background.BackgroundTaskId
+import dev.horex.moneytracker.core.background.BackgroundTaskResult
 import dev.horex.moneytracker.core.background.BackgroundTaskExecutor
 import dev.horex.moneytracker.core.background.MoneyTrackerBackgroundWorkScheduler
 import dev.horex.moneytracker.core.background.MoneyTrackerWorkerFactory
 import dev.horex.moneytracker.core.background.MutableBackgroundTaskRegistry
+import dev.horex.moneytracker.core.background.PeriodicBackgroundWorkSpec
+import dev.horex.moneytracker.core.budgets.Budget
+import dev.horex.moneytracker.core.budgets.BudgetNotificationProfile
+import dev.horex.moneytracker.core.budgets.BudgetNotificationProfileProvider
+import dev.horex.moneytracker.core.budgets.BudgetThresholdNotificationProcessor
 import dev.horex.moneytracker.core.budgets.RoomBudgetsRepository
 import dev.horex.moneytracker.core.categories.RoomCategoriesRepository
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
@@ -36,6 +43,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import java.util.Locale
+import kotlin.math.absoluteValue
 
 internal class MoneyTrackerAppContainer(
     context: Context,
@@ -48,6 +56,10 @@ internal class MoneyTrackerAppContainer(
             passphraseStore = AndroidDatabasePassphraseStore(appContext),
             databaseName = MoneyTrackerDatabase.DATABASE_NAME,
         )
+    }
+
+    init {
+        registerBackgroundTasks()
     }
 
     private val database: MoneyTrackerDatabase by databaseLazy
@@ -160,6 +172,31 @@ internal class MoneyTrackerAppContainer(
         )
     }
 
+    private val budgetNotificationProfileProvider: BudgetNotificationProfileProvider by lazy {
+        BudgetNotificationProfileProvider {
+            localProfileRepository.ensureActiveProfile()
+            localProfileRepository.listProfiles().map { profile ->
+                BudgetNotificationProfile(
+                    profileId = profile.id,
+                    budgetNotificationsEnabled = profile.notifyBudgetAlerts,
+                )
+            }
+        }
+    }
+
+    private val budgetThresholdNotificationProcessor: BudgetThresholdNotificationProcessor by lazy {
+        BudgetThresholdNotificationProcessor(
+            profileProvider = budgetNotificationProfileProvider,
+            budgetsRepository = budgetsRepository,
+            notifier = { request -> notificationNotifier.notify(request) },
+            contentIntentFactory = { budget, _ ->
+                notificationIntentFactory.openAppPendingIntent(
+                    requestCode = budget.notificationRequestCode(),
+                )
+            },
+        )
+    }
+
     val backgroundTaskRegistry: MutableBackgroundTaskRegistry by lazy {
         MutableBackgroundTaskRegistry()
     }
@@ -176,10 +213,31 @@ internal class MoneyTrackerAppContainer(
         MoneyTrackerBackgroundWorkScheduler.create(appContext)
     }
 
+    fun startBackgroundWork() {
+        backgroundWorkScheduler.enqueuePeriodic(
+            PeriodicBackgroundWorkSpec(
+                taskId = BudgetThresholdNotificationTaskId,
+                repeatIntervalMinutes = BUDGET_NOTIFICATION_REPEAT_INTERVAL_MINUTES,
+                flexIntervalMinutes = BUDGET_NOTIFICATION_FLEX_INTERVAL_MINUTES,
+            ),
+        )
+    }
+
     fun close() {
         appPreferencesScope.cancel()
         if (databaseLazy.isInitialized()) {
             database.close()
+        }
+    }
+
+    private fun registerBackgroundTasks() {
+        backgroundTaskRegistry.register(BudgetThresholdNotificationTaskId) {
+            runCatching {
+                budgetThresholdNotificationProcessor.run()
+                BackgroundTaskResult.Success
+            }.getOrElse {
+                BackgroundTaskResult.Retry
+            }
         }
     }
 }
@@ -188,3 +246,14 @@ private fun resolveDeviceLanguageCode(context: Context): String {
     val configuredLanguage = context.resources.configuration.locales[0]?.language
     return normalizeLocalProfileLanguageCode(configuredLanguage ?: Locale.getDefault().language)
 }
+
+private fun Budget.notificationRequestCode(): Int {
+    var result = 17
+    result = 31 * result + profileId.hashCode()
+    result = 31 * result + id.hashCode()
+    return result.absoluteValue.takeIf { it > 0 } ?: 1
+}
+
+private val BudgetThresholdNotificationTaskId = BackgroundTaskId("budgets.threshold-notifications")
+private const val BUDGET_NOTIFICATION_REPEAT_INTERVAL_MINUTES = 6L * 60L
+private const val BUDGET_NOTIFICATION_FLEX_INTERVAL_MINUTES = 60L

@@ -11,6 +11,11 @@ class MoneyTrackerApplication : Application(), Configuration.Provider {
             appContainerInstance = container
         }
 
+    override fun onCreate() {
+        super.onCreate()
+        appContainer.startBackgroundWork()
+    }
+
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()
             .setWorkerFactory(appContainer.backgroundWorkerFactory)

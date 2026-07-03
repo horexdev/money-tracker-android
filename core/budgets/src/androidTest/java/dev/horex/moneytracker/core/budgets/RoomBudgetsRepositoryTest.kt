@@ -165,6 +165,87 @@ class RoomBudgetsRepositoryTest {
     }
 
     @Test
+    fun recordBudgetThresholdNotificationPersistsStateAndResetsForNewPeriod() = runBlocking {
+        cleanUp()
+        val database = createDatabase()
+        try {
+            val profileId = insertProfile(database)
+            val categoryId = insertCategory(database, profileId, name = "Food", type = "expense")
+            val budgetId = database.budgetDao().insert(
+                BudgetEntity(
+                    profileId = profileId,
+                    categoryId = categoryId,
+                    limitCents = 10_000,
+                    period = "monthly",
+                    currencyCode = "USD",
+                    lastNotifiedPercent = 0,
+                    lastNotifiedAtEpochMillis = null,
+                    createdAtEpochMillis = JULY_01,
+                    updatedAtEpochMillis = JULY_01,
+                ),
+            )
+            val repository = RoomBudgetsRepository(database, clock = { JULY_15 }, zoneId = ZoneOffset.UTC)
+
+            assertTrue(
+                repository.recordBudgetThresholdNotification(
+                    profileId = profileId,
+                    budgetId = budgetId,
+                    thresholdPercent = 75,
+                    periodStartEpochMillis = JULY_01,
+                    notifiedAtEpochMillis = JULY_15,
+                ),
+            )
+            assertFalse(
+                repository.recordBudgetThresholdNotification(
+                    profileId = profileId,
+                    budgetId = budgetId,
+                    thresholdPercent = 75,
+                    periodStartEpochMillis = JULY_01,
+                    notifiedAtEpochMillis = JULY_15,
+                ),
+            )
+            assertFalse(
+                repository.recordBudgetThresholdNotification(
+                    profileId = profileId,
+                    budgetId = budgetId,
+                    thresholdPercent = 50,
+                    periodStartEpochMillis = JULY_01,
+                    notifiedAtEpochMillis = JULY_15,
+                ),
+            )
+            assertTrue(
+                repository.recordBudgetThresholdNotification(
+                    profileId = profileId,
+                    budgetId = budgetId,
+                    thresholdPercent = 95,
+                    periodStartEpochMillis = JULY_01,
+                    notifiedAtEpochMillis = JULY_15,
+                ),
+            )
+
+            val currentPeriodBudget = repository.getBudget(profileId, budgetId)
+            assertEquals(95, currentPeriodBudget.lastNotifiedPercent)
+            assertEquals(JULY_15, currentPeriodBudget.lastNotifiedAtEpochMillis)
+
+            assertTrue(
+                repository.recordBudgetThresholdNotification(
+                    profileId = profileId,
+                    budgetId = budgetId,
+                    thresholdPercent = 50,
+                    periodStartEpochMillis = AUGUST_01,
+                    notifiedAtEpochMillis = AUGUST_01,
+                ),
+            )
+
+            val nextPeriodBudget = repository.getBudget(profileId, budgetId)
+            assertEquals(50, nextPeriodBudget.lastNotifiedPercent)
+            assertEquals(AUGUST_01, nextPeriodBudget.lastNotifiedAtEpochMillis)
+        } finally {
+            database.close()
+        }
+    }
+
+    @Test
     fun createUpdateDeleteValidateInputDuplicatesCategoryAndProfileScope() = runBlocking {
         cleanUp()
         val database = createDatabase()

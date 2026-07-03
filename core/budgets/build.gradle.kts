@@ -19,10 +19,12 @@ android {
 
 dependencies {
     implementation(project(":core:database"))
+    implementation(project(":core:notifications"))
 
     api(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.ext.junit)
