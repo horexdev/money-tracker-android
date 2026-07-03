@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Description
@@ -56,6 +56,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
@@ -607,9 +608,12 @@ private fun ExportSection(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(enabled = !state.isBusy) {
-                    onEncryptedChange(!state.exportEncrypted)
-                },
+                .toggleable(
+                    value = state.exportEncrypted,
+                    enabled = !state.isBusy,
+                    role = Role.Switch,
+                    onValueChange = onEncryptedChange,
+                ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
@@ -636,7 +640,7 @@ private fun ExportSection(
             Switch(
                 checked = state.exportEncrypted,
                 enabled = !state.isBusy,
-                onCheckedChange = onEncryptedChange,
+                onCheckedChange = null,
             )
         }
 
@@ -939,13 +943,18 @@ private fun ExportProfileCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(enabled = enabled) { onToggle(profile.id, !selected) }
+                .toggleable(
+                    value = selected,
+                    enabled = enabled,
+                    role = Role.Checkbox,
+                    onValueChange = { onToggle(profile.id, it) },
+                )
                 .padding(14.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Checkbox(
                 checked = selected,
-                onCheckedChange = { onToggle(profile.id, it) },
+                onCheckedChange = null,
                 enabled = enabled,
             )
             Column(

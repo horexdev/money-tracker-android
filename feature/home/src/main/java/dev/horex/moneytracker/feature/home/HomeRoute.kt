@@ -54,6 +54,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
@@ -399,10 +403,22 @@ private fun BalanceHeroCard(
     hideAmounts: Boolean,
     onAddTransaction: () -> Unit,
 ) {
+    val amountText = formatMoney(amountCents, currencyCode, hideAmounts)
+    val amountDescription = accessibleMoneyDescription(
+        visibleAmount = amountText,
+        currencyCode = currencyCode,
+        hideAmounts = hideAmounts,
+    )
+    val netBalanceLabel = stringResource(R.string.home_net_balance)
+    val accountLabel = account?.name ?: stringResource(R.string.home_all_accounts)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .testTag("home-balance-hero"),
+            .testTag("home-balance-hero")
+            .semantics(mergeDescendants = true) {
+                contentDescription = "$netBalanceLabel. $accountLabel. $amountDescription"
+            },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -434,7 +450,7 @@ private fun BalanceHeroCard(
                 }
             }
             Text(
-                text = formatMoney(amountCents, currencyCode, hideAmounts),
+                text = amountText,
                 modifier = Modifier.padding(top = 18.dp),
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.ExtraBold,
@@ -482,9 +498,16 @@ private fun SummaryCards(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        val incomeAmount = formatMoney(summary.incomeCents, summary.currencyCode, hideAmounts)
+        val expenseAmount = formatMoney(summary.expenseCents, summary.currencyCode, hideAmounts)
         SummaryCard(
             title = stringResource(R.string.home_income),
-            amount = formatMoney(summary.incomeCents, summary.currencyCode, hideAmounts),
+            amount = incomeAmount,
+            amountDescription = accessibleMoneyDescription(
+                visibleAmount = incomeAmount,
+                currencyCode = summary.currencyCode,
+                hideAmounts = hideAmounts,
+            ),
             icon = {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.TrendingUp,
@@ -499,7 +522,12 @@ private fun SummaryCards(
         )
         SummaryCard(
             title = stringResource(R.string.home_expense),
-            amount = formatMoney(summary.expenseCents, summary.currencyCode, hideAmounts),
+            amount = expenseAmount,
+            amountDescription = accessibleMoneyDescription(
+                visibleAmount = expenseAmount,
+                currencyCode = summary.currencyCode,
+                hideAmounts = hideAmounts,
+            ),
             icon = {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.TrendingDown,
@@ -519,12 +547,18 @@ private fun SummaryCards(
 private fun SummaryCard(
     title: String,
     amount: String,
+    amountDescription: String,
     icon: @Composable () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier.clickable(onClick = onClick),
+        modifier = modifier
+            .semantics(mergeDescendants = true) {
+                contentDescription = "$title. $amountDescription"
+                role = Role.Button
+            }
+            .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
     ) {
@@ -707,8 +741,26 @@ private fun RecentTransactionRow(
     transaction: MoneyTransaction,
     hideAmounts: Boolean,
 ) {
+    val amountText = transaction.formatSignedAmount(hideAmounts)
+    val amountDescription = accessibleMoneyDescription(
+        visibleAmount = amountText,
+        currencyCode = transaction.currencyCode,
+        hideAmounts = hideAmounts,
+    )
+    val secondaryText = transaction.note.takeIf { it.isNotBlank() } ?: transaction.accountName
+    val dateText = transaction.createdAtEpochMillis.formatDisplayDate()
+
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .semantics(mergeDescendants = true) {
+                contentDescription = listOf(
+                    transaction.categoryName,
+                    secondaryText,
+                    dateText,
+                    amountDescription,
+                ).joinToString(". ")
+            },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
@@ -737,20 +789,20 @@ private fun RecentTransactionRow(
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = transaction.note.takeIf { it.isNotBlank() } ?: transaction.accountName,
+                text = secondaryText,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = transaction.createdAtEpochMillis.formatDisplayDate(),
+                text = dateText,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         Text(
-            text = transaction.formatSignedAmount(hideAmounts),
+            text = amountText,
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.Bold,
             color = if (transaction.type == TransactionType.Income) {
@@ -864,6 +916,18 @@ private fun formatMoney(cents: Long, currencyCode: String, hideAmounts: Boolean)
     }
     val sign = if (cents < 0) "-" else ""
     return "$sign${MoneyParser.formatPlainCents(abs(cents))} $currencyCode"
+}
+
+private fun accessibleMoneyDescription(
+    visibleAmount: String,
+    currencyCode: String,
+    hideAmounts: Boolean,
+): String {
+    return if (hideAmounts) {
+        "Amount hidden, $currencyCode"
+    } else {
+        visibleAmount
+    }
 }
 
 private fun Long.formatDisplayDate(): String {
