@@ -1,0 +1,12 @@
+Ldev/horex/moneytracker/MoneyTrackerApplication;
+HSPLdev/horex/moneytracker/MoneyTrackerApplication;->onCreate()V
+Ldev/horex/moneytracker/MainActivity;
+HSPLdev/horex/moneytracker/MainActivity;->onCreate(Landroid/os/Bundle;)V
+HSPLdev/horex/moneytracker/MainActivity;->requestNotificationPermissionIfNeeded()V
+Ldev/horex/moneytracker/MoneyTrackerAppContainer;
+HSPLdev/horex/moneytracker/MoneyTrackerAppContainer;-><init>(Landroid/content/Context;)V
+HSPLdev/horex/moneytracker/MoneyTrackerAppContainer;->startBackgroundWork()V
+Ldev/horex/moneytracker/MoneyTrackerAppKt;
+Ldev/horex/moneytracker/core/database/MoneyTrackerDatabaseFactory;
+Ldev/horex/moneytracker/core/database/profile/LocalProfileRepository;
+Ldev/horex/moneytracker/core/database/seed/DefaultProfileSeedRepository;

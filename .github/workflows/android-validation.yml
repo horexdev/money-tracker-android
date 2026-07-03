@@ -55,3 +55,9 @@ jobs:
           ./gradlew lint
           ./gradlew assembleDebugAndroidTest --no-daemon --max-workers=1
           ./gradlew assembleDebug
+
+      - name: Release readiness checks
+        shell: bash
+        run: |
+          ./gradlew :app:validateStartupPerformanceChecks
+          ./gradlew :app:validateReleaseBuildChecks
