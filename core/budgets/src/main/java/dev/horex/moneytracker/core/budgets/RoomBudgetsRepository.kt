@@ -101,6 +101,26 @@ class RoomBudgetsRepository(
         ).map(BudgetTransactionWithRelations::toBudgetTransaction)
     }
 
+    override suspend fun recordBudgetThresholdNotification(
+        profileId: Long,
+        budgetId: Long,
+        thresholdPercent: Int,
+        periodStartEpochMillis: Long,
+        notifiedAtEpochMillis: Long,
+    ): Boolean {
+        requireBudgetAlertThreshold(thresholdPercent)
+        require(periodStartEpochMillis >= 0L) { "Budget period start must not be negative" }
+        require(notifiedAtEpochMillis >= 0L) { "Budget notification time must not be negative" }
+
+        return budgetDao.recordThresholdNotification(
+            profileId = profileId,
+            budgetId = budgetId,
+            thresholdPercent = thresholdPercent,
+            periodStartEpochMillis = periodStartEpochMillis,
+            notifiedAtEpochMillis = notifiedAtEpochMillis,
+        ) == 1
+    }
+
     private suspend fun requireBudgetCategory(profileId: Long, categoryId: Long): CategoryEntity {
         val category = categoryDao.getActiveById(profileId, categoryId) ?: throw BudgetCategoryNotFoundException()
         if (category.type != EXPENSE_CATEGORY_TYPE && category.type != BOTH_CATEGORY_TYPE) {
@@ -151,6 +171,12 @@ private fun requirePositiveAmount(amountCents: Long) {
 
 private fun requirePositiveNotifyPercent(percent: Int) {
     if (percent <= 0) {
+        throw InvalidBudgetNotifyPercentException()
+    }
+}
+
+private fun requireBudgetAlertThreshold(percent: Int) {
+    if (percent !in BudgetAlertThresholds) {
         throw InvalidBudgetNotifyPercentException()
     }
 }
