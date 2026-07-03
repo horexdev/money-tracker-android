@@ -56,7 +56,9 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -623,6 +625,46 @@ private fun StatsChart(
     val expense = snapshot.items.total(StatsTransactionType.Expense, currencyCode)
     val selectedItems = snapshot.items.filtered(selectedType, currencyCode)
     val onSurfaceVariant = MaterialTheme.colorScheme.onSurfaceVariant
+    val chartLabel = stringResource(chartStyle.labelResId)
+    val selectedTypeLabel = stringResource(selectedType.labelResId)
+    val incomeLabel = stringResource(R.string.stats_income_total)
+    val expenseLabel = stringResource(R.string.stats_expense_total)
+    val netLabel = stringResource(R.string.stats_net_total)
+    val emptyLabel = stringResource(R.string.stats_empty_title)
+    val hiddenAmountDescription = stringResource(R.string.stats_amount_hidden_a11y, currencyCode)
+    val netAmountDescription = (income - expense).formatAccessibleMoney(
+        currencyCode = currencyCode,
+        hideAmounts = hideAmounts,
+        hiddenAmountDescription = hiddenAmountDescription,
+        signed = true,
+    )
+    val transactionCountLabels = selectedItems.associate { item ->
+        item.categoryId to stringResource(R.string.stats_transactions_count, item.transactionCount)
+    }
+    val hiddenCategoryAmountDescriptions = selectedItems.associate { item ->
+        item.categoryId to stringResource(R.string.stats_amount_hidden_a11y, item.currencyCode)
+    }
+    val chartDescription = when (chartStyle) {
+        StatsChartStylePreference.Donut,
+        StatsChartStylePreference.StackedBar,
+        -> selectedItems.toCategoryChartDescription(
+            chartLabel = chartLabel,
+            selectedTypeLabel = selectedTypeLabel,
+            transactionCountLabels = transactionCountLabels,
+            hiddenAmountDescriptions = hiddenCategoryAmountDescriptions,
+            hideAmounts = hideAmounts,
+            emptyLabel = emptyLabel,
+        )
+
+        StatsChartStylePreference.DualBar,
+        StatsChartStylePreference.ProfitBars,
+        -> listOf(
+            chartLabel,
+            "$incomeLabel ${income.formatAccessibleMoney(currencyCode, hideAmounts, hiddenAmountDescription)}",
+            "$expenseLabel ${expense.formatAccessibleMoney(currencyCode, hideAmounts, hiddenAmountDescription)}",
+            "$netLabel $netAmountDescription",
+        ).joinToString(". ")
+    }
 
     Card(
         modifier = Modifier
@@ -661,14 +703,16 @@ private fun StatsChart(
                     items = selectedItems,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(168.dp),
+                        .height(168.dp)
+                        .semantics { contentDescription = chartDescription },
                 )
 
                 StatsChartStylePreference.StackedBar -> StackedBarChart(
                     items = selectedItems,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(78.dp),
+                        .height(78.dp)
+                        .semantics { contentDescription = chartDescription },
                 )
 
                 StatsChartStylePreference.DualBar -> DualBarChart(
@@ -676,7 +720,8 @@ private fun StatsChart(
                     expense = expense,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(108.dp),
+                        .height(108.dp)
+                        .semantics { contentDescription = chartDescription },
                 )
 
                 StatsChartStylePreference.ProfitBars -> ProfitBarsChart(
@@ -684,7 +729,8 @@ private fun StatsChart(
                     expense = expense,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(128.dp),
+                        .height(128.dp)
+                        .semantics { contentDescription = chartDescription },
                 )
             }
 
@@ -863,12 +909,24 @@ private fun StatsCategoryRow(
 ) {
     val fallback = MaterialTheme.colorScheme.primary
     val openHistoryDescription = stringResource(R.string.stats_open_history, item.categoryName)
+    val hiddenAmountDescription = stringResource(R.string.stats_amount_hidden_a11y, item.currencyCode)
+    val rowDescription = listOf(
+        item.categoryName,
+        item.totalCents.formatAccessibleMoney(
+            currencyCode = item.currencyCode,
+            hideAmounts = hideAmounts,
+            hiddenAmountDescription = hiddenAmountDescription,
+        ),
+        stringResource(R.string.stats_transactions_count, item.transactionCount),
+        openHistoryDescription,
+    ).joinToString(". ")
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .testTag("stats-breakdown-row-${item.categoryId}")
-            .semantics {
-                contentDescription = openHistoryDescription
+            .semantics(mergeDescendants = true) {
+                contentDescription = rowDescription
+                role = Role.Button
             }
             .clickable(onClick = onOpenHistory),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -954,6 +1012,45 @@ private fun List<CategoryStat>.total(
 ): Long {
     return filter { it.type == type && it.currencyCode == currencyCode }
         .sumOf { it.totalCents }
+}
+
+private fun List<CategoryStat>.toCategoryChartDescription(
+    chartLabel: String,
+    selectedTypeLabel: String,
+    transactionCountLabels: Map<Long, String>,
+    hiddenAmountDescriptions: Map<Long, String>,
+    hideAmounts: Boolean,
+    emptyLabel: String,
+): String {
+    if (isEmpty()) {
+        return "$chartLabel. $emptyLabel"
+    }
+    val categorySummary = joinToString(". ") { item ->
+        val countLabel = transactionCountLabels.getValue(item.categoryId)
+        val amountDescription = item.totalCents.formatAccessibleMoney(
+            currencyCode = item.currencyCode,
+            hideAmounts = hideAmounts,
+            hiddenAmountDescription = hiddenAmountDescriptions.getValue(item.categoryId),
+        )
+        "${item.categoryName}: $amountDescription, $countLabel"
+    }
+    return "$chartLabel. $selectedTypeLabel. $categorySummary"
+}
+
+private fun Long.formatAccessibleMoney(
+    currencyCode: String,
+    hideAmounts: Boolean,
+    hiddenAmountDescription: String,
+    signed: Boolean = false,
+): String {
+    if (hideAmounts) {
+        return hiddenAmountDescription
+    }
+    return if (signed) {
+        formatSignedMoney(currencyCode, hideAmounts = false)
+    } else {
+        formatMoney(currencyCode, hideAmounts = false)
+    }
 }
 
 private fun Long.formatMoney(currencyCode: String, hideAmounts: Boolean): String {

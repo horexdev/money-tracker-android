@@ -11,6 +11,7 @@
     <string name="home_add_transaction">Aggiungi transazione</string>
     <string name="home_income">Entrata</string>
     <string name="home_expense">Spesa</string>
+    <string name="home_amount_hidden_a11y">Importo nascosto, %1$s</string>
     <string name="home_recent_transactions">Transazioni recenti</string>
     <string name="home_quick_templates">Modelli rapidi</string>
     <string name="home_quick_templates_empty">Crea modelli per applicare transazioni frequenti dalla dashboard.</string>

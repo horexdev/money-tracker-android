@@ -11,6 +11,7 @@
     <string name="home_add_transaction">Agregar transacción</string>
     <string name="home_income">Ingreso</string>
     <string name="home_expense">Gasto</string>
+    <string name="home_amount_hidden_a11y">Importe oculto, %1$s</string>
     <string name="home_recent_transactions">Transacciones recientes</string>
     <string name="home_quick_templates">Plantillas rápidas</string>
     <string name="home_quick_templates_empty">Crear plantillas para aplicar transacciones frecuentes desde el tablero.</string>

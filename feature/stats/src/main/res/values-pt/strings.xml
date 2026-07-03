@@ -26,6 +26,7 @@
     <string name="stats_income_total">Receita</string>
     <string name="stats_expense_total">Despesa</string>
     <string name="stats_net_total">Líquido</string>
+    <string name="stats_amount_hidden_a11y">Valor oculto, %1$s</string>
     <string name="stats_transactions_count">%1$d transações</string>
     <string name="stats_open_history">Transações abertas para %1$s</string>
 </resources>

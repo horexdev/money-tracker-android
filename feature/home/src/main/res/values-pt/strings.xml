@@ -11,6 +11,7 @@
     <string name="home_add_transaction">Adicionar transação</string>
     <string name="home_income">Receita</string>
     <string name="home_expense">Despesa</string>
+    <string name="home_amount_hidden_a11y">Valor oculto, %1$s</string>
     <string name="home_recent_transactions">Transações recentes</string>
     <string name="home_quick_templates">Modelos rápidos</string>
     <string name="home_quick_templates_empty">Crie modelos para aplicar transações frequentes do painel.</string>

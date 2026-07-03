@@ -11,6 +11,7 @@
     <string name="home_add_transaction">Transaktion hinzufügen</string>
     <string name="home_income">Einnahme</string>
     <string name="home_expense">Ausgabe</string>
+    <string name="home_amount_hidden_a11y">Betrag ausgeblendet, %1$s</string>
     <string name="home_recent_transactions">Letzte Transaktionen</string>
     <string name="home_quick_templates">Schnellvorlagen</string>
     <string name="home_quick_templates_empty">Erstellen Sie Vorlagen, um häufige Transaktionen über das Dashboard anzuwenden.</string>

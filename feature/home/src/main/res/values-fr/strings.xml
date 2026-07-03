@@ -11,6 +11,7 @@
     <string name="home_add_transaction">Ajouter une transaction</string>
     <string name="home_income">Revenu</string>
     <string name="home_expense">Dépense</string>
+    <string name="home_amount_hidden_a11y">Montant masqué, %1$s</string>
     <string name="home_recent_transactions">Transactions récentes</string>
     <string name="home_quick_templates">Modèles rapides</string>
     <string name="home_quick_templates_empty">Créez des modèles pour appliquer des transactions fréquentes à partir du tableau de bord.</string>

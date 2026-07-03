@@ -11,6 +11,7 @@
     <string name="home_add_transaction">Tambah transaksi</string>
     <string name="home_income">Pendapatan</string>
     <string name="home_expense">Perbelanjaan</string>
+    <string name="home_amount_hidden_a11y">Jumlah disembunyikan, %1$s</string>
     <string name="home_recent_transactions">Transaksi terkini</string>
     <string name="home_quick_templates">Templat pantas</string>
     <string name="home_quick_templates_empty">Cipta templat untuk menggunakan urus niaga yang kerap daripada papan pemuka.</string>

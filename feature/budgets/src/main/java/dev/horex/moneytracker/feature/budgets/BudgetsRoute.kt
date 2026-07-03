@@ -3,7 +3,6 @@ package dev.horex.moneytracker.feature.budgets
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +20,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
@@ -65,6 +65,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -477,6 +481,28 @@ private fun BudgetCard(
     } else {
         MaterialTheme.colorScheme.primary
     }
+    val spentOfLimitText = stringResource(
+        R.string.budgets_spent_of_limit,
+        budget.spentCents.formatMoney(budget.currencyCode),
+        budget.limitCents.formatMoney(budget.currencyCode),
+    )
+    val progressText = stringResource(R.string.budgets_progress_percent, progressPercent)
+    val statusText = if (budget.isOverLimit) {
+        stringResource(
+            R.string.budgets_over_limit,
+            overageCents.formatMoney(budget.currencyCode),
+        )
+    } else {
+        stringResource(
+            R.string.budgets_remaining,
+            (budget.limitCents - budget.spentCents).coerceAtLeast(0).formatMoney(budget.currencyCode),
+        )
+    }
+    val notificationsStateText = if (budget.notificationsEnabled) {
+        stringResource(R.string.budgets_notifications_enabled)
+    } else {
+        stringResource(R.string.budgets_notifications_disabled)
+    } + " - ${budget.notifyAtPercent}%"
 
     Card(
         modifier = Modifier
@@ -563,7 +589,10 @@ private fun BudgetCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(10.dp)
-                    .clip(MaterialTheme.shapes.small),
+                    .clip(MaterialTheme.shapes.small)
+                    .semantics {
+                        contentDescription = "$spentOfLimitText. $progressText. $statusText"
+                    },
                 color = statusColor,
                 trackColor = MaterialTheme.colorScheme.surfaceVariant,
             )
@@ -573,33 +602,19 @@ private fun BudgetCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = stringResource(
-                        R.string.budgets_spent_of_limit,
-                        budget.spentCents.formatMoney(budget.currencyCode),
-                        budget.limitCents.formatMoney(budget.currencyCode),
-                    ),
+                    text = spentOfLimitText,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold,
                 )
                 Text(
-                    text = stringResource(R.string.budgets_progress_percent, progressPercent),
+                    text = progressText,
                     style = MaterialTheme.typography.bodyMedium,
                     color = statusColor,
                 )
             }
 
             Text(
-                text = if (budget.isOverLimit) {
-                    stringResource(
-                        R.string.budgets_over_limit,
-                        overageCents.formatMoney(budget.currencyCode),
-                    )
-                } else {
-                    stringResource(
-                        R.string.budgets_remaining,
-                        (budget.limitCents - budget.spentCents).coerceAtLeast(0).formatMoney(budget.currencyCode),
-                    )
-                },
+                text = statusText,
                 style = MaterialTheme.typography.bodyMedium,
                 color = if (budget.isOverLimit) {
                     MaterialTheme.colorScheme.error
@@ -611,8 +626,14 @@ private fun BudgetCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(enabled = enabled) {
-                        onToggleNotifications(budget, !budget.notificationsEnabled)
+                    .toggleable(
+                        value = budget.notificationsEnabled,
+                        enabled = enabled,
+                        role = Role.Switch,
+                        onValueChange = { onToggleNotifications(budget, it) },
+                    )
+                    .semantics {
+                        stateDescription = notificationsStateText
                     },
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -623,18 +644,14 @@ private fun BudgetCard(
                         fontWeight = FontWeight.SemiBold,
                     )
                     Text(
-                        text = if (budget.notificationsEnabled) {
-                            stringResource(R.string.budgets_notifications_enabled)
-                        } else {
-                            stringResource(R.string.budgets_notifications_disabled)
-                        } + " - ${budget.notifyAtPercent}%",
+                        text = notificationsStateText,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 Switch(
                     checked = budget.notificationsEnabled,
-                    onCheckedChange = { onToggleNotifications(budget, it) },
+                    onCheckedChange = null,
                     enabled = enabled,
                     modifier = Modifier.testTag("budget-notifications-${budget.id}"),
                 )
@@ -873,10 +890,22 @@ private fun BudgetFormSheet(
                 }
             }
 
+            val formNotificationsStateText = if (form.notificationsEnabled) {
+                stringResource(R.string.budgets_notifications_enabled)
+            } else {
+                stringResource(R.string.budgets_notifications_disabled)
+            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { form = form.copy(notificationsEnabled = !form.notificationsEnabled) },
+                    .toggleable(
+                        value = form.notificationsEnabled,
+                        role = Role.Switch,
+                        onValueChange = { form = form.copy(notificationsEnabled = it) },
+                    )
+                    .semantics {
+                        stateDescription = formNotificationsStateText
+                    },
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
@@ -885,18 +914,14 @@ private fun BudgetFormSheet(
                         style = MaterialTheme.typography.bodyLarge,
                     )
                     Text(
-                        text = if (form.notificationsEnabled) {
-                            stringResource(R.string.budgets_notifications_enabled)
-                        } else {
-                            stringResource(R.string.budgets_notifications_disabled)
-                        },
+                        text = formNotificationsStateText,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 Switch(
                     checked = form.notificationsEnabled,
-                    onCheckedChange = { form = form.copy(notificationsEnabled = it) },
+                    onCheckedChange = null,
                     modifier = Modifier.testTag("budget-form-notifications"),
                 )
             }

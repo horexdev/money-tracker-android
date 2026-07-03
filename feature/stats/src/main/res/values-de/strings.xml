@@ -26,6 +26,7 @@
     <string name="stats_income_total">Einnahme</string>
     <string name="stats_expense_total">Ausgabe</string>
     <string name="stats_net_total">Netto</string>
+    <string name="stats_amount_hidden_a11y">Betrag ausgeblendet, %1$s</string>
     <string name="stats_transactions_count">%1$d-Sende</string>
     <string name="stats_open_history">Offene Transaktionen für %1$s</string>
 </resources>

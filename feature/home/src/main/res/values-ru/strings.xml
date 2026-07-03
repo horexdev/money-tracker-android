@@ -11,6 +11,7 @@
     <string name="home_add_transaction">Добавить операцию</string>
     <string name="home_income">Доходы</string>
     <string name="home_expense">Расходы</string>
+    <string name="home_amount_hidden_a11y">Сумма скрыта, %1$s</string>
     <string name="home_recent_transactions">Последние операции</string>
     <string name="home_quick_templates">Быстрые шаблоны</string>
     <string name="home_quick_templates_empty">Создайте шаблоны, чтобы применять частые операции с главной.</string>

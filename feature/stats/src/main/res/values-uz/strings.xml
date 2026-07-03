@@ -26,6 +26,7 @@
     <string name="stats_income_total">Daromad</string>
     <string name="stats_expense_total">Xarajat</string>
     <string name="stats_net_total">Sof</string>
+    <string name="stats_amount_hidden_a11y">Summa yashirilgan, %1$s</string>
     <string name="stats_transactions_count">%1$d operatsiya</string>
     <string name="stats_open_history">%1$s uchun ochiq tranzaktsiyalar</string>
 </resources>

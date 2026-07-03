@@ -11,6 +11,7 @@
     <string name="home_add_transaction">tranzaksiya qo\'shing</string>
     <string name="home_income">Daromad</string>
     <string name="home_expense">Xarajat</string>
+    <string name="home_amount_hidden_a11y">Summa yashirilgan, %1$s</string>
     <string name="home_recent_transactions">Oxirgi operatsiyalar</string>
     <string name="home_quick_templates">Tezkor shablonlar</string>
     <string name="home_quick_templates_empty">Boshqaruv panelidan tez-tez bajariladigan tranzaktsiyalarni qo\'llash uchun shablonlarni yarating.</string>

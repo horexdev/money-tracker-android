@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -64,6 +65,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -671,7 +677,11 @@ private fun AccountFormSheet(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { form = form.copy(includeInTotal = !form.includeInTotal) },
+                    .toggleable(
+                        value = form.includeInTotal,
+                        role = Role.Switch,
+                        onValueChange = { form = form.copy(includeInTotal = it) },
+                    ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -681,7 +691,7 @@ private fun AccountFormSheet(
                 )
                 Switch(
                     checked = form.includeInTotal,
-                    onCheckedChange = { form = form.copy(includeInTotal = it) },
+                    onCheckedChange = null,
                 )
             }
 
@@ -752,12 +762,18 @@ private fun ColorSwatch(
     selected: Boolean,
     onSelect: () -> Unit,
 ) {
+    val colorLabel = stringResource(R.string.accounts_color)
     Box(
         modifier = Modifier
-            .size(42.dp)
+            .size(48.dp)
             .clip(CircleShape)
             .background(color.toColorOrFallback())
-            .clickable(onClick = onSelect),
+            .clickable(onClick = onSelect)
+            .semantics {
+                contentDescription = "$colorLabel $color"
+                this.selected = selected
+                role = Role.Button
+            },
         contentAlignment = Alignment.Center,
     ) {
         if (selected) {

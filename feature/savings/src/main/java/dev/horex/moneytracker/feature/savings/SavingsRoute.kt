@@ -65,6 +65,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
@@ -382,6 +384,13 @@ private fun SavingsGoalCard(
     onOpenHistory: (SavingsGoal) -> Unit,
 ) {
     val progressPercent = goal.progressPercent.roundToInt()
+    val amountProgressText = stringResource(
+        R.string.savings_amount_progress,
+        goal.currentCents.formatMoney(goal.currencyCode),
+        goal.targetCents.formatMoney(goal.currencyCode),
+    )
+    val progressText = stringResource(R.string.savings_progress_percent, progressPercent)
+    val remainingText = stringResource(R.string.savings_remaining, goal.remainingCents.formatMoney(goal.currencyCode))
     Card(
         modifier = Modifier.fillMaxWidth().testTag("savings-goal-${goal.id}"),
         shape = MaterialTheme.shapes.medium,
@@ -411,11 +420,7 @@ private fun SavingsGoalCard(
                         }
                     }
                     Text(
-                        text = stringResource(
-                            R.string.savings_amount_progress,
-                            goal.currentCents.formatMoney(goal.currencyCode),
-                            goal.targetCents.formatMoney(goal.currencyCode),
-                        ),
+                        text = amountProgressText,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.bodyMedium,
@@ -437,16 +442,21 @@ private fun SavingsGoalCard(
             }
             LinearProgressIndicator(
                 progress = { (goal.progressPercent / 100.0).toFloat().coerceIn(0f, 1f) },
-                modifier = Modifier.fillMaxWidth().height(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp)
+                    .semantics {
+                        contentDescription = "$amountProgressText. $progressText. $remainingText"
+                    },
             )
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(
-                    stringResource(R.string.savings_progress_percent, progressPercent),
+                    progressText,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
-                    stringResource(R.string.savings_remaining, goal.remainingCents.formatMoney(goal.currencyCode)),
+                    remainingText,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

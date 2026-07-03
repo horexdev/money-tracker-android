@@ -26,6 +26,7 @@
     <string name="stats_income_total">دخل</string>
     <string name="stats_expense_total">مصروف</string>
     <string name="stats_net_total">صافي</string>
+    <string name="stats_amount_hidden_a11y">المبلغ مخفي، %1$s</string>
     <string name="stats_transactions_count">%1$d تكساس</string>
     <string name="stats_open_history">المعاملات المفتوحة لـ %1$s</string>
 </resources>

@@ -26,6 +26,7 @@
     <string name="stats_income_total">Pendapatan</string>
     <string name="stats_expense_total">Perbelanjaan</string>
     <string name="stats_net_total">Bersih</string>
+    <string name="stats_amount_hidden_a11y">Jumlah disembunyikan, %1$s</string>
     <string name="stats_transactions_count">%1$d transaksi</string>
     <string name="stats_open_history">Buka transaksi untuk %1$s</string>
 </resources>

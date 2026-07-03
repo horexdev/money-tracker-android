@@ -11,6 +11,7 @@
     <string name="home_add_transaction">إضافة معاملة</string>
     <string name="home_income">دخل</string>
     <string name="home_expense">مصروف</string>
+    <string name="home_amount_hidden_a11y">المبلغ مخفي، %1$s</string>
     <string name="home_recent_transactions">المعاملات الأخيرة</string>
     <string name="home_quick_templates">قوالب سريعة</string>
     <string name="home_quick_templates_empty">إنشاء قوالب لتطبيق المعاملات المتكررة من لوحة التحكم.</string>
