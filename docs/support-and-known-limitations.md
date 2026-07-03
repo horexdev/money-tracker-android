@@ -113,9 +113,10 @@ Support requests must not ask users to send:
   init data, bot/chat metadata, source database IDs, or `legacy_*` identifiers.
 
 If a screenshot is needed, ask the user to use sample data or redact names,
-amounts, notes, account numbers, and file paths. If a backup artifact is needed
-for a controlled escalation, prefer a newly created encrypted backup and never
-request the password in the same channel as the file.
+amounts, notes, account numbers, and file paths. For backup diagnostics, ask for
+the visible validation title, backup metadata, a redacted screenshot, or a local
+reproduction path. A controlled escalation must not require the backup password
+or ask the user to send it in any channel.
 
 ## Backup And Import FAQ
 
