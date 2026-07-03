@@ -3,7 +3,7 @@
     <string name="accounts_title">Accounts</string>
     <string name="accounts_subtitle">Cards, cash, savings, and balance corrections</string>
     <string name="accounts_empty_title">No accounts yet</string>
-    <string name="accounts_empty_body">Create the first account to start tracking balances offline.</string>
+    <string name="accounts_empty_body">Create the first account to start tracking balances.</string>
     <string name="accounts_add">Add account</string>
     <string name="accounts_edit">Edit account</string>
     <string name="accounts_create">Create account</string>

@@ -3,7 +3,7 @@
     <string name="categories_title">Categories</string>
     <string name="categories_subtitle">Manage names, icons, colors, and transaction types</string>
     <string name="categories_empty_title">No categories</string>
-    <string name="categories_empty_body">Create a category to classify income and expenses offline.</string>
+    <string name="categories_empty_body">Create a category to classify income and expenses.</string>
     <string name="categories_add">Add category</string>
     <string name="categories_edit">Edit category</string>
     <string name="categories_create">Create category</string>

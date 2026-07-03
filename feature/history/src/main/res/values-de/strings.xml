@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">Verlauf</string>
-    <string name="history_subtitle">Offline-Transaktionen suchen, filtern, bearbeiten und löschen</string>
+    <string name="history_subtitle">Transaktionen suchen, filtern, bearbeiten und löschen</string>
     <string name="history_empty_title">Keine Transaktionen</string>
     <string name="history_empty_body">Neue Einnahmen und Ausgaben werden hier angezeigt, nachdem sie gespeichert wurden.</string>
     <string name="history_loading">Ladeverlauf</string>

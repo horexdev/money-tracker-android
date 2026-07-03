@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">History</string>
-    <string name="history_subtitle">Search, filter, edit, and delete offline transactions</string>
+    <string name="history_subtitle">Search, filter, edit, and delete transactions</string>
     <string name="history_empty_title">No transactions</string>
     <string name="history_empty_body">New income and expenses will appear here after they are saved.</string>
     <string name="history_loading">Loading history</string>

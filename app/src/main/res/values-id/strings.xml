@@ -17,7 +17,7 @@
     <string name="settings_title">Pengaturan</string>
     <string name="settings_placeholder_subtitle">Rute pengaturan terdaftar.</string>
     <string name="settings_more_subtitle">Bahasa, privasi, notifikasi, tarif, dan data lokal.</string>
-    <string name="settings_subtitle">Pengaturan offline untuk profil Android lokal.</string>
+    <string name="settings_subtitle">Pengaturan untuk profil Android lokal.</string>
     <string name="settings_loading">Memuat pengaturan</string>
     <string name="settings_processing">Menyimpan pengaturan</string>
     <string name="settings_retry">Coba lagi</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">Data lokal</string>
     <string name="settings_open_import_export">Impor / Ekspor</string>
     <string name="settings_reset_data">Reset profil saat ini</string>
-    <string name="settings_reset_data_desc">Menghapus data profil lokal aktif dan membuat profil offline baru.</string>
+    <string name="settings_reset_data_desc">Menghapus data profil lokal aktif dan membuat profil lokal baru.</string>
     <string name="settings_reset_confirm_title">Setel ulang profil saat ini?</string>
     <string name="settings_reset_confirm_body">Ini menghapus data profil lokal aktif di perangkat ini. Profil lokal lainnya tidak disetel ulang.</string>
     <string name="settings_reset_confirm_button">Setel ulang profil</string>

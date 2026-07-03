@@ -17,7 +17,7 @@
     <string name="settings_title">Настройки</string>
     <string name="settings_placeholder_subtitle">Маршрут настроек зарегистрирован.</string>
     <string name="settings_more_subtitle">Язык, приватность, уведомления, курсы и локальные данные.</string>
-    <string name="settings_subtitle">Офлайн-настройки локальных Android-профилей.</string>
+    <string name="settings_subtitle">Настройки локальных Android-профилей.</string>
     <string name="settings_loading">Загрузка настроек</string>
     <string name="settings_processing">Сохранение настроек</string>
     <string name="settings_retry">Повторить</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">Данные</string>
     <string name="settings_open_import_export">Импорт / экспорт</string>
     <string name="settings_reset_data">Сбросить текущий профиль</string>
-    <string name="settings_reset_data_desc">Удаляет данные активного локального профиля и создает новый офлайн-профиль.</string>
+    <string name="settings_reset_data_desc">Удаляет данные активного локального профиля и создает новый локальный профиль.</string>
     <string name="settings_reset_confirm_title">Сбросить текущий профиль?</string>
     <string name="settings_reset_confirm_body">Будут удалены данные активного локального профиля на этом устройстве. Другие локальные профили не сбрасываются.</string>
     <string name="settings_reset_confirm_button">Сбросить профиль</string>

@@ -3,7 +3,7 @@
     <string name="accounts_title">Akun</string>
     <string name="accounts_subtitle">Kartu, uang tunai, tabungan, dan koreksi saldo</string>
     <string name="accounts_empty_title">Belum ada akun</string>
-    <string name="accounts_empty_body">Buat akun pertama yang mulai melacak saldo secara offline.</string>
+    <string name="accounts_empty_body">Buat akun pertama untuk mulai melacak saldo.</string>
     <string name="accounts_add">Tambahkan akun</string>
     <string name="accounts_edit">Edit akun</string>
     <string name="accounts_create">Buat akun</string>

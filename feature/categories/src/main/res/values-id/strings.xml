@@ -3,7 +3,7 @@
     <string name="categories_title">Kategori</string>
     <string name="categories_subtitle">Kelola nama, ikon, warna, dan jenis transaksi</string>
     <string name="categories_empty_title">Tidak ada kategori</string>
-    <string name="categories_empty_body">Buat kategori untuk mengklasifikasikan pendapatan dan pengeluaran secara offline.</string>
+    <string name="categories_empty_body">Buat kategori untuk mengklasifikasikan pendapatan dan pengeluaran.</string>
     <string name="categories_add">Tambahkan kategori</string>
     <string name="categories_edit">Sunting kategori</string>
     <string name="categories_create">Buat kategori</string>

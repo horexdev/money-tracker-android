@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Панель</string>
     <string name="feature_home_subtitle">коренева навігація готова.</string>
-    <string name="home_subtitle">офлайн-знімок балансів і останні дії.</string>
+    <string name="home_subtitle">Зведення балансів і останніх дій.</string>
     <string name="home_loading">Завантаження приладової панелі...</string>
     <string name="home_retry">Повторити</string>
     <string name="home_error_generic">Не вдалося завантажити дані інформаційної панелі.</string>

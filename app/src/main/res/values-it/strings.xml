@@ -17,7 +17,7 @@
     <string name="settings_title">Impostazioni</string>
     <string name="settings_placeholder_subtitle">Il percorso delle impostazioni è registrato.</string>
     <string name="settings_more_subtitle">Lingua, privacy, notifiche, tariffe e dati locali.</string>
-    <string name="settings_subtitle">Impostazioni offline per i profili Android locali.</string>
+    <string name="settings_subtitle">Impostazioni per i profili Android locali.</string>
     <string name="settings_loading">Caricamento impostazioni</string>
     <string name="settings_processing">salvataggio delle impostazioni</string>
     <string name="settings_retry">Riprova</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">Dati</string>
     <string name="settings_open_import_export">Importa/Esporta</string>
     <string name="settings_reset_data">Reimposta il profilo corrente</string>
-    <string name="settings_reset_data_desc">Elimina i dati del profilo locale attivo e crea un nuovo profilo offline.</string>
+    <string name="settings_reset_data_desc">Elimina i dati del profilo locale attivo e crea un nuovo profilo locale.</string>
     <string name="settings_reset_confirm_title">Reimpostare il profilo corrente?</string>
     <string name="settings_reset_confirm_body">questo elimina i dati del profilo locale attivo su questo dispositivo. Gli altri profili locali non vengono reimpostati.</string>
     <string name="settings_reset_confirm_button">Reimposta profilo</string>

@@ -3,7 +3,7 @@
     <string name="categories_title">Kategorien</string>
     <string name="categories_subtitle">Namen, Symbole, Farben und Transaktionstypen verwalten</string>
     <string name="categories_empty_title">Keine Kategorien</string>
-    <string name="categories_empty_body">Erstellen Sie eine Kategorie, um Einnahmen und Ausgaben offline zu klassifizieren.</string>
+    <string name="categories_empty_body">Erstellen Sie eine Kategorie, um Einnahmen und Ausgaben zu klassifizieren.</string>
     <string name="categories_add">Kategorie hinzufügen</string>
     <string name="categories_edit">Kategorie bearbeiten</string>
     <string name="categories_create">Kategorie erstellen</string>

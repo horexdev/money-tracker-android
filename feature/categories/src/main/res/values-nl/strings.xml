@@ -3,7 +3,7 @@
     <string name="categories_title">Categorieën</string>
     <string name="categories_subtitle">Beheer namen, pictogrammen, kleuren en transactietypen</string>
     <string name="categories_empty_title">Geen categorieën</string>
-    <string name="categories_empty_body">Maak een categorie om inkomsten en uitgaven offline te classificeren.</string>
+    <string name="categories_empty_body">Maak een categorie om inkomsten en uitgaven te classificeren.</string>
     <string name="categories_add">Categorie toevoegen</string>
     <string name="categories_edit">Categorie bewerken</string>
     <string name="categories_create">Categorie aanmaken</string>

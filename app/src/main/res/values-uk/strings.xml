@@ -17,7 +17,7 @@
     <string name="settings_title">Налаштування</string>
     <string name="settings_placeholder_subtitle">Налаштування маршруту зареєстровано.</string>
     <string name="settings_more_subtitle">мова, конфіденційність, сповіщення, тарифи та місцеві дані.</string>
-    <string name="settings_subtitle">офлайн-налаштування для локальних профілів Android.</string>
+    <string name="settings_subtitle">Налаштування локальних профілів Android.</string>
     <string name="settings_loading">Завантаження налаштувань</string>
     <string name="settings_processing">Збереження налаштувань</string>
     <string name="settings_retry">Повторити</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">Дані</string>
     <string name="settings_open_import_export">Імпорт / Експорт</string>
     <string name="settings_reset_data">скинути поточний профіль</string>
-    <string name="settings_reset_data_desc">видаляє дані активного локального профілю та створює новий офлайн-профіль.</string>
+    <string name="settings_reset_data_desc">Видаляє дані активного локального профілю та створює новий локальний профіль.</string>
     <string name="settings_reset_confirm_title">Скинути поточний профіль?</string>
     <string name="settings_reset_confirm_body">це видаляє дані активного локального профілю на цьому пристрої. Інші локальні профілі не скидаються.</string>
     <string name="settings_reset_confirm_button">Скинути профіль</string>

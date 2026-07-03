@@ -3,7 +3,7 @@
     <string name="accounts_title">Rekeningen</string>
     <string name="accounts_subtitle">Kaarten, contant geld, spaargeld en saldocorrecties</string>
     <string name="accounts_empty_title">Nog geen accounts</string>
-    <string name="accounts_empty_body">Maak het eerste account aan om saldi offline bij te houden.</string>
+    <string name="accounts_empty_body">Maak het eerste account aan om saldi bij te houden.</string>
     <string name="accounts_add">Account toevoegen</string>
     <string name="accounts_edit">Account bewerken</string>
     <string name="accounts_create">Account aanmaken</string>

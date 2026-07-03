@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">Тарих</string>
-    <string name="history_subtitle">Офлайн транзакцияларды іздеу, сүзу, өңдеу және жою</string>
+    <string name="history_subtitle">Транзакцияларды іздеу, сүзу, өңдеу және жою</string>
     <string name="history_empty_title">транзакциялар жоқ</string>
     <string name="history_empty_body">Жаңа кірістер мен шығыстар сақталғаннан кейін осы жерде пайда болады.</string>
     <string name="history_loading">Жүктеу журналы</string>

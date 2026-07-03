@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Dashboard</string>
     <string name="feature_home_subtitle">Root navigation is ready.</string>
-    <string name="home_subtitle">Offline snapshot of balances and recent activity.</string>
+    <string name="home_subtitle">Overview of balances and recent activity.</string>
     <string name="home_loading">Loading dashboard...</string>
     <string name="home_retry">Retry</string>
     <string name="home_error_generic">Dashboard data could not be loaded.</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">История</string>
-    <string name="history_subtitle">Поиск, фильтры, редактирование и удаление офлайн-операций</string>
+    <string name="history_subtitle">Поиск, фильтры, редактирование и удаление операций</string>
     <string name="history_empty_title">Операций пока нет</string>
     <string name="history_empty_body">Новые доходы и расходы появятся здесь после сохранения.</string>
     <string name="history_loading">Загружаем историю</string>

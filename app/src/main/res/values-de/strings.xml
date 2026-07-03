@@ -17,7 +17,7 @@
     <string name="settings_title">Einstellungen</string>
     <string name="settings_placeholder_subtitle">Einstellungsroute ist registriert.</string>
     <string name="settings_more_subtitle">Sprache, Datenschutz, Benachrichtigungen, Tarife und lokale Daten.</string>
-    <string name="settings_subtitle">Offline-Einstellungen für lokale Android-Profile.</string>
+    <string name="settings_subtitle">Einstellungen für lokale Android-Profile.</string>
     <string name="settings_loading">Einstellungen werden geladen</string>
     <string name="settings_processing">Einstellungen speichern</string>
     <string name="settings_retry">Erneut versuchen</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">Daten</string>
     <string name="settings_open_import_export">Importieren / Exportieren</string>
     <string name="settings_reset_data">Aktuelles Profil zurücksetzen</string>
-    <string name="settings_reset_data_desc">Löscht die aktiven lokalen Profildaten und erstellt ein neues Offline-Profil.</string>
+    <string name="settings_reset_data_desc">Löscht die aktiven lokalen Profildaten und erstellt ein neues lokales Profil.</string>
     <string name="settings_reset_confirm_title">Aktuelles Profil zurücksetzen?</string>
     <string name="settings_reset_confirm_body">Dadurch werden die aktiven lokalen Profildaten auf diesem Gerät gelöscht. Andere lokale Profile werden nicht zurückgesetzt.</string>
     <string name="settings_reset_confirm_button">Profil zurücksetzen</string>

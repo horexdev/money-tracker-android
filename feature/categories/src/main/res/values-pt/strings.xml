@@ -3,7 +3,7 @@
     <string name="categories_title">Categorias</string>
     <string name="categories_subtitle">Gerenciar nomes, ícones, cores e tipos de transação</string>
     <string name="categories_empty_title">Sem categorias</string>
-    <string name="categories_empty_body">Crie uma categoria para classificar receitas e despesas offline.</string>
+    <string name="categories_empty_body">Crie uma categoria para classificar receitas e despesas.</string>
     <string name="categories_add">Adicionar categoria</string>
     <string name="categories_edit">Editar categoria</string>
     <string name="categories_create">Criar categoria</string>

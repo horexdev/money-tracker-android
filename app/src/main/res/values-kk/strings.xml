@@ -107,7 +107,7 @@
     <string name="settings_data_section">Деректер</string>
     <string name="settings_open_import_export">Импорт/Экспорт</string>
     <string name="settings_reset_data">Ағымдағы профильді қалпына келтіру</string>
-    <string name="settings_reset_data_desc">Белсенді жергілікті профиль деректерін жояды және жаңа офлайн профильді жасайды.</string>
+    <string name="settings_reset_data_desc">Белсенді жергілікті профиль деректерін жояды және жаңа жергілікті профиль жасайды.</string>
     <string name="settings_reset_confirm_title">Ағымдағы профильді қалпына келтіру керек пе?</string>
     <string name="settings_reset_confirm_body">Бұл құрылғыдағы белсенді жергілікті профиль деректерін жояды. Басқа жергілікті профильдер қалпына келтірілмейді.</string>
     <string name="settings_reset_confirm_button">Профильді қалпына келтіру</string>
