@@ -1,0 +1,242 @@
+{
+  "format": "MoneyTrackerBackup",
+  "version": 1,
+  "created_at_epoch_millis": 1783065600000,
+  "profiles": [
+    {
+      "ref": "profile:p000001",
+      "label": "Profile 1",
+      "language_code": "ru",
+      "display_currency_codes": [
+        "USD",
+        "EUR"
+      ],
+      "notification_preferences": {
+        "notify_budget_alerts": true,
+        "notify_recurring_reminders": true,
+        "notify_weekly_summary": false,
+        "notify_goal_milestones": true
+      },
+      "ui_preferences": {
+        "stats_chart_style": "stacked_bar",
+        "animate_numbers": true,
+        "theme": "dark",
+        "hide_amounts": true
+      },
+      "created_at_epoch_millis": 1782892800000,
+      "updated_at_epoch_millis": 1782984600000,
+      "accounts": [
+        {
+          "ref": "account:a000001",
+          "name": "Main wallet",
+          "icon": "wallet",
+          "color": "#2563eb",
+          "type": "checking",
+          "currency_code": "USD",
+          "is_default": true,
+          "include_in_total": true,
+          "created_at_epoch_millis": 1782893100000,
+          "updated_at_epoch_millis": 1782893100000
+        },
+        {
+          "ref": "account:a000002",
+          "name": "Reserve",
+          "icon": "piggy-bank",
+          "color": "#0f766e",
+          "type": "savings",
+          "currency_code": "EUR",
+          "is_default": false,
+          "include_in_total": true,
+          "created_at_epoch_millis": 1782893400000,
+          "updated_at_epoch_millis": 1782893400000
+        }
+      ],
+      "categories": [
+        {
+          "ref": "category:c000001",
+          "name": "Dining",
+          "localization_key": null,
+          "icon": "fork-knife",
+          "type": "expense",
+          "color": "#ef4444",
+          "is_protected": false,
+          "updated_at_epoch_millis": 1782893700000,
+          "deleted_at_epoch_millis": null
+        },
+        {
+          "ref": "category:c000002",
+          "name": "Salary",
+          "localization_key": null,
+          "icon": "briefcase",
+          "type": "income",
+          "color": "#10b981",
+          "is_protected": false,
+          "updated_at_epoch_millis": 1782893760000,
+          "deleted_at_epoch_millis": null
+        },
+        {
+          "ref": "category:c000003",
+          "name": "Transfer",
+          "localization_key": null,
+          "icon": "arrows-left-right",
+          "type": "transfer",
+          "color": "#6366f1",
+          "is_protected": true,
+          "updated_at_epoch_millis": 1782893820000,
+          "deleted_at_epoch_millis": null
+        }
+      ],
+      "transactions": [
+        {
+          "ref": "transaction:t000001",
+          "type": "expense",
+          "amount_cents": 2750,
+          "category_ref": "category:c000001",
+          "account_ref": "account:a000001",
+          "note": "Lunch",
+          "currency_code": "USD",
+          "snapshot_date": "2026-07-01",
+          "created_at_epoch_millis": 1782907200000,
+          "is_adjustment": false
+        },
+        {
+          "ref": "transaction:t000002",
+          "type": "income",
+          "amount_cents": 250000,
+          "category_ref": "category:c000002",
+          "account_ref": "account:a000001",
+          "note": "Paycheck",
+          "currency_code": "USD",
+          "snapshot_date": "2026-07-01",
+          "created_at_epoch_millis": 1782910800000,
+          "is_adjustment": false
+        },
+        {
+          "ref": "transaction:t000003",
+          "type": "expense",
+          "amount_cents": 50000,
+          "category_ref": "category:c000003",
+          "account_ref": "account:a000001",
+          "note": "Move to reserve",
+          "currency_code": "USD",
+          "snapshot_date": "2026-07-02",
+          "created_at_epoch_millis": 1782986400000,
+          "is_adjustment": false
+        },
+        {
+          "ref": "transaction:t000004",
+          "type": "income",
+          "amount_cents": 46000,
+          "category_ref": "category:c000003",
+          "account_ref": "account:a000002",
+          "note": "Reserve received",
+          "currency_code": "EUR",
+          "snapshot_date": "2026-07-02",
+          "created_at_epoch_millis": 1782986401000,
+          "is_adjustment": false
+        }
+      ],
+      "transfers": [
+        {
+          "ref": "transfer:tr000001",
+          "from_account_ref": "account:a000001",
+          "to_account_ref": "account:a000002",
+          "amount_cents": 50000,
+          "from_currency_code": "USD",
+          "to_currency_code": "EUR",
+          "exchange_rate_e8": 92000000,
+          "note": "Move to reserve",
+          "from_transaction_ref": "transaction:t000003",
+          "to_transaction_ref": "transaction:t000004",
+          "created_at_epoch_millis": 1782986400000
+        }
+      ],
+      "budgets": [
+        {
+          "ref": "budget:b000001",
+          "category_ref": "category:c000001",
+          "limit_cents": 75000,
+          "period": "monthly",
+          "currency_code": "USD",
+          "notify_at_percent": 80,
+          "notifications_enabled": true,
+          "last_notified_percent": 50,
+          "last_notified_at_epoch_millis": 1782982800000,
+          "created_at_epoch_millis": 1782896400000,
+          "updated_at_epoch_millis": 1782982800000
+        }
+      ],
+      "recurring_transactions": [
+        {
+          "ref": "recurring:r000001",
+          "account_ref": "account:a000001",
+          "category_ref": "category:c000001",
+          "type": "expense",
+          "amount_cents": 1500,
+          "currency_code": "USD",
+          "note": "Membership",
+          "frequency": "weekly",
+          "next_run_at_epoch_millis": 1783501200000,
+          "is_active": true,
+          "created_at_epoch_millis": 1782897300000,
+          "updated_at_epoch_millis": 1782983700000
+        }
+      ],
+      "savings_goals": [
+        {
+          "ref": "goal:g000001",
+          "name": "Trip fund",
+          "target_cents": 300000,
+          "current_cents": 46000,
+          "currency_code": "EUR",
+          "deadline_date": "2026-12-31",
+          "account_ref": "account:a000002",
+          "created_at_epoch_millis": 1782897600000,
+          "updated_at_epoch_millis": 1782984000000
+        }
+      ],
+      "goal_transactions": [
+        {
+          "ref": "goal-transaction:gt000001",
+          "goal_ref": "goal:g000001",
+          "type": "deposit",
+          "amount_cents": 46000,
+          "created_at_epoch_millis": 1782986401000
+        }
+      ],
+      "exchange_rate_overrides": [],
+      "transaction_templates": [
+        {
+          "ref": "template:tp000001",
+          "name": "Lunch preset",
+          "type": "expense",
+          "amount_cents": 2750,
+          "amount_fixed": true,
+          "category_ref": "category:c000001",
+          "account_ref": "account:a000001",
+          "currency_code": "USD",
+          "note": "Lunch",
+          "sort_order": 1,
+          "created_at_epoch_millis": 1782898200000,
+          "updated_at_epoch_millis": 1782984600000
+        }
+      ]
+    }
+  ],
+  "exchange_rate_snapshots": [
+    {
+      "snapshot_date": "2026-07-01",
+      "base_currency_code": "USD",
+      "target_currency_code": "EUR",
+      "rate_e8": 92000000,
+      "created_at_epoch_millis": 1782864000000
+    },
+    {
+      "snapshot_date": "2026-07-01",
+      "base_currency_code": "USD",
+      "target_currency_code": "RUB",
+      "rate_e8": 8000000000,
+      "created_at_epoch_millis": 1782864000000
+    }
+  ]
+}
