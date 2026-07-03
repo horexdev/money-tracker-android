@@ -11,14 +11,17 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollToNode
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
 import dev.horex.moneytracker.core.preferences.AppThemePreference
+import dev.horex.moneytracker.core.currency.SaveExchangeRateOverrideInput
 import dev.horex.moneytracker.core.preferences.MoneyTrackerSettings
 import dev.horex.moneytracker.core.preferences.SettingsNotificationPreferences
 import dev.horex.moneytracker.core.preferences.SettingsUiPreferences
 import dev.horex.moneytracker.core.preferences.StatsChartStylePreference
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -78,7 +81,11 @@ class SettingsScreenTest {
         composeRule.onNodeWithTag("settings-screen")
             .performScrollToNode(hasText("Currencies and rates"))
         composeRule.onNodeWithText("Currencies and rates").assertIsDisplayed()
+        composeRule.onNodeWithText("Rate source").assertIsDisplayed()
+        composeRule.onNodeWithText("2026-07-03, source: Saved snapshot, rate 0.93").assertIsDisplayed()
         composeRule.onNodeWithText("Manual rate override").assertIsDisplayed()
+        composeRule.onNodeWithText("Manual rate history").assertIsDisplayed()
+        composeRule.onNodeWithText("2026-07-03, rate 0.93, source: Manual override").assertIsDisplayed()
 
         composeRule.onNodeWithTag("settings-screen")
             .performScrollToNode(hasText("Data"))
@@ -231,6 +238,68 @@ class SettingsScreenTest {
         composeRule.onNodeWithText("Open system settings").assertIsDisplayed()
     }
 
+    @Test
+    fun manualRateOverwriteDialogRequiresExplicitConfirmation() {
+        var confirmed = false
+
+        composeRule.setContent {
+            MoneyTrackerTheme {
+                SettingsScreen(
+                    state = screenState.copy(
+                        pendingRateOverwrite = SettingsPendingRateOverwriteUi(
+                            input = SaveExchangeRateOverrideInput(
+                                effectiveDate = "2026-07-03",
+                                baseCurrency = "USD",
+                                targetCurrency = "EUR",
+                                rateE8 = 94_000_000L,
+                            ),
+                            effectiveDate = "2026-07-03",
+                            baseCurrency = "USD",
+                            targetCurrency = "EUR",
+                            existingRate = "0.93",
+                            newRate = "0.94",
+                        ),
+                    ),
+                    onRetry = {},
+                    onDismissMessage = {},
+                    onSelectProfile = {},
+                    onProfileLabelInputChange = {},
+                    onSaveProfileLabel = {},
+                    onNewProfileLabelChange = {},
+                    onCreateProfile = {},
+                    onLanguageSelected = {},
+                    onThemeSelected = {},
+                    onHideAmountsChanged = {},
+                    onAnimateNumbersChanged = {},
+                    onChartStyleSelected = {},
+                    onNotificationChanged = { _, _ -> },
+                    onOpenNotificationSettings = {},
+                    onDisplayCurrenciesInputChange = {},
+                    onSaveDisplayCurrencies = {},
+                    onRateBaseChange = {},
+                    onRateTargetChange = {},
+                    onRateDateChange = {},
+                    onRateValueChange = {},
+                    onSaveRateOverride = {},
+                    onDeleteRateOverride = {},
+                    onOpenImportExport = {},
+                    onResetRequested = {},
+                    onResetDismiss = {},
+                    onResetConfirmed = {},
+                    onConfirmRateOverwrite = { confirmed = true },
+                )
+            }
+        }
+
+        composeRule.onNodeWithText("Replace manual rate?").assertIsDisplayed()
+        composeRule.onNodeWithText(
+            "A manual rate already exists for USD -> EUR on 2026-07-03. Current rate: 0.93. New rate: 0.94.",
+        ).assertIsDisplayed()
+        composeRule.onNodeWithText("Replace rate").performClick()
+
+        assertTrue(confirmed)
+    }
+
     private companion object {
         val screenState = SettingsUiState(
             settings = MoneyTrackerSettings(
@@ -266,6 +335,16 @@ class SettingsScreenTest {
                 ),
             ),
             latestSnapshotDate = "2026-07-03",
+            ratePreview = SettingsRatePreviewUi(
+                status = SettingsRatePreviewStatus.Ready,
+                resolvedRate = SettingsResolvedRateUi(
+                    effectiveDate = "2026-07-03",
+                    baseCurrency = "USD",
+                    targetCurrency = "EUR",
+                    rate = "0.93",
+                    source = SettingsRateSourceUi.Snapshot,
+                ),
+            ),
             manualRateOverrides = listOf(
                 SettingsRateOverrideUi(
                     id = 1L,
@@ -273,6 +352,7 @@ class SettingsScreenTest {
                     baseCurrency = "USD",
                     targetCurrency = "EUR",
                     rate = "0.93",
+                    source = SettingsRateSourceUi.ManualOverride,
                 ),
             ),
             activeProfileLabelInput = "Personal",

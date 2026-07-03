@@ -24,6 +24,7 @@ interface CurrencyRatesRepository {
     suspend fun saveManualOverride(
         profileId: Long,
         input: SaveExchangeRateOverrideInput,
+        overwriteExisting: Boolean = false,
     ): ExchangeRateOverride
 
     suspend fun listManualOverrides(profileId: Long): List<ExchangeRateOverride>

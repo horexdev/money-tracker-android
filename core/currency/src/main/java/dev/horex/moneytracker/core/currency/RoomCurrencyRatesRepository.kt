@@ -90,6 +90,7 @@ class RoomCurrencyRatesRepository(
     override suspend fun saveManualOverride(
         profileId: Long,
         input: SaveExchangeRateOverrideInput,
+        overwriteExisting: Boolean,
     ): ExchangeRateOverride {
         val normalized = input.normalized()
         val now = clock()
@@ -100,6 +101,9 @@ class RoomCurrencyRatesRepository(
                 targetCurrency = normalized.targetCurrency,
                 effectiveDate = normalized.effectiveDate,
             )
+            if (existing != null && !overwriteExisting) {
+                throw ExchangeRateOverrideAlreadyExistsException(existing.toOverride())
+            }
             overrideDao.upsert(
                 ExchangeRateOverrideEntity(
                     id = existing?.id ?: 0,

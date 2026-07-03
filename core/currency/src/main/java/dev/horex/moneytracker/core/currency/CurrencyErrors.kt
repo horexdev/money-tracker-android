@@ -10,4 +10,8 @@ class InvalidExchangeRateException : CurrencyException("Exchange rate must be gr
 
 class ExchangeRateNotFoundException : CurrencyException("Exchange rate not found")
 
+class ExchangeRateOverrideAlreadyExistsException(
+    val existing: ExchangeRateOverride,
+) : CurrencyException("Exchange rate override already exists")
+
 class ExchangeRateOverrideNotFoundException : CurrencyException("Exchange rate override not found")
