@@ -153,6 +153,7 @@ dependencies {
     implementation(project(":core:balance"))
     implementation(project(":core:backup"))
     implementation(project(":core:background"))
+    implementation(project(":core:budgets"))
     implementation(project(":core:categories"))
     implementation(project(":core:database"))
     implementation(project(":core:designsystem"))
