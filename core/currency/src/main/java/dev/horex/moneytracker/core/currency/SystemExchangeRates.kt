@@ -26,8 +26,24 @@ internal object SystemExchangeRates {
             ?: error("Missing built-in system exchange rate for $currencyCode")
     }
 
+    private fun quoteFrom(
+        currencyCode: String,
+        multiplierNumerator: Long = 1L,
+        multiplierDenominator: Long = 1L,
+    ): Long {
+        val baseQuote = CurrentUsdQuoteRatesE8[currencyCode]
+            ?: error("Missing base quote for $currencyCode")
+        return BigInteger.valueOf(baseQuote)
+            .multiply(BigInteger.valueOf(multiplierNumerator))
+            .add(BigInteger.valueOf(multiplierDenominator / 2L))
+            .divide(BigInteger.valueOf(multiplierDenominator))
+            .toLong()
+            .takeIf { it > 0L }
+            ?: error("Invalid derived quote for $currencyCode")
+    }
+
     // USD quote snapshot from open.er-api.com, 2026-07-03 00:02:31 UTC.
-    private val UsdQuoteRatesE8 = mapOf(
+    private val CurrentUsdQuoteRatesE8 = mapOf(
         "AED" to 367_250_000L,
         "AFN" to 6_471_852_000L,
         "ALL" to 8_255_292_200L,
@@ -58,6 +74,7 @@ internal object SystemExchangeRates {
         "CHF" to 80_443_900L,
         "CLF" to 2_340_200L,
         "CLP" to 92_501_549_500L,
+        "CNH" to 678_835_400L,
         "CNY" to 679_627_400L,
         "COP" to 338_884_201_200L,
         "CRC" to 45_538_211_100L,
@@ -74,8 +91,10 @@ internal object SystemExchangeRates {
         "EUR" to 87_535_200L,
         "FJD" to 225_916_100L,
         "FKP" to 74_977_000L,
+        "FOK" to 653_616_600L,
         "GBP" to 74_977_200L,
         "GEL" to 264_018_700L,
+        "GGP" to 74_977_000L,
         "GHS" to 1_134_843_600L,
         "GIP" to 74_977_000L,
         "GMD" to 7_430_381_300L,
@@ -89,16 +108,19 @@ internal object SystemExchangeRates {
         "HUF" to 31_026_001_300L,
         "IDR" to 1_798_944_338_900L,
         "ILS" to 299_878_800L,
+        "IMP" to 74_977_000L,
         "INR" to 9_538_790_300L,
         "IQD" to 131_031_238_700L,
         "IRR" to 127_992_433_323_700L,
         "ISK" to 12_602_984_800L,
         "JMD" to 15_764_153_700L,
+        "JEP" to 74_977_000L,
         "JOD" to 70_900_000L,
         "JPY" to 16_133_366_700L,
         "KES" to 12_925_348_100L,
         "KGS" to 8_746_437_100L,
         "KHR" to 404_146_229_900L,
+        "KID" to 144_697_200L,
         "KMF" to 43_064_395_600L,
         "KRW" to 154_390_721_500L,
         "KWD" to 30_978_600L,
@@ -165,6 +187,7 @@ internal object SystemExchangeRates {
         "TOP" to 238_959_600L,
         "TRY" to 4_672_615_600L,
         "TTD" to 675_604_600L,
+        "TVD" to 144_697_200L,
         "TWD" to 3_192_044_300L,
         "TZS" to 262_150_582_600L,
         "UAH" to 4_485_534_500L,
@@ -188,4 +211,81 @@ internal object SystemExchangeRates {
         "ZWG" to 2_687_240_000L,
         "ZWL" to 2_687_240_000L,
     )
+
+    private val LegacyAndSpecialUsdQuoteRatesE8 = mapOf(
+        "ADP" to quoteFrom("EUR", 166_386, 1_000),
+        "AFA" to quoteFrom("AFN", 1_000),
+        "ATS" to quoteFrom("EUR", 137_603, 10_000),
+        "AYM" to quoteFrom("AZN", 5_000),
+        "AZM" to quoteFrom("AZN", 5_000),
+        "BEF" to quoteFrom("EUR", 403_399, 10_000),
+        "BGL" to quoteFrom("BGN", 1_000),
+        "BOV" to quoteFrom("BOB"),
+        "BYB" to quoteFrom("BYN", 10_000_000),
+        "BYR" to quoteFrom("BYN", 10_000),
+        "CHE" to quoteFrom("EUR"),
+        "CHW" to quoteFrom("CHF"),
+        "COU" to quoteFrom("COP"),
+        "CSD" to quoteFrom("RSD"),
+        "CUC" to RATE_SCALE_E8,
+        "CYP" to quoteFrom("EUR", 585_274, 1_000_000),
+        "DEM" to quoteFrom("EUR", 195_583, 100_000),
+        "EEK" to quoteFrom("EUR", 156_466, 10_000),
+        "ESP" to quoteFrom("EUR", 166_386, 1_000),
+        "FIM" to quoteFrom("EUR", 594_573, 100_000),
+        "FRF" to quoteFrom("EUR", 655_957, 100_000),
+        "GHC" to quoteFrom("GHS", 10_000),
+        "GRD" to quoteFrom("EUR", 340_750, 1_000),
+        "GWP" to quoteFrom("XOF", 65),
+        "IEP" to quoteFrom("EUR", 787_564, 1_000_000),
+        "ITL" to quoteFrom("EUR", 193_627, 100),
+        "KPW" to 90_000_000_000L,
+        "LTL" to quoteFrom("EUR", 34_528, 10_000),
+        "LUF" to quoteFrom("EUR", 403_399, 10_000),
+        "LVL" to quoteFrom("EUR", 702_804, 1_000_000),
+        "MGF" to quoteFrom("MGA", 5),
+        "MRO" to quoteFrom("MRU", 10),
+        "MTL" to quoteFrom("EUR", 4_293, 10_000),
+        "MXV" to quoteFrom("MXN", 86, 10),
+        "MZM" to quoteFrom("MZN", 1_000),
+        "NLG" to quoteFrom("EUR", 220_371, 100_000),
+        "PTE" to quoteFrom("EUR", 200_482, 1_000),
+        "ROL" to quoteFrom("RON", 10_000),
+        "RUR" to quoteFrom("RUB", 1_000),
+        "SDD" to quoteFrom("SDG", 100),
+        "SIT" to quoteFrom("EUR", 239_640, 1_000),
+        "SKK" to quoteFrom("EUR", 301_260, 10_000),
+        "SRG" to quoteFrom("SRD", 1_000),
+        "STD" to quoteFrom("STN", 1_000),
+        "SVC" to 875_000_000L,
+        "TMM" to quoteFrom("TMT", 5_000),
+        "TPE" to quoteFrom("EUR", 200_482, 1_000),
+        "TRL" to quoteFrom("TRY", 1_000_000),
+        "USN" to RATE_SCALE_E8,
+        "USS" to RATE_SCALE_E8,
+        "UYI" to quoteFrom("UYU"),
+        "VEB" to quoteFrom("VES", 100_000_000),
+        "VED" to quoteFrom("VES"),
+        "VEF" to quoteFrom("VES", 100_000),
+        "XAD" to quoteFrom("XDR"),
+        "XAG" to 2_717_391L,
+        "XAU" to 30_303L,
+        "XBA" to quoteFrom("EUR"),
+        "XBB" to quoteFrom("EUR"),
+        "XBC" to quoteFrom("EUR"),
+        "XBD" to quoteFrom("EUR"),
+        "XFO" to quoteFrom("CHF"),
+        "XFU" to quoteFrom("CHF"),
+        "XPD" to 83_333L,
+        "XPT" to 66_667L,
+        "XSU" to quoteFrom("XDR"),
+        "XUA" to quoteFrom("XDR"),
+        "YUM" to quoteFrom("RSD"),
+        "ZMK" to quoteFrom("ZMW", 1_000),
+        "ZWD" to quoteFrom("ZWL"),
+        "ZWN" to quoteFrom("ZWL"),
+        "ZWR" to quoteFrom("ZWL"),
+    )
+
+    private val UsdQuoteRatesE8 = CurrentUsdQuoteRatesE8 + LegacyAndSpecialUsdQuoteRatesE8
 }

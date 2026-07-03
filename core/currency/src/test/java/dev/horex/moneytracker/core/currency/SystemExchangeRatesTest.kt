@@ -1,5 +1,6 @@
 package dev.horex.moneytracker.core.currency
 
+import java.util.Currency
 import java.util.Locale
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -8,9 +9,9 @@ import org.junit.Test
 
 class SystemExchangeRatesTest {
     @Test
-    fun systemQuotesCoverSupportedCurrencyCatalog() {
-        val catalogCodes = IsoCurrencyCatalog.listCurrencies(Locale.US).map { it.code }.toSet()
-        val missingQuotes = catalogCodes.filterNot(SystemExchangeRates::hasUsdQuote)
+    fun systemQuotesCoverRuntimeSupportedCurrencyCatalog() {
+        val missingQuotes = runtimeSupportedCurrencyCodes()
+            .filterNot(SystemExchangeRates::hasUsdQuote)
 
         assertEquals(emptyList<String>(), missingQuotes)
     }
@@ -54,5 +55,20 @@ class SystemExchangeRatesTest {
         } catch (expected: IllegalStateException) {
             assertTrue(expected.message.orEmpty().contains("ZZZ"))
         }
+    }
+
+    private fun runtimeSupportedCurrencyCodes(): List<String> {
+        return Currency.getAvailableCurrencies()
+            .asSequence()
+            .map { it.currencyCode }
+            .filter { CurrencyCodePattern.matches(it) }
+            .filterNot { it in ExcludedCurrencyCodes }
+            .sorted()
+            .toList()
+    }
+
+    private companion object {
+        private val CurrencyCodePattern = Regex("[A-Z]{3}")
+        private val ExcludedCurrencyCodes = setOf("XXX", "XTS")
     }
 }

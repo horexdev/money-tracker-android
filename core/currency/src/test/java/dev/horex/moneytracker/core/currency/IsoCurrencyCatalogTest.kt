@@ -1,5 +1,6 @@
 package dev.horex.moneytracker.core.currency
 
+import java.util.Currency
 import java.util.Locale
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -12,21 +13,22 @@ class IsoCurrencyCatalogTest {
         assertTrue(IsoCurrencyCatalog.isSupported("USD"))
         assertTrue(IsoCurrencyCatalog.isSupported(" eur "))
         assertTrue(IsoCurrencyCatalog.isSupported("TJS"))
+        assertTrue(IsoCurrencyCatalog.isSupported("ADP"))
         assertFalse(IsoCurrencyCatalog.isSupported("XYZ"))
-        assertFalse(IsoCurrencyCatalog.isSupported("ADP"))
         assertFalse(IsoCurrencyCatalog.isSupported("XXX"))
         assertFalse(IsoCurrencyCatalog.isSupported("XTS"))
         assertFalse(IsoCurrencyCatalog.isSupported(""))
     }
 
     @Test
-    fun listsRuntimeIsoCurrenciesWithSystemQuotesAndDisplayMetadata() {
+    fun listsRuntimeIsoCurrenciesWithDisplayMetadataExcludingPseudoCodes() {
         val currencies = IsoCurrencyCatalog.listCurrencies(locale = Locale.US)
         val codes = currencies.map { it.code }
 
+        assertEquals(runtimeSupportedCurrencyCodes(), codes)
         assertTrue("USD should be available in the runtime currency catalog", "USD" in codes)
         assertTrue("EUR should be available in the runtime currency catalog", "EUR" in codes)
-        assertFalse("Runtime currency without a system quote should be excluded", "ADP" in codes)
+        assertTrue("ADP should be available when present in the runtime currency catalog", "ADP" in codes)
         assertFalse("Pseudo no-currency code should be excluded", "XXX" in codes)
         assertFalse("Test currency code should be excluded", "XTS" in codes)
         assertEquals(codes.sorted(), codes)
@@ -60,5 +62,20 @@ class IsoCurrencyCatalogTest {
         assertTrue(usd.matchesCurrencyQuery("usd", locale = Locale.US))
         assertTrue(usd.matchesCurrencyQuery("dollar", locale = Locale.US))
         assertTrue(usd.currencyDisplayText().startsWith("USD - "))
+    }
+
+    private fun runtimeSupportedCurrencyCodes(): List<String> {
+        return Currency.getAvailableCurrencies()
+            .asSequence()
+            .map { it.currencyCode }
+            .filter { CurrencyCodePattern.matches(it) }
+            .filterNot { it in ExcludedCurrencyCodes }
+            .sorted()
+            .toList()
+    }
+
+    private companion object {
+        private val CurrencyCodePattern = Regex("[A-Z]{3}")
+        private val ExcludedCurrencyCodes = setOf("XXX", "XTS")
     }
 }
