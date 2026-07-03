@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Бюджеты</string>
+    <string name="budgets_subtitle">Лимиты расходов по категориям и текущему периоду.</string>
+    <string name="budgets_loading">Загрузка бюджетов</string>
+    <string name="budgets_empty_title">Бюджетов пока нет</string>
+    <string name="budgets_empty_body">Создайте лимит для расходной категории, чтобы видеть прогресс.</string>
+    <string name="budgets_no_categories_title">Нет расходных категорий</string>
+    <string name="budgets_no_categories_body">Создайте расходную категорию перед добавлением бюджета.</string>
+    <string name="budgets_add">Добавить бюджет</string>
+    <string name="budgets_create">Создать бюджет</string>
+    <string name="budgets_edit">Изменить бюджет</string>
+    <string name="budgets_save">Сохранить бюджет</string>
+    <string name="budgets_delete">Удалить бюджет</string>
+    <string name="budgets_cancel">Отмена</string>
+    <string name="budgets_retry">Повторить</string>
+    <string name="budgets_category">Категория</string>
+    <string name="budgets_period">Период</string>
+    <string name="budgets_period_weekly">Неделя</string>
+    <string name="budgets_period_monthly">Месяц</string>
+    <string name="budgets_limit">Лимит</string>
+    <string name="budgets_spent_of_limit">%1$s из %2$s</string>
+    <string name="budgets_remaining">Осталось: %1$s</string>
+    <string name="budgets_over_limit">Превышение: %1$s</string>
+    <string name="budgets_over_limit_chip">Лимит превышен</string>
+    <string name="budgets_progress_percent">Использовано %1$d%%</string>
+    <string name="budgets_currency">Валюта</string>
+    <string name="budgets_notifications">Уведомления</string>
+    <string name="budgets_notifications_enabled">Уведомления включены</string>
+    <string name="budgets_notifications_disabled">Уведомления выключены</string>
+    <string name="budgets_notify_at">Уведомить на проценте</string>
+    <string name="budgets_transactions">Операции</string>
+    <string name="budgets_transactions_title">Операции бюджета</string>
+    <string name="budgets_transactions_empty">В текущем периоде нет операций.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Удалить бюджет?</string>
+    <string name="budgets_delete_body">Будет удален только лимит. Операции останутся без изменений.</string>
+    <string name="budgets_error_generic">Не удалось выполнить действие с бюджетом.</string>
+    <string name="budgets_error_amount">Лимит бюджета должен быть положительной суммой.</string>
+    <string name="budgets_error_currency">Валюта должна быть ISO-кодом из 3 букв.</string>
+    <string name="budgets_error_notify_percent">Процент уведомления должен быть положительным.</string>
+    <string name="budgets_error_duplicate">Для этой категории уже есть бюджет на выбранный период.</string>
+    <string name="budgets_error_category">Выберите расходную категорию.</string>
+    <string name="budgets_error_not_found">Бюджет не найден.</string>
+</resources>

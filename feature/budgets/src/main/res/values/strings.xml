@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="budgets_title">Budgets</string>
+    <string name="budgets_subtitle">Track spending limits by category and current period.</string>
+    <string name="budgets_loading">Loading budgets</string>
+    <string name="budgets_empty_title">No budgets yet</string>
+    <string name="budgets_empty_body">Create a limit for an expense category to see progress here.</string>
+    <string name="budgets_no_categories_title">No expense categories</string>
+    <string name="budgets_no_categories_body">Create an expense category before adding a budget.</string>
+    <string name="budgets_add">Add budget</string>
+    <string name="budgets_create">Create budget</string>
+    <string name="budgets_edit">Edit budget</string>
+    <string name="budgets_save">Save budget</string>
+    <string name="budgets_delete">Delete budget</string>
+    <string name="budgets_cancel">Cancel</string>
+    <string name="budgets_retry">Retry</string>
+    <string name="budgets_category">Category</string>
+    <string name="budgets_period">Period</string>
+    <string name="budgets_period_weekly">Weekly</string>
+    <string name="budgets_period_monthly">Monthly</string>
+    <string name="budgets_limit">Limit</string>
+    <string name="budgets_spent_of_limit">%1$s of %2$s</string>
+    <string name="budgets_remaining">Remaining: %1$s</string>
+    <string name="budgets_over_limit">Over limit by %1$s</string>
+    <string name="budgets_over_limit_chip">Over limit</string>
+    <string name="budgets_progress_percent">%1$d%% used</string>
+    <string name="budgets_currency">Currency</string>
+    <string name="budgets_notifications">Notifications</string>
+    <string name="budgets_notifications_enabled">Notifications on</string>
+    <string name="budgets_notifications_disabled">Notifications off</string>
+    <string name="budgets_notify_at">Notify at percent</string>
+    <string name="budgets_transactions">Transactions</string>
+    <string name="budgets_transactions_title">Budget transactions</string>
+    <string name="budgets_transactions_empty">No transactions in the current period.</string>
+    <string name="budgets_transaction_meta">%1$s - %2$s</string>
+    <string name="budgets_delete_title">Delete budget?</string>
+    <string name="budgets_delete_body">This removes the budget limit. Transactions stay unchanged.</string>
+    <string name="budgets_error_generic">Budget action failed.</string>
+    <string name="budgets_error_amount">Budget limit must be a positive amount.</string>
+    <string name="budgets_error_currency">Currency must be a 3-letter ISO code.</string>
+    <string name="budgets_error_notify_percent">Notification percent must be positive.</string>
+    <string name="budgets_error_duplicate">This category already has a budget for the selected period.</string>
+    <string name="budgets_error_category">Select an expense category.</string>
+    <string name="budgets_error_not_found">Budget was not found.</string>
+</resources>

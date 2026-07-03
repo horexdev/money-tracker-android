@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
                 localProfileBootstrapper = appContainer.localProfileRepository,
                 accountsRepository = appContainer.accountsRepository,
                 balancesRepository = appContainer.balancesRepository,
+                budgetsRepository = appContainer.budgetsRepository,
                 categoriesRepository = appContainer.categoriesRepository,
                 currencyRatesRepository = appContainer.currencyRatesRepository,
                 settingsRepository = appContainer.settingsRepository,
