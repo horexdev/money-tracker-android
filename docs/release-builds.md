@@ -62,3 +62,9 @@ Builds the debug APK with the debug application ID suffix.
 ```
 
 Builds the release APK only when release signing is configured.
+
+## Play Release
+
+Use `docs/play-release-checklist.md` before preparing a Google Play release. It
+covers store listing copy, privacy and Data safety declarations, permission
+explanations, and release readiness checks.
