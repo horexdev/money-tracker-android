@@ -17,7 +17,7 @@
     <string name="settings_title">Instellingen</string>
     <string name="settings_placeholder_subtitle">Instellingen route is geregistreerd.</string>
     <string name="settings_more_subtitle">Taal, privacy, meldingen, tarieven en lokale gegevens.</string>
-    <string name="settings_subtitle">Offline instellingen voor lokale Android-profielen.</string>
+    <string name="settings_subtitle">Instellingen voor lokale Android-profielen.</string>
     <string name="settings_loading">Instellingen laden</string>
     <string name="settings_processing">Instellingen opslaan</string>
     <string name="settings_retry">Opnieuw proberen</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">Gegevens</string>
     <string name="settings_open_import_export">Importeren/exporteren</string>
     <string name="settings_reset_data">Huidig profiel resetten</string>
-    <string name="settings_reset_data_desc">Verwijdert de actieve lokale profielgegevens en maakt een nieuw offline profiel aan.</string>
+    <string name="settings_reset_data_desc">Verwijdert de actieve lokale profielgegevens en maakt een nieuw lokaal profiel aan.</string>
     <string name="settings_reset_confirm_title">Huidig profiel resetten?</string>
     <string name="settings_reset_confirm_body">Hiermee worden de actieve lokale profielgegevens op dit apparaat verwijderd. Andere lokale profielen worden niet opnieuw ingesteld.</string>
     <string name="settings_reset_confirm_button">Profiel opnieuw instellen</string>

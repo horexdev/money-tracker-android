@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Tableau de bord</string>
     <string name="feature_home_subtitle">La navigation racine est prête.</string>
-    <string name="home_subtitle">instantané hors ligne des soldes et de l\'activité récente.</string>
+    <string name="home_subtitle">Aperçu des soldes et de l\'activité récente.</string>
     <string name="home_loading">Chargement du tableau de bord...</string>
     <string name="home_retry">Réessayer</string>
     <string name="home_error_generic">Les données du tableau de bord n\'ont pas pu être chargées.</string>

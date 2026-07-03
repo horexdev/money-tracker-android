@@ -3,7 +3,7 @@
     <string name="accounts_title">Рахунки</string>
     <string name="accounts_subtitle">Картки, готівка, заощадження та коригування балансу</string>
     <string name="accounts_empty_title">облікових записів ще немає</string>
-    <string name="accounts_empty_body">створіть перший обліковий запис, щоб почати відстежувати баланси офлайн.</string>
+    <string name="accounts_empty_body">Створіть перший рахунок, щоб відстежувати баланси.</string>
     <string name="accounts_add">Додати обліковий запис</string>
     <string name="accounts_edit">Редагувати обліковий запис</string>
     <string name="accounts_create">Створити обліковий запис</string>

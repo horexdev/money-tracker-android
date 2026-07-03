@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">내역</string>
-    <string name="history_subtitle">오프라인 거래 검색, 필터링, 편집 및 삭제</string>
+    <string name="history_subtitle">거래 검색, 필터링, 편집 및 삭제</string>
     <string name="history_empty_title">거래 없음</string>
     <string name="history_empty_body">새로운 수입과 지출이 저장되면 여기에 나타납니다.</string>
     <string name="history_loading">로딩 이력</string>

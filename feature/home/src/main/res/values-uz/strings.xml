@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Boshqaruv paneli</string>
     <string name="feature_home_subtitle">Ildiz navigatsiyasi tayyor.</string>
-    <string name="home_subtitle">Balanslar va oxirgi faoliyatning oflayn surati.</string>
+    <string name="home_subtitle">Balanslar va oxirgi faoliyat sharhi.</string>
     <string name="home_loading">Boshqaruv paneli yuklanmoqda...</string>
     <string name="home_retry">Qayta urinish</string>
     <string name="home_error_generic">Boshqaruv paneli maʼlumotlarini yuklab boʻlmadi.</string>

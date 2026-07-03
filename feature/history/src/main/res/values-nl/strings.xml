@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">Geschiedenis</string>
-    <string name="history_subtitle">offline transacties zoeken, filteren, bewerken en verwijderen</string>
+    <string name="history_subtitle">Transacties zoeken, filteren, bewerken en verwijderen</string>
     <string name="history_empty_title">Geen transacties</string>
     <string name="history_empty_body">Nieuwe inkomsten en uitgaven verschijnen hier nadat ze zijn opgeslagen.</string>
     <string name="history_loading">Geschiedenis laden</string>

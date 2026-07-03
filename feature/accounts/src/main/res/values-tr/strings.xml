@@ -3,7 +3,7 @@
     <string name="accounts_title">Hesaplar</string>
     <string name="accounts_subtitle">Kartlar, nakit para, tasarruflar ve bakiye düzeltmeleri</string>
     <string name="accounts_empty_title">Henüz hesap yok</string>
-    <string name="accounts_empty_body">Bakiyeleri çevrimdışı izlemeye başlamak için ilk hesabı oluşturun.</string>
+    <string name="accounts_empty_body">Bakiyeleri izlemeye başlamak için ilk hesabı oluşturun.</string>
     <string name="accounts_add">Hesap ekle</string>
     <string name="accounts_edit">Hesabı düzenle</string>
     <string name="accounts_create">Hesap oluştur</string>

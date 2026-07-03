@@ -3,7 +3,7 @@
     <string name="accounts_title">Счета</string>
     <string name="accounts_subtitle">Карты, наличные, накопления и корректировка баланса</string>
     <string name="accounts_empty_title">Счетов пока нет</string>
-    <string name="accounts_empty_body">Создайте первый счет, чтобы вести балансы офлайн.</string>
+    <string name="accounts_empty_body">Создайте первый счет, чтобы вести балансы.</string>
     <string name="accounts_add">Добавить счет</string>
     <string name="accounts_edit">Редактировать счет</string>
     <string name="accounts_create">Создать счет</string>

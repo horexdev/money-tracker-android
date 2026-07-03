@@ -17,7 +17,7 @@
     <string name="settings_title">설정</string>
     <string name="settings_placeholder_subtitle">설정 경로가 등록되었습니다.</string>
     <string name="settings_more_subtitle">언어, 개인 정보 보호, 알림, 요금 및 로컬 데이터.</string>
-    <string name="settings_subtitle">로컬 Android 프로필의 오프라인 설정입니다.</string>
+    <string name="settings_subtitle">로컬 Android 프로필 설정입니다.</string>
     <string name="settings_loading">설정 로딩</string>
     <string name="settings_processing">설정 저장</string>
     <string name="settings_retry">다시 시도</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">데이터</string>
     <string name="settings_open_import_export">가져오기/내보내기</string>
     <string name="settings_reset_data">현재 프로필 재설정</string>
-    <string name="settings_reset_data_desc">활성 로컬 프로필 데이터를 삭제하고 새로운 오프라인 프로필을 만듭니다.</string>
+    <string name="settings_reset_data_desc">활성 로컬 프로필 데이터를 삭제하고 새 로컬 프로필을 만듭니다.</string>
     <string name="settings_reset_confirm_title">현재 프로필을 재설정하시겠습니까?</string>
     <string name="settings_reset_confirm_body">이 장치의 활성 로컬 프로필 데이터를 삭제합니다. 다른 로컬 프로필은 재설정되지 않습니다.</string>
     <string name="settings_reset_confirm_button">프로필 재설정</string>

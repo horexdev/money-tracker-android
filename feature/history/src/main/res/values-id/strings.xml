@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">Riwayat</string>
-    <string name="history_subtitle">Mencari, memfilter, mengedit, dan menghapus transaksi offline</string>
+    <string name="history_subtitle">Mencari, memfilter, mengedit, dan menghapus transaksi</string>
     <string name="history_empty_title">Tidak ada transaksi</string>
     <string name="history_empty_body">Pendapatan dan pengeluaran baru akan muncul di sini setelah disimpan.</string>
     <string name="history_loading">Memuat riwayat</string>

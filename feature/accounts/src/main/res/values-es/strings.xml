@@ -3,7 +3,7 @@
     <string name="accounts_title">Cuentas</string>
     <string name="accounts_subtitle">Tarjetas, efectivo, ahorros y correcciones de saldo</string>
     <string name="accounts_empty_title">Aún no hay cuentas</string>
-    <string name="accounts_empty_body">cree la primera cuenta para comenzar a realizar un seguimiento de los saldos sin conexión.</string>
+    <string name="accounts_empty_body">Cree la primera cuenta para comenzar a realizar un seguimiento de los saldos.</string>
     <string name="accounts_add">Agregar cuenta</string>
     <string name="accounts_edit">Editar cuenta</string>
     <string name="accounts_create">crear cuenta</string>

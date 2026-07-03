@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Dasbor</string>
     <string name="feature_home_subtitle">Navigasi root sudah siap.</string>
-    <string name="home_subtitle">Potret offline saldo dan aktivitas terkini.</string>
+    <string name="home_subtitle">Ringkasan saldo dan aktivitas terkini.</string>
     <string name="home_loading">Memuat dasbor...</string>
     <string name="home_retry">Coba lagi</string>
     <string name="home_error_generic">Data dasbor tidak dapat dimuat.</string>

@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Panel</string>
     <string name="feature_home_subtitle">La navegación raíz está lista.</string>
-    <string name="home_subtitle">Instantánea fuera de línea de saldos y actividad reciente.</string>
+    <string name="home_subtitle">Resumen de saldos y actividad reciente.</string>
     <string name="home_loading">Cargando panel...</string>
     <string name="home_retry">Reintentar</string>
     <string name="home_error_generic">No se pudieron cargar los datos del panel.</string>

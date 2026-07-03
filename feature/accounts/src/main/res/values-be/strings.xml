@@ -3,7 +3,7 @@
     <string name="accounts_title">Рахункі</string>
     <string name="accounts_subtitle">карты, наяўныя грошы, зберажэнні і карэкціроўка балансу</string>
     <string name="accounts_empty_title">уліковых запісаў пакуль няма</string>
-    <string name="accounts_empty_body">Стварыце першы ўліковы запіс, каб пачаць адсочваць балансы ў аўтаномным рэжыме.</string>
+    <string name="accounts_empty_body">Стварыце першы ўліковы запіс, каб пачаць адсочваць балансы.</string>
     <string name="accounts_add">Дадаць уліковы запіс</string>
     <string name="accounts_edit">Рэдагаваць уліковы запіс</string>
     <string name="accounts_create">Стварыць уліковы запіс</string>

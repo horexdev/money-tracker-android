@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">Geçmiş</string>
-    <string name="history_subtitle">Çevrimdışı işlemleri arayın, filtreleyin, düzenleyin ve silin</string>
+    <string name="history_subtitle">İşlemleri arayın, filtreleyin, düzenleyin ve silin</string>
     <string name="history_empty_title">İşlem yok</string>
     <string name="history_empty_body">Yeni gelir ve giderler kaydedildikten sonra burada görünecektir.</string>
     <string name="history_loading">Yükleme geçmişi</string>

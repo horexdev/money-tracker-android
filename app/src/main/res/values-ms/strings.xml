@@ -17,7 +17,7 @@
     <string name="settings_title">Tetapan</string>
     <string name="settings_placeholder_subtitle">Laluan tetapan didaftarkan.</string>
     <string name="settings_more_subtitle">Bahasa, privasi, pemberitahuan, kadar dan data setempat.</string>
-    <string name="settings_subtitle">Tetapan luar talian untuk profil Android setempat.</string>
+    <string name="settings_subtitle">Tetapan untuk profil Android setempat.</string>
     <string name="settings_loading">Memuatkan tetapan</string>
     <string name="settings_processing">Menyimpan tetapan</string>
     <string name="settings_retry">Cuba lagi</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">Maklumat</string>
     <string name="settings_open_import_export">Import / Eksport</string>
     <string name="settings_reset_data">Tetapkan semula profil semasa</string>
-    <string name="settings_reset_data_desc">Memadam data profil tempatan yang aktif dan mencipta profil luar talian yang baharu.</string>
+    <string name="settings_reset_data_desc">Memadam data profil tempatan yang aktif dan mencipta profil tempatan yang baharu.</string>
     <string name="settings_reset_confirm_title">Tetapkan semula profil semasa?</string>
     <string name="settings_reset_confirm_body">Ini memadamkan data profil setempat yang aktif pada peranti ini. Profil tempatan lain tidak ditetapkan semula.</string>
     <string name="settings_reset_confirm_button">Tetapkan semula profil</string>

@@ -3,7 +3,7 @@
     <string name="categories_title">Категорії</string>
     <string name="categories_subtitle">Керуйте іменами, значками, кольорами та типами транзакцій</string>
     <string name="categories_empty_title">немає категорій</string>
-    <string name="categories_empty_body">Створіть категорію для класифікації доходів і витрат офлайн.</string>
+    <string name="categories_empty_body">Створіть категорію для класифікації доходів і витрат.</string>
     <string name="categories_add">Додати категорію</string>
     <string name="categories_edit">Редагувати категорію</string>
     <string name="categories_create">Створити категорію</string>

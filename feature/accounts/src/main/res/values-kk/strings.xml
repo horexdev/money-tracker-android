@@ -3,7 +3,7 @@
     <string name="accounts_title">Шоттар</string>
     <string name="accounts_subtitle">Карточкалар, қолма-қол ақша, жинақ және теңгерімдегі түзетулер</string>
     <string name="accounts_empty_title">әлі тіркелгі жоқ</string>
-    <string name="accounts_empty_body">баланстарды офлайн режимде бақылауды бастау үшін бірінші тіркелгіні жасаңыз.</string>
+    <string name="accounts_empty_body">Баланстарды бақылауды бастау үшін бірінші тіркелгіні жасаңыз.</string>
     <string name="accounts_add">Есептік жазба қосу</string>
     <string name="accounts_edit">Есептік жазбаны өңдеу</string>
     <string name="accounts_create">тіркелгі жасау</string>

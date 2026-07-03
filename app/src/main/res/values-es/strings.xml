@@ -17,7 +17,7 @@
     <string name="settings_title">Ajustes</string>
     <string name="settings_placeholder_subtitle">Se registra la ruta de configuración.</string>
     <string name="settings_more_subtitle">Idioma, privacidad, notificaciones, tarifas y datos locales.</string>
-    <string name="settings_subtitle">Configuración sin conexión para perfiles locales de Android.</string>
+    <string name="settings_subtitle">Configuración para perfiles locales de Android.</string>
     <string name="settings_loading">Cargando configuraciones</string>
     <string name="settings_processing">Guardar configuración</string>
     <string name="settings_retry">Reintentar</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">datos</string>
     <string name="settings_open_import_export">Importación/Exportación</string>
     <string name="settings_reset_data">restablecer el perfil actual</string>
-    <string name="settings_reset_data_desc">elimina los datos del perfil local activo y crea un perfil sin conexión nuevo.</string>
+    <string name="settings_reset_data_desc">Elimina los datos del perfil local activo y crea un perfil local nuevo.</string>
     <string name="settings_reset_confirm_title">¿Restablecer perfil actual?</string>
     <string name="settings_reset_confirm_body">Esto elimina los datos del perfil local activo en este dispositivo. Otros perfiles locales no se restablecen.</string>
     <string name="settings_reset_confirm_button">restablecer perfil</string>

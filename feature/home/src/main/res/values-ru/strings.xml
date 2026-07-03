@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Главная</string>
     <string name="feature_home_subtitle">Корневая навигация готова.</string>
-    <string name="home_subtitle">Офлайн-сводка по балансам и последним операциям.</string>
+    <string name="home_subtitle">Сводка по балансам и последним операциям.</string>
     <string name="home_loading">Загружаем главную...</string>
     <string name="home_retry">Повторить</string>
     <string name="home_error_generic">Не удалось загрузить данные главной.</string>

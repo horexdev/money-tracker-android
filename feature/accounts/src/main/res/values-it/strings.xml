@@ -3,7 +3,7 @@
     <string name="accounts_title">Conti</string>
     <string name="accounts_subtitle">Carte, contanti, risparmi e correzioni del saldo</string>
     <string name="accounts_empty_title">Ancora nessun account</string>
-    <string name="accounts_empty_body">crea il primo account per iniziare a monitorare i saldi offline.</string>
+    <string name="accounts_empty_body">Crea il primo account per iniziare a monitorare i saldi.</string>
     <string name="accounts_add">Aggiungi conto</string>
     <string name="accounts_edit">Modifica conto</string>
     <string name="accounts_create">Crea account</string>

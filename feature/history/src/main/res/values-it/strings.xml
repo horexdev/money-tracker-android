@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">Cronologia</string>
-    <string name="history_subtitle">cerca, filtra, modifica ed elimina le transazioni offline</string>
+    <string name="history_subtitle">Cerca, filtra, modifica ed elimina le transazioni</string>
     <string name="history_empty_title">Nessuna transazione</string>
     <string name="history_empty_body">Le nuove entrate e uscite appariranno qui dopo che sono state salvate.</string>
     <string name="history_loading">Caricamento della cronologia</string>

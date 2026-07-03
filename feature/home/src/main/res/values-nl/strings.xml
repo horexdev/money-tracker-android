@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Overzicht</string>
     <string name="feature_home_subtitle">Rootnavigatie is gereed.</string>
-    <string name="home_subtitle">Offline momentopname van saldi en recente activiteit.</string>
+    <string name="home_subtitle">Overzicht van saldi en recente activiteit.</string>
     <string name="home_loading">Dashboard laden...</string>
     <string name="home_retry">Opnieuw proberen</string>
     <string name="home_error_generic">Dashboardgegevens konden niet worden geladen.</string>

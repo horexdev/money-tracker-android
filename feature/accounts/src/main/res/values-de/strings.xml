@@ -3,7 +3,7 @@
     <string name="accounts_title">Konten</string>
     <string name="accounts_subtitle">Karten, Bargeld, Ersparnisse und Kontostandkorrekturen</string>
     <string name="accounts_empty_title">Noch keine Konten</string>
-    <string name="accounts_empty_body">Erstellen Sie das erste Konto, um Salden offline zu verfolgen.</string>
+    <string name="accounts_empty_body">Erstellen Sie das erste Konto, um Salden zu verfolgen.</string>
     <string name="accounts_add">Konto hinzufügen</string>
     <string name="accounts_edit">Konto bearbeiten</string>
     <string name="accounts_create">Konto erstellen</string>

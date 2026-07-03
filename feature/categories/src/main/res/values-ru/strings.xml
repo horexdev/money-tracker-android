@@ -3,7 +3,7 @@
     <string name="categories_title">Категории</string>
     <string name="categories_subtitle">Управление названиями, иконками, цветами и типами операций</string>
     <string name="categories_empty_title">Категорий пока нет</string>
-    <string name="categories_empty_body">Создайте категорию, чтобы группировать доходы и расходы офлайн.</string>
+    <string name="categories_empty_body">Создайте категорию, чтобы группировать доходы и расходы.</string>
     <string name="categories_add">Добавить категорию</string>
     <string name="categories_edit">Редактировать категорию</string>
     <string name="categories_create">Создать категорию</string>

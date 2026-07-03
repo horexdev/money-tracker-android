@@ -3,7 +3,7 @@
     <string name="categories_title">الفئات</string>
     <string name="categories_subtitle">إدارة الأسماء والأيقونات والألوان وأنواع المعاملات</string>
     <string name="categories_empty_title">لا توجد فئات</string>
-    <string name="categories_empty_body">قم بإنشاء فئة لتصنيف الدخل والنفقات دون الاتصال بالإنترنت.</string>
+    <string name="categories_empty_body">قم بإنشاء فئة لتصنيف الدخل والنفقات.</string>
     <string name="categories_add">اضافة فئة</string>
     <string name="categories_edit">تحرير الفئة</string>
     <string name="categories_create">إنشاء فئة</string>

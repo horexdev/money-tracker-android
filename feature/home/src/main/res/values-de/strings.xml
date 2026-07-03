@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Übersicht</string>
     <string name="feature_home_subtitle">Die Root-Navigation ist bereit.</string>
-    <string name="home_subtitle">Offline-Übersicht der Guthaben und letzten Aktivitäten.</string>
+    <string name="home_subtitle">Übersicht über Guthaben und letzte Aktivitäten.</string>
     <string name="home_loading">Dashboard wird geladen...</string>
     <string name="home_retry">Erneut versuchen</string>
     <string name="home_error_generic">Dashboard-Daten konnten nicht geladen werden.</string>

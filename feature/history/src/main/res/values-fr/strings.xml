@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">Historique</string>
-    <string name="history_subtitle">Rechercher, filtrer, modifier et supprimer des transactions hors ligne</string>
+    <string name="history_subtitle">Rechercher, filtrer, modifier et supprimer des transactions</string>
     <string name="history_empty_title">Aucune transaction</string>
     <string name="history_empty_body">Les nouveaux revenus et dépenses apparaîtront ici après avoir été enregistrés.</string>
     <string name="history_loading">Historique de chargement</string>

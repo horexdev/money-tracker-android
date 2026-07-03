@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">Histórico</string>
-    <string name="history_subtitle">Pesquise, filtre, edite e exclua transações offline</string>
+    <string name="history_subtitle">Pesquise, filtre, edite e exclua transações</string>
     <string name="history_empty_title">Nenhuma transação</string>
     <string name="history_empty_body">Novas receitas e despesas aparecerão aqui após serem salvas.</string>
     <string name="history_loading">Carregando histórico</string>

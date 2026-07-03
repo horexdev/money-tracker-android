@@ -112,6 +112,22 @@ class LocalizationResourcesTest {
     }
 
     @Test
+    fun userFacingResourcesDoNotContainForbiddenOfflineWording() {
+        val violations = stringResourceFiles().flatMap { stringsFile ->
+            readStrings(stringsFile)
+                .filterValues { value -> FORBIDDEN_USER_FACING_OFFLINE_WORDING.containsMatchIn(value) }
+                .map { (name, value) ->
+                    "${stringsFile.toRepoRelativePath()}/$name=$value"
+                }
+        }
+
+        assertTrue(
+            "User-facing resources contain forbidden offline wording: ${violations.joinToString()}",
+            violations.isEmpty(),
+        )
+    }
+
+    @Test
     fun longLocalizedUiTextStaysWithinSmokeLimit() {
         val modules = stringResourceModules()
         val violations = modules.flatMap { module ->
@@ -159,6 +175,14 @@ class LocalizationResourcesTest {
                 )
             }
             .sortedBy { it.relativePath }
+            .toList()
+    }
+
+    private fun stringResourceFiles(): List<File> {
+        return repoRoot()
+            .walkTopDown()
+            .filter { it.isFile && it.name == "strings.xml" && it.parentFile?.name?.startsWith("values") == true }
+            .sortedBy { it.path }
             .toList()
     }
 
@@ -241,6 +265,9 @@ class LocalizationResourcesTest {
             ENGLISH_WORD.findAll(value).count() >= MIN_ENGLISH_FRAGMENT_WORDS
     }
 
+    private fun File.toRepoRelativePath(): String =
+        toRelativeString(repoRoot()).replace(File.separatorChar, '/')
+
     private data class ResourceModule(
         val resRoot: File,
         val relativePath: String,
@@ -282,6 +309,33 @@ class LocalizationResourcesTest {
         val WHITESPACE = Regex("\\s+")
         val ENGLISH_FRAGMENT_SEPARATOR = Regex("[.!?;]+")
         val ENGLISH_WORD = Regex("[A-Za-z][A-Za-z']+")
+        val FORBIDDEN_USER_FACING_OFFLINE_WORDING = Regex(
+            listOf(
+                """\boffline\b""",
+                """oflayn""",
+                """оф+лайн""",
+                """аўтаном\p{L}*""",
+                """hors\s+ligne""",
+                """sin\s+conexi[oó]n""",
+                """fuera\s+de\s+l[ií]nea""",
+                """sem\s+conex[aã]o""",
+                """senza\s+connessione""",
+                """zonder\s+(?:internet|verbinding)""",
+                """ohne\s+verbindung""",
+                """çevrim\s*dışı""",
+                """cevrim\s*disi""",
+                """luar\s+talian""",
+                """오프라인""",
+                """عدم\s+الاتصال""",
+                """دون\s+الاتصال""",
+                """دون\s+اتصال""",
+                """بلا\s+اتصال""",
+                """بدون\s+اتصال""",
+                """غير\s+المتصلة""",
+                """غير\s+متصل(?:ة|ون|ين)?""",
+            ).joinToString("|"),
+            RegexOption.IGNORE_CASE,
+        )
         val RTL_TEXT = Regex("[\\u0600-\\u06FF]")
     }
 }

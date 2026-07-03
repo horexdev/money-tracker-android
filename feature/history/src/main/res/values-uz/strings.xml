@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">Tarix</string>
-    <string name="history_subtitle">Oflayn tranzaksiyalarni qidirish, filtrlash, tahrirlash va o‘chirish</string>
+    <string name="history_subtitle">Tranzaksiyalarni qidirish, filtrlash, tahrirlash va o‘chirish</string>
     <string name="history_empty_title">Tranzaksiya yo\'q</string>
     <string name="history_empty_body">Yangi daromad va xarajatlar saqlanganidan keyin bu yerda paydo bo\'ladi.</string>
     <string name="history_loading">Yuklanish tarixi</string>

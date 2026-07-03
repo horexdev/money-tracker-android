@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Pannello</string>
     <string name="feature_home_subtitle">la navigazione root è pronta.</string>
-    <string name="home_subtitle">istantanea offline dei saldi e dell\'attività recente.</string>
+    <string name="home_subtitle">Riepilogo di saldi e attività recente.</string>
     <string name="home_loading">Caricamento dashboard...</string>
     <string name="home_retry">Riprova</string>
     <string name="home_error_generic">Impossibile caricare i dati del dashboard.</string>

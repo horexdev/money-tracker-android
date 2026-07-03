@@ -17,7 +17,7 @@
     <string name="settings_title">Paramètres</string>
     <string name="settings_placeholder_subtitle">L\'itinéraire des paramètres est enregistré.</string>
     <string name="settings_more_subtitle">Langue, confidentialité, notifications, tarifs et données locales.</string>
-    <string name="settings_subtitle">Paramètres hors ligne pour les profils Android locaux.</string>
+    <string name="settings_subtitle">Paramètres des profils Android locaux.</string>
     <string name="settings_loading">Chargement des paramètres</string>
     <string name="settings_processing">Enregistrement des paramètres</string>
     <string name="settings_retry">Réessayer</string>
@@ -107,7 +107,7 @@
     <string name="settings_data_section">Données</string>
     <string name="settings_open_import_export">Importation/Exportation</string>
     <string name="settings_reset_data">Réinitialiser le profil actuel</string>
-    <string name="settings_reset_data_desc">supprime les données de profil local actives et crée un nouveau profil hors ligne.</string>
+    <string name="settings_reset_data_desc">Supprime les données du profil local actif et crée un nouveau profil local.</string>
     <string name="settings_reset_confirm_title">Réinitialiser le profil actuel ?</string>
     <string name="settings_reset_confirm_body">cela supprime les données de profil local actives sur cet appareil. Les autres profils locaux ne sont pas réinitialisés.</string>
     <string name="settings_reset_confirm_button">Réinitialiser le profil</string>

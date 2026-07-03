@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Басқару тақтасы</string>
     <string name="feature_home_subtitle">Түбірлік навигация дайын.</string>
-    <string name="home_subtitle">баланстар мен соңғы әрекеттің офлайн суреті.</string>
+    <string name="home_subtitle">Баланстар мен соңғы әрекеттердің қысқаша шолуы.</string>
     <string name="home_loading">бақылау тақтасы жүктелуде...</string>
     <string name="home_retry">Қайталау</string>
     <string name="home_error_generic">бақылау тақтасы деректерін жүктеу мүмкін емес.</string>

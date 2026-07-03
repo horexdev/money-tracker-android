@@ -3,7 +3,7 @@
     <string name="categories_title">카테고리</string>
     <string name="categories_subtitle">이름, 아이콘, 색상 및 거래 유형 관리</string>
     <string name="categories_empty_title">카테고리 없음</string>
-    <string name="categories_empty_body">오프라인에서 수입과 지출을 분류할 수 있는 카테고리를 생성합니다.</string>
+    <string name="categories_empty_body">수입과 지출을 분류할 수 있는 카테고리를 생성합니다.</string>
     <string name="categories_add">카테고리 추가</string>
     <string name="categories_edit">카테고리 편집</string>
     <string name="categories_create">카테고리 생성</string>

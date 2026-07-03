@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_home_title">Painel</string>
     <string name="feature_home_subtitle">A navegação raiz está pronta.</string>
-    <string name="home_subtitle">Instantâneo offline de saldos e atividades recentes.</string>
+    <string name="home_subtitle">Resumo de saldos e atividades recentes.</string>
     <string name="home_loading">Carregando painel...</string>
     <string name="home_retry">Tentar novamente</string>
     <string name="home_error_generic">Não foi possível carregar os dados do painel.</string>
