@@ -34,6 +34,7 @@ class MainActivity : ComponentActivity() {
                 settingsRepository = appContainer.settingsRepository,
                 recurringRepository = appContainer.recurringRepository,
                 statsRepository = appContainer.statsRepository,
+                transactionTemplatesRepository = appContainer.transactionTemplatesRepository,
                 transactionsRepository = appContainer.transactionsRepository,
                 localProfileRepository = appContainer.localProfileRepository,
                 appPreferencesRepository = appContainer.appPreferencesRepository,

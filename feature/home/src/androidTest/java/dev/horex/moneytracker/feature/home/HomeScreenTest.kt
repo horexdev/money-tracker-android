@@ -16,6 +16,12 @@ import dev.horex.moneytracker.core.balance.BalancesRepository
 import dev.horex.moneytracker.core.database.profile.LocalProfile
 import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
+import dev.horex.moneytracker.core.templates.ApplyTransactionTemplateInput
+import dev.horex.moneytracker.core.templates.CreateTransactionTemplateInput
+import dev.horex.moneytracker.core.templates.TransactionTemplate
+import dev.horex.moneytracker.core.templates.TransactionTemplateAmountMode
+import dev.horex.moneytracker.core.templates.TransactionTemplatesRepository
+import dev.horex.moneytracker.core.templates.UpdateTransactionTemplateInput
 import dev.horex.moneytracker.core.transactions.BalanceAdjustmentInput
 import dev.horex.moneytracker.core.transactions.CreateTransactionInput
 import dev.horex.moneytracker.core.transactions.MoneyTransaction
@@ -109,6 +115,36 @@ class HomeScreenTest {
         composeRule.onNodeWithTag("home-empty-state").assertIsDisplayed()
         composeRule.onNodeWithText("No transactions yet").assertIsDisplayed()
     }
+
+    @Test
+    fun homeRouteAppliesFixedQuickTemplate() {
+        val templatesRepository = FakeTransactionTemplatesRepository(
+            templates = listOf(templateFixture(id = 1, name = "Lunch")),
+        )
+
+        composeRule.setContent {
+            MoneyTrackerTheme {
+                HomeRoute(
+                    localProfileBootstrapper = LocalProfileBootstrapper { profileFixture },
+                    balancesRepository = FakeBalancesRepository(),
+                    transactionsRepository = FakeTransactionsRepository(transactionsFixture),
+                    transactionTemplatesRepository = templatesRepository,
+                )
+            }
+        }
+
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            templatesRepository.listCalls > 0
+        }
+        composeRule.onNodeWithTag("home-quick-template-1").performClick()
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            templatesRepository.appliedTemplates.isNotEmpty()
+        }
+
+        val applied = templatesRepository.appliedTemplates.single()
+        assertEquals(1L, applied.templateId)
+        assertEquals(null, applied.input.variableAmountCents)
+    }
 }
 
 private class FakeBalancesRepository : BalancesRepository {
@@ -191,6 +227,79 @@ private class FakeTransactionsRepository(
     }
 }
 
+private data class AppliedTemplate(
+    val templateId: Long,
+    val input: ApplyTransactionTemplateInput,
+)
+
+private class FakeTransactionTemplatesRepository(
+    private val templates: List<TransactionTemplate>,
+) : TransactionTemplatesRepository {
+    val appliedTemplates = mutableListOf<AppliedTemplate>()
+    var listCalls = 0
+
+    override suspend fun listTemplates(profileId: Long): List<TransactionTemplate> {
+        listCalls += 1
+        return templates
+    }
+
+    override suspend fun getTemplate(profileId: Long, templateId: Long): TransactionTemplate {
+        return templates.first { it.id == templateId }
+    }
+
+    override suspend fun createTemplate(
+        profileId: Long,
+        input: CreateTransactionTemplateInput,
+    ): TransactionTemplate {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun updateTemplate(
+        profileId: Long,
+        templateId: Long,
+        input: UpdateTransactionTemplateInput,
+    ): TransactionTemplate {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun deleteTemplate(profileId: Long, templateId: Long) {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun reorderTemplates(
+        profileId: Long,
+        orderedTemplateIds: List<Long>,
+    ): List<TransactionTemplate> {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun applyTemplate(
+        profileId: Long,
+        templateId: Long,
+        input: ApplyTransactionTemplateInput,
+    ): MoneyTransaction {
+        appliedTemplates += AppliedTemplate(templateId, input)
+        val template = templates.first { it.id == templateId }
+        return MoneyTransaction(
+            id = appliedTemplates.size.toLong(),
+            profileId = profileId,
+            type = template.type,
+            amountCents = input.variableAmountCents ?: template.amountCents,
+            categoryId = template.categoryId,
+            categoryName = template.categoryName,
+            categoryIcon = template.categoryIcon,
+            categoryColor = template.categoryColor,
+            accountId = template.accountId,
+            accountName = template.accountName,
+            note = template.note,
+            currencyCode = template.currencyCode,
+            snapshotDate = "2026-07-03",
+            createdAtEpochMillis = 1,
+            isAdjustment = false,
+        )
+    }
+}
+
 private val profileFixture = LocalProfile(
     id = 1,
     label = "Personal",
@@ -254,3 +363,25 @@ private val transactionsFixture = listOf(
         isAdjustment = false,
     ),
 )
+
+private fun templateFixture(id: Long, name: String): TransactionTemplate {
+    return TransactionTemplate(
+        id = id,
+        profileId = 1,
+        name = name,
+        type = TransactionType.Expense,
+        amountCents = 1_250L,
+        amountMode = TransactionTemplateAmountMode.Fixed,
+        categoryId = 1,
+        categoryName = "Groceries",
+        categoryIcon = "cart",
+        categoryColor = "#EF4444",
+        accountId = 1,
+        accountName = "Main card",
+        currencyCode = "USD",
+        note = name,
+        sortOrder = 0,
+        createdAtEpochMillis = 1,
+        updatedAtEpochMillis = 1,
+    )
+}

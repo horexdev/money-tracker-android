@@ -23,6 +23,12 @@ import dev.horex.moneytracker.core.categories.UpdateCategoryInput
 import dev.horex.moneytracker.core.database.profile.LocalProfile
 import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
+import dev.horex.moneytracker.core.templates.ApplyTransactionTemplateInput
+import dev.horex.moneytracker.core.templates.CreateTransactionTemplateInput
+import dev.horex.moneytracker.core.templates.TransactionTemplate
+import dev.horex.moneytracker.core.templates.TransactionTemplateAmountMode
+import dev.horex.moneytracker.core.templates.TransactionTemplatesRepository
+import dev.horex.moneytracker.core.templates.UpdateTransactionTemplateInput
 import dev.horex.moneytracker.core.transactions.BalanceAdjustmentInput
 import dev.horex.moneytracker.core.transactions.CreateTransactionInput
 import dev.horex.moneytracker.core.transactions.MoneyTransaction
@@ -153,6 +159,49 @@ class AddTransactionScreenTest {
         composeRule.onNodeWithText("Choose a category.").assertIsDisplayed()
         assertTrue(transactionsRepository.inputs.isEmpty())
     }
+
+    @Test
+    fun addTransactionRoutePromptsForVariableQuickTemplateAmount() {
+        val templatesRepository = FakeTransactionTemplatesRepository(
+            templates = listOf(
+                templateFixture(
+                    id = 7,
+                    name = "Taxi",
+                    amountMode = TransactionTemplateAmountMode.Variable,
+                ),
+            ),
+        )
+        var saved = false
+
+        composeRule.setContent {
+            MoneyTrackerTheme {
+                AddTransactionRoute(
+                    localProfileBootstrapper = LocalProfileBootstrapper { profileFixture },
+                    transactionsRepository = FakeTransactionsRepository(),
+                    accountsRepository = FakeAccountsRepository(),
+                    categoriesRepository = FakeCategoriesRepository(),
+                    transactionTemplatesRepository = templatesRepository,
+                    onTransactionSaved = { saved = true },
+                    todayProvider = { LocalDate.parse("2026-07-02") },
+                )
+            }
+        }
+
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            templatesRepository.listCalls > 0
+        }
+        composeRule.onNodeWithTag("add-quick-template-7").performClick()
+        composeRule.onNodeWithText("Enter amount").assertIsDisplayed()
+        composeRule.onNodeWithTag("add-template-variable-amount").performTextReplacement("18.40")
+        composeRule.onNodeWithTag("add-template-variable-apply").performClick()
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            templatesRepository.appliedTemplates.isNotEmpty() && saved
+        }
+
+        val applied = templatesRepository.appliedTemplates.single()
+        assertEquals(7L, applied.templateId)
+        assertEquals(1_840L, applied.input.variableAmountCents)
+    }
 }
 
 private class FakeTransactionsRepository : TransactionsRepository {
@@ -277,6 +326,79 @@ private class FakeCategoriesRepository : CategoriesRepository {
     }
 }
 
+private data class AppliedTemplate(
+    val templateId: Long,
+    val input: ApplyTransactionTemplateInput,
+)
+
+private class FakeTransactionTemplatesRepository(
+    private val templates: List<TransactionTemplate>,
+) : TransactionTemplatesRepository {
+    val appliedTemplates = mutableListOf<AppliedTemplate>()
+    var listCalls = 0
+
+    override suspend fun listTemplates(profileId: Long): List<TransactionTemplate> {
+        listCalls += 1
+        return templates
+    }
+
+    override suspend fun getTemplate(profileId: Long, templateId: Long): TransactionTemplate {
+        return templates.first { it.id == templateId }
+    }
+
+    override suspend fun createTemplate(
+        profileId: Long,
+        input: CreateTransactionTemplateInput,
+    ): TransactionTemplate {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun updateTemplate(
+        profileId: Long,
+        templateId: Long,
+        input: UpdateTransactionTemplateInput,
+    ): TransactionTemplate {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun deleteTemplate(profileId: Long, templateId: Long) {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun reorderTemplates(
+        profileId: Long,
+        orderedTemplateIds: List<Long>,
+    ): List<TransactionTemplate> {
+        throw UnsupportedOperationException()
+    }
+
+    override suspend fun applyTemplate(
+        profileId: Long,
+        templateId: Long,
+        input: ApplyTransactionTemplateInput,
+    ): MoneyTransaction {
+        appliedTemplates += AppliedTemplate(templateId, input)
+        val template = templates.first { it.id == templateId }
+        return MoneyTransaction(
+            id = appliedTemplates.size.toLong(),
+            profileId = profileId,
+            type = template.type,
+            amountCents = input.variableAmountCents ?: template.amountCents,
+            categoryId = template.categoryId,
+            categoryName = template.categoryName,
+            categoryIcon = template.categoryIcon,
+            categoryColor = template.categoryColor,
+            accountId = template.accountId,
+            accountName = template.accountName,
+            note = template.note,
+            currencyCode = template.currencyCode,
+            snapshotDate = "2026-07-02",
+            createdAtEpochMillis = input.createdAtEpochMillis ?: 1,
+            isAdjustment = false,
+        )
+    }
+}
+
 private val profileFixture = LocalProfile(
     id = 1,
     label = "Personal",
@@ -360,3 +482,29 @@ private val categoriesFixture = listOf(
         deletedAtEpochMillis = null,
     ),
 )
+
+private fun templateFixture(
+    id: Long,
+    name: String,
+    amountMode: TransactionTemplateAmountMode,
+): TransactionTemplate {
+    return TransactionTemplate(
+        id = id,
+        profileId = 1,
+        name = name,
+        type = TransactionType.Expense,
+        amountCents = 1_250L,
+        amountMode = amountMode,
+        categoryId = 1,
+        categoryName = "Food",
+        categoryIcon = "shopping-bag",
+        categoryColor = "#EF4444",
+        accountId = 1,
+        accountName = "Main card",
+        currencyCode = "USD",
+        note = name,
+        sortOrder = 0,
+        createdAtEpochMillis = 1,
+        updatedAtEpochMillis = 1,
+    )
+}

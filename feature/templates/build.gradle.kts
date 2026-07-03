@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.horex.moneytracker.feature.addtransaction"
+    namespace = "dev.horex.moneytracker.feature.templates"
     compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.automirrored.filled.Label
+import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.Add
@@ -67,6 +68,7 @@ import dev.horex.moneytracker.core.preferences.SettingsRepository
 import dev.horex.moneytracker.core.recurring.RecurringTransactionsRepository
 import dev.horex.moneytracker.core.stats.StatsRepository
 import dev.horex.moneytracker.core.stats.StatsTransactionType
+import dev.horex.moneytracker.core.templates.TransactionTemplatesRepository
 import dev.horex.moneytracker.core.transactions.TransactionType
 import dev.horex.moneytracker.core.transactions.TransactionsRepository
 import dev.horex.moneytracker.csv.MoneyTrackerCsvDocumentRepository
@@ -79,6 +81,7 @@ import dev.horex.moneytracker.feature.history.HistoryFilters
 import dev.horex.moneytracker.feature.history.HistoryRoute
 import dev.horex.moneytracker.feature.recurring.RecurringRoute
 import dev.horex.moneytracker.feature.stats.StatsRoute
+import dev.horex.moneytracker.feature.templates.TemplatesRoute
 
 @Composable
 fun MoneyTrackerApp(
@@ -91,6 +94,7 @@ fun MoneyTrackerApp(
     settingsRepository: SettingsRepository? = null,
     recurringRepository: RecurringTransactionsRepository? = null,
     statsRepository: StatsRepository? = null,
+    transactionTemplatesRepository: TransactionTemplatesRepository? = null,
     transactionsRepository: TransactionsRepository? = null,
     localProfileRepository: LocalProfileRepository? = null,
     appPreferencesRepository: AppPreferencesRepository? = null,
@@ -136,6 +140,7 @@ fun MoneyTrackerApp(
                 settingsRepository = settingsRepository,
                 recurringRepository = recurringRepository,
                 statsRepository = statsRepository,
+                transactionTemplatesRepository = transactionTemplatesRepository,
                 transactionsRepository = transactionsRepository,
                 localProfileRepository = localProfileRepository,
                 appPreferencesRepository = appPreferencesRepository,
@@ -166,6 +171,7 @@ private fun MoneyTrackerNavHost(
     settingsRepository: SettingsRepository?,
     recurringRepository: RecurringTransactionsRepository?,
     statsRepository: StatsRepository?,
+    transactionTemplatesRepository: TransactionTemplatesRepository?,
     transactionsRepository: TransactionsRepository?,
     localProfileRepository: LocalProfileRepository?,
     appPreferencesRepository: AppPreferencesRepository?,
@@ -193,6 +199,7 @@ private fun MoneyTrackerNavHost(
                     localProfileBootstrapper = localProfileBootstrapper,
                     balancesRepository = balancesRepository,
                     transactionsRepository = transactionsRepository,
+                    transactionTemplatesRepository = transactionTemplatesRepository,
                     onAddTransaction = {
                         navController.navigate(MoneyTrackerRoutes.AddTransaction) {
                             launchSingleTop = true
@@ -247,6 +254,7 @@ private fun MoneyTrackerNavHost(
                     transactionsRepository = transactionsRepository,
                     accountsRepository = accountsRepository,
                     categoriesRepository = categoriesRepository,
+                    transactionTemplatesRepository = transactionTemplatesRepository,
                     onTransactionSaved = {
                         onHistoryInitialFiltersChange(HistoryFilters())
                         navController.navigate(MoneyTrackerRoutes.History) {
@@ -307,6 +315,9 @@ private fun MoneyTrackerNavHost(
                 },
                 onOpenRecurring = {
                     navController.navigate(MoneyTrackerRoutes.Recurring)
+                },
+                onOpenTemplates = {
+                    navController.navigate(MoneyTrackerRoutes.Templates)
                 },
                 onOpenCategories = {
                     navController.navigate(MoneyTrackerRoutes.Categories)
@@ -403,10 +414,24 @@ private fun MoneyTrackerNavHost(
             }
         }
         composable(MoneyTrackerRoutes.Templates) {
-            LocalizedPlaceholderScreen(
-                titleResId = R.string.templates_title,
-                subtitleResId = R.string.templates_placeholder_subtitle,
-            )
+            if (
+                localProfileBootstrapper != null &&
+                transactionTemplatesRepository != null &&
+                accountsRepository != null &&
+                categoriesRepository != null
+            ) {
+                TemplatesRoute(
+                    localProfileBootstrapper = localProfileBootstrapper,
+                    templatesRepository = transactionTemplatesRepository,
+                    accountsRepository = accountsRepository,
+                    categoriesRepository = categoriesRepository,
+                )
+            } else {
+                LocalizedPlaceholderScreen(
+                    titleResId = R.string.templates_title,
+                    subtitleResId = R.string.templates_placeholder_subtitle,
+                )
+            }
         }
         composable(MoneyTrackerRoutes.Savings) {
             LocalizedPlaceholderScreen(
@@ -458,6 +483,7 @@ private fun MoreRoute(
     onOpenAccounts: () -> Unit,
     onOpenBudgets: () -> Unit,
     onOpenRecurring: () -> Unit,
+    onOpenTemplates: () -> Unit,
     onOpenCategories: () -> Unit,
     onOpenSettings: () -> Unit,
     onOpenExport: () -> Unit,
@@ -506,6 +532,32 @@ private fun MoreRoute(
                 leadingContent = {
                     Icon(
                         imageVector = Icons.Filled.CalendarToday,
+                        contentDescription = null,
+                    )
+                },
+                trailingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.ChevronRight,
+                        contentDescription = null,
+                    )
+                },
+            )
+            HorizontalDivider()
+        }
+        item {
+            ListItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onOpenTemplates),
+                headlineContent = {
+                    Text(text = stringResource(R.string.templates_title))
+                },
+                supportingContent = {
+                    Text(text = stringResource(R.string.templates_more_subtitle))
+                },
+                leadingContent = {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ReceiptLong,
                         contentDescription = null,
                     )
                 },
@@ -751,7 +803,6 @@ private data class MorePlaceholderRoute(
 )
 
 private val morePlaceholderRoutes = listOf(
-    MorePlaceholderRoute(R.string.templates_title, R.string.templates_placeholder_subtitle),
     MorePlaceholderRoute(R.string.savings_title, R.string.savings_placeholder_subtitle),
 )
 

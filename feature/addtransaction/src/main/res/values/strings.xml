@@ -2,6 +2,12 @@
 <resources>
     <string name="add_transaction_title">Add transaction</string>
     <string name="add_transaction_subtitle">Record an expense or income in your local ledger.</string>
+    <string name="add_transaction_quick_templates">Quick templates</string>
+    <string name="add_transaction_template_variable">Variable</string>
+    <string name="add_transaction_template_amount_title">Enter amount</string>
+    <string name="add_transaction_template_amount_body">This template uses a variable amount.</string>
+    <string name="add_transaction_template_apply">Apply</string>
+    <string name="add_transaction_template_cancel">Cancel</string>
     <string name="add_transaction_loading">Loading form data...</string>
     <string name="add_transaction_expense">Expense</string>
     <string name="add_transaction_income">Income</string>

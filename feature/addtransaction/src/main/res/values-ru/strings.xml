@@ -2,6 +2,12 @@
 <resources>
     <string name="add_transaction_title">Добавление операции</string>
     <string name="add_transaction_subtitle">Запишите расход или доход в локальную книгу.</string>
+    <string name="add_transaction_quick_templates">Быстрые шаблоны</string>
+    <string name="add_transaction_template_variable">Переменная</string>
+    <string name="add_transaction_template_amount_title">Введите сумму</string>
+    <string name="add_transaction_template_amount_body">В этом шаблоне сумма задается при применении.</string>
+    <string name="add_transaction_template_apply">Применить</string>
+    <string name="add_transaction_template_cancel">Отмена</string>
     <string name="add_transaction_loading">Загрузка формы...</string>
     <string name="add_transaction_expense">Расход</string>
     <string name="add_transaction_income">Доход</string>

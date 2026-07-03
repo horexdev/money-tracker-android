@@ -24,6 +24,7 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:money"))
+    implementation(project(":core:templates"))
     implementation(project(":core:transactions"))
 
     implementation(platform(libs.androidx.compose.bom))

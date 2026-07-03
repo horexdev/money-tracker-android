@@ -12,6 +12,14 @@
     <string name="home_income">Доходы</string>
     <string name="home_expense">Расходы</string>
     <string name="home_recent_transactions">Последние операции</string>
+    <string name="home_quick_templates">Быстрые шаблоны</string>
+    <string name="home_quick_templates_empty">Создайте шаблоны, чтобы применять частые операции с главной.</string>
+    <string name="home_template_amount_prompt_title">Введите сумму</string>
+    <string name="home_template_amount_prompt_body">В этом шаблоне сумма задается при применении.</string>
+    <string name="home_template_amount">Сумма</string>
+    <string name="home_template_apply">Применить</string>
+    <string name="home_template_cancel">Отмена</string>
+    <string name="home_template_variable">Переменная</string>
     <string name="home_view_all">Все</string>
     <string name="home_empty_title">Операций пока нет</string>
     <string name="home_empty_body">Добавьте первую операцию, чтобы начать учет.</string>

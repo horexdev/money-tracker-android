@@ -12,6 +12,14 @@
     <string name="home_income">Income</string>
     <string name="home_expense">Expense</string>
     <string name="home_recent_transactions">Recent transactions</string>
+    <string name="home_quick_templates">Quick templates</string>
+    <string name="home_quick_templates_empty">Create templates to apply frequent transactions from the dashboard.</string>
+    <string name="home_template_amount_prompt_title">Enter amount</string>
+    <string name="home_template_amount_prompt_body">This template uses a variable amount.</string>
+    <string name="home_template_amount">Amount</string>
+    <string name="home_template_apply">Apply</string>
+    <string name="home_template_cancel">Cancel</string>
+    <string name="home_template_variable">Variable</string>
     <string name="home_view_all">View all</string>
     <string name="home_empty_title">No transactions yet</string>
     <string name="home_empty_body">Add the first transaction to start tracking.</string>
