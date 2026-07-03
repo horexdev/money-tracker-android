@@ -21,10 +21,10 @@
     <string name="history_cancel">Annuler</string>
     <string name="history_save">Enregistrer la transaction</string>
     <string name="history_amount">Montant</string>
-    <string name="history_date">Date</string>
+    <string name="history_date">Date de l’opération</string>
     <string name="history_date_hint">AAAA-MM-JJ</string>
     <string name="history_category">Catégorie</string>
-    <string name="history_note">Note</string>
+    <string name="history_note">Remarque</string>
     <string name="history_note_empty">Aucune remarque</string>
     <string name="history_account">Compte</string>
     <string name="history_retry">Réessayer</string>

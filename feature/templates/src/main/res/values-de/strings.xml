@@ -17,7 +17,7 @@
     <string name="templates_apply">Anwenden</string>
     <string name="templates_expense">Ausgabe</string>
     <string name="templates_income">Einnahme</string>
-    <string name="templates_name">Name</string>
+    <string name="templates_name">Vorlagenname</string>
     <string name="templates_name_placeholder">Kaffee, Taxi, Gehalt</string>
     <string name="templates_amount">Betrag</string>
     <string name="templates_amount_prompt_title">Betrag eingeben</string>
@@ -28,8 +28,8 @@
     <string name="templates_note_placeholder">Optionale Beschreibung</string>
     <string name="templates_mode">Betragsmodus</string>
     <string name="templates_mode_fixed">Behoben</string>
-    <string name="templates_mode_variable">Variable</string>
-    <string name="templates_variable_chip">Variable</string>
+    <string name="templates_mode_variable">Variabel</string>
+    <string name="templates_variable_chip">Variabel</string>
     <string name="templates_move_up">Nach oben bewegen</string>
     <string name="templates_move_down">Nach unten bewegen</string>
     <string name="templates_delete_title">Vorlage löschen?</string>

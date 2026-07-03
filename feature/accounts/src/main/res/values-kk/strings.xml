@@ -22,7 +22,7 @@
     <string name="accounts_currency">Валюта</string>
     <string name="accounts_color">Түс</string>
     <string name="accounts_balance_adjustment">Балансты реттеу</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">Ағымдағы баланс</string>
     <string name="accounts_target_balance">Мақсатты баланс</string>
     <string name="accounts_adjust_note">Реттеу жазбасы</string>
     <string name="accounts_apply_adjustment">Реттеуді қолдану</string>

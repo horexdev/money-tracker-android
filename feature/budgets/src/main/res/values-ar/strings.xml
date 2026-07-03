@@ -2,7 +2,7 @@
 <resources>
     <string name="budgets_title">الميزانيات</string>
     <string name="budgets_subtitle">تتبع حدود الإنفاق حسب الفئة والفترة الحالية.</string>
-    <string name="budgets_loading">Loading budgets</string>
+    <string name="budgets_loading">تحميل الميزانيات</string>
     <string name="budgets_empty_title">لا توجد ميزانيات حتى الآن</string>
     <string name="budgets_empty_body">قم بإنشاء حد لفئة المصروفات لرؤية التقدم هنا.</string>
     <string name="budgets_no_categories_title">لا توجد فئات مصروفات</string>
@@ -20,15 +20,15 @@
     <string name="budgets_period_monthly">شهري</string>
     <string name="budgets_limit">الحد</string>
     <string name="budgets_spent_of_limit">%1$s من %2$s</string>
-    <string name="budgets_remaining">Remaining: %1$s</string>
+    <string name="budgets_remaining">المتبقي: %1$s</string>
     <string name="budgets_over_limit">تجاوز الحد بواسطة %1$s</string>
-    <string name="budgets_over_limit_chip">Over limit</string>
+    <string name="budgets_over_limit_chip">تجاوز الحد</string>
     <string name="budgets_progress_percent">%1$d%% مستخدم</string>
     <string name="budgets_currency">العملة</string>
     <string name="budgets_notifications">الإشعارات</string>
-    <string name="budgets_notifications_enabled">Notifications on</string>
+    <string name="budgets_notifications_enabled">تشغيل الإشعارات</string>
     <string name="budgets_notifications_disabled">إيقاف الإشعارات</string>
-    <string name="budgets_notify_at">Notify at percent</string>
+    <string name="budgets_notify_at">الإخطار في المئة</string>
     <string name="budgets_transactions">المعاملات</string>
     <string name="budgets_transactions_title">معاملات الميزانية</string>
     <string name="budgets_transactions_empty">لا توجد معاملات في الفترة الحالية.</string>

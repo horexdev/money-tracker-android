@@ -2,7 +2,7 @@
 <resources>
     <string name="savings_title">Birikim</string>
     <string name="savings_subtitle">Hedef ilerlemesini, para yatırma, çekme ve geçmişini izleyin.</string>
-    <string name="savings_loading">Loading savings goals</string>
+    <string name="savings_loading">Tasarruf hedefleri yükleniyor</string>
     <string name="savings_empty_title">Henüz hedef yok</string>
     <string name="savings_empty_body">Hedef tutara doğru ilerlemeyi izlemek için bir hedef oluşturun.</string>
     <string name="savings_add">Hedef ekle</string>
@@ -18,9 +18,9 @@
     <string name="savings_deadline_optional">Son Tarih (YYYY-AA-GG, isteğe bağlı)</string>
     <string name="savings_account">Bağlı hesap</string>
     <string name="savings_no_account">Bağlı hesap yok</string>
-    <string name="savings_progress_percent">%1$d%% complete</string>
+    <string name="savings_progress_percent">%1$d%% tamamlandı</string>
     <string name="savings_amount_progress">%2$s\'in %1$s\'i</string>
-    <string name="savings_remaining">Remaining: %1$s</string>
+    <string name="savings_remaining">Kalan: %1$s</string>
     <string name="savings_completed">Tamamlandı</string>
     <string name="savings_deposit">Yatır</string>
     <string name="savings_withdraw">Çek</string>
@@ -29,16 +29,16 @@
     <string name="savings_history_empty">Henüz para yatırma veya çekme işlemi yok.</string>
     <string name="savings_operation_amount">Tutar</string>
     <string name="savings_operation_note">Not</string>
-    <string name="savings_operation_note_placeholder">Optional operation note</string>
+    <string name="savings_operation_note_placeholder">İsteğe bağlı çalışma notu</string>
     <string name="savings_delete_title">Hedef silinsin mi?</string>
     <string name="savings_delete_body">Bu, hedefi ve hedef geçmişini kaldırır. Bağlı hesap işlemleri değişmeden kalır.</string>
-    <string name="savings_error_generic">Savings action failed.</string>
-    <string name="savings_error_name">Goal name is required.</string>
+    <string name="savings_error_generic">Tasarruf eylemi başarısız oldu.</string>
+    <string name="savings_error_name">Hedef adı gerekli.</string>
     <string name="savings_error_amount">Tutar pozitif olmalıdır.</string>
     <string name="savings_error_currency">Para birimi 3 harfli ISO kodu olmalıdır.</string>
-    <string name="savings_error_deadline">Deadline must use YYYY-MM-DD.</string>
+    <string name="savings_error_deadline">Son tarih YYYY-AA-GG\'yi kullanmalıdır.</string>
     <string name="savings_error_account">Bağlı hesap bulunamadı.</string>
-    <string name="savings_error_category">Savings category is missing.</string>
+    <string name="savings_error_category">Tasarruf kategorisi eksik.</string>
     <string name="savings_error_funds">Para çekme mevcut hedef tutarından daha yüksek.</string>
     <string name="savings_error_not_found">Tasarruf hedefi bulunamadı.</string>
 </resources>

@@ -29,10 +29,10 @@
     <string name="categories_protected">Korumalı</string>
     <string name="categories_system">Sistem</string>
     <string name="categories_error_generic">Eylem tamamlanamadı.</string>
-    <string name="categories_error_empty_name">Enter a category name.</string>
+    <string name="categories_error_empty_name">Bir kategori adı girin.</string>
     <string name="categories_error_duplicate_name">Bu isimde bir kategori zaten mevcut.</string>
-    <string name="categories_error_protected">Protected categories cannot be modified.</string>
-    <string name="categories_error_not_found">Category was not found.</string>
+    <string name="categories_error_protected">Korunan kategoriler değiştirilemez.</string>
+    <string name="categories_error_not_found">Kategori bulunamadı.</string>
     <string name="categories_icon_food">Yemek</string>
     <string name="categories_icon_transport">Ulaşım</string>
     <string name="categories_icon_home">Ana Sayfa</string>

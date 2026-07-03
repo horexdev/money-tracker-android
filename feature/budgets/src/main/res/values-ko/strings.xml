@@ -19,11 +19,11 @@
     <string name="budgets_period_weekly">매주</string>
     <string name="budgets_period_monthly">매월</string>
     <string name="budgets_limit">한도</string>
-    <string name="budgets_spent_of_limit">%1$s of %2$s</string>
+    <string name="budgets_spent_of_limit">%2$s의 %1$s</string>
     <string name="budgets_remaining">남은: %1$s</string>
     <string name="budgets_over_limit">%1$s 한도 초과</string>
     <string name="budgets_over_limit_chip">한도 초과</string>
-    <string name="budgets_progress_percent">%1$d%% used</string>
+    <string name="budgets_progress_percent">%1$d%% 사용됨</string>
     <string name="budgets_currency">통화</string>
     <string name="budgets_notifications">알림</string>
     <string name="budgets_notifications_enabled">알림 켜기</string>

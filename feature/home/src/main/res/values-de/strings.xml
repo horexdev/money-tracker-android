@@ -19,7 +19,7 @@
     <string name="home_template_amount">Betrag</string>
     <string name="home_template_apply">Anwenden</string>
     <string name="home_template_cancel">Abbrechen</string>
-    <string name="home_template_variable">Variable</string>
+    <string name="home_template_variable">Variabel</string>
     <string name="home_view_all">Alle anzeigen</string>
     <string name="home_empty_title">Noch keine Transaktionen</string>
     <string name="home_empty_body">Fügen Sie die erste Transaktion hinzu, um mit der Verfolgung zu beginnen.</string>

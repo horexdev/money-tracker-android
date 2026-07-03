@@ -34,7 +34,7 @@
     <string name="categories_error_protected">Himoyalangan toifalarni o\'zgartirib bo\'lmaydi.</string>
     <string name="categories_error_not_found">Turkum topilmadi.</string>
     <string name="categories_icon_food">Oziq-ovqat</string>
-    <string name="categories_icon_transport">Transport</string>
+    <string name="categories_icon_transport">Transport belgisi</string>
     <string name="categories_icon_home">Bosh sahifa</string>
     <string name="categories_icon_shopping">Xarid</string>
     <string name="categories_icon_work">Ish</string>

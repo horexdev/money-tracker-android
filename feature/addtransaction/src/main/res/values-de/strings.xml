@@ -3,7 +3,7 @@
     <string name="add_transaction_title">Transaktion hinzufügen</string>
     <string name="add_transaction_subtitle">Erfassen Sie eine Ausgabe oder einen Ertrag in Ihrem lokalen Hauptbuch.</string>
     <string name="add_transaction_quick_templates">Schnellvorlagen</string>
-    <string name="add_transaction_template_variable">Variable</string>
+    <string name="add_transaction_template_variable">Variabel</string>
     <string name="add_transaction_template_amount_title">Betrag eingeben</string>
     <string name="add_transaction_template_amount_body">Diese Vorlage verwendet einen variablen Betrag.</string>
     <string name="add_transaction_template_apply">Anwenden</string>

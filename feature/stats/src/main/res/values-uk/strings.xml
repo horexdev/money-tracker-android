@@ -11,7 +11,7 @@
     <string name="stats_filter_period">Період</string>
     <string name="stats_filter_currency">Валюта</string>
     <string name="stats_filter_type">Поломка</string>
-    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_filter_chart_style">Стиль діаграми</string>
     <string name="stats_all_accounts">Всі рахунки</string>
     <string name="stats_today">Сьогодні</string>
     <string name="stats_week">тиждень</string>
@@ -19,10 +19,10 @@
     <string name="stats_last_month">Минулого місяця</string>
     <string name="stats_expense">Витрата</string>
     <string name="stats_income">Дохід</string>
-    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_donut">Пончик</string>
     <string name="stats_style_stacked_bar">складено</string>
     <string name="stats_style_dual_bar">Доходи / витрати</string>
-    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_style_profit_bars">Прибуток</string>
     <string name="stats_income_total">Дохід</string>
     <string name="stats_expense_total">Витрата</string>
     <string name="stats_net_total">Чистий</string>

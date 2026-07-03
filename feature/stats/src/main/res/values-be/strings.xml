@@ -11,7 +11,7 @@
     <string name="stats_filter_period">Перыяд</string>
     <string name="stats_filter_currency">Валюта</string>
     <string name="stats_filter_type">Паломка</string>
-    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_filter_chart_style">Стыль дыяграмы</string>
     <string name="stats_all_accounts">Усе рахункі</string>
     <string name="stats_today">Сёння</string>
     <string name="stats_week">Тыдзень</string>
@@ -19,10 +19,10 @@
     <string name="stats_last_month">У мінулым месяцы</string>
     <string name="stats_expense">Выдатак</string>
     <string name="stats_income">Даход</string>
-    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_donut">Пончык</string>
     <string name="stats_style_stacked_bar">Складзены</string>
     <string name="stats_style_dual_bar">Даход / выдаткі</string>
-    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_style_profit_bars">Прыбытак</string>
     <string name="stats_income_total">Даход</string>
     <string name="stats_expense_total">Выдатак</string>
     <string name="stats_net_total">Сетка</string>

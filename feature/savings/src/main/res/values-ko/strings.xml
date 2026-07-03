@@ -18,8 +18,8 @@
     <string name="savings_deadline_optional">마감일(YYYY-MM-DD, 선택 사항)</string>
     <string name="savings_account">연결된 계정</string>
     <string name="savings_no_account">연결된 계정이 없습니다</string>
-    <string name="savings_progress_percent">%1$d%% complete</string>
-    <string name="savings_amount_progress">%1$s of %2$s</string>
+    <string name="savings_progress_percent">%1$d%% 완료</string>
+    <string name="savings_amount_progress">%2$s의 %1$s</string>
     <string name="savings_remaining">남은: %1$s</string>
     <string name="savings_completed">완료</string>
     <string name="savings_deposit">입금</string>
@@ -34,7 +34,7 @@
     <string name="savings_delete_body">목표와 목표 기록이 제거됩니다. 연결된 계정 거래는 변경되지 않습니다.</string>
     <string name="savings_error_generic">저축 작업에 실패했습니다.</string>
     <string name="savings_error_name">목표 이름이 필요합니다.</string>
-    <string name="savings_error_amount">Amount must be positive.</string>
+    <string name="savings_error_amount">금액은 양수여야 합니다.</string>
     <string name="savings_error_currency">통화는 3자리 ISO 코드여야 합니다.</string>
     <string name="savings_error_deadline">마감일은 YYYY-MM-DD를 사용해야 합니다.</string>
     <string name="savings_error_account">연결된 계정을 찾을 수 없습니다.</string>

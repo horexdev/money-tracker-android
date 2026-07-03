@@ -5,7 +5,7 @@
     <string name="history_empty_title">İşlem yok</string>
     <string name="history_empty_body">Yeni gelir ve giderler kaydedildikten sonra burada görünecektir.</string>
     <string name="history_loading">Yükleme geçmişi</string>
-    <string name="history_search">Search transactions</string>
+    <string name="history_search">Arama işlemleri</string>
     <string name="history_apply_filters">Filtreleri uygula</string>
     <string name="history_clear_filters">Temizle</string>
     <string name="history_all_accounts">Tüm hesaplar</string>
@@ -16,7 +16,7 @@
     <string name="history_expense">Gider</string>
     <string name="history_edit">İşlemi düzenle</string>
     <string name="history_delete">İşlemi sil</string>
-    <string name="history_delete_title">Delete transaction?</string>
+    <string name="history_delete_title">İşlem silinsin mi?</string>
     <string name="history_delete_body">Bu işlem yerel defterden kaldırılacak.</string>
     <string name="history_cancel">İptal</string>
     <string name="history_save">İşlemi kaydet</string>
@@ -29,7 +29,7 @@
     <string name="history_account">Hesap</string>
     <string name="history_retry">Tekrar dene</string>
     <string name="history_error_generic">Eylem tamamlanamadı.</string>
-    <string name="history_error_invalid_amount">Enter a positive amount.</string>
+    <string name="history_error_invalid_amount">Pozitif bir miktar girin.</string>
     <string name="history_error_invalid_date">YYYY-AA-GG biçiminde geçerli bir tarih kullanın.</string>
     <string name="history_error_category">Uyumlu bir kategori seçin.</string>
     <string name="history_error_linked_transfer">Bağlantılı transfer işlemleri geçmişten düzenlenemez veya silinemez.</string>

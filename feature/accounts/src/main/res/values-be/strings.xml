@@ -22,7 +22,7 @@
     <string name="accounts_currency">Валюта</string>
     <string name="accounts_color">Колер</string>
     <string name="accounts_balance_adjustment">Карэкціроўка балансу</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">Бягучы баланс</string>
     <string name="accounts_target_balance">мэтавы баланс</string>
     <string name="accounts_adjust_note">Заўвага аб карэкціроўцы</string>
     <string name="accounts_apply_adjustment">Ужыць карэкціроўку</string>

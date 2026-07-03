@@ -52,7 +52,7 @@
     <string name="settings_animate_numbers">Animar números</string>
     <string name="settings_animate_numbers_desc">Use contadores animados quando as telas suportarem.</string>
     <string name="settings_chart_style">Estilo do gráfico de estatísticas</string>
-    <string name="settings_chart_donut">Donut</string>
+    <string name="settings_chart_donut">Anel</string>
     <string name="settings_chart_stacked_bar">Barra empilhada</string>
     <string name="settings_chart_dual_bar">Barra dupla</string>
     <string name="settings_chart_profit_bars">Barras de lucro</string>
@@ -93,7 +93,7 @@
     <string name="settings_rate_source_manual">Substituição manual</string>
     <string name="settings_rate_source_snapshot">Instantâneo salvo</string>
     <string name="settings_manual_rate_title">Substituição manual da taxa</string>
-    <string name="settings_rate_base">Base</string>
+    <string name="settings_rate_base">Moeda base</string>
     <string name="settings_rate_target">Meta</string>
     <string name="settings_rate_date">Data</string>
     <string name="settings_rate_value">Taxa</string>

@@ -28,7 +28,7 @@
     <string name="savings_history_title">Historique des buts</string>
     <string name="savings_history_empty">Aucun dépôt ni retrait pour l’instant.</string>
     <string name="savings_operation_amount">Montant</string>
-    <string name="savings_operation_note">Note</string>
+    <string name="savings_operation_note">Remarque</string>
     <string name="savings_operation_note_placeholder">Note d’opération facultative</string>
     <string name="savings_delete_title">Supprimer l\'objectif ?</string>
     <string name="savings_delete_body">cela supprime l\'objectif et son historique d\'objectifs. Les transactions des comptes liés restent inchangées.</string>

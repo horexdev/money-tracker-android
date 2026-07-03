@@ -35,8 +35,8 @@
     <string name="categories_error_not_found">Categoria non trovata.</string>
     <string name="categories_icon_food">Cibo</string>
     <string name="categories_icon_transport">Trasporti</string>
-    <string name="categories_icon_home">Home</string>
-    <string name="categories_icon_shopping">Shopping</string>
+    <string name="categories_icon_home">Casa</string>
+    <string name="categories_icon_shopping">Fare la spesa</string>
     <string name="categories_icon_work">Lavoro</string>
     <string name="categories_icon_money">Soldi</string>
     <string name="categories_icon_savings">Risparmio</string>

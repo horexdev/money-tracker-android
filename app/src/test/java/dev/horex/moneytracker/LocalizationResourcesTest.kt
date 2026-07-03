@@ -61,6 +61,32 @@ class LocalizationResourcesTest {
     }
 
     @Test
+    fun nonEnglishResourcesDoNotCopyDefaultUserFacingStrings() {
+        val modules = stringResourceModules()
+        val violations = modules.flatMap { module ->
+            val defaultStrings = readStrings(module.defaultStringsFile)
+
+            SUPPORTED_LOCALES
+                .filterNot { it == DEFAULT_LOCALE }
+                .flatMap { locale ->
+                    val localizedStrings = readStrings(module.localizedStringsFile(locale))
+
+                    defaultStrings
+                        .filter { (name, defaultValue) ->
+                            localizedStrings.getValue(name) == defaultValue &&
+                                !isAllowedExactMatch(defaultValue)
+                        }
+                        .map { (name, value) -> "${module.relativePath}/values-$locale/$name=$value" }
+                }
+        }
+
+        assertTrue(
+            "Non-English resources copy default user-facing strings: ${violations.joinToString()}",
+            violations.isEmpty(),
+        )
+    }
+
+    @Test
     fun longLocalizedUiTextStaysWithinSmokeLimit() {
         val modules = stringResourceModules()
         val violations = modules.flatMap { module ->
@@ -152,6 +178,16 @@ class LocalizationResourcesTest {
             .eachCount()
     }
 
+    private fun isAllowedExactMatch(defaultValue: String): Boolean {
+        val value = defaultValue.trim()
+
+        return value.isEmpty() ||
+            value in EXACT_MATCH_ALLOWLIST ||
+            PLACEHOLDER_ONLY.matches(value) ||
+            CURRENCY_CODE.matches(value) ||
+            value == DATE_FORMAT_TOKEN
+    }
+
     private data class ResourceModule(
         val resRoot: File,
         val relativePath: String,
@@ -164,7 +200,9 @@ class LocalizationResourcesTest {
     private companion object {
         const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
         const val DEFAULT_LOCALE = "en"
+        const val DATE_FORMAT_TOKEN = "YYYY-MM-DD"
         const val LONG_TEXT_SMOKE_LIMIT = 280
+        val EXACT_MATCH_ALLOWLIST = setOf("Money Tracker")
         val SUPPORTED_LOCALES = listOf(
             "en",
             "ru",
@@ -185,6 +223,8 @@ class LocalizationResourcesTest {
             "id",
         )
         val PLACEHOLDER = Regex("%(\\d+\\$)?[sd]|%%")
+        val PLACEHOLDER_ONLY = Regex("[0-9%\$sd.,: /()-]+")
+        val CURRENCY_CODE = Regex("[A-Z]{3}")
         val RTL_TEXT = Regex("[\\u0600-\\u06FF]")
     }
 }

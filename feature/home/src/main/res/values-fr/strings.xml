@@ -19,7 +19,7 @@
     <string name="home_template_amount">Montant</string>
     <string name="home_template_apply">Appliquer</string>
     <string name="home_template_cancel">Annuler</string>
-    <string name="home_template_variable">Variable</string>
+    <string name="home_template_variable">Montant variable</string>
     <string name="home_view_all">Voir tout</string>
     <string name="home_empty_title">Aucune transaction pour l\'instant</string>
     <string name="home_empty_body">Ajoutez la première transaction pour démarrer le suivi.</string>

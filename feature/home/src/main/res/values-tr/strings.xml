@@ -3,7 +3,7 @@
     <string name="feature_home_title">Gösterge Paneli</string>
     <string name="feature_home_subtitle">Kök navigasyonu hazır.</string>
     <string name="home_subtitle">Bakiyelerin ve son etkinliklerin çevrimdışı anlık görüntüsü.</string>
-    <string name="home_loading">Loading dashboard...</string>
+    <string name="home_loading">Kontrol paneli yükleniyor...</string>
     <string name="home_retry">Tekrar dene</string>
     <string name="home_error_generic">Kontrol paneli verileri yüklenemedi.</string>
     <string name="home_net_balance">Net bakiye</string>

@@ -12,7 +12,7 @@
     <string name="accounts_delete_title">Hapus akun?</string>
     <string name="accounts_delete_body">Akun ini akan dihapus jika tidak ada data tertaut.</string>
     <string name="accounts_cancel">Batal</string>
-    <string name="accounts_default">Default</string>
+    <string name="accounts_default">Bawaan</string>
     <string name="accounts_set_default">Tetapkan default</string>
     <string name="accounts_include_total">Termasuk totalnya</string>
     <string name="accounts_excluded_total">Tidak termasuk dari total</string>
@@ -22,7 +22,7 @@
     <string name="accounts_currency">Mata uang</string>
     <string name="accounts_color">Warna</string>
     <string name="accounts_balance_adjustment">Penyesuaian saldo</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">Saldo saat ini</string>
     <string name="accounts_target_balance">Saldo sasaran</string>
     <string name="accounts_adjust_note">Catatan penyesuaian</string>
     <string name="accounts_apply_adjustment">Terapkan penyesuaian</string>

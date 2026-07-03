@@ -22,10 +22,10 @@
     <string name="accounts_currency">통화</string>
     <string name="accounts_color">색상</string>
     <string name="accounts_balance_adjustment">밸런스 조정</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">현재 잔액</string>
     <string name="accounts_target_balance">목표 잔액</string>
-    <string name="accounts_adjust_note">Adjustment note</string>
-    <string name="accounts_apply_adjustment">Apply adjustment</string>
+    <string name="accounts_adjust_note">조정 노트</string>
+    <string name="accounts_apply_adjustment">조정 적용</string>
     <string name="accounts_balance_increase">%1$s 증가</string>
     <string name="accounts_balance_decrease">%1$s만큼 감소</string>
     <string name="accounts_loading">계정 로드 중</string>

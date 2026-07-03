@@ -18,7 +18,7 @@
     <string name="budgets_period">Davr</string>
     <string name="budgets_period_weekly">Har hafta</string>
     <string name="budgets_period_monthly">Har oy</string>
-    <string name="budgets_limit">Limit</string>
+    <string name="budgets_limit">Chegara</string>
     <string name="budgets_spent_of_limit">%2$sning %1$s</string>
     <string name="budgets_remaining">Qolgan: %1$s</string>
     <string name="budgets_over_limit">%1$s tomonidan chegaradan oshib ketdi</string>

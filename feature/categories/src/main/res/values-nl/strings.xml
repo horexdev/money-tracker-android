@@ -16,7 +16,7 @@
     <string name="categories_loading">Categorieën laden</string>
     <string name="categories_name">Naam</string>
     <string name="categories_name_placeholder">Boodschappen</string>
-    <string name="categories_type">Type</string>
+    <string name="categories_type">Categorietype</string>
     <string name="categories_color">Kleur</string>
     <string name="categories_icon">Icoon</string>
     <string name="categories_all">Alles</string>
@@ -35,7 +35,7 @@
     <string name="categories_error_not_found">Categorie is niet gevonden.</string>
     <string name="categories_icon_food">Eten</string>
     <string name="categories_icon_transport">Vervoer</string>
-    <string name="categories_icon_home">Home</string>
+    <string name="categories_icon_home">Start</string>
     <string name="categories_icon_shopping">Winkelen</string>
     <string name="categories_icon_work">Werk</string>
     <string name="categories_icon_money">Geld</string>

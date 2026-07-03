@@ -7,7 +7,7 @@
     <string name="categories_add">اضافة فئة</string>
     <string name="categories_edit">تحرير الفئة</string>
     <string name="categories_create">إنشاء فئة</string>
-    <string name="categories_save">Save category</string>
+    <string name="categories_save">حفظ الفئة</string>
     <string name="categories_delete">حذف الفئة</string>
     <string name="categories_delete_title">حذف الفئة؟</string>
     <string name="categories_delete_body">سيتم إخفاء الفئة من المعاملات الجديدة. التاريخ الحالي يحافظ على علامته.</string>
@@ -15,7 +15,7 @@
     <string name="categories_retry">إعادة المحاولة</string>
     <string name="categories_loading">تحميل الفئات</string>
     <string name="categories_name">الاسم</string>
-    <string name="categories_name_placeholder">Groceries</string>
+    <string name="categories_name_placeholder">البقالة</string>
     <string name="categories_type">النوع</string>
     <string name="categories_color">لون</string>
     <string name="categories_icon">أيقونة</string>
@@ -26,7 +26,7 @@
     <string name="categories_type_savings">توفير</string>
     <string name="categories_type_transfer">تحويل</string>
     <string name="categories_type_adjustment">التعديل</string>
-    <string name="categories_protected">Protected</string>
+    <string name="categories_protected">محمي</string>
     <string name="categories_system">النظام</string>
     <string name="categories_error_generic">لا يمكن إكمال الإجراء.</string>
     <string name="categories_error_empty_name">أدخل اسم الفئة.</string>
@@ -37,7 +37,7 @@
     <string name="categories_icon_transport">مواصلات</string>
     <string name="categories_icon_home">الرئيسية</string>
     <string name="categories_icon_shopping">تسوق</string>
-    <string name="categories_icon_work">Work</string>
+    <string name="categories_icon_work">العمل</string>
     <string name="categories_icon_money">المال</string>
     <string name="categories_icon_savings">توفير</string>
     <string name="categories_icon_transfer">تحويل</string>

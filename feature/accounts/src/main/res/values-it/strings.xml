@@ -22,7 +22,7 @@
     <string name="accounts_currency">Valuta</string>
     <string name="accounts_color">Colore</string>
     <string name="accounts_balance_adjustment">Regolazione del saldo</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">Saldo attuale</string>
     <string name="accounts_target_balance">Saldo target</string>
     <string name="accounts_adjust_note">Nota di rettifica</string>
     <string name="accounts_apply_adjustment">applica la regolazione</string>

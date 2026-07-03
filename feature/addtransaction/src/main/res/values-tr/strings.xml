@@ -25,9 +25,9 @@
     <string name="add_transaction_no_categories_title">Bu tür için kategori yok</string>
     <string name="add_transaction_no_categories_body">Tasarruf etmeden önce bir gider veya gelir kategorisi oluşturun.</string>
     <string name="add_transaction_retry">Tekrar dene</string>
-    <string name="add_transaction_error_generic">Could not save the transaction.</string>
-    <string name="add_transaction_error_invalid_amount">Enter an amount greater than zero.</string>
-    <string name="add_transaction_error_invalid_date">Enter a valid date as YYYY-MM-DD.</string>
+    <string name="add_transaction_error_generic">İşlem kaydedilemedi.</string>
+    <string name="add_transaction_error_invalid_amount">Sıfırdan büyük bir miktar girin.</string>
+    <string name="add_transaction_error_invalid_date">Geçerli bir tarihi YYYY-AA-GG olarak girin.</string>
     <string name="add_transaction_error_account_required">Bir hesap seçin.</string>
     <string name="add_transaction_error_category_required">Bir kategori seçin.</string>
     <string name="add_transaction_error_account_not_found">Seçilen hesap artık mevcut değil.</string>

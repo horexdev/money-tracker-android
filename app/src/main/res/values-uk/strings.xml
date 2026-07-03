@@ -52,7 +52,7 @@
     <string name="settings_animate_numbers">Анімація чисел</string>
     <string name="settings_animate_numbers_desc">Використовуйте анімовані лічильники, якщо екрани це підтримують.</string>
     <string name="settings_chart_style">Стиль діаграми статистики</string>
-    <string name="settings_chart_donut">Donut</string>
+    <string name="settings_chart_donut">Пончик</string>
     <string name="settings_chart_stacked_bar">Смуга з нагромадженням</string>
     <string name="settings_chart_dual_bar">подвійна смуга</string>
     <string name="settings_chart_profit_bars">Бари прибутку</string>

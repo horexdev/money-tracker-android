@@ -17,7 +17,7 @@
     <string name="categories_name">Nombre</string>
     <string name="categories_name_placeholder">comestibles</string>
     <string name="categories_type">Tipo</string>
-    <string name="categories_color">Color</string>
+    <string name="categories_color">Color de categoría</string>
     <string name="categories_icon">Icono</string>
     <string name="categories_all">Todo</string>
     <string name="categories_type_expense">Gasto</string>

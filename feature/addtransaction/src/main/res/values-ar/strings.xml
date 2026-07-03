@@ -18,7 +18,7 @@
     <string name="add_transaction_note_placeholder">ملاحظة اختيارية</string>
     <string name="add_transaction_date">التاريخ</string>
     <string name="add_transaction_date_hint">YYYY-MM-DD</string>
-    <string name="add_transaction_save">Save transaction</string>
+    <string name="add_transaction_save">حفظ المعاملة</string>
     <string name="add_transaction_saving">جاري الحفظ...</string>
     <string name="add_transaction_no_accounts_title">لا يوجد حسابات بعد</string>
     <string name="add_transaction_no_accounts_body">قم بإنشاء حساب قبل تسجيل المعاملات.</string>

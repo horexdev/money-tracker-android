@@ -33,7 +33,7 @@
     <string name="recurring_inactive">Inaktiv</string>
     <string name="recurring_active_state">Aktiv – nächster Lauf %1$s</string>
     <string name="recurring_inactive_state">Inaktiv – Zeitplan ist pausiert</string>
-    <string name="recurring_pause">Pause</string>
+    <string name="recurring_pause">Pausieren</string>
     <string name="recurring_resume">Fortsetzen</string>
     <string name="recurring_delete_title">Wiederkehrende Transaktion löschen?</string>
     <string name="recurring_delete_body">Dadurch wird der Zeitplan entfernt. Bestehende Transaktionen bleiben unverändert.</string>

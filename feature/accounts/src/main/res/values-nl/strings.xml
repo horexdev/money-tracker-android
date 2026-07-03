@@ -18,11 +18,11 @@
     <string name="accounts_excluded_total">Uitgesloten van totaal</string>
     <string name="accounts_name">Naam</string>
     <string name="accounts_name_placeholder">Hoofdkaart</string>
-    <string name="accounts_type">Type</string>
+    <string name="accounts_type">Rekeningtype</string>
     <string name="accounts_currency">Valuta</string>
     <string name="accounts_color">Kleur</string>
     <string name="accounts_balance_adjustment">Saldoaanpassing</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">Huidig saldo</string>
     <string name="accounts_target_balance">Doelsaldo</string>
     <string name="accounts_adjust_note">Aanpassingsnotitie</string>
     <string name="accounts_apply_adjustment">Aanpassing toepassen</string>
@@ -45,5 +45,5 @@
     <string name="account_type_savings">Spaarrekening</string>
     <string name="account_type_cash">Contant</string>
     <string name="account_type_credit">Krediet</string>
-    <string name="account_type_crypto">Crypto</string>
+    <string name="account_type_crypto">Cryptoactief</string>
 </resources>

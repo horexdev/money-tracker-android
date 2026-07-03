@@ -52,7 +52,7 @@
     <string name="settings_animate_numbers">Animasikan nombor</string>
     <string name="settings_animate_numbers_desc">Gunakan pembilang animasi apabila skrin menyokongnya.</string>
     <string name="settings_chart_style">Gaya carta statistik</string>
-    <string name="settings_chart_donut">Donut</string>
+    <string name="settings_chart_donut">Carta gelang</string>
     <string name="settings_chart_stacked_bar">Bar bertindan</string>
     <string name="settings_chart_dual_bar">Dwi bar</string>
     <string name="settings_chart_profit_bars">Bar untung</string>
@@ -104,7 +104,7 @@
     <string name="settings_rate_overwrite_title">Gantikan kadar manual?</string>
     <string name="settings_rate_overwrite_body">Kadar manual sudah wujud untuk %1$s -&gt; %2$s pada %3$s. Kadar semasa: %4$s. Kadar baharu: %5$s.</string>
     <string name="settings_replace_rate">Kadar ganti</string>
-    <string name="settings_data_section">Data</string>
+    <string name="settings_data_section">Maklumat</string>
     <string name="settings_open_import_export">Import / Eksport</string>
     <string name="settings_reset_data">Tetapkan semula profil semasa</string>
     <string name="settings_reset_data_desc">Memadam data profil tempatan yang aktif dan mencipta profil luar talian yang baharu.</string>

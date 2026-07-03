@@ -2,7 +2,7 @@
 <resources>
     <string name="notification_channel_budget_alerts_name">Bütçe uyarıları</string>
     <string name="notification_channel_budget_alerts_description">Bütçe eşiklerine dikkat edilmesi gerektiğinde yerel uyarılar.</string>
-    <string name="notification_channel_recurring_reminders_name">Recurring reminders</string>
+    <string name="notification_channel_recurring_reminders_name">Tekrarlanan hatırlatıcılar</string>
     <string name="notification_channel_recurring_reminders_description">Yinelenen işlemler için yerel hatırlatıcılar.</string>
     <string name="notification_channel_goal_milestones_name">Hedef kilometre taşları</string>
     <string name="notification_channel_goal_milestones_description">Tasarruf hedefinin ilerlemesiyle ilgili yerel güncellemeler.</string>

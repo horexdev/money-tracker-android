@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Money Tracker</string>
-    <string name="tab_home">Home</string>
+    <string name="tab_home">Start</string>
     <string name="tab_history">Geschiedenis</string>
     <string name="tab_add">Toevoegen</string>
     <string name="tab_stats">Statistieken</string>
@@ -52,7 +52,7 @@
     <string name="settings_animate_numbers">Getallen animeren</string>
     <string name="settings_animate_numbers_desc">Gebruik geanimeerde tellers wanneer schermen dit ondersteunen.</string>
     <string name="settings_chart_style">Statistiekendiagramstijl</string>
-    <string name="settings_chart_donut">Donut</string>
+    <string name="settings_chart_donut">Ringdiagram</string>
     <string name="settings_chart_stacked_bar">Gestapelde staaf</string>
     <string name="settings_chart_dual_bar">Dubbele balk</string>
     <string name="settings_chart_profit_bars">Winstbalken</string>

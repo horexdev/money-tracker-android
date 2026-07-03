@@ -45,6 +45,6 @@
     <string name="templates_error_account_not_found">لم يتم العثور على الحساب المحدد.</string>
     <string name="templates_error_category_not_found">لم يتم العثور على الفئة المحددة.</string>
     <string name="templates_error_category_type">لا يمكن استخدام الفئة المحددة لنوع المعاملة هذا.</string>
-    <string name="templates_error_not_found">Template was not found.</string>
-    <string name="templates_error_reorder">Template order could not be saved.</string>
+    <string name="templates_error_not_found">لم يتم العثور على القالب.</string>
+    <string name="templates_error_reorder">تعذر حفظ ترتيب القالب.</string>
 </resources>

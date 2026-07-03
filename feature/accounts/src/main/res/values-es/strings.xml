@@ -20,9 +20,9 @@
     <string name="accounts_name_placeholder">tarjeta principal</string>
     <string name="accounts_type">Tipo</string>
     <string name="accounts_currency">moneda</string>
-    <string name="accounts_color">Color</string>
+    <string name="accounts_color">Color de cuenta</string>
     <string name="accounts_balance_adjustment">Ajuste de equilibrio</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">Saldo actual</string>
     <string name="accounts_target_balance">Saldo objetivo</string>
     <string name="accounts_adjust_note">Nota de ajuste</string>
     <string name="accounts_apply_adjustment">Aplicar ajuste</string>

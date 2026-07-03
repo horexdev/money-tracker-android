@@ -6,10 +6,10 @@
     <string name="history_empty_body">새로운 수입과 지출이 저장되면 여기에 나타납니다.</string>
     <string name="history_loading">로딩 이력</string>
     <string name="history_search">거래 검색</string>
-    <string name="history_apply_filters">Apply filters</string>
+    <string name="history_apply_filters">필터 적용</string>
     <string name="history_clear_filters">클리어</string>
     <string name="history_all_accounts">모든 계좌</string>
-    <string name="history_all_categories">All categories</string>
+    <string name="history_all_categories">모든 카테고리</string>
     <string name="history_load_more">더 로드</string>
     <string name="history_page_label">%2$d의 페이지 %1$d</string>
     <string name="history_income">수입</string>

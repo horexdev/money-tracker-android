@@ -11,7 +11,7 @@
     <string name="stats_filter_period">Período</string>
     <string name="stats_filter_currency">moneda</string>
     <string name="stats_filter_type">Desglose</string>
-    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_filter_chart_style">Estilo de gráfico</string>
     <string name="stats_all_accounts">Todas las cuentas</string>
     <string name="stats_today">Hoy</string>
     <string name="stats_week">Semana</string>
@@ -19,10 +19,10 @@
     <string name="stats_last_month">el mes pasado</string>
     <string name="stats_expense">Gasto</string>
     <string name="stats_income">Ingreso</string>
-    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_donut">Anillo</string>
     <string name="stats_style_stacked_bar">apilado</string>
     <string name="stats_style_dual_bar">Ingresos/gastos</string>
-    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_style_profit_bars">Beneficio</string>
     <string name="stats_income_total">Ingreso</string>
     <string name="stats_expense_total">Gasto</string>
     <string name="stats_net_total">neto</string>

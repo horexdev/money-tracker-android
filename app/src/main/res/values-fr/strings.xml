@@ -52,11 +52,11 @@
     <string name="settings_animate_numbers">Animer les nombres</string>
     <string name="settings_animate_numbers_desc">Utilisez des compteurs animés lorsque les écrans le prennent en charge.</string>
     <string name="settings_chart_style">Style du graphique de statistiques</string>
-    <string name="settings_chart_donut">Donut</string>
+    <string name="settings_chart_donut">Anneau</string>
     <string name="settings_chart_stacked_bar">Barre empilée</string>
     <string name="settings_chart_dual_bar">Double barre</string>
     <string name="settings_chart_profit_bars">Barres de profit</string>
-    <string name="settings_notifications_section">Notifications</string>
+    <string name="settings_notifications_section">Alertes locales</string>
     <string name="settings_notify_budget_alerts">Alertes budgétaires</string>
     <string name="settings_notify_budget_alerts_desc">Alertes locales lorsque les seuils budgétaires sont atteints.</string>
     <string name="settings_notify_recurring_reminders">Rappels récurrents</string>
@@ -93,9 +93,9 @@
     <string name="settings_rate_source_manual">Commande manuelle</string>
     <string name="settings_rate_source_snapshot">instantané enregistré</string>
     <string name="settings_manual_rate_title">Forçage manuel du taux</string>
-    <string name="settings_rate_base">Base</string>
+    <string name="settings_rate_base">Devise de base</string>
     <string name="settings_rate_target">Objectif</string>
-    <string name="settings_rate_date">Date</string>
+    <string name="settings_rate_date">Date du taux</string>
     <string name="settings_rate_value">Taux</string>
     <string name="settings_save_rate">Taux d\'économie</string>
     <string name="settings_manual_rate_history_title">Historique des taux manuel</string>
@@ -114,7 +114,7 @@
     <string name="categories_title">Catégories</string>
     <string name="categories_placeholder_subtitle">L\'itinéraire des catégories est enregistré.</string>
     <string name="categories_more_subtitle">Gérer les noms de catégories, les icônes, les couleurs et les types.</string>
-    <string name="budgets_title">Budgets</string>
+    <string name="budgets_title">Budgets prévus</string>
     <string name="budgets_placeholder_subtitle">L\'itinéraire Budgets est enregistré.</string>
     <string name="budgets_more_subtitle">Gérer les budgets des catégories, les progrès et les alertes.</string>
     <string name="recurring_title">Récurrents</string>

@@ -24,12 +24,12 @@
     <string name="templates_amount_prompt_body">Ce modèle utilise un montant variable.</string>
     <string name="templates_account">Compte</string>
     <string name="templates_category">Catégorie</string>
-    <string name="templates_note">Note</string>
+    <string name="templates_note">Remarque</string>
     <string name="templates_note_placeholder">Description facultative</string>
     <string name="templates_mode">Mode montant</string>
     <string name="templates_mode_fixed">Corrigé</string>
-    <string name="templates_mode_variable">Variable</string>
-    <string name="templates_variable_chip">Variable</string>
+    <string name="templates_mode_variable">Montant variable</string>
+    <string name="templates_variable_chip">Variable selon saisie</string>
     <string name="templates_move_up">Monter</string>
     <string name="templates_move_down">Descendre</string>
     <string name="templates_delete_title">Supprimer le modèle ?</string>

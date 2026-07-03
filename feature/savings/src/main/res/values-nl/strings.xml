@@ -19,7 +19,7 @@
     <string name="savings_account">Gekoppeld account</string>
     <string name="savings_no_account">Geen gekoppeld account</string>
     <string name="savings_progress_percent">%1$d%% voltooid</string>
-    <string name="savings_amount_progress">%1$s of %2$s</string>
+    <string name="savings_amount_progress">%1$s van %2$s</string>
     <string name="savings_remaining">Resterend: %1$s</string>
     <string name="savings_completed">voltooid</string>
     <string name="savings_deposit">Storten</string>

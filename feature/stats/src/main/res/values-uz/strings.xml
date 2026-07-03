@@ -11,7 +11,7 @@
     <string name="stats_filter_period">Davr</string>
     <string name="stats_filter_currency">Valyuta</string>
     <string name="stats_filter_type">buzilish</string>
-    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_filter_chart_style">Diagramma uslubi</string>
     <string name="stats_all_accounts">Barcha hisoblar</string>
     <string name="stats_today">Bugun</string>
     <string name="stats_week">Hafta</string>
@@ -19,13 +19,13 @@
     <string name="stats_last_month">O\'tgan oy</string>
     <string name="stats_expense">Xarajat</string>
     <string name="stats_income">Daromad</string>
-    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_donut">Halqasimon</string>
     <string name="stats_style_stacked_bar">Yig\'ilgan</string>
     <string name="stats_style_dual_bar">Daromadlar / xarajatlar</string>
-    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_style_profit_bars">Foyda</string>
     <string name="stats_income_total">Daromad</string>
     <string name="stats_expense_total">Xarajat</string>
-    <string name="stats_net_total">Net</string>
-    <string name="stats_transactions_count">%1$d tx</string>
+    <string name="stats_net_total">Sof</string>
+    <string name="stats_transactions_count">%1$d operatsiya</string>
     <string name="stats_open_history">%1$s uchun ochiq tranzaktsiyalar</string>
 </resources>

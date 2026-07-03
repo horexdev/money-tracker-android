@@ -11,7 +11,7 @@
     <string name="stats_filter_period">기간</string>
     <string name="stats_filter_currency">통화</string>
     <string name="stats_filter_type">고장</string>
-    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_filter_chart_style">차트 스타일</string>
     <string name="stats_all_accounts">모든 계좌</string>
     <string name="stats_today">오늘</string>
     <string name="stats_week">주</string>
@@ -19,13 +19,13 @@
     <string name="stats_last_month">지난달</string>
     <string name="stats_expense">지출</string>
     <string name="stats_income">수입</string>
-    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_donut">도넛</string>
     <string name="stats_style_stacked_bar">스택</string>
     <string name="stats_style_dual_bar">수입/지출</string>
-    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_style_profit_bars">이익</string>
     <string name="stats_income_total">수입</string>
     <string name="stats_expense_total">지출</string>
     <string name="stats_net_total">순</string>
-    <string name="stats_transactions_count">%1$d tx</string>
+    <string name="stats_transactions_count">%1$d건</string>
     <string name="stats_open_history">%1$s에 대한 공개 트랜잭션</string>
 </resources>

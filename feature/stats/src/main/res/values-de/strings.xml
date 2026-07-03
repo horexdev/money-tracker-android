@@ -11,7 +11,7 @@
     <string name="stats_filter_period">Zeitraum</string>
     <string name="stats_filter_currency">Währung</string>
     <string name="stats_filter_type">Panne</string>
-    <string name="stats_filter_chart_style">Chart style</string>
+    <string name="stats_filter_chart_style">Diagrammstil</string>
     <string name="stats_all_accounts">Alle Konten</string>
     <string name="stats_today">Heute</string>
     <string name="stats_week">Woche</string>
@@ -19,13 +19,13 @@
     <string name="stats_last_month">Letzter Monat</string>
     <string name="stats_expense">Ausgabe</string>
     <string name="stats_income">Einnahme</string>
-    <string name="stats_style_donut">Donut</string>
+    <string name="stats_style_donut">Ringdiagramm</string>
     <string name="stats_style_stacked_bar">Gestapelt</string>
     <string name="stats_style_dual_bar">Einnahmen / Ausgaben</string>
-    <string name="stats_style_profit_bars">Profit</string>
+    <string name="stats_style_profit_bars">Gewinn</string>
     <string name="stats_income_total">Einnahme</string>
     <string name="stats_expense_total">Ausgabe</string>
     <string name="stats_net_total">Netto</string>
-    <string name="stats_transactions_count">%1$d tx</string>
+    <string name="stats_transactions_count">%1$d-Sende</string>
     <string name="stats_open_history">Offene Transaktionen für %1$s</string>
 </resources>

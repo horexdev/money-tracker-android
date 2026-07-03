@@ -16,13 +16,13 @@
     <string name="accounts_set_default">Standard festlegen</string>
     <string name="accounts_include_total">Gesamt einbeziehen</string>
     <string name="accounts_excluded_total">Von der Gesamtsumme ausgeschlossen</string>
-    <string name="accounts_name">Name</string>
+    <string name="accounts_name">Kontoname</string>
     <string name="accounts_name_placeholder">Hauptkarte</string>
     <string name="accounts_type">Typ</string>
     <string name="accounts_currency">Währung</string>
     <string name="accounts_color">Farbe</string>
     <string name="accounts_balance_adjustment">Balance-Anpassung</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">Aktueller Saldo</string>
     <string name="accounts_target_balance">Zielsaldo</string>
     <string name="accounts_adjust_note">Anpassungshinweis</string>
     <string name="accounts_apply_adjustment">Anpassung anwenden</string>

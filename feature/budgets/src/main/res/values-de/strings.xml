@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="budgets_title">Budgets</string>
+    <string name="budgets_title">Budgetplanung</string>
     <string name="budgets_subtitle">Verfolgen Sie die Ausgabengrenzen nach Kategorie und aktuellem Zeitraum.</string>
     <string name="budgets_loading">Budgets werden geladen</string>
     <string name="budgets_empty_title">Noch keine Budgets</string>
@@ -18,7 +18,7 @@
     <string name="budgets_period">Zeitraum</string>
     <string name="budgets_period_weekly">Wöchentlich</string>
     <string name="budgets_period_monthly">Monatlich</string>
-    <string name="budgets_limit">Limit</string>
+    <string name="budgets_limit">Budgetgrenze</string>
     <string name="budgets_spent_of_limit">%1$s von %2$s</string>
     <string name="budgets_remaining">Verbleibend: %1$s</string>
     <string name="budgets_over_limit">Überschreitung des Limits um %1$s</string>

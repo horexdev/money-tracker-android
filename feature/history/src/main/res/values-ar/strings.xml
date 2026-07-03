@@ -2,7 +2,7 @@
 <resources>
     <string name="history_title">السجل</string>
     <string name="history_subtitle">البحث عن المعاملات غير المتصلة بالإنترنت وتصفيتها وتحريرها وحذفها</string>
-    <string name="history_empty_title">No transactions</string>
+    <string name="history_empty_title">لا توجد معاملات</string>
     <string name="history_empty_body">ستظهر هنا الإيرادات والمصروفات الجديدة بعد حفظها.</string>
     <string name="history_loading">تحميل التاريخ</string>
     <string name="history_search">بحث المعاملات</string>
@@ -11,7 +11,7 @@
     <string name="history_all_accounts">جميع الحسابات</string>
     <string name="history_all_categories">جميع الفئات</string>
     <string name="history_load_more">تحميل المزيد</string>
-    <string name="history_page_label">Page %1$d of %2$d</string>
+    <string name="history_page_label">صفحة %1$d من %2$d</string>
     <string name="history_income">دخل</string>
     <string name="history_expense">مصروف</string>
     <string name="history_edit">تحرير المعاملة</string>
@@ -19,7 +19,7 @@
     <string name="history_delete_title">حذف المعاملة؟</string>
     <string name="history_delete_body">ستتم إزالة هذه المعاملة من دفتر الأستاذ المحلي.</string>
     <string name="history_cancel">إلغاء</string>
-    <string name="history_save">Save transaction</string>
+    <string name="history_save">حفظ المعاملة</string>
     <string name="history_amount">المبلغ</string>
     <string name="history_date">التاريخ</string>
     <string name="history_date_hint">YYYY-MM-DD</string>
@@ -30,7 +30,7 @@
     <string name="history_retry">إعادة المحاولة</string>
     <string name="history_error_generic">لا يمكن إكمال الإجراء.</string>
     <string name="history_error_invalid_amount">أدخل مبلغًا موجبًا.</string>
-    <string name="history_error_invalid_date">Use a valid date in YYYY-MM-DD format.</string>
+    <string name="history_error_invalid_date">استخدم تاريخًا صالحًا بتنسيق YYYY-MM-DD.</string>
     <string name="history_error_category">اختر فئة متوافقة.</string>
     <string name="history_error_linked_transfer">لا يمكن تعديل أو حذف معاملات التحويل المرتبطة من السجل.</string>
     <string name="history_error_not_found">لم يتم العثور على المعاملة.</string>

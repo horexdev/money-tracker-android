@@ -16,7 +16,7 @@
     <string name="categories_loading">Chargement des catégories</string>
     <string name="categories_name">Nom</string>
     <string name="categories_name_placeholder">Épicerie</string>
-    <string name="categories_type">Type</string>
+    <string name="categories_type">Type de catégorie</string>
     <string name="categories_color">Couleur</string>
     <string name="categories_icon">Icône</string>
     <string name="categories_all">Tout</string>
@@ -34,9 +34,9 @@
     <string name="categories_error_protected">Les catégories protégées ne peuvent pas être modifiées.</string>
     <string name="categories_error_not_found">La catégorie n\'a pas été trouvée.</string>
     <string name="categories_icon_food">Alimentation</string>
-    <string name="categories_icon_transport">Transport</string>
+    <string name="categories_icon_transport">Transports</string>
     <string name="categories_icon_home">Accueil</string>
-    <string name="categories_icon_shopping">Shopping</string>
+    <string name="categories_icon_shopping">Achats</string>
     <string name="categories_icon_work">Travail</string>
     <string name="categories_icon_money">Argent</string>
     <string name="categories_icon_savings">Épargne</string>

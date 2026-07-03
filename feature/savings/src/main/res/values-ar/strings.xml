@@ -2,7 +2,7 @@
 <resources>
     <string name="savings_title">توفير</string>
     <string name="savings_subtitle">تتبع تقدم الهدف والإيداعات والسحوبات والتاريخ.</string>
-    <string name="savings_loading">Loading savings goals</string>
+    <string name="savings_loading">تحميل أهداف الادخار</string>
     <string name="savings_empty_title">لا يوجد أهداف حتى الآن</string>
     <string name="savings_empty_body">قم بإنشاء هدف لتتبع التقدم نحو المبلغ المستهدف.</string>
     <string name="savings_add">اضافة هدف</string>
@@ -13,23 +13,23 @@
     <string name="savings_cancel">إلغاء</string>
     <string name="savings_retry">إعادة المحاولة</string>
     <string name="savings_name">اسم الهدف</string>
-    <string name="savings_target">Target amount</string>
+    <string name="savings_target">المبلغ المستهدف</string>
     <string name="savings_currency">العملة</string>
     <string name="savings_deadline_optional">الموعد النهائي (YYYY-MM-DD، اختياري)</string>
     <string name="savings_account">حساب مرتبط</string>
     <string name="savings_no_account">لا يوجد حساب مرتبط</string>
     <string name="savings_progress_percent">اكتمل %1$d%%</string>
     <string name="savings_amount_progress">%1$s من %2$s</string>
-    <string name="savings_remaining">Remaining: %1$s</string>
+    <string name="savings_remaining">المتبقي: %1$s</string>
     <string name="savings_completed">مكتمل</string>
     <string name="savings_deposit">إيداع</string>
     <string name="savings_withdraw">سحب</string>
     <string name="savings_history">السجل</string>
-    <string name="savings_history_title">Goal history</string>
+    <string name="savings_history_title">تاريخ الهدف</string>
     <string name="savings_history_empty">لا توجد عمليات إيداع أو سحب حتى الآن.</string>
     <string name="savings_operation_amount">المبلغ</string>
     <string name="savings_operation_note">ملاحظة</string>
-    <string name="savings_operation_note_placeholder">Optional operation note</string>
+    <string name="savings_operation_note_placeholder">ملاحظة عملية اختيارية</string>
     <string name="savings_delete_title">حذف الهدف؟</string>
     <string name="savings_delete_body">يؤدي هذا إلى إزالة الهدف وتاريخ أهدافه. تظل معاملات الحساب المرتبط دون تغيير.</string>
     <string name="savings_error_generic">فشل إجراء الحفظ.</string>
@@ -37,8 +37,8 @@
     <string name="savings_error_amount">يجب أن يكون المبلغ موجبًا.</string>
     <string name="savings_error_currency">يجب أن تكون العملة عبارة عن رمز ISO مكون من 3 أحرف.</string>
     <string name="savings_error_deadline">الموعد النهائي يجب أن يستخدم YYYY-MM-DD.</string>
-    <string name="savings_error_account">Linked account was not found.</string>
+    <string name="savings_error_account">لم يتم العثور على الحساب المرتبط.</string>
     <string name="savings_error_category">فئة التوفير مفقودة.</string>
     <string name="savings_error_funds">السحب أعلى من المبلغ المستهدف الحالي.</string>
-    <string name="savings_error_not_found">Savings goal was not found.</string>
+    <string name="savings_error_not_found">لم يتم العثور على هدف التوفير.</string>
 </resources>

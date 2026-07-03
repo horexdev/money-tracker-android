@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="add_transaction_title">Add transaction</string>
+    <string name="add_transaction_title">트랜잭션 추가</string>
     <string name="add_transaction_subtitle">지역 장부에 비용이나 수입을 기록합니다.</string>
     <string name="add_transaction_quick_templates">빠른 템플릿</string>
     <string name="add_transaction_template_variable">가변</string>

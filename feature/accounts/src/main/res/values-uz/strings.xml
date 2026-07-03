@@ -22,7 +22,7 @@
     <string name="accounts_currency">Valyuta</string>
     <string name="accounts_color">Rang</string>
     <string name="accounts_balance_adjustment">Balansni sozlash</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">Joriy balans</string>
     <string name="accounts_target_balance">Maqsad balansi</string>
     <string name="accounts_adjust_note">Sozlash eslatmasi</string>
     <string name="accounts_apply_adjustment">sozlashni qo\'llash</string>

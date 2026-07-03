@@ -44,7 +44,7 @@
     <string name="settings_language_section">Sprache</string>
     <string name="settings_appearance_section">Aussehen und Privatsphäre</string>
     <string name="settings_theme">Design</string>
-    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_system">Systemstandard</string>
     <string name="settings_theme_light">Hell</string>
     <string name="settings_theme_dark">Dunkel</string>
     <string name="settings_hide_amounts">Beträge ausblenden</string>
@@ -52,7 +52,7 @@
     <string name="settings_animate_numbers">Zahlen animieren</string>
     <string name="settings_animate_numbers_desc">Animierte Zähler verwenden, wenn Bildschirme dies unterstützen.</string>
     <string name="settings_chart_style">Statistikdiagrammstil</string>
-    <string name="settings_chart_donut">Donut</string>
+    <string name="settings_chart_donut">Ringdiagramm</string>
     <string name="settings_chart_stacked_bar">Gestapelter Balken</string>
     <string name="settings_chart_dual_bar">Doppelbalken</string>
     <string name="settings_chart_profit_bars">Gewinnbalken</string>
@@ -96,7 +96,7 @@
     <string name="settings_rate_base">Basis</string>
     <string name="settings_rate_target">Ziel</string>
     <string name="settings_rate_date">Datum</string>
-    <string name="settings_rate_value">Rate</string>
+    <string name="settings_rate_value">Kurs</string>
     <string name="settings_save_rate">Sparrate</string>
     <string name="settings_manual_rate_history_title">Manueller Tarifverlauf</string>
     <string name="settings_no_manual_rates">Keine manuellen Tarife für dieses Profil.</string>
@@ -114,7 +114,7 @@
     <string name="categories_title">Kategorien</string>
     <string name="categories_placeholder_subtitle">Die Kategorienroute ist registriert.</string>
     <string name="categories_more_subtitle">Kategorienamen, Symbole, Farben und Typen verwalten.</string>
-    <string name="budgets_title">Budgets</string>
+    <string name="budgets_title">Budgetplanung</string>
     <string name="budgets_placeholder_subtitle">Budgetroute ist registriert.</string>
     <string name="budgets_more_subtitle">Kategoriebudgets, Fortschritt und Warnungen verwalten.</string>
     <string name="recurring_title">Wiederkehrend</string>

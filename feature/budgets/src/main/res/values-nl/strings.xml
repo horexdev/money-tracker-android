@@ -19,7 +19,7 @@
     <string name="budgets_period_weekly">Wekelijks</string>
     <string name="budgets_period_monthly">Maandelijks</string>
     <string name="budgets_limit">Limiet</string>
-    <string name="budgets_spent_of_limit">%1$s of %2$s</string>
+    <string name="budgets_spent_of_limit">%1$s van %2$s</string>
     <string name="budgets_remaining">Resterend: %1$s</string>
     <string name="budgets_over_limit">Overlimiet door %1$s</string>
     <string name="budgets_over_limit_chip">Overlimiet</string>

@@ -24,7 +24,7 @@
     <string name="categories_type_income">Pemasukan</string>
     <string name="categories_type_both">Keduanya</string>
     <string name="categories_type_savings">Tabungan</string>
-    <string name="categories_type_transfer">Transfer</string>
+    <string name="categories_type_transfer">Pindahan</string>
     <string name="categories_type_adjustment">Penyesuaian</string>
     <string name="categories_protected">Dilindungi</string>
     <string name="categories_system">Sistem</string>
@@ -40,6 +40,6 @@
     <string name="categories_icon_work">Bekerja</string>
     <string name="categories_icon_money">Uang</string>
     <string name="categories_icon_savings">Tabungan</string>
-    <string name="categories_icon_transfer">Transfer</string>
+    <string name="categories_icon_transfer">Ikon pindahan</string>
     <string name="categories_icon_other">Lainnya</string>
 </resources>

@@ -31,7 +31,7 @@
     <string name="recurring_note_placeholder">선택적 설명</string>
     <string name="recurring_active">활성</string>
     <string name="recurring_inactive">비활성</string>
-    <string name="recurring_active_state">Active - next run %1$s</string>
+    <string name="recurring_active_state">활성 - 다음 실행 %1$s</string>
     <string name="recurring_inactive_state">비활성 - 일정이 일시 중지되었습니다.</string>
     <string name="recurring_pause">일시정지</string>
     <string name="recurring_resume">이력서</string>
@@ -42,7 +42,7 @@
     <string name="recurring_no_categories_title">호환되는 카테고리가 없습니다.</string>
     <string name="recurring_no_categories_body">이 거래 유형에 대한 수입 또는 지출 범주를 만듭니다.</string>
     <string name="recurring_error_generic">반복 거래 작업이 실패했습니다.</string>
-    <string name="recurring_error_amount">Amount must be positive.</string>
+    <string name="recurring_error_amount">금액은 양수여야 합니다.</string>
     <string name="recurring_error_next_run">다음 실행은 유효한 날짜여야 합니다.</string>
     <string name="recurring_error_account_required">계정을 선택하세요.</string>
     <string name="recurring_error_category_required">호환되는 카테고리를 선택하세요.</string>

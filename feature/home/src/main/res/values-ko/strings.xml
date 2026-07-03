@@ -8,7 +8,7 @@
     <string name="home_error_generic">대시보드 데이터를 로드할 수 없습니다.</string>
     <string name="home_net_balance">순잔고</string>
     <string name="home_all_accounts">모든 계좌</string>
-    <string name="home_add_transaction">Add transaction</string>
+    <string name="home_add_transaction">트랜잭션 추가</string>
     <string name="home_income">수입</string>
     <string name="home_expense">지출</string>
     <string name="home_recent_transactions">최근 거래</string>
@@ -22,5 +22,5 @@
     <string name="home_template_variable">가변</string>
     <string name="home_view_all">모두 보기</string>
     <string name="home_empty_title">아직 거래 없음</string>
-    <string name="home_empty_body">Add the first transaction to start tracking.</string>
+    <string name="home_empty_body">추적을 시작하려면 첫 번째 거래를 추가하세요.</string>
 </resources>

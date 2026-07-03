@@ -3,7 +3,7 @@
     <string name="add_transaction_title">Ajouter une transaction</string>
     <string name="add_transaction_subtitle">Enregistrez une dépense ou un revenu dans votre grand livre local.</string>
     <string name="add_transaction_quick_templates">Modèles rapides</string>
-    <string name="add_transaction_template_variable">Variable</string>
+    <string name="add_transaction_template_variable">Montant variable</string>
     <string name="add_transaction_template_amount_title">Saisir le montant</string>
     <string name="add_transaction_template_amount_body">Ce modèle utilise un montant variable.</string>
     <string name="add_transaction_template_apply">Appliquer</string>
@@ -14,9 +14,9 @@
     <string name="add_transaction_amount">Montant</string>
     <string name="add_transaction_account">Compte</string>
     <string name="add_transaction_category">Catégorie</string>
-    <string name="add_transaction_note">Note</string>
+    <string name="add_transaction_note">Remarque</string>
     <string name="add_transaction_note_placeholder">Note facultative</string>
-    <string name="add_transaction_date">Date</string>
+    <string name="add_transaction_date">Date de l’opération</string>
     <string name="add_transaction_date_hint">AAAA-MM-JJ</string>
     <string name="add_transaction_save">Enregistrer la transaction</string>
     <string name="add_transaction_saving">Enregistrement...</string>

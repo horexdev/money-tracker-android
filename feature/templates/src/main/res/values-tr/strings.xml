@@ -18,14 +18,14 @@
     <string name="templates_expense">Gider</string>
     <string name="templates_income">Gelir</string>
     <string name="templates_name">Ad</string>
-    <string name="templates_name_placeholder">Coffee, taxi, salary</string>
+    <string name="templates_name_placeholder">Kahve, taksi, maaş</string>
     <string name="templates_amount">Tutar</string>
     <string name="templates_amount_prompt_title">Tutarı girin</string>
     <string name="templates_amount_prompt_body">Bu şablon değişken bir miktar kullanıyor.</string>
     <string name="templates_account">Hesap</string>
     <string name="templates_category">Kategori</string>
     <string name="templates_note">Not</string>
-    <string name="templates_note_placeholder">Optional description</string>
+    <string name="templates_note_placeholder">İsteğe bağlı açıklama</string>
     <string name="templates_mode">Tutar modu</string>
     <string name="templates_mode_fixed">Sabit</string>
     <string name="templates_mode_variable">Değişken</string>
@@ -36,15 +36,15 @@
     <string name="templates_delete_body">Kısayol kaldırılacak. Mevcut işlemler değişmeden kalır.</string>
     <string name="templates_no_accounts_title">Hesap yok</string>
     <string name="templates_no_accounts_body">Şablon eklemeden önce bir hesap oluşturun.</string>
-    <string name="templates_no_categories_title">No compatible categories</string>
+    <string name="templates_no_categories_title">Uyumlu kategori yok</string>
     <string name="templates_no_categories_body">Bu işlem türü için bir gelir veya gider kategorisi oluşturun.</string>
-    <string name="templates_error_generic">Template action failed.</string>
+    <string name="templates_error_generic">Şablon eylemi başarısız oldu.</string>
     <string name="templates_error_amount">Tutar pozitif olmalıdır.</string>
     <string name="templates_error_account_required">Bir hesap seçin.</string>
     <string name="templates_error_category_required">Uyumlu bir kategori seçin.</string>
     <string name="templates_error_account_not_found">Seçilen hesap bulunamadı.</string>
-    <string name="templates_error_category_not_found">Selected category was not found.</string>
+    <string name="templates_error_category_not_found">Seçilen kategori bulunamadı.</string>
     <string name="templates_error_category_type">Seçilen kategori bu işlem türü için kullanılamaz.</string>
     <string name="templates_error_not_found">Şablon bulunamadı.</string>
-    <string name="templates_error_reorder">Template order could not be saved.</string>
+    <string name="templates_error_reorder">Şablon sırası kaydedilemedi.</string>
 </resources>

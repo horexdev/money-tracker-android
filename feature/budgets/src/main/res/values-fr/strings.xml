@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="budgets_title">Budgets</string>
+    <string name="budgets_title">Budgets prévus</string>
     <string name="budgets_subtitle">suivez les limites de dépenses par catégorie et par période en cours.</string>
     <string name="budgets_loading">Chargement des budgets</string>
     <string name="budgets_empty_title">Pas encore de budget</string>
@@ -25,11 +25,11 @@
     <string name="budgets_over_limit_chip">dépassement de limite</string>
     <string name="budgets_progress_percent">%1$d%% utilisé</string>
     <string name="budgets_currency">Devise</string>
-    <string name="budgets_notifications">Notifications</string>
+    <string name="budgets_notifications">Alertes de budget</string>
     <string name="budgets_notifications_enabled">Notifications activées</string>
     <string name="budgets_notifications_disabled">Notifications désactivées</string>
     <string name="budgets_notify_at">notifier au pourcentage</string>
-    <string name="budgets_transactions">Transactions</string>
+    <string name="budgets_transactions">Opérations</string>
     <string name="budgets_transactions_title">Opérations budgétaires</string>
     <string name="budgets_transactions_empty">Aucune transaction dans la période en cours.</string>
     <string name="budgets_transaction_meta">%1$s - %2$s</string>

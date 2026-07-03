@@ -22,7 +22,7 @@
     <string name="accounts_currency">Валюта</string>
     <string name="accounts_color">Колір</string>
     <string name="accounts_balance_adjustment">Коригування балансу</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">Поточний баланс</string>
     <string name="accounts_target_balance">Цільовий баланс</string>
     <string name="accounts_adjust_note">Примітка коригування</string>
     <string name="accounts_apply_adjustment">Застосувати коригування</string>

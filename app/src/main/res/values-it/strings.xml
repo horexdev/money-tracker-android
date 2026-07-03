@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Money Tracker</string>
-    <string name="tab_home">Home</string>
+    <string name="tab_home">Inizio</string>
     <string name="tab_history">Cronologia</string>
     <string name="tab_add">Aggiungi</string>
     <string name="tab_stats">Statistiche</string>
@@ -52,7 +52,7 @@
     <string name="settings_animate_numbers">Anima i numeri</string>
     <string name="settings_animate_numbers_desc">Utilizza i contatori animati quando gli schermi lo supportano.</string>
     <string name="settings_chart_style">stile del grafico delle statistiche</string>
-    <string name="settings_chart_donut">Donut</string>
+    <string name="settings_chart_donut">Anello</string>
     <string name="settings_chart_stacked_bar">Barra impilata</string>
     <string name="settings_chart_dual_bar">Doppia barra</string>
     <string name="settings_chart_profit_bars">Barre di profitto</string>
@@ -93,7 +93,7 @@
     <string name="settings_rate_source_manual">Azionamento manuale</string>
     <string name="settings_rate_source_snapshot">istantanea salvata</string>
     <string name="settings_manual_rate_title">Override manuale della tariffa</string>
-    <string name="settings_rate_base">Base</string>
+    <string name="settings_rate_base">Valuta base</string>
     <string name="settings_rate_target">Obiettivo</string>
     <string name="settings_rate_date">Data</string>
     <string name="settings_rate_value">Tasso</string>

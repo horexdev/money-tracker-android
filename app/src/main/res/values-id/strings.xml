@@ -52,7 +52,7 @@
     <string name="settings_animate_numbers">Animasikan angka</string>
     <string name="settings_animate_numbers_desc">Gunakan penghitung animasi ketika layar mendukungnya.</string>
     <string name="settings_chart_style">Gaya bagan statistik</string>
-    <string name="settings_chart_donut">Donut</string>
+    <string name="settings_chart_donut">Cincin</string>
     <string name="settings_chart_stacked_bar">Batang bertumpuk</string>
     <string name="settings_chart_dual_bar">Bilah ganda</string>
     <string name="settings_chart_profit_bars">Batangan keuntungan</string>
@@ -94,7 +94,7 @@
     <string name="settings_rate_source_snapshot">Cuplikan tersimpan</string>
     <string name="settings_manual_rate_title">Penggantian tarif manual</string>
     <string name="settings_rate_base">Pangkalan</string>
-    <string name="settings_rate_target">Target</string>
+    <string name="settings_rate_target">Mata uang tujuan</string>
     <string name="settings_rate_date">Tanggal</string>
     <string name="settings_rate_value">Nilai</string>
     <string name="settings_save_rate">Tingkat penghematan</string>
@@ -104,7 +104,7 @@
     <string name="settings_rate_overwrite_title">Ganti tarif manual?</string>
     <string name="settings_rate_overwrite_body">Tarif manual sudah ada untuk %1$s -&gt; %2$s di %3$s. Tarif saat ini: %4$s. Tarif baru: %5$s.</string>
     <string name="settings_replace_rate">Tingkat penggantian</string>
-    <string name="settings_data_section">Data</string>
+    <string name="settings_data_section">Data lokal</string>
     <string name="settings_open_import_export">Impor / Ekspor</string>
     <string name="settings_reset_data">Reset profil saat ini</string>
     <string name="settings_reset_data_desc">Menghapus data profil lokal aktif dan membuat profil offline baru.</string>

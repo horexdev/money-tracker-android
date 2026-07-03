@@ -52,7 +52,7 @@
     <string name="settings_animate_numbers">Анімацыя лікаў</string>
     <string name="settings_animate_numbers_desc">выкарыстоўваць аніміраваныя лічыльнікі, калі экраны гэта падтрымліваюць.</string>
     <string name="settings_chart_style">Стыль дыяграмы статыстыкі</string>
-    <string name="settings_chart_donut">Donut</string>
+    <string name="settings_chart_donut">Пончык</string>
     <string name="settings_chart_stacked_bar">складзены бар</string>
     <string name="settings_chart_dual_bar">Падвойная паласа</string>
     <string name="settings_chart_profit_bars">бары прыбытку</string>

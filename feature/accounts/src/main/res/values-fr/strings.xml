@@ -18,11 +18,11 @@
     <string name="accounts_excluded_total">Exclus du total</string>
     <string name="accounts_name">Nom</string>
     <string name="accounts_name_placeholder">Carte principale</string>
-    <string name="accounts_type">Type</string>
+    <string name="accounts_type">Type de compte</string>
     <string name="accounts_currency">Devise</string>
     <string name="accounts_color">Couleur</string>
     <string name="accounts_balance_adjustment">Ajustement du solde</string>
-    <string name="accounts_current_balance">Current balance</string>
+    <string name="accounts_current_balance">Solde actuel</string>
     <string name="accounts_target_balance">Solde cible</string>
     <string name="accounts_adjust_note">Note de réglage</string>
     <string name="accounts_apply_adjustment">Appliquer le réglage</string>
@@ -45,5 +45,5 @@
     <string name="account_type_savings">Épargne</string>
     <string name="account_type_cash">Espèces</string>
     <string name="account_type_credit">Crédit</string>
-    <string name="account_type_crypto">Crypto</string>
+    <string name="account_type_crypto">Cryptoactif</string>
 </resources>
