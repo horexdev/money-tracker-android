@@ -117,6 +117,19 @@ data class RecurringTransactionWithCategory(
     val categoryColor: String,
 )
 
+data class TransactionTemplateWithRelations(
+    @Embedded
+    val template: TransactionTemplateEntity,
+    @ColumnInfo(name = "category_name")
+    val categoryName: String,
+    @ColumnInfo(name = "category_icon")
+    val categoryIcon: String,
+    @ColumnInfo(name = "category_color")
+    val categoryColor: String,
+    @ColumnInfo(name = "account_name")
+    val accountName: String,
+)
+
 @Dao
 interface LocalProfileDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
@@ -1167,8 +1180,34 @@ interface TransactionTemplateDao {
     @Update
     suspend fun update(template: TransactionTemplateEntity)
 
-    @Query("SELECT * FROM transaction_templates WHERE profile_id = :profileId ORDER BY sort_order ASC, created_at_epoch_millis ASC")
+    @Update
+    suspend fun updateAndReturnCount(template: TransactionTemplateEntity): Int
+
+    @Query(
+        """
+        SELECT * FROM transaction_templates
+        WHERE profile_id = :profileId
+        ORDER BY sort_order ASC, created_at_epoch_millis ASC, id ASC
+        """,
+    )
     suspend fun listByProfile(profileId: Long): List<TransactionTemplateEntity>
+
+    @Query(
+        """
+        SELECT
+            t.*,
+            c.name AS category_name,
+            c.icon AS category_icon,
+            c.color AS category_color,
+            a.name AS account_name
+        FROM transaction_templates t
+        JOIN categories c ON c.id = t.category_id AND c.profile_id = t.profile_id
+        JOIN accounts a ON a.id = t.account_id AND a.profile_id = t.profile_id
+        WHERE t.profile_id = :profileId
+        ORDER BY t.sort_order ASC, t.created_at_epoch_millis ASC, t.id ASC
+        """,
+    )
+    suspend fun listWithRelationsByProfile(profileId: Long): List<TransactionTemplateWithRelations>
 
     @Query(
         """
@@ -1182,6 +1221,40 @@ interface TransactionTemplateDao {
     @Query("SELECT * FROM transaction_templates WHERE id = :templateId AND profile_id = :profileId")
     suspend fun getById(profileId: Long, templateId: Long): TransactionTemplateEntity?
 
+    @Query(
+        """
+        SELECT
+            t.*,
+            c.name AS category_name,
+            c.icon AS category_icon,
+            c.color AS category_color,
+            a.name AS account_name
+        FROM transaction_templates t
+        JOIN categories c ON c.id = t.category_id AND c.profile_id = t.profile_id
+        JOIN accounts a ON a.id = t.account_id AND a.profile_id = t.profile_id
+        WHERE t.id = :templateId AND t.profile_id = :profileId
+        """,
+    )
+    suspend fun getWithRelationsById(profileId: Long, templateId: Long): TransactionTemplateWithRelations?
+
+    @Query("SELECT COALESCE(MAX(sort_order), -1) FROM transaction_templates WHERE profile_id = :profileId")
+    suspend fun getMaxSortOrder(profileId: Long): Int
+
+    @Query(
+        """
+        UPDATE transaction_templates
+        SET sort_order = :sortOrder,
+            updated_at_epoch_millis = :updatedAtEpochMillis
+        WHERE id = :templateId AND profile_id = :profileId
+        """,
+    )
+    suspend fun updateSortOrder(
+        profileId: Long,
+        templateId: Long,
+        sortOrder: Int,
+        updatedAtEpochMillis: Long,
+    ): Int
+
     @Query("DELETE FROM transaction_templates WHERE id = :templateId AND profile_id = :profileId")
-    suspend fun deleteById(profileId: Long, templateId: Long)
+    suspend fun deleteById(profileId: Long, templateId: Long): Int
 }
