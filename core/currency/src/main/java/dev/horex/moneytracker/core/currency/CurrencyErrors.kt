@@ -15,3 +15,15 @@ class ExchangeRateOverrideAlreadyExistsException(
 ) : CurrencyException("Exchange rate override already exists")
 
 class ExchangeRateOverrideNotFoundException : CurrencyException("Exchange rate override not found")
+
+class OnlineExchangeRateUpdateException(
+    cause: Throwable? = null,
+) : CurrencyException("Online exchange rate update failed") {
+    init {
+        if (cause != null) {
+            initCause(cause)
+        }
+    }
+}
+
+class OnlineExchangeRateResponseException : CurrencyException("Online exchange rate response is invalid")

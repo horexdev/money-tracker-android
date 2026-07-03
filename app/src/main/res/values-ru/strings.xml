@@ -81,6 +81,10 @@
     <string name="settings_save_currencies">Сохранить валюты</string>
     <string name="settings_latest_snapshot">Последний сохраненный снимок курсов: %1$s</string>
     <string name="settings_no_snapshots">Сохраненных снимков курсов нет.</string>
+    <string name="settings_update_online_rates">Обновить онлайн-курсы</string>
+    <string name="settings_update_online_rates_desc">Использует сеть только после этого нажатия и сохраняет локальный снимок.</string>
+    <string name="settings_online_rates_updated">Снимок онлайн-курсов сохранен.</string>
+    <string name="settings_error_rate_update_failed">Не удалось обновить онлайн-курсы. Сохраненные локальные курсы остаются доступны.</string>
     <string name="settings_rate_source_title">Источник курса</string>
     <string name="settings_rate_source_waiting">Введите корректную пару и дату, чтобы увидеть источник активного курса.</string>
     <string name="settings_rate_source_missing">Для этой пары и даты курс не найден.</string>

@@ -81,6 +81,10 @@
     <string name="settings_save_currencies">Save currencies</string>
     <string name="settings_latest_snapshot">Latest saved rate snapshot: %1$s</string>
     <string name="settings_no_snapshots">No saved rate snapshots.</string>
+    <string name="settings_update_online_rates">Update online rates</string>
+    <string name="settings_update_online_rates_desc">Uses the network only after this tap and saves a local snapshot.</string>
+    <string name="settings_online_rates_updated">Online rates snapshot saved.</string>
+    <string name="settings_error_rate_update_failed">Online rate update failed. Saved local rates are still available.</string>
     <string name="settings_rate_source_title">Rate source</string>
     <string name="settings_rate_source_waiting">Enter a valid pair and date to preview the active rate source.</string>
     <string name="settings_rate_source_missing">No rate is available for this pair and date.</string>

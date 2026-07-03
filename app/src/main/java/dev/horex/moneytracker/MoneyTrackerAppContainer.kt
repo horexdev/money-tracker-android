@@ -19,6 +19,7 @@ import dev.horex.moneytracker.core.budgets.BudgetNotificationProfileProvider
 import dev.horex.moneytracker.core.budgets.BudgetThresholdNotificationProcessor
 import dev.horex.moneytracker.core.budgets.RoomBudgetsRepository
 import dev.horex.moneytracker.core.categories.RoomCategoriesRepository
+import dev.horex.moneytracker.core.currency.KtorExchangeRateUpdateService
 import dev.horex.moneytracker.core.currency.RoomCurrencyRatesRepository
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
@@ -114,6 +115,12 @@ internal class MoneyTrackerAppContainer(
     val currencyRatesRepository: RoomCurrencyRatesRepository by lazy {
         RoomCurrencyRatesRepository(database)
     }
+
+    private val exchangeRateUpdateServiceLazy = lazy {
+        KtorExchangeRateUpdateService(currencyRatesRepository)
+    }
+
+    val exchangeRateUpdateService: KtorExchangeRateUpdateService by exchangeRateUpdateServiceLazy
 
     val settingsRepository: RoomSettingsRepository by lazy {
         RoomSettingsRepository(
@@ -293,6 +300,9 @@ internal class MoneyTrackerAppContainer(
     }
 
     fun close() {
+        if (exchangeRateUpdateServiceLazy.isInitialized()) {
+            exchangeRateUpdateService.close()
+        }
         appPreferencesScope.cancel()
         if (databaseLazy.isInitialized()) {
             database.close()
