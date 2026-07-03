@@ -96,8 +96,119 @@ class KtorExchangeRateUpdateServiceTest {
         assertEquals(emptyList<SaveExchangeRateSnapshotInput>(), repository.savedSnapshots)
     }
 
+    @Test
+    fun updateLatestRatesDoesNotPersistWhenTargetRateIsMissing() = runBlocking {
+        val repository = FakeCurrencyRatesRepository()
+        val client = HttpClient(
+            MockEngine {
+                respond(
+                    content = """
+                        {
+                          "result": "success",
+                          "time_last_update_unix": 1783036800,
+                          "rates": {
+                            "EUR": 0.93
+                          }
+                        }
+                    """.trimIndent(),
+                    headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()),
+                )
+            },
+        )
+        val service = KtorExchangeRateUpdateService(
+            ratesRepository = repository,
+            client = client,
+            endpointBaseUrl = "https://example.test/latest",
+        )
+
+        try {
+            service.updateLatestRates(baseCurrency = "USD", targetCurrencies = listOf("EUR", "TJS"))
+            fail("Expected online response failure")
+        } catch (error: Throwable) {
+            assertTrue(error is OnlineExchangeRateResponseException)
+        }
+
+        assertEquals(0, repository.saveSnapshotsCallCount)
+        assertEquals(emptyList<SaveExchangeRateSnapshotInput>(), repository.savedSnapshots)
+    }
+
+    @Test
+    fun updateLatestRatesDoesNotPersistWhenTargetRateIsInvalid() = runBlocking {
+        val repository = FakeCurrencyRatesRepository()
+        val client = HttpClient(
+            MockEngine {
+                respond(
+                    content = """
+                        {
+                          "result": "success",
+                          "time_last_update_unix": 1783036800,
+                          "rates": {
+                            "TJS": "bad",
+                            "RUB": 78.5
+                          }
+                        }
+                    """.trimIndent(),
+                    headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()),
+                )
+            },
+        )
+        val service = KtorExchangeRateUpdateService(
+            ratesRepository = repository,
+            client = client,
+            endpointBaseUrl = "https://example.test/latest",
+        )
+
+        try {
+            service.updateLatestRates(baseCurrency = "USD", targetCurrencies = listOf("TJS", "RUB"))
+            fail("Expected online response failure")
+        } catch (error: Throwable) {
+            assertTrue(error is OnlineExchangeRateResponseException)
+        }
+
+        assertEquals(0, repository.saveSnapshotsCallCount)
+        assertEquals(emptyList<SaveExchangeRateSnapshotInput>(), repository.savedSnapshots)
+    }
+
+    @Test
+    fun updateLatestRatesDoesNotPersistWhenTargetRateIsNonPositive() = runBlocking {
+        val repository = FakeCurrencyRatesRepository()
+        val client = HttpClient(
+            MockEngine {
+                respond(
+                    content = """
+                        {
+                          "result": "success",
+                          "time_last_update_unix": 1783036800,
+                          "rates": {
+                            "EUR": 0,
+                            "RUB": 78.5
+                          }
+                        }
+                    """.trimIndent(),
+                    headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()),
+                )
+            },
+        )
+        val service = KtorExchangeRateUpdateService(
+            ratesRepository = repository,
+            client = client,
+            endpointBaseUrl = "https://example.test/latest",
+        )
+
+        try {
+            service.updateLatestRates(baseCurrency = "USD", targetCurrencies = listOf("EUR", "RUB"))
+            fail("Expected online response failure")
+        } catch (error: Throwable) {
+            assertTrue(error is OnlineExchangeRateResponseException)
+        }
+
+        assertEquals(0, repository.saveSnapshotsCallCount)
+        assertEquals(emptyList<SaveExchangeRateSnapshotInput>(), repository.savedSnapshots)
+    }
+
     private class FakeCurrencyRatesRepository : CurrencyRatesRepository {
         val savedSnapshots = mutableListOf<SaveExchangeRateSnapshotInput>()
+        var saveSnapshotsCallCount = 0
 
         override suspend fun saveSnapshot(input: SaveExchangeRateSnapshotInput): ExchangeRateSnapshot {
             return saveSnapshots(listOf(input)).single()
@@ -106,6 +217,7 @@ class KtorExchangeRateUpdateServiceTest {
         override suspend fun saveSnapshots(
             inputs: List<SaveExchangeRateSnapshotInput>,
         ): List<ExchangeRateSnapshot> {
+            saveSnapshotsCallCount += 1
             savedSnapshots += inputs
             return inputs.mapIndexed { index, input ->
                 ExchangeRateSnapshot(

@@ -80,30 +80,25 @@ class KtorExchangeRateUpdateService(
         }
         val payload = parsePayload(body)
         val snapshotDate = payload.snapshotDate ?: todayUtc()
-        val rates = normalizedTargets.mapNotNull { target ->
+        val rates = normalizedTargets.map { target ->
             val rateE8 = payload.rateFor(target)?.toRateE8()
-            if (rateE8 == null) {
-                null
-            } else {
-                SaveExchangeRateSnapshotInput(
-                    snapshotDate = snapshotDate,
-                    baseCurrency = normalizedBase,
-                    targetCurrency = target,
-                    rateE8 = rateE8,
-                )
-            }
+                ?: throw OnlineExchangeRateResponseException()
+            SaveExchangeRateSnapshotInput(
+                snapshotDate = snapshotDate,
+                baseCurrency = normalizedBase,
+                targetCurrency = target,
+                rateE8 = rateE8,
+            )
         }
 
-        if (rates.isNotEmpty()) {
-            try {
-                ratesRepository.saveSnapshots(rates)
-            } catch (error: CancellationException) {
-                throw error
-            } catch (error: CurrencyException) {
-                throw error
-            } catch (error: Throwable) {
-                throw OnlineExchangeRateUpdateException(error)
-            }
+        try {
+            ratesRepository.saveSnapshots(rates)
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: CurrencyException) {
+            throw error
+        } catch (error: Throwable) {
+            throw OnlineExchangeRateUpdateException(error)
         }
 
         return ExchangeRateUpdateResult(
