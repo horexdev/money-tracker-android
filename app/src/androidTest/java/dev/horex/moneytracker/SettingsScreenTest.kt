@@ -48,6 +48,7 @@ class SettingsScreenTest {
                         onAnimateNumbersChanged = {},
                         onChartStyleSelected = {},
                         onNotificationChanged = { _, _ -> },
+                        onOpenNotificationSettings = {},
                         onDisplayCurrenciesInputChange = {},
                         onSaveDisplayCurrencies = {},
                         onRateBaseChange = {},
@@ -69,6 +70,9 @@ class SettingsScreenTest {
         composeRule.onNodeWithText("Local profiles").assertIsDisplayed()
         composeRule.onNodeWithText("Language").assertIsDisplayed()
         composeRule.onNodeWithText("Appearance and privacy").assertIsDisplayed()
+
+        composeRule.onNodeWithTag("settings-screen")
+            .performScrollToNode(hasText("Budget alerts"))
         composeRule.onNodeWithText("Budget alerts").assertIsDisplayed()
 
         composeRule.onNodeWithTag("settings-screen")
@@ -105,6 +109,7 @@ class SettingsScreenTest {
                     onAnimateNumbersChanged = {},
                     onChartStyleSelected = {},
                     onNotificationChanged = { _, _ -> },
+                    onOpenNotificationSettings = {},
                     onDisplayCurrenciesInputChange = {},
                     onSaveDisplayCurrencies = {},
                     onRateBaseChange = {},
@@ -125,6 +130,105 @@ class SettingsScreenTest {
         composeRule.onNodeWithText(
             "This deletes the active local profile data on this device. Other local profiles are not reset.",
         ).assertIsDisplayed()
+    }
+
+    @Test
+    fun notificationStatusExplainsRuntimePermissionBlockedDelivery() {
+        composeRule.setContent {
+            MoneyTrackerTheme {
+                Box(modifier = Modifier.size(width = 360.dp, height = 960.dp)) {
+                    SettingsScreen(
+                        state = screenState.copy(
+                            notificationDeliveryState = SettingsNotificationDeliveryState.RuntimePermissionDenied,
+                        ),
+                        onRetry = {},
+                        onDismissMessage = {},
+                        onSelectProfile = {},
+                        onProfileLabelInputChange = {},
+                        onSaveProfileLabel = {},
+                        onNewProfileLabelChange = {},
+                        onCreateProfile = {},
+                        onLanguageSelected = {},
+                        onThemeSelected = {},
+                        onHideAmountsChanged = {},
+                        onAnimateNumbersChanged = {},
+                        onChartStyleSelected = {},
+                        onNotificationChanged = { _, _ -> },
+                        onOpenNotificationSettings = {},
+                        onDisplayCurrenciesInputChange = {},
+                        onSaveDisplayCurrencies = {},
+                        onRateBaseChange = {},
+                        onRateTargetChange = {},
+                        onRateDateChange = {},
+                        onRateValueChange = {},
+                        onSaveRateOverride = {},
+                        onDeleteRateOverride = {},
+                        onOpenImportExport = {},
+                        onResetRequested = {},
+                        onResetDismiss = {},
+                        onResetConfirmed = {},
+                    )
+                }
+            }
+        }
+
+        composeRule.onNodeWithTag("settings-screen")
+            .performScrollToNode(hasText("Permission denied"))
+        composeRule.onNodeWithText("Permission denied").assertIsDisplayed()
+        composeRule.onNodeWithText(
+            "Notification permission was denied. Alerts are saved, but Android will block delivery until notifications are allowed in system settings.",
+        ).assertIsDisplayed()
+        composeRule.onNodeWithText("Open system settings").assertIsDisplayed()
+        composeRule.onNodeWithText("Budget alerts").assertIsDisplayed()
+    }
+
+    @Test
+    fun notificationStatusExplainsSystemNotificationsBlockedDelivery() {
+        composeRule.setContent {
+            MoneyTrackerTheme {
+                Box(modifier = Modifier.size(width = 360.dp, height = 960.dp)) {
+                    SettingsScreen(
+                        state = screenState.copy(
+                            notificationDeliveryState = SettingsNotificationDeliveryState.SystemNotificationsDisabled,
+                        ),
+                        onRetry = {},
+                        onDismissMessage = {},
+                        onSelectProfile = {},
+                        onProfileLabelInputChange = {},
+                        onSaveProfileLabel = {},
+                        onNewProfileLabelChange = {},
+                        onCreateProfile = {},
+                        onLanguageSelected = {},
+                        onThemeSelected = {},
+                        onHideAmountsChanged = {},
+                        onAnimateNumbersChanged = {},
+                        onChartStyleSelected = {},
+                        onNotificationChanged = { _, _ -> },
+                        onOpenNotificationSettings = {},
+                        onDisplayCurrenciesInputChange = {},
+                        onSaveDisplayCurrencies = {},
+                        onRateBaseChange = {},
+                        onRateTargetChange = {},
+                        onRateDateChange = {},
+                        onRateValueChange = {},
+                        onSaveRateOverride = {},
+                        onDeleteRateOverride = {},
+                        onOpenImportExport = {},
+                        onResetRequested = {},
+                        onResetDismiss = {},
+                        onResetConfirmed = {},
+                    )
+                }
+            }
+        }
+
+        composeRule.onNodeWithTag("settings-screen")
+            .performScrollToNode(hasText("Disabled in system settings"))
+        composeRule.onNodeWithText("Disabled in system settings").assertIsDisplayed()
+        composeRule.onNodeWithText(
+            "Notifications are disabled for this app in system settings. Alerts are saved, but delivery is blocked until they are enabled.",
+        ).assertIsDisplayed()
+        composeRule.onNodeWithText("Open system settings").assertIsDisplayed()
     }
 
     private companion object {

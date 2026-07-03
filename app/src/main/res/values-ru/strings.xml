@@ -65,6 +65,15 @@
     <string name="settings_notify_weekly_summary_desc">Локальное уведомление с недельной финансовой сводкой.</string>
     <string name="settings_notify_goal_milestones">Этапы целей</string>
     <string name="settings_notify_goal_milestones_desc">Локальные напоминания о прогрессе целей накопления.</string>
+    <string name="settings_notifications_delivery_ready_title">Доставка готова</string>
+    <string name="settings_notifications_delivery_ready_desc">Включенные типы уведомлений могут доставляться на этом устройстве.</string>
+    <string name="settings_notifications_delivery_permission_required_title">Нужно разрешение</string>
+    <string name="settings_notifications_delivery_permission_required_desc">Разрешение на уведомления еще не выдано. Настройки сохранятся, но Android заблокирует доставку, пока уведомления не разрешены.</string>
+    <string name="settings_notifications_delivery_permission_denied_title">Разрешение отклонено</string>
+    <string name="settings_notifications_delivery_permission_denied_desc">Разрешение на уведомления было отклонено. Настройки сохранятся, но Android заблокирует доставку, пока уведомления не разрешены в системных настройках.</string>
+    <string name="settings_notifications_delivery_disabled_title">Отключено в системе</string>
+    <string name="settings_notifications_delivery_disabled_desc">Уведомления для приложения отключены в системных настройках. Настройки сохранятся, но доставка заблокирована, пока уведомления не включены.</string>
+    <string name="settings_notifications_open_system_settings">Открыть системные настройки</string>
     <string name="settings_rates_section">Валюты и курсы</string>
     <string name="settings_base_currency">Базовая валюта: %1$s</string>
     <string name="settings_display_currencies">Валюты отображения</string>

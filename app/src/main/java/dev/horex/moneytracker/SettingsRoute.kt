@@ -79,6 +79,8 @@ import dev.horex.moneytracker.core.currency.SaveExchangeRateOverrideInput
 import dev.horex.moneytracker.core.database.profile.LocalProfile
 import dev.horex.moneytracker.core.database.profile.LocalProfileRepository
 import dev.horex.moneytracker.core.designsystem.theme.MoneyTrackerTheme
+import dev.horex.moneytracker.core.notifications.NotificationPermissionStatus
+import dev.horex.moneytracker.core.notifications.canPostNotifications
 import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
 import dev.horex.moneytracker.core.preferences.AppThemePreference
 import dev.horex.moneytracker.core.preferences.MoneyTrackerSettings
@@ -102,6 +104,11 @@ fun SettingsRoute(
     localProfileRepository: LocalProfileRepository,
     currencyRatesRepository: CurrencyRatesRepository,
     appPreferencesRepository: AppPreferencesRepository? = null,
+    notificationPermissionStatusProvider: () -> NotificationPermissionStatus = {
+        NotificationPermissionStatus.NotRequired
+    },
+    areNotificationsEnabledProvider: () -> Boolean = { true },
+    onOpenNotificationSettings: () -> Unit = {},
     onOpenImportExport: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -122,12 +129,17 @@ fun SettingsRoute(
                 val latestSnapshotDate = currencyRatesRepository.getLatestSnapshotDate()
                     .takeUnless { it == EMPTY_RATES_SNAPSHOT_DATE }
                 val overrides = currencyRatesRepository.listManualOverrides(settings.profileId)
+                val notificationDeliveryState = resolveNotificationDeliveryState(
+                    permissionStatus = notificationPermissionStatusProvider(),
+                    systemNotificationsEnabled = areNotificationsEnabledProvider(),
+                )
 
                 state = state.toLoadedState(
                     settings = settings,
                     profiles = profiles,
                     latestSnapshotDate = latestSnapshotDate,
                     overrides = overrides,
+                    notificationDeliveryState = notificationDeliveryState,
                     defaultRateDate = defaultRateDate,
                     success = success,
                 )
@@ -262,6 +274,7 @@ fun SettingsRoute(
                 ),
             )
         },
+        onOpenNotificationSettings = onOpenNotificationSettings,
         onDisplayCurrenciesInputChange = { value ->
             state = state.copy(displayCurrenciesInput = value, error = null, success = null)
         },
@@ -361,6 +374,7 @@ fun SettingsScreen(
     onAnimateNumbersChanged: (Boolean) -> Unit,
     onChartStyleSelected: (StatsChartStylePreference) -> Unit,
     onNotificationChanged: (NotificationPreferenceKey, Boolean) -> Unit,
+    onOpenNotificationSettings: () -> Unit,
     onDisplayCurrenciesInputChange: (String) -> Unit,
     onSaveDisplayCurrencies: () -> Unit,
     onRateBaseChange: (String) -> Unit,
@@ -457,8 +471,10 @@ fun SettingsScreen(
                     item {
                         NotificationsSection(
                             preferences = settings.notificationPreferences,
+                            deliveryState = state.notificationDeliveryState,
                             isBusy = state.isBusy,
                             onNotificationChanged = onNotificationChanged,
+                            onOpenNotificationSettings = onOpenNotificationSettings,
                         )
                     }
                     item { HorizontalDivider() }
@@ -705,13 +721,19 @@ private fun AppearanceSection(
 @Composable
 private fun NotificationsSection(
     preferences: SettingsNotificationPreferences,
+    deliveryState: SettingsNotificationDeliveryState,
     isBusy: Boolean,
     onNotificationChanged: (NotificationPreferenceKey, Boolean) -> Unit,
+    onOpenNotificationSettings: () -> Unit,
 ) {
     SettingsSection(
         icon = Icons.Filled.Notifications,
         title = stringResource(R.string.settings_notifications_section),
     ) {
+        NotificationDeliveryStatusCard(
+            deliveryState = deliveryState,
+            onOpenNotificationSettings = onOpenNotificationSettings,
+        )
         NotificationPreferenceKey.entries.forEach { key ->
             SettingsSwitchRow(
                 icon = key.icon,
@@ -721,6 +743,56 @@ private fun NotificationsSection(
                 enabled = !isBusy,
                 onCheckedChange = { enabled -> onNotificationChanged(key, enabled) },
             )
+        }
+    }
+}
+
+@Composable
+private fun NotificationDeliveryStatusCard(
+    deliveryState: SettingsNotificationDeliveryState,
+    onOpenNotificationSettings: () -> Unit,
+) {
+    val isBlocked = deliveryState.blocksDelivery
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isBlocked) {
+                MaterialTheme.colorScheme.errorContainer
+            } else {
+                MaterialTheme.colorScheme.secondaryContainer
+            },
+            contentColor = if (isBlocked) {
+                MaterialTheme.colorScheme.onErrorContainer
+            } else {
+                MaterialTheme.colorScheme.onSecondaryContainer
+            },
+        ),
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = if (isBlocked) Icons.Filled.Error else Icons.Filled.CheckCircle,
+                    contentDescription = null,
+                )
+                Text(
+                    text = stringResource(deliveryState.titleResId),
+                    modifier = Modifier.padding(start = 10.dp),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+            Text(
+                text = stringResource(deliveryState.descriptionResId),
+                style = MaterialTheme.typography.bodySmall,
+            )
+            if (isBlocked) {
+                TextButton(onClick = onOpenNotificationSettings) {
+                    Text(text = stringResource(R.string.settings_notifications_open_system_settings))
+                }
+            }
         }
     }
 }
@@ -1058,6 +1130,7 @@ data class SettingsUiState(
     val profiles: List<SettingsProfileUi> = emptyList(),
     val latestSnapshotDate: String? = null,
     val manualRateOverrides: List<SettingsRateOverrideUi> = emptyList(),
+    val notificationDeliveryState: SettingsNotificationDeliveryState = SettingsNotificationDeliveryState.Ready,
     val activeProfileLabelInput: String = "",
     val newProfileLabel: String = "",
     val displayCurrenciesInput: String = "",
@@ -1084,6 +1157,33 @@ data class SettingsRateOverrideUi(
     val targetCurrency: String,
     val rate: String,
 )
+
+enum class SettingsNotificationDeliveryState(
+    @StringRes val titleResId: Int,
+    @StringRes val descriptionResId: Int,
+    val blocksDelivery: Boolean,
+) {
+    Ready(
+        R.string.settings_notifications_delivery_ready_title,
+        R.string.settings_notifications_delivery_ready_desc,
+        false,
+    ),
+    RuntimePermissionRequired(
+        R.string.settings_notifications_delivery_permission_required_title,
+        R.string.settings_notifications_delivery_permission_required_desc,
+        true,
+    ),
+    RuntimePermissionDenied(
+        R.string.settings_notifications_delivery_permission_denied_title,
+        R.string.settings_notifications_delivery_permission_denied_desc,
+        true,
+    ),
+    SystemNotificationsDisabled(
+        R.string.settings_notifications_delivery_disabled_title,
+        R.string.settings_notifications_delivery_disabled_desc,
+        true,
+    ),
+}
 
 enum class NotificationPreferenceKey(
     @StringRes val titleResId: Int,
@@ -1150,6 +1250,7 @@ private fun SettingsUiState.toLoadedState(
     profiles: List<LocalProfile>,
     latestSnapshotDate: String?,
     overrides: List<ExchangeRateOverride>,
+    notificationDeliveryState: SettingsNotificationDeliveryState,
     defaultRateDate: String,
     success: SettingsSuccess?,
 ): SettingsUiState {
@@ -1165,6 +1266,7 @@ private fun SettingsUiState.toLoadedState(
         profiles = profiles.map { it.toSettingsProfileUi(settings.profileId) },
         latestSnapshotDate = latestSnapshotDate,
         manualRateOverrides = overrides.map(ExchangeRateOverride::toUi),
+        notificationDeliveryState = notificationDeliveryState,
         activeProfileLabelInput = activeProfile?.label.orEmpty(),
         newProfileLabel = "",
         displayCurrenciesInput = settings.displayCurrencyCodes.joinToString(", "),
@@ -1176,6 +1278,31 @@ private fun SettingsUiState.toLoadedState(
         error = null,
         success = success,
     )
+}
+
+private fun resolveNotificationDeliveryState(
+    permissionStatus: NotificationPermissionStatus,
+    systemNotificationsEnabled: Boolean,
+): SettingsNotificationDeliveryState {
+    if (!permissionStatus.canPostNotifications) {
+        return when (permissionStatus) {
+            NotificationPermissionStatus.Denied -> {
+                SettingsNotificationDeliveryState.RuntimePermissionDenied
+            }
+            NotificationPermissionStatus.NeedsRuntimePermission -> {
+                SettingsNotificationDeliveryState.RuntimePermissionRequired
+            }
+            NotificationPermissionStatus.NotRequired,
+            NotificationPermissionStatus.Granted,
+            -> SettingsNotificationDeliveryState.RuntimePermissionRequired
+        }
+    }
+
+    return if (systemNotificationsEnabled) {
+        SettingsNotificationDeliveryState.Ready
+    } else {
+        SettingsNotificationDeliveryState.SystemNotificationsDisabled
+    }
 }
 
 private fun LocalProfile.toSettingsProfileUi(activeProfileId: Long): SettingsProfileUi {
@@ -1356,6 +1483,7 @@ private fun SettingsScreenPreview() {
             onAnimateNumbersChanged = {},
             onChartStyleSelected = {},
             onNotificationChanged = { _, _ -> },
+            onOpenNotificationSettings = {},
             onDisplayCurrenciesInputChange = {},
             onSaveDisplayCurrencies = {},
             onRateBaseChange = {},

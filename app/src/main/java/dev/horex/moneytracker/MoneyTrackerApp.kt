@@ -56,6 +56,7 @@ import dev.horex.moneytracker.core.database.profile.LocalProfileBootstrapper
 import dev.horex.moneytracker.core.database.profile.LocalProfileRepository
 import dev.horex.moneytracker.core.navigation.MoneyTrackerRoutes
 import dev.horex.moneytracker.core.navigation.MoneyTrackerTopLevelDestination
+import dev.horex.moneytracker.core.notifications.NotificationPermissionStatus
 import dev.horex.moneytracker.core.preferences.AppPreferences
 import dev.horex.moneytracker.core.preferences.AppPreferencesRepository
 import dev.horex.moneytracker.core.preferences.AppThemePreference
@@ -85,6 +86,9 @@ fun MoneyTrackerApp(
     localProfileRepository: LocalProfileRepository? = null,
     appPreferencesRepository: AppPreferencesRepository? = null,
     backupDocumentRepository: MoneyTrackerBackupDocumentRepository? = null,
+    notificationPermissionStatusProvider: (() -> NotificationPermissionStatus)? = null,
+    areNotificationsEnabledProvider: (() -> Boolean)? = null,
+    onOpenNotificationSettings: (() -> Unit)? = null,
 ) {
     val navController = rememberNavController()
     var historyInitialFilters by remember { mutableStateOf(HistoryFilters()) }
@@ -124,6 +128,9 @@ fun MoneyTrackerApp(
                 localProfileRepository = localProfileRepository,
                 appPreferencesRepository = appPreferencesRepository,
                 backupDocumentRepository = backupDocumentRepository,
+                notificationPermissionStatusProvider = notificationPermissionStatusProvider,
+                areNotificationsEnabledProvider = areNotificationsEnabledProvider,
+                onOpenNotificationSettings = onOpenNotificationSettings,
                 historyInitialFilters = historyInitialFilters,
                 onHistoryInitialFiltersChange = { historyInitialFilters = it },
                 modifier = Modifier
@@ -148,6 +155,9 @@ private fun MoneyTrackerNavHost(
     localProfileRepository: LocalProfileRepository?,
     appPreferencesRepository: AppPreferencesRepository?,
     backupDocumentRepository: MoneyTrackerBackupDocumentRepository?,
+    notificationPermissionStatusProvider: (() -> NotificationPermissionStatus)?,
+    areNotificationsEnabledProvider: (() -> Boolean)?,
+    onOpenNotificationSettings: (() -> Unit)?,
     historyInitialFilters: HistoryFilters,
     onHistoryInitialFiltersChange: (HistoryFilters) -> Unit,
     modifier: Modifier = Modifier,
@@ -298,6 +308,11 @@ private fun MoneyTrackerNavHost(
                     localProfileRepository = localProfileRepository,
                     currencyRatesRepository = currencyRatesRepository,
                     appPreferencesRepository = appPreferencesRepository,
+                    notificationPermissionStatusProvider = notificationPermissionStatusProvider ?: {
+                        NotificationPermissionStatus.NotRequired
+                    },
+                    areNotificationsEnabledProvider = areNotificationsEnabledProvider ?: { true },
+                    onOpenNotificationSettings = onOpenNotificationSettings ?: {},
                     onOpenImportExport = {
                         navController.navigate(MoneyTrackerRoutes.Export) {
                             launchSingleTop = true
