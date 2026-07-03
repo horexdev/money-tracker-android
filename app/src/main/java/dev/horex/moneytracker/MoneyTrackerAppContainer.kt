@@ -3,6 +3,10 @@ package dev.horex.moneytracker
 import android.content.Context
 import dev.horex.moneytracker.core.accounts.RoomAccountsRepository
 import dev.horex.moneytracker.core.balance.RoomBalancesRepository
+import dev.horex.moneytracker.core.background.BackgroundTaskExecutor
+import dev.horex.moneytracker.core.background.MoneyTrackerBackgroundWorkScheduler
+import dev.horex.moneytracker.core.background.MoneyTrackerWorkerFactory
+import dev.horex.moneytracker.core.background.MutableBackgroundTaskRegistry
 import dev.horex.moneytracker.core.categories.RoomCategoriesRepository
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabase
 import dev.horex.moneytracker.core.database.MoneyTrackerDatabaseFactory
@@ -121,6 +125,22 @@ internal class MoneyTrackerAppContainer(
             permissionController = notificationPermissionController,
             notificationBuilder = notificationBuilder,
         )
+    }
+
+    val backgroundTaskRegistry: MutableBackgroundTaskRegistry by lazy {
+        MutableBackgroundTaskRegistry()
+    }
+
+    val backgroundTaskExecutor: BackgroundTaskExecutor by lazy {
+        BackgroundTaskExecutor(backgroundTaskRegistry)
+    }
+
+    val backgroundWorkerFactory: MoneyTrackerWorkerFactory by lazy {
+        MoneyTrackerWorkerFactory(backgroundTaskExecutor)
+    }
+
+    val backgroundWorkScheduler: MoneyTrackerBackgroundWorkScheduler by lazy {
+        MoneyTrackerBackgroundWorkScheduler.create(appContext)
     }
 
     fun close() {

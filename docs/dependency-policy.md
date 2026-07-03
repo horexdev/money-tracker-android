@@ -29,6 +29,7 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 | AndroidX Test Core / Runner / Rules | 1.7.0 | Instrumentation and Android framework test baseline. |
 | AndroidX Test Ext JUnit | 1.3.0 | AndroidJUnit4 integration for instrumentation tests. |
 | AndroidX Espresso | 3.7.0 | Android test assertion baseline used by test artifacts. |
+| AndroidX WorkManager | 2.11.2 | Local-only periodic background work foundation with custom worker factory hooks. |
 | Kotlinx Coroutines Android | 1.11.0 | Runtime coroutine classes aligned with coroutine test tooling used by connected Compose tests. |
 | Kotlinx Coroutines Test | 1.11.0 | Coroutine dispatcher and virtual-time test support. |
 | JUnit | 4.13.2 | Unit-test baseline until the dedicated test infrastructure task expands coverage. |
@@ -42,6 +43,8 @@ The Gradle wrapper version is pinned in `gradle/wrapper/gradle-wrapper.propertie
 `core:database` also owns encrypted database opening through SQLCipher and Android Keystore. Device-bound SQLCipher passphrases must not be reused for portable backup encryption.
 
 `core:preferences` owns Preferences DataStore setup, app preference mapping, and the DataStore-backed active profile pointer. It must not store financial records or source identity fields.
+
+`core:background` owns WorkManager integration, periodic/test work request creation, custom worker factory wiring, and idempotency hook interfaces. It must stay local-only unless a future task explicitly changes the background contract.
 
 ## Rules
 

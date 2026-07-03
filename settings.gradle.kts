@@ -18,6 +18,7 @@ rootProject.name = "MoneyTrackerAndroid"
 include(":app")
 include(":core:accounts")
 include(":core:backup")
+include(":core:background")
 include(":core:balance")
 include(":core:categories")
 include(":core:common")
